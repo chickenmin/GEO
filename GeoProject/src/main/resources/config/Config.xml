@@ -5,6 +5,7 @@
 <!-- 타입 알리아스 각자 추가  -->
 	<typeAliases>
 		<typeAlias type="com.nike.geo.vo.appr.Ap_DocuVo" alias="Ap_DocuVo"/>
+		<typeAlias type="com.nike.geo.vo.msg.MsgVo" alias="MsgVo"/>
 	</typeAliases>
 
 	<mappers>

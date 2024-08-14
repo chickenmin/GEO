@@ -2,8 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <!-- namespace : impl패키지 경로로 통일 -->
-<mapper namespace="com.nike.geo.model.ApprovalDaoImpl">
+<mapper namespace="com.nike.geo.model.MsgDaoImpl">
 
-
+	<!--  쪽지 목록 조회 selectMsgList  -->
+	<select id="selectMsgList" resultType="MsgVo">
+		SELECT MSG_NO , MSG_SEND_ID , MSG_RECV_ID ,
+				MSG_CONTENT , MSG_SEND_DATE , MSG_RECV_READ_YN ,
+				MSG_SEND_DEL_YN , MSG_RECV_DEL_YN , REG_ID ,
+				REG_DATE , MOD_ID , MOD_DATE FROM MSG
+	</select>
+	
+	<!--  쪽지 작성 insertMsg  -->
+	<insert id="insertMsg">
+		<selectKey keyProperty="msg_no" resultType="java.lang.Integer" order="BEFORE">
+			SELECT MSG_SEQ.NEXTVAL AS SEQ FROM DUAL
+		</selectKey>
+		INSERT INTO GEO.MSG (MSG_NO, MSG_SEND_ID, MSG_RECV_ID,
+							MSG_CONTENT, MSG_SEND_DATE, MSG_RECV_READ_YN,
+							MSG_SEND_DEL_YN, MSG_RECV_DEL_YN, REG_ID,
+							REG_DATE, MOD_ID, MOD_DATE)
+			VALUES(#{msg_no}, #{msg_send_id}, #{msg_recv_id},
+			#{msg_content}, SYSDATE, 'N',
+			'N', 'N', #{reg_id},
+			SYSDATE, #{mod_id}, SYSDATE)
+	</insert>
 	
 </mapper>
