@@ -38,6 +38,7 @@ public class Cha_Test {
 	public void insertMsg_Test() { // 작동완 ㅋ
 		MsgVo signupVo = new MsgVo();
 		
+		
 		String sendId = "HYUN";
 		String recvId = "HYUN";
 		signupVo.setMsg_send_id(sendId);
