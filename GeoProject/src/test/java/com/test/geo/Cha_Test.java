@@ -34,26 +34,39 @@ public class Cha_Test {
 		assertNotNull(template);
 	}
 	
+
+	
+//	@Test
+	public void selectMsgListRecv_Test() { // 작동완 ㅋ
+		String recvId = "HYUN";
+		List<MsgVo> msgListRecv = service.selectMsgListRecv(recvId);
+		assertNotEquals(0, msgListRecv.size());
+	}
+	
+	@Test
+	public void selectMsgListSend_Test() { // 작동완 ㅋ
+		String sendId = "TEST";
+		List<MsgVo> msgListSend = service.selectMsgListSend(sendId);
+		assertNotEquals(0, msgListSend.size());
+	}
+	
+//	@Test
+	public void selectMsgOne_Test() { // 작동완 ㅋ
+		String no = "40";
+		MsgVo vo = service.selectMsgOne(no);
+		assertNotNull(vo);
+	}
+	
 //	@Test
 	public void insertMsg_Test() { // 작동완 ㅋ
 		MsgVo signupVo = new MsgVo();
 		
+		signupVo.setMsg_send_id("KANG");
+		signupVo.setMsg_recv_id("HYUN");
+		signupVo.setMsg_content("데이터 추가");
 		
-		String sendId = "HYUN";
-		String recvId = "HYUN";
-		signupVo.setMsg_send_id(sendId);
-		signupVo.setMsg_recv_id(recvId);
-		signupVo.setMsg_content("이클립스에서 JUnitTest로 넣음 푸하하22");
-		signupVo.setReg_id(sendId);
-		signupVo.setMod_id(sendId);
 		int signupChk = service.insertMsg(signupVo);
 		assertNotEquals(0, signupChk);
-	}
-	
-	@Test
-	public void selectMsgList_Test() { // 작동완 ㅋ
-		List<MsgVo> msgList = service.selectMsgList();
-		assertNotEquals(0, msgList.size());
 	}
 
 }

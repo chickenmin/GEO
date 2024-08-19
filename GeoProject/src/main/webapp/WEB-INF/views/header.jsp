@@ -41,9 +41,12 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
 
+  <!-- MESSAGE -->
+  <link href="/css/Msg.css" rel="stylesheet">
+  <script src="/js/Msg.js" type="text/javascript"></script>
+
 <title>GEO</title>
 </head>
-
 
 
   <!-- ======= Header ======= -->

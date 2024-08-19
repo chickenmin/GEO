@@ -197,13 +197,13 @@
         </a>
         <ul id="message-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="#">
+            <a href="./recvMsg.do">
               <i class="bi bi-circle"></i><span>받은 쪽지함</span>
             </a>
           </li>
           
           <li>
-            <a href="#">
+            <a href="./sendMsg.do">
               <i class="bi bi-circle"></i><span>보낸 쪽지함</span>
             </a>
           </li>

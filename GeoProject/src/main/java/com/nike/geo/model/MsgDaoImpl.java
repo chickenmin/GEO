@@ -20,16 +20,31 @@ public class MsgDaoImpl implements IMsgDao {
 	private final String NS = "com.nike.geo.model.MsgDaoImpl.";
 	
 	@Override
+	public List<MsgVo> selectMsgListRecv(String recvId) {
+		log.info("MESSAGE repository - 받은 쪽지 목록 조회 selectMsgListRecv");
+		log.info("MESSAGE repository - 받아온 값 : {}", recvId);
+		return session.selectList(NS+"selectMsgListRecv", recvId);
+	}
+	
+	@Override
+	public List<MsgVo> selectMsgListSend(String sendId) {
+		log.info("MESSAGE repository - 보낸 쪽지 목록 조회 selectMsgListSend");
+		log.info("MESSAGE repository - 받아온 값 : {}", sendId);
+		return session.selectList(NS+"selectMsgListSend", sendId);
+	}
+	
+	@Override
+	public MsgVo selectMsgOne(String no) {
+		log.info("MESSAGE repository - 쪽지 상세 조회 selectMsgOne");
+		log.info("MESSAGE repository - 받아온 값 : {}", no);
+		return session.selectOne(NS+"selectMsgOne", no);
+	}
+	
+	@Override
 	public int insertMsg(MsgVo vo) {
 		log.info("MESSAGE repository - 쪽지 작성 insertMsg");
 		log.info("MESSAGE repository - 받아온 값 : {}", vo);
 		return session.insert(NS+"insertMsg", vo);
 	}
 	
-	@Override
-	public List<MsgVo> selectMsgList() {
-		log.info("MESSAGE repository - 쪽지 목록 조회 selectMsgList");
-		return session.selectList(NS+"selectMsgList");
-	}
-
 }

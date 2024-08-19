@@ -7,17 +7,31 @@ import com.nike.geo.vo.msg.MsgVo;
 public interface IMsgService {
 
 	/**
+	 * 받은 쪽지 목록 조회
+	 * @param recvId
+	 * @return List<MsgVo>
+	 */
+	public List<MsgVo> selectMsgListRecv(String recvId);
+	
+	/**
+	 * 보낸 쪽지 목록 조회 
+	 * @param sendId
+	 * @return List<MsgVo>
+	 */
+	public List<MsgVo> selectMsgListSend(String sendId);
+	
+	/**
+	 * 쪽지 상세 조회
+	 * @param no
+	 * @return MsgVo
+	 */
+	public MsgVo selectMsgOne(String no);
+	
+	/**
 	 * 쪽지 작성
 	 * @param MsgVo
 	 * @return 0 혹은 1
 	 */
 	public int insertMsg(MsgVo vo);
-
-	
-	/**
-	 * 쪽지 목록 조회
-	 * @return List<MsgVo>
-	 */
-	public List<MsgVo> selectMsgList();
 	
 }
