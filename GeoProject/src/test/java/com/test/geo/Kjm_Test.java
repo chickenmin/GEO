@@ -11,19 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.nike.geo.model.ApprovalDaoImpl;
+import com.nike.geo.model.IApprovalDao;
+import com.nike.geo.vo.appr.Ap_FavVo;
+
+import lombok.extern.slf4j.Slf4j;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
+@Slf4j
 public class Kjm_Test {
 	
 	//junit은 @RequiredArgsConstructor 사용불가 / @Autowired만 사용하기
 	
+	
 	@Autowired
-	private SqlSessionTemplate template;
+	private IApprovalDao dao;
 	
 	@Test
 	public void test() {
-		assertNotNull(template);
+		List<Ap_FavVo> lists = dao.selectFavList("EMP");
+		log.info("lists: {}",lists);
+		assertNotEquals(0, lists.size());
+		
 	}
 	
 

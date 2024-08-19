@@ -2,6 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 
+
 <!-- 타입 알리아스 각자 추가  -->
 	<typeAliases>
 		<typeAlias type="com.nike.geo.vo.appr.Ap_DocuVo" alias="Ap_DocuVo"/>

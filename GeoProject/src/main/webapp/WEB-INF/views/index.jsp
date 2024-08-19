@@ -9,13 +9,7 @@
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
 		
-		<div id="mdp-demo"></div>
-		
-		<script type="text/javascript">
-		var date = new Date();
-		$('#mdp-demo').multiDatesPicker({
-		});
-		</script>
+		<a href="./apprHome.do">전자결재로 이동</a>
   
 
   	</main><!-- End #main -->
