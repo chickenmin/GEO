@@ -6,7 +6,23 @@
 <html>
 
 <%@ include file="./header.jsp" %>
+<style>
+	td a {
+		color: inherit; /* 링크 색상을 부모 요소의 색상으로 설정 */
+	}
+	
+	td strong {
+		font-weight: normal; /* strong 효과 제거 */
+        }
 
+    td em {
+		font-style: normal; /* em 효과 제거 */
+    }
+    
+    td u {
+    	text-decoration: none;
+    }
+</style>
 <body>
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
@@ -33,13 +49,13 @@
 	              <table class="table">
 	                <thead>
 	                  <tr>
-	                  	<th scope="col">
+	                  	<th scope="col" class="text-center">
 	                  		<input type="checkbox"> <!-- 체크박스 -->
 	                  	</th>
-	                    <th scope="col">쪽지번호</th>
-	                    <th scope="col">쪽지 내용</th>
-	                    <th scope="col">보낸 사람</th>
-	                    <th scope="col">보낸 날짜</th>
+	                    <th scope="col" class="text-center">쪽지번호</th>
+	                    <th scope="col" class="text-center">쪽지 내용</th>
+	                    <th scope="col" class="text-center">보낸 사람</th>
+	                    <th scope="col" class="text-center">보낸 날짜</th>
 	                  </tr>
 	                </thead>
 	                
@@ -47,19 +63,19 @@
 	                <tbody>
 	                  <c:forEach var="vo" items="${msgListRecv}" varStatus="vs">
 	                    <tr>
-	                      <td>
+	                      <td class="text-center">
 	                      	<input type="checkbox" value="${vo.msg_no}"> <!-- 체크박스 -->
 	                      </td>
 	                      
 	                      <!-- 페이징하려면 수정 -->
-	                      <th scope="row">${fn:length(msgListRecv) - vs.index}</th>
+	                      <th scope="row" class="text-center">${fn:length(msgListRecv) - vs.index}</th>
 	                      
 	                      <!-- 링크처럼 안보이게 CSS 수정 -->
-	                      <td><a href="./detailMsgRecv.do?no=${vo.msg_no}">${vo.msg_content}</a></td>
+	                      <td id=""><a href="./detailMsgRecv.do?no=${vo.msg_no}">${vo.msg_content}</a></td>
 	                      
 	                      <!-- 회원 상세 조회 추가시 그 쪽으로 이동 -->
-	                      <td>${vo.msg_send_id}</td> 
-	                      <td>${vo.msg_send_date}</td>
+	                      <td class="text-center">${vo.msg_send_id}</td> 
+	                      <td class="text-center">${vo.msg_send_date}</td>
 	                    </tr>
 	                  </c:forEach>
 	                </tbody>
@@ -81,7 +97,6 @@
   	</main><!-- End #main -->
 
 </body>
-
   <%@ include file="./footer.jsp" %>
 
 </html>

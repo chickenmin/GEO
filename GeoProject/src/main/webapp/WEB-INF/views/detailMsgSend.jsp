@@ -62,6 +62,7 @@
 		
 		<div style="text-align: center;">
 			<button type="button" class="btn btn-primary" onclick="location.href='./insertMsg.do'" style="display: inline-block">쪽지 작성</button>
+			<button type="button" class="btn btn-secondary" onclick="location.href='./sendMsg.do'"style="display: inline-block">쪽지 목록</button>
 			<button type="button" class="btn btn-danger" onclick="location.href='#'"style="display: inline-block">쪽지 삭제</button>
 		</div>
 

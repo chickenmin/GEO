@@ -72,8 +72,8 @@ public class MsgController {
 		int m = service.insertMsg(vo);
 		
 		if(m==1) {
-			log.info("MESSAGE controller - 쪽지 작성 완료. 쪽지 상세 조회로 이동");
-			return "redirect:/detailMsg.do?no="+vo.getMsg_no();
+			log.info("MESSAGE controller - 쪽지 작성 완료. 보낸 쪽지 상세 조회로 이동");
+			return "redirect:/detailMsgSend.do?no="+vo.getMsg_no();
 		}else {
 			log.info("MESSAGE controller - 쪽지 작성 실패. 받은 쪽지함으로 이동");
 			// alert 창

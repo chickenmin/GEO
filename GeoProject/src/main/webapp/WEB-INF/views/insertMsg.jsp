@@ -58,12 +58,11 @@
 	                  </div>
 	                </div>
 	                
-	                <!-- 입력 초기화 버튼 클릭시 에디터 안에 있는 데이터도 지워지도록 자바스크립트 추가 -->
 	                <div class="row mb-3">
 	                  <div class="col-sm-12" style="text-align: center;">
 	                    <button type="submit" class="btn btn-primary" style="display: inline-block">쪽지 전송</button>
-	                    <button type="reset" class="btn btn-secondary" style="display: inline-block">입력 초기화</button>
-	                    <button class="btn btn-danger" onclick="location.href='./recvMsg.do'" style="display: inline-block">작성 취소</button>
+	                    <button type="button" class="btn btn-secondary" id="reset" style="display: inline-block">입력 초기화</button>
+	                    <button type="button" class="btn btn-danger" onclick="location.href='./recvMsg.do'" style="display: inline-block">작성 취소</button>
 	                  </div>
 	                </div>
 	
@@ -74,6 +73,10 @@
 	              		 theme: 'snow'
 	              	 });
 	              
+	              	 document.getElementById("reset").addEventListener("click",function(){
+	              		 quill.setContents([]);
+	              	 });
+	              	 
 	              	 function sendDivContent(){
 // 	              		 var plainText = quill.getText().trim(); // 텍스트만 가져옴
 	              		 var plainText = quill.root.innerHTML.substr(3).slice(0,-4);
