@@ -1,5 +1,8 @@
 package com.nike.geo.service;
 
-public class IApprovalService {
+import java.util.List;
 
+import com.nike.geo.vo.appr.Ap_FavVo;
+
+public class IApprovalService {
 }

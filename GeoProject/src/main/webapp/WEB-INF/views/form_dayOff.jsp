@@ -22,7 +22,30 @@
 							</td>
 						</tr>
 					</thead>
+					
 					<tbody>
+						<tr>
+            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+                결재자 1
+            </td>
+            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+                결재자 2
+            </td>
+            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+                결재자 3
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
+                <input type="text" name="approver1" style="width: 100%; border: 1px solid black; padding: 5px;" />
+            </td>
+            <td style="padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
+                <input type="text" name="approver2" style="width: 100%; border: 1px solid black; padding: 5px;" />
+            </td>
+            <td style="padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;">
+                <input type="text" name="approver3" style="width: 100%; border: 1px solid black; padding: 5px;" />
+            </td>
+        </tr>
 						<tr>
 							<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
 								연차 날짜

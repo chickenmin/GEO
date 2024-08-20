@@ -55,47 +55,112 @@
     					</tr>
     				</thead>
     				<tbody>
-    					<c:forEach var="fav" items="${favList}">
-	    					<tr>
-	    						<th scope="row">1</th>
-	    						<td> <a href="#">일일 업무 일지</a></td>
-	    						<td></td>
-	    						<td>
-	    							<c:choose>
-	    								<c:when test="${fav.apd_form == 111}">
-	    									<img alt="bookmark" src="img/yesBookmark.png">
-	    								</c:when>
-	    								<c:otherwise>
-	    									<img alt="bookmark" src="img/nonBookmark.png">
-	    								</c:otherwise>
-	    							</c:choose>
-	    						 </td>
-	    					</tr>
-	    					<tr>
-	    						<th scope="row">2</th>
-	    						<td> <a href="#">연차 신청서</a></td>
-	    						<td></td>
-	    						<td> <button>☆</button></td>
-	    					</tr>
-	    					<tr>
-	    						<th scope="row">3</th>
-	    						<td> <a href="#">일일 업무 일지</a></td>
-	    						<td></td>
-	    						<td> <button>☆</button></td>
-	    					</tr>
-	    					<tr>
-	    						<th scope="row">4</th>
-	    						<td> <a href="#">일일 업무 일지</a></td>
-	    						<td></td>
-	    						<td> <button>☆</button></td>
-	    					</tr>
-	    					<tr>
-	    						<th scope="row">5</th>
-	    						<td> <a href="#">일일 업무 일지</a></td>
-	    						<td></td>
-	    						<td> <button>☆</button></td>
-	    					</tr>
-	    				</c:forEach>	
+    					<tr>
+    						<th scope="row">1</th>
+    						<td> <a href="#">일일 업무 일지</a></td>
+    						<td></td>
+    						<td>
+			    				<c:set var="stopLoop" value="true" scope="page"/>
+			   					<c:forEach var="fav" items="${favList}">
+   								 <c:if test="${stopLoop}">
+   									<c:choose>
+   										<c:when test="${fav.apd_form == 111}">
+   											<img alt="bookmark" src="img/yesBookmark.png">
+   											<c:set var="stopLoop" value="false" scope="page"/>
+   										</c:when>
+   										<c:otherwise>
+   											<img alt="bookmark" src="img/nonBookmark.png">
+   										</c:otherwise>
+   									</c:choose>
+					    		</c:if>
+    							</c:forEach>
+    						 </td>
+    					</tr>
+    					<tr>
+    						<th scope="row">2</th>
+    						<td> <a href="#">연차 신청서</a></td>
+    						<td></td>
+    						<td>
+			    				<c:set var="stopLoop" value="true" scope="page"/>
+			   					<c:forEach var="fav" items="${favList}">
+   								 <c:if test="${stopLoop}">
+   									<c:choose>
+   										<c:when test="${fav.apd_form == 112}">
+   											<img alt="bookmark" src="img/yesBookmark.png">
+   											<c:set var="stopLoop" value="false" scope="page"/>
+   										</c:when>
+   										<c:otherwise>
+   											<img alt="bookmark" src="img/nonBookmark.png">
+   										</c:otherwise>
+   									</c:choose>
+					    		</c:if>
+    							</c:forEach>
+    						 </td>
+    					</tr>
+    					<tr>
+    						<th scope="row">3</th>
+    						<td> <a href="#">지출결의서</a></td>
+    						<td></td>
+    						<td>
+			    				<c:set var="stopLoop" value="true" scope="page"/>
+			   					<c:forEach var="fav" items="${favList}">
+   								 <c:if test="${stopLoop}">
+   									<c:choose>
+   										<c:when test="${fav.apd_form == 113}">
+   											<img alt="bookmark" src="img/yesBookmark.png">
+   											<c:set var="stopLoop" value="false" scope="page"/>
+   										</c:when>
+   										<c:otherwise>
+   											<img alt="bookmark" src="img/nonBookmark.png">
+   										</c:otherwise>
+   									</c:choose>
+					    		</c:if>
+    							</c:forEach>
+    						 </td>
+    					</tr>
+    					<tr>
+    						<th scope="row">4</th>
+    						<td> <a href="#">사유서</a></td>
+    						<td></td>
+    						<td>
+			    				<c:set var="stopLoop" value="true" scope="page"/>
+			   					<c:forEach var="fav" items="${favList}">
+   								 <c:if test="${stopLoop}">
+   									<c:choose>
+   										<c:when test="${fav.apd_form == 114}">
+   											<img alt="bookmark" src="img/yesBookmark.png">
+   											<c:set var="stopLoop" value="false" scope="page"/>
+   										</c:when>
+   										<c:otherwise>
+   											<img alt="bookmark" src="img/nonBookmark.png">
+   										</c:otherwise>
+   									</c:choose>
+					    		</c:if>
+    							</c:forEach>
+    						 </td>
+    					</tr>
+    					<tr>
+    						<th scope="row">5</th>
+    						<td> <a href="#">출장보고서</a></td>
+    						<td></td>
+    						<td>
+			    				<c:set var="stopLoop" value="true" scope="page"/>
+			   					<c:forEach var="fav" items="${favList}">
+   								 <c:if test="${stopLoop}">
+   									<c:choose>
+   										<c:when test="${fav.apd_form == 115}">
+   											<img alt="bookmark" src="img/yesBookmark.png">
+   											<c:set var="stopLoop" value="false" scope="page"/>
+   										</c:when>
+   										<c:otherwise>
+   											<img alt="bookmark" src="img/nonBookmark.png">
+   										</c:otherwise>
+   									</c:choose>
+					    		</c:if>
+    							</c:forEach>
+    						 </td>
+    					</tr>
+	    					
     				</tbody>
     			</table>
     		</div>
