@@ -12,7 +12,6 @@
 		
 		<div class="pagetitle">
 	      <h1>전자결재</h1>
-	      ${favList }
     	</div><!-- End Page Title -->
     	
     	<div style="height: 200px; margin: 20px; ">
@@ -26,12 +25,16 @@
     					</c:when>
     					<c:otherwise>
     						<c:forEach var="fav" items="${favList}">
-    							<div style="width: 150px; height:150px; background: white; position: relative;">
-    								<div style="width:120px; height:120px; margin: auto; position: absolute; ">
-	    								<span style="align-content: center;">${fav.apf_name}</span> <br><br>
-	    								<button class="btn btn-primary" >기안하기</button>
-    								</div>
-    							</div>
+	    						<form action="./goForm.do">
+	    							<div style="width: 150px; height:150px; background: white; position: relative;">
+	    								<div style="width:120px; height:120px; margin: auto; position: absolute; ">
+	    									<!-- 돔 탐색으로 양식명 받아와서 기안하기 클릭시 해당 결재 jsp로 이동 -->
+		    								<span style="align-content: center;">${fav.apf_name}</span> <br><br>
+		    								<input name="formNo" value="${fav.apd_form}" style="display: none">
+		    								<button class="btn btn-primary">기안하기</button>
+	    								</div>
+	    							</div>
+    							</form>
     						</c:forEach>
     					</c:otherwise>
     				</c:choose>
@@ -57,107 +60,97 @@
     				<tbody>
     					<tr>
     						<th scope="row">1</th>
-    						<td> <a href="#">일일 업무 일지</a></td>
+    						<td> <a href="./daily.do" >일일 업무 일지</a></td>
     						<td></td>
     						<td>
 			    				<c:set var="stopLoop" value="true" scope="page"/>
-			   					<c:forEach var="fav" items="${favList}">
-   								 <c:if test="${stopLoop}">
-   									<c:choose>
-   										<c:when test="${fav.apd_form == 111}">
-   											<img alt="bookmark" src="img/yesBookmark.png">
-   											<c:set var="stopLoop" value="false" scope="page"/>
-   										</c:when>
-   										<c:otherwise>
-   											<img alt="bookmark" src="img/nonBookmark.png">
-   										</c:otherwise>
-   									</c:choose>
-					    		</c:if>
+    							<c:forEach var="fav" items="${favList}">
+	   								 <c:if test="${stopLoop}">
+	   									<c:if test="${fav.apd_form == 111}">
+	   										<img class="yesMark mark" alt="bookmark" src="img/yesBookmark.png" onclick="bookmark()">
+	   										<c:set var="stopLoop" value="false" scope="page"/>
+	   									</c:if>
+						    		</c:if>
     							</c:forEach>
+    							 <c:if test="${stopLoop}">
+    								<img alt="bookmark" src="img/nonBookmark.png">
+    							</c:if>
     						 </td>
     					</tr>
     					<tr>
     						<th scope="row">2</th>
-    						<td> <a href="#">연차 신청서</a></td>
+    						<td> <a href="./dayOff.do">연차 신청서</a></td>
     						<td></td>
     						<td>
 			    				<c:set var="stopLoop" value="true" scope="page"/>
-			   					<c:forEach var="fav" items="${favList}">
-   								 <c:if test="${stopLoop}">
-   									<c:choose>
-   										<c:when test="${fav.apd_form == 112}">
-   											<img alt="bookmark" src="img/yesBookmark.png">
-   											<c:set var="stopLoop" value="false" scope="page"/>
-   										</c:when>
-   										<c:otherwise>
-   											<img alt="bookmark" src="img/nonBookmark.png">
-   										</c:otherwise>
-   									</c:choose>
-					    		</c:if>
+    							<c:forEach var="fav" items="${favList}">
+	   								 <c:if test="${stopLoop}">
+	   									<c:if test="${fav.apd_form == 112}">
+	   										<img class="yesMark mark"  alt="bookmark" src="img/yesBookmark.png">
+	   										<c:set var="stopLoop" value="false" scope="page"/>
+	   									</c:if>
+						    		</c:if>
     							</c:forEach>
+    							 <c:if test="${stopLoop}">
+    								<img alt="bookmark" src="img/nonBookmark.png">
+    							</c:if>
     						 </td>
     					</tr>
     					<tr>
     						<th scope="row">3</th>
-    						<td> <a href="#">지출결의서</a></td>
+    						<td> <a href="./pay.do">지출 결의서</a></td>
     						<td></td>
     						<td>
-			    				<c:set var="stopLoop" value="true" scope="page"/>
-			   					<c:forEach var="fav" items="${favList}">
-   								 <c:if test="${stopLoop}">
-   									<c:choose>
-   										<c:when test="${fav.apd_form == 113}">
-   											<img alt="bookmark" src="img/yesBookmark.png">
-   											<c:set var="stopLoop" value="false" scope="page"/>
-   										</c:when>
-   										<c:otherwise>
-   											<img alt="bookmark" src="img/nonBookmark.png">
-   										</c:otherwise>
-   									</c:choose>
-					    		</c:if>
+    							<c:set var="stopLoop" value="true" scope="page"/>
+    							<c:forEach var="fav" items="${favList}">
+	   								 <c:if test="${stopLoop}">
+	   									<c:if test="${fav.apd_form == 113}">
+	   										<img class="yesMark mark"  alt="bookmark" src="img/yesBookmark.png">
+	   										<c:set var="stopLoop" value="false" scope="page"/>
+	   									</c:if>
+						    		</c:if>
     							</c:forEach>
+    							 <c:if test="${stopLoop}">
+    								<img alt="bookmark" src="img/nonBookmark.png">
+    							</c:if>
     						 </td>
     					</tr>
     					<tr>
     						<th scope="row">4</th>
-    						<td> <a href="#">사유서</a></td>
+    						<td> <a href="./reason.do">사유서</a></td>
     						<td></td>
     						<td>
-			    				<c:set var="stopLoop" value="true" scope="page"/>
-			   					<c:forEach var="fav" items="${favList}">
-   								 <c:if test="${stopLoop}">
-   									<c:choose>
-   										<c:when test="${fav.apd_form == 114}">
-   											<img alt="bookmark" src="img/yesBookmark.png">
-   											<c:set var="stopLoop" value="false" scope="page"/>
-   										</c:when>
-   										<c:otherwise>
-   											<img alt="bookmark" src="img/nonBookmark.png">
-   										</c:otherwise>
-   									</c:choose>
-					    		</c:if>
+    						<c:set var="stopLoop" value="true" scope="page"/>
+    							<c:forEach var="fav" items="${favList}">
+	   								 <c:if test="${stopLoop}">
+	   									<c:if test="${fav.apd_form == 114}">
+	   										<img class="yesMark mark"  alt="bookmark" src="img/yesBookmark.png">
+	   										<c:set var="stopLoop" value="false" scope="page"/>
+	   									</c:if>
+						    		</c:if>
     							</c:forEach>
+    							 <c:if test="${stopLoop}">
+    								<img alt="bookmark" src="img/nonBookmark.png">
+    							</c:if>
     						 </td>
     					</tr>
     					<tr>
     						<th scope="row">5</th>
-    						<td> <a href="#">출장보고서</a></td>
+    						<td> <a href="./tripReport.do">출장보고서</a></td>
     						<td></td>
     						<td>
 			    				<c:set var="stopLoop" value="true" scope="page"/>
-			   					<c:forEach var="fav" items="${favList}">
-   								 <c:if test="${stopLoop}">
-   									<c:choose>
-   										<c:when test="${fav.apd_form == 115}">
-   											<img alt="bookmark" src="img/yesBookmark.png">
-   											<c:set var="stopLoop" value="false" scope="page"/>
-   										</c:when>
-   										<c:otherwise>
-   											<img alt="bookmark" src="img/nonBookmark.png">
-   										</c:otherwise>
-   									</c:choose>
-					    		</c:if>
+    							<c:forEach var="fav" items="${favList}">
+	   								 <c:if test="${stopLoop}">
+	   									<c:if test="${fav.apd_form == 115}">
+	   										<img class="yesMark mark"  alt="bookmark" src="img/yesBookmark.png">
+	   										<c:set var="stopLoop" value="false" scope="page"/>
+	   									</c:if>
+						    		</c:if>
     							</c:forEach>
+    							 <c:if test="${stopLoop}">
+    								<img alt="bookmark" src="img/nonBookmark.png">
+    							</c:if>
     						 </td>
     					</tr>
 	    					
@@ -171,5 +164,17 @@
   <%@ include file="./footer.jsp" %>
 
 </body>
+
+<script type="text/javascript">
+
+	function bookmark(){
+		var yesBook = document.querySelectorAll(".yesMark");
+		
+		if(yesBook.length == 3){
+			alert('즐겨찾기는 3개까지만 가능합니다');
+		}
+	}
+
+</script>
 
 </html>

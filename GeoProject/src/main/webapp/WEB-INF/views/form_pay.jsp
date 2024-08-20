@@ -4,9 +4,6 @@
 <html>
 
 <%@ include file="./header.jsp" %>
-<head>
-<!-- 	<script type="text/javascript" src="js/index3.js"></script> -->
-</head>
 
 <body>
 	<%@ include file="./sidebar.jsp" %>
@@ -14,13 +11,13 @@
 		<div style="width: 800px; background-color: white;">
 		
 		<!-- FORM -->
-			<form action="./submitForm"  method="post">
+			<form action="./submitForm"  method="post" enctype="multipart/form-data">
 				<table class="__se_tbl" style="width: 800px; border-collapse: collapse !important; color: black; background: white; 
 				border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
 				    <thead>
 				        <tr>
 				            <td style="width: 100%; padding: 10px; border: 1px solid black; font-size: 22px; font-weight: bold; text-align: center; vertical-align: middle;" colspan="3">
-				                연차신청서
+				                지출결의서
 				            </td>
 				        </tr>
 				    </thead>
@@ -53,7 +50,7 @@
 						<tr>
 							<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
 				            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
-				                출장자
+				                기안자
 				            </td>
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
@@ -65,21 +62,19 @@
 				        <tr>
 				            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
 				            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
-				                연차 날짜
+				                발의 날짜
 				            </td>
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
-				                <input name="dates" type="text" id="mdp-demo" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
-				                <button onclick="resetDay(event)" style="margin-left: 10px;">초기화</button>
+				                <input name="dates" type="date" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
 				            </td>
 				        </tr>
 				
-				        
 				
 				        <!-- 사유 -->
 				        <tr>
 				            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" colspan="3">
-				                <b style="color: rgb(255, 0, 0);">*</b>&nbsp;연차 사유
+				                <b style="color: rgb(255, 0, 0);">*</b>&nbsp;지출 내용
 				            </td>
 				        </tr>
 				        <tr>
@@ -87,8 +82,15 @@
 				                <textarea rows="5" name="content" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
 				            </td>
 				        </tr>
+				        
+				        <!-- 파일 -->
+				        <tr>
+				        	<td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); 
+				        		font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
+				        		<input type="file" name="file" multiple="multiple">	
+				        	</td>
+				        </tr>
 				
-				    
 				    </tbody>
 				</table>
 				
@@ -102,31 +104,6 @@
   <%@ include file="./footer.jsp" %>
 
 </body>
-<script type="text/javascript">
 
-	
-      // multiDatesPicker 초기화
-	 $(document).ready(function() {
-         $('#mdp-demo').multiDatesPicker({
-        		dateFormat: "y-m-d",
-        		beforeShowDay: $.datepicker.noWeekends,
-                 // 날짜가 선택될 때 호출되는 함수
-             onSelect: function(dateText, inst) {
-                 console.log('Selected date:', dateText);
-                 console.log('typeOf:', typeof dateText);
-             }
-             
-         });
-         
-     });
-			
-      function resetDay(event){
-    	  event.preventDefault();
-    	  $('#mdp-demo').multiDatesPicker('resetDates');
-    	  console.log("리셋")
-      }
-
-
-</script>
 
 </html>

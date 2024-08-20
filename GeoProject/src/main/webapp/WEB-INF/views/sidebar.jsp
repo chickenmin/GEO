@@ -26,7 +26,7 @@
           </li>
           
           <li>
-            <a href="#">
+            <a href="./apprHome.do">
               <i class="bi bi-circle"></i><span>결재 양식</span>
             </a>
           </li>
