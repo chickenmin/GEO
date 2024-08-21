@@ -10,22 +10,22 @@ public class DaoLogAdvice {
 	
 	public void before(JoinPoint j) {
 		Logger logger = LoggerFactory.getLogger(j.getTarget()+"");
-		logger.info("메소드 시작");
+		logger.info("[AOP 메소드 시작]");
 		Object[]  obj = j.getArgs();
 		if (obj != null && obj.length != 0) {
-			logger.info("method \t{}",j.getSignature().getName());
+			logger.info("[AOP 실행 메소드명] \t{}",j.getSignature().getName());
 			for (int i=0;i<obj.length;i++) {
-				logger.info(i+"번째:\t"+obj[i].toString());
+				logger.info("파라미터"+i+"번째:\t"+obj[i].toString());
 			}
-			logger.info("method \t{}",j.getSignature().getName());
+			logger.info("[AOP Logger before]: \t{}",j.getSignature().getName());
 		}
 	}
 	
 	
-	public void afterReturning(JoinPoint j,Object returnValue) throws Throwable {
-		Logger logger = LoggerFactory.getLogger(j.getTarget()+"");
-		 ProceedingJoinPoint jp = (ProceedingJoinPoint)j;
-		logger.info("반환 종류 : {}",jp.proceed());
+	
+	public void afterReturning(JoinPoint j, Object returnValue) {
+		Logger log = LoggerFactory.getLogger(j.getTarget()+"");
+		log.info("[AOP Logger 반환결과]:\t {}",returnValue);
 	}
 	
 	

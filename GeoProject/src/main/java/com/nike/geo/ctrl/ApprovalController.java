@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.nike.geo.model.IApprovalDao;
 import com.nike.geo.service.IApprovalService;
@@ -22,7 +24,7 @@ public class ApprovalController {
 	
 	private final IApprovalService dao;
 	
-	//양식홈
+	// 양식홈 로드시, 즐겨찾기 리스트 전달
 	@GetMapping("/apprHome.do")
 	public String apprHome(Model model) {
 		//테스트 사원 : emp ; 로그인 구현하면, 세션에 담긴 로그인 정보 id로 파라미터 태우기
@@ -32,54 +34,42 @@ public class ApprovalController {
 		return "AP_home";
 	}
 	
-	//양식 상세보기로 이동
-	@GetMapping("/daily.do")
-	public String daily() {
-		return "form_daily";
+
+	// 
+	@GetMapping(value = {"/{form}.do"})
+	public String formDetail(@PathVariable("form") String form) {
+	 	      switch(form) {
+	 	         case "daily":return "form_daily";
+	 	         case "dayOff":return "form_dayOff";
+	 	         case "pay":return "form_pay";
+	 	         case "reason":return "form_reason";
+	 	         case "tripReport":return "form_tripReport";
+	 	      }
+	 	      return "form_"+form;
 	}
 	
-	@GetMapping("/dayOff.do")
-	public String dayOff() {
-		return "form_dayOff";
-	}
+
 	
-	
-	@GetMapping("/pay.do")
-	public String pay() {
-		return "form_pay";
-	}
-	
-	
-	@GetMapping("/reason.do")
-	public String reson() {
-		return "form_reason";
-	}
-	
-	
-	@GetMapping("/tripReport.do")
-	public String tripReport() {
-		return "form_tripReport";
-	}
-	
+	//즐겨찾기에서 상세보기
 	@GetMapping("/goForm.do")
 	public String goForm(Integer formNo) {
 		int formNumber = formNo;
 		String formPage=null;
 		
 		switch(formNumber) {
-		case 111: formPage = "/daily.do";
+		case 111: formPage = "form_daily";
 					break;
-		case 112:formPage = "/dayOff.do";
+		case 112:formPage = "form_dayOff";
 					break;
-		case 113:formPage = "/dayOff.do";
+		case 113:formPage = "form_pay";
 				break;
-		case 114:formPage = "/dayOff.do";
+		case 114:formPage = "form_reason";
 				break;
-		case 115:formPage = "/dayOff.do";
+		case 115:formPage = "form_tripReport";
 				break;
 		}
 		
-		return "redirect:."+formPage;
+		return formPage;
 	}
 
 	

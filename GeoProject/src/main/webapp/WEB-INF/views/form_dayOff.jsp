@@ -11,7 +11,7 @@
 <body>
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
-		<div style="width: 800px; background-color: white;">
+		<div style="width: 800px; ">
 		
 		<!-- FORM -->
 			<form action="./submitForm"  method="post">
@@ -84,14 +84,14 @@
 				        </tr>
 				        <tr>
 				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				                <textarea rows="5" name="content" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
+				                <textarea rows="15" name="content" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
 				            </td>
 				        </tr>
 				
 				    
 				    </tbody>
 				</table>
-				
+				<br>
 				<div style="display: flex; justify-content: flex-end;" >
 					<button class="btn btn-primary" style="height: auto;">상신하기</button>
 				</div>
