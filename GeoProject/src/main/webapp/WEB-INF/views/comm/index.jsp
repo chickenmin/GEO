@@ -9,6 +9,12 @@
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
 		
+
+		
+
+  	</main><!-- End #main -->
+
+
 		<div id="mdp-demo"></div>
 		
 		<script type="text/javascript">
@@ -16,12 +22,13 @@
 		$('#mdp-demo').multiDatesPicker({
 		});
 		</script>
-  
+
 
   	</main><!-- End #main -->
 
-  <%@ include file="./footer.jsp" %>
 
 </body>
+  <%@ include file="./footer.jsp" %>
+
 
 </html>
