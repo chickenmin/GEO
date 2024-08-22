@@ -172,19 +172,19 @@
         </a>
         <ul id="board-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="tables-general.jsp">
+            <a href="./announcements.do">
               <i class="bi bi-circle"></i><span>공지 게시판</span>
             </a>
           </li>
           
           <li>
-            <a href="#">
+            <a href="./nomalBoard.do">
               <i class="bi bi-circle"></i><span>일반 게시판</span>
             </a>
           </li>
           
           <li>
-            <a href="#">
+            <a href="./delBoard.do">
               <i class="bi bi-circle"></i><span>삭제 게시판</span>
             </a>
           </li>

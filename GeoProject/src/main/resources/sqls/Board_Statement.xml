@@ -2,8 +2,67 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <!-- namespace : impl패키지 경로로 통일 -->
-<mapper namespace="com.nike.geo.model.ApprovalDaoImpl">
+<mapper namespace="com.nike.geo.model.BoardDaoImpl">
 
+	<select id="announcements" resultType="BoardVo">
+		SELECT BO_NO,EMP_NO,BO_STATUS,BO_TITLE,BO_CONTENT ,BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT,BO_DEL_YN ,MOD_ID ,MOD_DATE 
+			FROM BO
+			WHERE BO_STATUS ='announcements' AND BO_DEL_YN ='N'
+			ORDER BY BO_REGDATE DESC
+	</select>
+	
+	<select id="nomalBoard" resultType="BoardVo">
+		SELECT BO_NO,EMP_NO,BO_STATUS,BO_TITLE,BO_CONTENT ,BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT,BO_DEL_YN ,MOD_ID ,MOD_DATE 
+			FROM BO
+			WHERE BO_STATUS ='nomalBoard'
+	</select>
+	
+	<select id="delBoard" resultType="BoardVo">
+		SELECT BO_NO,EMP_NO,BO_STATUS,BO_TITLE,BO_CONTENT ,BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT,BO_DEL_YN ,MOD_ID ,MOD_DATE 
+			FROM BO
+			WHERE BO_DEL_YN ='Y'
+	</select>
+	
+	<insert id="insertBoard">
+		INSERT INTO BO (BO_NO,BO_TITLE,EMP_NO,
+				BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT
+				,BO_CONTENT ,BO_STATUS,BO_DEL_YN,
+				REG_ID,REG_DATE,MOD_ID
+				,MOD_DATE)
+		VALUES('A' || TO_CHAR(BO_NO_SEQ.NEXTVAL,'FM0000'),#{bo_title},'SY001',
+				SYSDATE,0,0
+				,#{bo_content},'announcements','N'
+				,'SY001',SYSDATE,'SY001'
+				,SYSDATE)
+	</insert>
+	
+	<select id="detailBoard" resultType="BoardVo">
+		SELECT BO_NO,EMP_NO,BO_STATUS,BO_TITLE,BO_CONTENT ,BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT,BO_DEL_YN ,MOD_ID ,MOD_DATE 
+			FROM BO
+			WHERE BO_NO=#{bo_no}
+	</select>
+	
+	<update id="modifyBoard">
+		UPDATE BO 
+		SET BO_TITLE =#{bo_title}, BO_CONTENT =#{bo_content} 
+		WHERE BO_NO = #{bo_no}
+	</update>
 
+	<update id="viewCount">
+		UPDATE BO SET BO_VIEW_COUNT = #{bo_view_count}+1
+		WHERE BO_NO =#{bo_no}
+	</update>
+	
+	<update id="multiDeleteBoard">
+		UPDATE BO SET BO_DEL_YN ='Y'
+		WHERE BO_NO in 
+		<foreach collection="list" item="bo_no" open="(" separator="," close=")">
+		#{bo_no}
+		</foreach>
+	</update>
+	
+	<delete id="realDelete">
+		DELETE FROM BO WHERE BO_NO =#{bo_no}
+	</delete>
 	
 </mapper>
