@@ -1,6 +1,7 @@
 package com.nike.geo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,12 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.selectFavList(empNo);
 	}
 	
+	@Override
+	public int addFav(Map<String, Object> map) {
+		log.info("즐겨찾기 추가 addFav");
+		log.info("map {}",map);
+		return dao.addFav(map);
+	}
 	
 
 	//@Transactional은 annotation 사용

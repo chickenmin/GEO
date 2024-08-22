@@ -57,7 +57,7 @@
     </appender>
 
 <!-- logback.xml에서 설정할 경우 -->
-	<logger name="com.brs.sun" level="INFO" />
+	<logger name="com.nike.geo" level="INFO" />
     <logger name="jdbc.sqlonly" level="INFO"  />
     <logger name="jdbc.resultsettable" level="INFO"  />
     <logger name="jdbc.resultset" level="INFO"/>

@@ -3,12 +3,15 @@
 <!DOCTYPE html>
 <html>
 
-<%@ include file="./header.jsp" %>
+<%@ include file="../comm/header.jsp" %>
+<head>
+<!-- 	<script type="text/javascript" src="js/index3.js"></script> -->
+</head>
 
 <body>
-	<%@ include file="./sidebar.jsp" %>
+	<%@ include file="../comm/sidebar.jsp" %>
  	<main id="main" class="main">
-		<div style="width: 800px; ">
+		<div style="width: 800px;">
 		
 		<!-- FORM -->
 			<form action="./submitForm"  method="post" enctype="multipart/form-data">
@@ -17,7 +20,7 @@
 				    <thead>
 				        <tr>
 				            <td style="width: 100%; padding: 10px; border: 1px solid black; font-size: 22px; font-weight: bold; text-align: center; vertical-align: middle;" colspan="3">
-				                지출결의서
+				                출장 보고서
 				            </td>
 				        </tr>
 				    </thead>
@@ -62,19 +65,19 @@
 				        <tr>
 				            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
 				            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
-				                발의 날짜
+				                출장 날짜
 				            </td>
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
-				                <input name="dates" type="date" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
+				                <input name="dates" type="text" id="mdp-demo" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
+				                <button onclick="resetDay(event)" style="margin-left: 10px;">초기화</button>
 				            </td>
 				        </tr>
-				
 				
 				        <!-- 사유 -->
 				        <tr>
 				            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" colspan="3">
-				                <b style="color: rgb(255, 0, 0);">*</b>&nbsp;지출 내용
+				                <b style="color: rgb(255, 0, 0);">*</b>&nbsp;출장 보고
 				            </td>
 				        </tr>
 				        <tr>
@@ -82,7 +85,7 @@
 				                <textarea rows="15" name="content" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
 				            </td>
 				        </tr>
-				        
+				
 				        <!-- 파일 -->
 				        <tr>
 				        	<td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); 
@@ -90,10 +93,11 @@
 				        		<input type="file" name="file" multiple="multiple">	
 				        	</td>
 				        </tr>
-				
 				    </tbody>
 				</table>
-				<br>
+				
+ 
+ 				<br>
 				<div style="display: flex; justify-content: flex-end;" >
 					<button class="btn btn-primary" style="height: auto;">상신하기</button>
 				</div>
@@ -101,9 +105,34 @@
 		</div>
   	</main><!-- End #main -->
 
-  <%@ include file="./footer.jsp" %>
+  <%@ include file="../comm/footer.jsp" %>
 
 </body>
+<script type="text/javascript">
 
+	
+      // multiDatesPicker 초기화
+	 $(document).ready(function() {
+         $('#mdp-demo').multiDatesPicker({
+        		dateFormat: "y-m-d",
+        		beforeShowDay: $.datepicker.noWeekends,
+                 // 날짜가 선택될 때 호출되는 함수
+             onSelect: function(dateText, inst) {
+                 console.log('Selected date:', dateText);
+                 console.log('typeOf:', typeof dateText);
+             }
+             
+         });
+         
+     });
+			
+      function resetDay(event){
+    	  event.preventDefault();
+    	  $('#mdp-demo').multiDatesPicker('resetDates');
+    	  console.log("리셋")
+      }
+
+
+</script>
 
 </html>

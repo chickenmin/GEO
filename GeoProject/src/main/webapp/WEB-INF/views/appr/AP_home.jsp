@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 
-<%@ include file="./header.jsp"%>
+<%@ include file="../comm/header.jsp"%>
 <head>
 <link
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<%@ include file="./sidebar.jsp"%>
+	<%@ include file="../comm/sidebar.jsp"%>
 	<main id="main" class="main">
 
 		<div class="pagetitle">
@@ -37,7 +37,7 @@
 								<div class="card info-card revenue-card"
 									style="width: 150px; height: 150px; background: white; display: flex; align-items: center; justify-content: center; position: relative;">
 									<div style="text-align: center;">
-										<span>${fav.apf_name}</span> <br>
+										<span> <b> ${fav.apf_name}</b></span> <br>
 										<br> <input name="formNo" value="${fav.apd_form}"
 											style="display: none">
 										<button class="btn btn-primary">기안하기</button>
@@ -71,22 +71,19 @@
 					<tbody>
 						<tr>
 							<th scope="row">1</th>
-							<td><a href="./daily.do">일일 업무 일지</a> <input name="formNo"
-								value="111" style="display: none"></td>
+							<td><a href="./daily.do"> 일일 업무 일지 </a> <input name="formNo"
+								value="AP001" style="display: none"></td>
 							<td></td>
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
 							<c:forEach var="fav" items="${favList}">
 									<c:if test="${stopLoop}">
-										<c:if test="${fav.apd_form == 111}">
-											<!-- <a> <img class="yesMark " alt="bookmark"
-												src="img/yesBookmark.png" onclick="bookmark()">
-											</a> -->
-											<input type="image" src="img/yesBookmark.png" onclick="bookmark()">
+										<c:if test="${fav.apd_form eq 'AP001'}">
+											<input class="yesMark book" type="image" src="img/yesBookmark.png" onclick="bookmark(this)" value="AP001">
 											<c:set var="stopLoop" value="false" scope="page" />
 										</c:if>
 									</c:if>
 								</c:forEach> <c:if test="${stopLoop}">
-									<img alt="bookmark" src="img/nonBookmark.png">
+									<input  class="noMark book" type="image" src="img/nonBookmark.png" onclick="bookmark(this)" value="AP001">
 								</c:if></td>
 						</tr>
 						<tr>
@@ -96,14 +93,13 @@
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
 								<c:forEach var="fav" items="${favList}">
 									<c:if test="${stopLoop}">
-										<c:if test="${fav.apd_form == 112}">
-											<img class="yesMark " alt="bookmark"
-												src="img/yesBookmark.png">
+										<c:if test="${fav.apd_form eq 'AP002'}">
+											<input class="yesMark book" type="image" src="img/yesBookmark.png" onclick="bookmark(this)" value="AP002">
 											<c:set var="stopLoop" value="false" scope="page" />
 										</c:if>
 									</c:if>
 								</c:forEach> <c:if test="${stopLoop}">
-									<img alt="bookmark" src="img/nonBookmark.png">
+									<input class="noMark book"  type="image" src="img/nonBookmark.png" onclick="bookmark(this)" value="AP002">
 								</c:if></td>
 						</tr>
 						<tr>
@@ -113,14 +109,13 @@
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
 								<c:forEach var="fav" items="${favList}">
 									<c:if test="${stopLoop}">
-										<c:if test="${fav.apd_form == 113}">
-											<img class="yesMark " alt="bookmark"
-												src="img/yesBookmark.png">
+										<c:if test="${fav.apd_form eq 'AP003'}">
+											<input class="yesMark book" type="image" src="img/yesBookmark.png" onclick="bookmark(this)" value="AP003">
 											<c:set var="stopLoop" value="false" scope="page" />
 										</c:if>
 									</c:if>
 								</c:forEach> <c:if test="${stopLoop}">
-									<img alt="bookmark" src="img/nonBookmark.png">
+									<input class="noMark book"  type="image" src="img/nonBookmark.png" onclick="bookmark(this)" value="AP003">
 								</c:if></td>
 						</tr>
 						<tr>
@@ -130,14 +125,13 @@
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
 								<c:forEach var="fav" items="${favList}">
 									<c:if test="${stopLoop}">
-										<c:if test="${fav.apd_form == 114}">
-											<img class="yesMark " alt="bookmark"
-												src="img/yesBookmark.png">
+										<c:if test="${fav.apd_form eq 'AP004'}">
+											<input class="yesMark book" type="image" src="img/yesBookmark.png" onclick="bookmark(this)" value="AP004">
 											<c:set var="stopLoop" value="false" scope="page" />
 										</c:if>
 									</c:if>
 								</c:forEach> <c:if test="${stopLoop}">
-									<img alt="bookmark" src="img/nonBookmark.png">
+									<input  class="noMark book" type="image" src="img/nonBookmark.png" onclick="bookmark(this)" value="AP004">
 								</c:if></td>
 						</tr>
 						<tr>
@@ -147,14 +141,13 @@
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
 							<c:forEach var="fav" items="${favList}">
 									<c:if test="${stopLoop}">
-										<c:if test="${fav.apd_form == 115}">
-											<img class="yesMark " alt="bookmark"
-												src="img/yesBookmark.png">
+										<c:if test="${fav.apd_form eq 'AP005'}">
+											<input class="yesMark book" type="image" src="img/yesBookmark.png" onclick="bookmark(this)" value="AP005">
 											<c:set var="stopLoop" value="false" scope="page" />
 										</c:if>
 									</c:if>
 								</c:forEach> <c:if test="${stopLoop}">
-									<img alt="bookmark" src="img/nonBookmark.png">
+									<input class="noMark book" type="image" src="img/nonBookmark.png" onclick="bookmark(this)" value="AP005">
 								</c:if></td>
 						</tr>
 
@@ -167,18 +160,61 @@
 	</main>
 	<!-- End #main -->
 
-	<%@ include file="./footer.jsp"%>
+	<%@ include file="../comm/footer.jsp"%>
 
 </body>
 
 <script type="text/javascript">
-	function bookmark() {
-		var yesBook = document.querySelectorAll(".yesMark");
+	
+	function bookmark(clickedElement) {
+        // 클릭된 요소가 'noMark' 클래스를 가진 경우만 처리
+        if (clickedElement.classList.contains('noMark')) {
+            
+            // yesMark 클래스를 가진 요소의 수를 확인
+            const yesMarkCount = document.querySelectorAll('.yesMark').length;
+            
+            // yesMark 클래스를 가진 요소의 수가 3개 이상인 경우 경고
+            if (yesMarkCount >= 3) {
+                alert('yesMark가 3개 이상입니다!');
+                return;
+            }
+            console.log(clickedElement.value);
+            $.ajax({
+				url : "./addFav.do",
+				type:"post",
+				data:{"apd_form" :clickedElement.value},	
+				success:function(msg){
+					console.log(typeof msg, msg)
+				},
+				error:function(){
+					alert("잘못된 요청처리");
+				}
+			});
 
-		if (yesBook.length == 3) {
-			alert('즐겨찾기는 3개까지만 가능합니다');
-		}
-	}
+            
+            clickedElement.classList.add('yesMark');
+            clickedElement.classList.remove('noMark');
+            clickedElement.src = 'img/yesBookmark.png';  // 비북마크 이미지로 변경
+        } else {// 클릭된 요소가 'yesMark' 클래스를 가진 경우만 처리
+        	
+        	$.ajax({
+				url : "./addFav.do",
+				type:"post",
+				data:{"apd_form" :clickedElement.value},	
+				success:function(msg){
+					console.log(typeof msg, msg)
+				},
+				error:function(){
+					alert("잘못된 요청처리");
+				}
+			});
+        	
+            clickedElement.classList.add('noMark');
+            clickedElement.classList.remove('yesMark');
+            clickedElement.src = 'img/nonBookmark.png';  // 북마크 이미지로 변경
+        }
+    }
+	
 </script>
 
 </html>

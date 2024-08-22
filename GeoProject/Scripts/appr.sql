@@ -1,0 +1,44 @@
+TRUNCATE TABLE AP_FAV;
+
+ALTER TABLE AP_FAV MODIFY APD_FORM VARCHAR2(1000);
+ALTER TABLE AP_FAV MODIFY APF_ID NUMBER;
+
+INSERT INTO GEO.COM
+(COMMON_CODE, CODE_NAME, DIVISION, REG_ID, REG_DATE, MOD_ID, MOD_DATE)
+SELECT 'AP003', '지출결의서', '결재양식', 'reg1', SYSDATE, 'mod1', SYSDATE FROM DUAL
+UNION ALL
+SELECT 'AP004', '일일업무일지', '결재양식', 'reg2', SYSDATE, 'mod2', SYSDATE FROM DUAL
+UNION ALL
+SELECT 'AP005', '출장보고서', '결재양식', 'reg3', SYSDATE, 'mod3', SYSDATE FROM DUAL;
+
+INSERT INTO GEO.AP_FAV
+(APF_ID, EMP_NO, APD_FORM, REG_ID, REG_DATE, MOD_ID, MOD_DATE, APF_NAME)
+VALUES(1, 'EMP', 'AP003', 'EMP', SYSDATE, 'EMP', SYSDATE, '');
+
+
+
+INSERT INTO AP_FAV
+            (APF_ID, EMP_NO, APD_FORM,
+                             REG_ID, REG_DATE, MOD_ID, MOD_DATE
+                             ,APF_NAME )
+VALUES    (3, 'EMP', 'AP005', 
+                    'EMP', SYSDATE, 'EMP', SYSDATE,
+                (SELECT  CODE_NAME 
+         FROM COM c 
+          WHERE c.COMMON_CODE ='AP005')
+        );
+       
+SELECT *
+	FROM AP_FAV;
+
+SELECT *
+	FROM COM;
+       
+       
+       
+SELECT  CODE_NAME 
+         FROM COM c 
+         INNER JOIN AP_FAV af 
+          ON af.APD_FORM = c.COMMON_CODE 
+          WHERE APD_FORM ='AP002';
+

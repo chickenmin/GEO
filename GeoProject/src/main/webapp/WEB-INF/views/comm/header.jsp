@@ -44,7 +44,11 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
 
-
+<!-- 현아 -->
+<!-- MESSAGE -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> 
+<link href="/css/Msg.css" rel="stylesheet">
+<script src="/js/Msg.js" type="text/javascript"></script>
 
 <title>GEO</title>
 </head>
@@ -62,21 +66,21 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+   <!--  <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
-    </div><!-- End Search Bar -->
+    </div> --><!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        <li class="nav-item d-block d-lg-none">
+      <!--   <li class="nav-item d-block d-lg-none">
           <a class="nav-link nav-icon search-bar-toggle " href="#">
             <i class="bi bi-search"></i>
           </a>
-        </li><!-- End Search Icon-->
+        </li> --><!-- End Search Icon-->
 
         <li class="nav-item dropdown">
 

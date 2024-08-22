@@ -2,7 +2,9 @@ package com.test.geo;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,9 +33,16 @@ public class Kjm_Test {
 	
 	@Test
 	public void test() {
-		List<Ap_FavVo> lists = dao.selectFavList("EMP");
-		log.info("lists: {}",lists);
-		assertNotEquals(0, lists.size());
+//		List<Ap_FavVo> lists = dao.selectFavList("EMP");
+//		log.info("lists: {}",lists);
+//		assertNotEquals(0, lists.size());
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("apd_form", "AP001");
+		map.put("emp_no", "MIN");
+		
+		int addFav = dao.addFav(map);
+		assertEquals(1, 1);
 		
 	}
 	

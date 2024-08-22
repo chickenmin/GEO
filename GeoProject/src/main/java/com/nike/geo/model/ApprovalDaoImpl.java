@@ -1,6 +1,7 @@
 package com.nike.geo.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,11 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	@Override
 	public List<Ap_FavVo> selectFavList(String empNo) {
 		return template.selectList(NS+"selectFavList",empNo);
+	}
+
+	@Override
+	public int addFav(Map<String, Object> map) {
+		return template.insert(NS+"addFav", map);
 	}
 
 }

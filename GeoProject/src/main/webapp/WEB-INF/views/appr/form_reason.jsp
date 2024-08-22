@@ -3,23 +3,21 @@
 <!DOCTYPE html>
 <html>
 
-<%@ include file="./header.jsp" %>
-<head>
-</head>
+<%@ include file="../comm/header.jsp" %>
 
 <body>
-	<%@ include file="./sidebar.jsp" %>
+	<%@ include file="../comm/sidebar.jsp" %>
  	<main id="main" class="main">
 		<div style="width: 800px; ">
 		
 		<!-- FORM -->
-			<form action="./submitForm"  method="post">
+			<form action="./submitForm"  method="post" enctype="multipart/form-data">
 				<table class="__se_tbl" style="width: 800px; border-collapse: collapse !important; color: black; background: white; 
 				border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
 				    <thead >
 				        <tr>
 				            <td style="width: 100%; padding: 10px; border: 1px solid black; font-size: 22px; font-weight: bold; text-align: center; vertical-align: middle;" colspan="3">
-				                일일 업무 일지
+				                사유서
 				            </td>
 				        </tr>
 				    </thead> 
@@ -48,7 +46,6 @@
 				            			height: 100px;">
 				            </td>
 				        </tr>
-						
 						<!-- 기안자 -->
 						<tr>
 							<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
@@ -65,7 +62,7 @@
 				        <tr>
 				            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
 				            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
-				                업무 날짜
+				                사유 일자
 				            </td>
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
@@ -77,18 +74,24 @@
 				        <!-- 사유 -->
 				        <tr>
 				            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" colspan="3">
-				                <b style="color: rgb(255, 0, 0);">*</b>&nbsp;업무 내용
+				                <b style="color: rgb(255, 0, 0);">*</b>&nbsp;사유
 				            </td>
 				        </tr>
 				        <tr>
 				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
 				                <textarea rows="15" name="content" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
 				            </td>
-				        </tr> 
-						
+				        </tr>
+				
+						 <!-- 파일 -->
+				        <tr>
+				        	<td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); 
+				        		font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
+				        		<input type="file" name="file" multiple="multiple">	
+				        	</td>
+				        </tr>
 				    </tbody>
 				</table>
-				
 				<br>
 				<div style="display: flex; justify-content: flex-end;" >
 					<button class="btn btn-primary" style="height: auto;">상신하기</button>
@@ -97,13 +100,9 @@
 		</div>
   	</main><!-- End #main -->
 
-  <%@ include file="./footer.jsp" %>
+  <%@ include file="../comm/footer.jsp" %>
 
 </body>
 
-<script type="text/javascript">
-
-	
-</script>
 
 </html>

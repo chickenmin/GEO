@@ -16,9 +16,9 @@ import lombok.ToString;
 @ToString
 public class Ap_FavVo {
 
-	private String	apf_id    ;
+	private int	apf_id    ;
 	private String	emp_no    ;
-	private int	apd_form  ;
+	private String	apd_form  ;
 	private String	reg_id    ;
 	private String	reg_date  ;
 	private String	mod_id    ;
