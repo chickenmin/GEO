@@ -2,10 +2,10 @@
 <configuration scan="true">
 
     <!-- 로그 파일이 저장될 경로 -->
-    <property name="LOG_PATH" value="d:/logs"/>
+    <property name="LOG_PATH" value="C:\logs"/>
     
     <!-- 로그 파일 이름 -->
-    <property name="LOG_FILE_NAME" value="GeoProject"/>
+    <property name="LOG_FILE_NAME" value="geo"/>
     
     <!-- 로그 출력 패턴 -->
     <property name="LOG_PATTERN" value="%-5level %d{yy-MM-dd HH:mm:ss}[%thread] [%logger{0}:%line] - %msg%n"/>
@@ -24,11 +24,11 @@
 
     <!-- CONSOLE에 로그 출력 세팅 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.PatternLayout">
+        <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
                 [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} : %30logger{5} - %msg%n
             </Pattern>
-        </encoder>
+        </layout>
     </appender>
 
     <!-- File에 로그 출력 세팅 -->

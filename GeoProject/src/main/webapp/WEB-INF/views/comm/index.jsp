@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
 <%@ include file="./header.jsp" %>
-
 <body>
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
@@ -16,12 +14,9 @@
 		$('#mdp-demo').multiDatesPicker({
 		});
 		</script>
-  
-
   	</main><!-- End #main -->
 
 </body>
-
-<%@ include file="./footer.jsp" %>
+  <%@ include file="./footer.jsp" %>
 
 </html>

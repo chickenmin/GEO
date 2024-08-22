@@ -26,7 +26,7 @@
           </li>
           
           <li>
-            <a href="#">
+            <a href="./apprHome.do">
               <i class="bi bi-circle"></i><span>결재 양식</span>
             </a>
           </li>
@@ -73,19 +73,7 @@
             <a href="#">
               <i class="bi bi-circle"></i><span>근태 관리</span>
             </a>
-            <ul>
-            	<li>
-            		<a href="#">
-		              <i class="bi bi-circle"></i><span>사유서 제출</span>
-		            </a>
-            	</li>
-            	
-            	<li>
-            		<a href="#">
-		              <i class="bi bi-circle"></i><span>사유서 관리</span>
-		            </a>
-            	</li>
-            </ul>
+         
           </li>
           
           <li>
@@ -94,7 +82,7 @@
             </a>
             <ul>
             	<li>
-            		<a href="#">
+            		<a href="./selectAll.do">
 		              <i class="bi bi-circle"></i><span>사원 조회</span>
 		            </a>
             	</li>
@@ -115,56 +103,13 @@
         </a>
       </li><!-- End orgChart Nav -->
       
+      <!-- start Calendar Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#calendar-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-calendar-check"></i><span>일정 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" data-bs-target="#calendar-nav" data-bs-toggle="collapse" href="./Calendar.do">
+          <i class="bi bi-calendar-check"></i><span>일정 관리</span>
         </a>
-        <ul id="calendar-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>회사 일정 관리</span>
-            </a>
-            <ul>
-            	<li>
-            		<a href="#">
-		              <i class="bi bi-circle"></i><span>월별 일정 조회</span>
-		            </a>
-            	</li>
-            	
-            	<li>
-            		<a href="#">
-		              <i class="bi bi-circle"></i><span>카테고리별 일정 조회</span>
-		            </a>
-            	</li>
-            	
-            	<li>
-            		<a href="#">
-		              <i class="bi bi-circle"></i><span>일정 등록</span>
-		            </a>
-            	</li>
-            </ul>
-          </li>
-          
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>개인 스케줄 관리</span>
-            </a>
-            <ul>
-            	<li>
-            		<a href="#">
-		              <i class="bi bi-circle"></i><span>스케줄 조회</span>
-		            </a>
-            	</li>
-            	
-            	<li>
-            		<a href="#">
-		              <i class="bi bi-circle"></i><span>스케줄 등록</span>
-		            </a>
-            	</li>
-            </ul>
-          </li>
-        </ul>
-      </li><!-- End Calendar Nav -->
+	
+		</li><!-- End Calendar Nav -->
       
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#board-nav" data-bs-toggle="collapse" href="#">
@@ -197,13 +142,13 @@
         </a>
         <ul id="message-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="#">
+            <a href="./recvMsg.do">
               <i class="bi bi-circle"></i><span>받은 쪽지함</span>
             </a>
           </li>
           
           <li>
-            <a href="#">
+            <a href="./sendMsg.do">
               <i class="bi bi-circle"></i><span>보낸 쪽지함</span>
             </a>
           </li>

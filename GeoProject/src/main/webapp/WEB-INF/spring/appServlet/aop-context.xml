@@ -12,7 +12,7 @@
 	
 	<!-- aop의  동작설정  -->
 	<aop:config>
-		<aop:pointcut expression="execution(public * com.nike.geo.comm.*Dao*.*(..))" id="daoLogPointCut"/>
+		<aop:pointcut expression="execution(public * com.nike.geo.model.*Dao*.*(..))" id="daoLogPointCut"/>
 		<aop:aspect ref="daoLogAdvice">
 			<aop:before method="before" pointcut-ref="daoLogPointCut"/>
 			<aop:after-returning method="afterReturning" pointcut-ref="daoLogPointCut" returning="returnValue"/>
