@@ -31,7 +31,6 @@ public class DaoLogAdvice {
 		 logger.info("에러 \t{}",j.getArgs());
 		 logger.info("에러 \t{}",e.toString());
 	}
-	
-
 
 }
+
