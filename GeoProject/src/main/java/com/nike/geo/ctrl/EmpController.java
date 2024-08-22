@@ -61,7 +61,7 @@ public class EmpController {
 	public String updateEmployee(EmpVo vo) {
 	    log.info("사원 정보 업데이트: {}", vo);
 	    service.updateEmp(vo);
-		return "hr/selectOneEmp";
+		return "redirect:selectOneEmp.do?emp_no="+vo.getEmp_no();
 		
 	}
 	
