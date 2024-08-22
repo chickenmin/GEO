@@ -59,5 +59,10 @@ WHERE emp_no = #{emp_no}
 <!-- WHERE EMP_NO = #{emp_no} -->
 <!-- </update> -->
 
-	
+<!-- 비밀번호 초기화 -->
+<!-- <update id="clearPw"> -->
+<!-- UPDATE GEO.EMP -->
+<!-- SET EMP_PW = '1234' -->
+<!-- WHERE EMP_NO = #{emp_no} -->
+<!-- </update> -->
 </mapper>

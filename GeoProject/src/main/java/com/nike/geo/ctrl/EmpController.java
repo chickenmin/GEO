@@ -27,7 +27,7 @@ public class EmpController {
 		log.info("사원 추가 :{}", vo);
 		int n = service.insertEmp(vo);
 		if(n == 1) {
-			return "hr/index";
+			return "redirect:selectOneEmp.do?emp_no="+vo.getEmp_no();
 		}else {
 			return null;
 		}
@@ -40,7 +40,7 @@ public class EmpController {
 	}
 	
 	@GetMapping(value = "/selectAll.do")
-	public String selectAll(Model model){
+	public String selectAll(Model model) {
 		log.info("사원 전체 조회");
 		List<EmpVo> vo = service.selectAll();
 		model.addAttribute("vo", vo);
