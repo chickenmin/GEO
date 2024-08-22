@@ -52,8 +52,25 @@
 	</insert>
 	
 	<!-- 다수에게 쪽지 보내기(다중 insert) insertMsgMany -->
+	
 	<!-- 쪽지 읽기 updateMsgRead -->
+	<update id="updateMsgRead">
+		UPDATE GEO.MSG
+			SET MSG_RECV_READ_YN='Y', MOD_DATE=SYSDATE
+			WHERE MSG_NO=#{msg_no}
+	</update>
+	
 	<!-- 받은 쪽지 삭제(update) deleteMsgRecv -->
+	<update id="deleteMsgRecv">
+		UPDATE GEO.MSG
+			SET MSG_RECV_DEL_YN='Y', MOD_DATE=SYSDATE
+			WHERE MSG_NO IN
+			<foreach collection="list" item="msg_no"
+					open="(" separator="," close=")">
+				#{msg_no}
+			</foreach>
+	</update>
+	
 	<!-- 보낸 쪽지 삭제(update) deleteMsgSend -->
 	
 

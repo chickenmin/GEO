@@ -18,4 +18,9 @@ public interface IMsgDao {
 	// 쪽지 작성 insertMsg
 	public int insertMsg(MsgVo vo);
 	
+	// 쪽지 읽기 updateMsgRead
+	public int updateMsgRead(MsgVo vo);
+	
+	// 받은 쪽지 삭제(update) deleteMsgRecv
+	public int deleteMsgRecv(List<String> noList);
 }

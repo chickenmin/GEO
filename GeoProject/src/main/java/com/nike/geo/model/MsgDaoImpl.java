@@ -47,4 +47,18 @@ public class MsgDaoImpl implements IMsgDao {
 		return session.insert(NS+"insertMsg", vo);
 	}
 	
+	@Override
+	public int updateMsgRead(MsgVo vo) {
+		log.info("MESSAGE repository - 쪽지 읽기 updateMsgRead");
+		log.info("MESSAGE repository - 받아온 값 : {}", vo);
+		return session.update(NS+"updateMsgRead", vo);
+	}
+	
+	@Override
+	public int deleteMsgRecv(List<String> noList) {
+		log.info("MESSAGE repository - 받은 쪽지 삭제 deleteMsgRecv");
+		log.info("MESSAGE repository - 받아온 값 : {}", noList);
+		return session.update(NS+"deleteMsgRecv", noList);
+	}
+	
 }

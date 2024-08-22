@@ -34,4 +34,18 @@ public interface IMsgService {
 	 */
 	public int insertMsg(MsgVo vo);
 	
+	/**
+	 * 쪽지 읽기
+	 * @param MsgVo
+	 * @return 0 혹은 1
+	 */
+	public int updateMsgRead(MsgVo vo);
+	
+	/**
+	 * 받은 쪽지 삭제(update)
+	 * @param noList
+	 * @return 삭제한 row 갯수
+	 */
+	public int deleteMsgRecv(List<String> noList);
+	
 }

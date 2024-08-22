@@ -44,4 +44,18 @@ public class MsgServiceImpl implements IMsgService {
 		log.info("MESSAGE service - 받아온 값 : {}", vo);
 		return dao.insertMsg(vo);
 	}
+	
+	@Override
+	public int updateMsgRead(MsgVo vo) {
+		log.info("MESSAGE service - 쪽지 읽기 updateMsgRead");
+		log.info("MESSAGE service - 받아온 값 : {}", vo);
+		return dao.updateMsgRead(vo);
+	}
+	
+	@Override
+	public int deleteMsgRecv(List<String> noList) {
+		log.info("MESSAGE service - 받은 쪽지 삭제 deleteMsgRecv");
+		log.info("MESSAGE service - 받아온 값 : {}", noList);
+		return dao.deleteMsgRecv(noList);
+	}
 }
