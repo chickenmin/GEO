@@ -3,6 +3,7 @@ package com.nike.geo.ctrl;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -133,7 +134,7 @@ public class BoardController {
 	
 	//리얼삭제
 	@PostMapping(value = "/realDelete.do")
-	public String realDelete(@RequestParam String chDel) {
+	public String realDelete(@RequestParam(value="chDel", required=false) String chDel) {
 		boolean isc = service.realDelete(chDel);
 		return "redirect:/delBoard.do";
 	}

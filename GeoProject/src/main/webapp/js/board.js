@@ -33,13 +33,29 @@ function chkSubmit(){
 
 function del(event){
 	event.preventDefault();
-	console.log();
-	var frm =document.getElementsByName("chDel");
+	//var i = [];
+	var i = "";
+	$('.chDel:checked').each(function(index, item){
+		//i.push({ch:item.value});
+		i += item.value;
+	});
 	var con=confirm("abc132선택된 글이 삭제됩니다");
 	if(con){
-	frm.action="./realDelete.do";
-	frm.method="post";
-	frm.submit();			
+		$.ajax({
+			url : "/realDelete.do",
+			type : "post",
+			dataType:"text",
+			data : 'chDel='+i,
+			success : function(msg) {
+				alert('aa');
+			},
+			error : function(error) {
+				alert('bb');
+			}
+		});
+	// frm.action="./realDelete.do";
+	// frm.method="post";
+	// frm.submit();
 	}else{
 		alert("삭제가 취소되었습니다");
 	}
