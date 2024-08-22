@@ -15,6 +15,8 @@
 		});
 		</script>
   	</main><!-- End #main -->
+
 </body>
   <%@ include file="./footer.jsp" %>
+
 </html>
