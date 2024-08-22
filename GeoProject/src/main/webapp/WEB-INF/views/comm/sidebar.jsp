@@ -1,8 +1,8 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <body>
 
-<<<<<<< HEAD
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
@@ -25,6 +25,7 @@
               <i class="bi bi-circle"></i><span>전자 결재 홈</span>
             </a>
           </li>
+
           
           <li>
             <a href="#">
@@ -213,7 +214,7 @@
       
       
       
-=======
+
 
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
@@ -237,6 +238,7 @@
               <i class="bi bi-circle"></i><span>전자 결재 홈</span>
             </a>
           </li>
+
 
           <li>
             <a href="./apprHome.do">
@@ -286,6 +288,7 @@
             <a href="#">
               <i class="bi bi-circle"></i><span>근태 관리</span>
             </a>
+
 
          
           </li>
@@ -367,10 +370,11 @@
             </a>
           </li>
         </ul>
+
       </li><!-- End Message Nav -->     
       
      
->>>>>>> branch 'main' of https://github.com/chickenmin/GEO.git
+
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -379,3 +383,4 @@
 
 
 </body>
+

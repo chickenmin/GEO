@@ -5,13 +5,12 @@
 	<typeAliases>
 		<!-- 전자결재 -->
 		<typeAlias type="com.nike.geo.vo.appr.Ap_DocuVo" alias="Ap_DocuVo"/>
-		
-
 
 		<!-- 쪽지 및 로그인 -->
 		<typeAlias type="com.nike.geo.vo.msg.MsgVo" alias="MsgVo"/>
 		
 		<!-- 캘린더 -->
+
 <!-- 		<typeAlias type="com.nike.geo.vo.bo.BoardVo" alias="BoardVo"/> -->
 <!-- 		<typeAlias type="com.nike.geo.vo.bo.CommVo" alias="CommVo"/> -->
 <!-- 		<typeAlias type="com.nike.geo.vo.bo.LikeVo" alias="LikeVo"/> -->
@@ -26,6 +25,7 @@
 		
 <!-- 		 일정 --> 
 <!-- 		<typeAlias type="com.nike.geo.vo.co.CalVo" alias="CalVo"/> -->
+
 		
 	</typeAliases>
 	<mappers>

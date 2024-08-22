@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="description">
   <meta content="" name="keywords">
-<<<<<<< HEAD
+
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -226,8 +226,9 @@
         </li><!-- End Profile Nav -->
       </ul>
     </nav><!-- End Icons Navigation -->
+
   </header><!-- End Header -->
-=======
+
 
 
   <!-- Favicons -->
@@ -494,4 +495,5 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
->>>>>>> branch 'main' of https://github.com/chickenmin/GEO.git
+
+
