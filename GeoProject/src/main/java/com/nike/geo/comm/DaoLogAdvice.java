@@ -1,11 +1,8 @@
 package com.nike.geo.comm;
-
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 public class DaoLogAdvice {
 	
 	public void before(JoinPoint j) {
@@ -33,10 +30,8 @@ public class DaoLogAdvice {
 		 Logger logger = LoggerFactory.getLogger(j.getTarget()+"");
 		 logger.info("에러 \t{}",j.getArgs());
 		 logger.info("에러 \t{}",e.toString());
-
 	}
 	
 
+
 }
-
-

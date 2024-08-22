@@ -6,6 +6,7 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
+
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -13,7 +14,7 @@
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
+  
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -36,7 +37,7 @@
 
 <!-- multi DATE PICKER  주말 안나오게 하려면 jQuery ui 필요 -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  
+
   <!-- jQuery , multiDatesPicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <link href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css" rel="stylesheet"/>
@@ -46,15 +47,11 @@
 
 <!-- 현아 -->
 <!-- MESSAGE -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> 
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <link href="/css/Msg.css" rel="stylesheet">
 <script src="/js/Msg.js" type="text/javascript"></script>
-
 <title>GEO</title>
 </head>
-
-
-
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -83,7 +80,6 @@
         </li> --><!-- End Search Icon-->
 
         <li class="nav-item dropdown">
-
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">4</span>
@@ -107,6 +103,7 @@
               </div>
             </li>
 
+
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -119,6 +116,7 @@
                 <p>1시간 전</p>
               </div>
             </li>
+
 
             <li>
               <hr class="dropdown-divider">
@@ -133,9 +131,11 @@
               </div>
             </li>
 
+
             <li>
               <hr class="dropdown-divider">
             </li>
+
 
             <li class="notification-item">
               <i class="bi bi-info-circle text-primary"></i>
@@ -152,6 +152,7 @@
             <li class="dropdown-footer">
               <a href="#">모든 알림 보기</a>
             </li>
+
 
           </ul><!-- End Notification Dropdown Items -->
 
@@ -218,11 +219,8 @@
             <li class="dropdown-footer">
               <a href="#">모든 쪽지 보기</a>
             </li>
-
           </ul><!-- End Messages Dropdown Items -->
-
         </li><!-- End Messages Nav -->
-
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -258,7 +256,7 @@
 			<li>
               <hr class="dropdown-divider">
             </li>
-            
+
             <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-login.jsp">
                 <i class="bi bi-box-arrow-right"></i>
@@ -273,6 +271,3 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
-
-
-

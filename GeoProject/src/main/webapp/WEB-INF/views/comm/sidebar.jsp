@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <body>
 
+
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
@@ -24,43 +25,43 @@
               <i class="bi bi-circle"></i><span>전자 결재 홈</span>
             </a>
           </li>
-          
+
           <li>
             <a href="./apprHome.do">
               <i class="bi bi-circle"></i><span>결재 양식</span>
             </a>
           </li>
-          
+
           <li>
             <a href="#">
               <i class="bi bi-circle"></i><span>결재 문서함</span>
             </a>
           </li>
-          
+
           <li>
             <a href="#">
               <i class="bi bi-circle"></i><span>상신 문서함</span>
             </a>
           </li>
-          
+
           <li>
             <a href="#">
               <i class="bi bi-circle"></i><span>참조 문서함</span>
             </a>
           </li>
-          
+
           <li>
             <a href="#">
               <i class="bi bi-circle"></i><span>임시 문서함</span>
             </a>
           </li>
-          
+
           <li>
             <a href="#">
               <i class="bi bi-circle"></i><span>전자 서명 관리</span>
             </a>
           </li>
-          
+
         </ul>
       </li><!-- End Approval Nav -->
 	
@@ -73,9 +74,10 @@
             <a href="#">
               <i class="bi bi-circle"></i><span>근태 관리</span>
             </a>
+
          
           </li>
-          
+
           <li>
             <a href="#">
               <i class="bi bi-circle"></i><span>인사 관리</span>
@@ -96,13 +98,13 @@
           </li>
         </ul>
       </li><!-- End HR Nav -->
-      
+
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#orgChart-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-diagram-3"></i><span>조직도</span>
         </a>
       </li><!-- End orgChart Nav -->
-      
+
       <!-- start Calendar Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#calendar-nav" data-bs-toggle="collapse" href="./Calendar.do">
@@ -110,7 +112,7 @@
         </a>
 	
 		</li><!-- End Calendar Nav -->
-      
+
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#board-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>게시판</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -121,13 +123,13 @@
               <i class="bi bi-circle"></i><span>공지 게시판</span>
             </a>
           </li>
-          
+
           <li>
             <a href="#">
               <i class="bi bi-circle"></i><span>일반 게시판</span>
             </a>
           </li>
-          
+
           <li>
             <a href="#">
               <i class="bi bi-circle"></i><span>삭제 게시판</span>
@@ -135,7 +137,7 @@
           </li>
         </ul>
       </li><!-- End Board Nav -->
-      
+
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#message-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-envelope"></i><span>쪽지</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -146,17 +148,16 @@
               <i class="bi bi-circle"></i><span>받은 쪽지함</span>
             </a>
           </li>
-          
+
           <li>
             <a href="./sendMsg.do">
               <i class="bi bi-circle"></i><span>보낸 쪽지함</span>
             </a>
           </li>
         </ul>
-      </li><!-- End Message Nav -->
+      </li><!-- End Message Nav -->     
       
-      
-      
+     
     </ul>
 
   </aside><!-- End Sidebar-->

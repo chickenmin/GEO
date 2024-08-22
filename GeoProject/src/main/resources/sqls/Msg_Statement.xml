@@ -4,6 +4,75 @@
 <!-- namespace : impl패키지 경로로 통일 -->
 <mapper namespace="com.nike.geo.model.MsgDaoImpl">
 
+	<!--  받은 쪽지 목록 조회 selectMsgListRecv  -->
+	<select id="selectMsgListRecv" resultType="MsgVo">
+		SELECT MSG_NO , MSG_SEND_ID , MSG_RECV_ID ,
+				MSG_CONTENT , MSG_SEND_DATE , MSG_RECV_READ_YN ,
+				MSG_SEND_DEL_YN , MSG_RECV_DEL_YN , REG_ID ,
+				REG_DATE , MOD_ID , MOD_DATE 
+			FROM MSG
+			WHERE MSG_RECV_ID = #{msg_recv_id}
+			ORDER BY MSG_SEND_DATE DESC
+	</select>
+	
+	<!-- 보낸 쪽지 목록 조회 selectMsgListSend -->
+	<select id="selectMsgListSend" resultType="MsgVo">
+		SELECT MSG_NO , MSG_SEND_ID , MSG_RECV_ID ,
+                MSG_CONTENT , MSG_SEND_DATE , MSG_RECV_READ_YN ,
+                MSG_SEND_DEL_YN , MSG_RECV_DEL_YN , REG_ID ,
+                REG_DATE , MOD_ID , MOD_DATE 
+        	FROM MSG
+        	WHERE MSG_SEND_ID = #{msg_send_id}
+        	ORDER BY MSG_SEND_DATE DESC
+	</select>
+	
+	<!-- 쪽지 상세 조회 selectMsgOne -->
+	<select id="selectMsgOne" resultType="MsgVo">
+		SELECT MSG_NO , MSG_SEND_ID , MSG_RECV_ID ,
+                MSG_CONTENT , MSG_SEND_DATE , MSG_RECV_READ_YN ,
+                MSG_SEND_DEL_YN , MSG_RECV_DEL_YN , REG_ID ,
+                REG_DATE , MOD_ID , MOD_DATE 
+        	FROM MSG
+        	WHERE MSG_NO = #{msg_no}
+	</select>
+	
+	<!-- 쪽지 보내기 insertMsg -->
+	<insert id="insertMsg">
+		<selectKey keyProperty="msg_no" resultType="java.lang.Integer" order="BEFORE">
+			SELECT MSG_SEQ.NEXTVAL AS SEQ FROM DUAL
+		</selectKey>
+		INSERT INTO GEO.MSG (MSG_NO, MSG_SEND_ID, MSG_RECV_ID,
+							MSG_CONTENT, MSG_SEND_DATE, MSG_RECV_READ_YN,
+							MSG_SEND_DEL_YN, MSG_RECV_DEL_YN, REG_ID,
+							REG_DATE, MOD_ID, MOD_DATE)
+			VALUES(#{msg_no}, #{msg_send_id}, #{msg_recv_id},
+			#{msg_content}, SYSDATE, 'N',
+			'N', 'N', #{msg_send_id},
+			SYSDATE, #{msg_send_id}, SYSDATE)
+	</insert>
+	
+	<!-- 다수에게 쪽지 보내기(다중 insert) insertMsgMany -->
+	
+	<!-- 쪽지 읽기 updateMsgRead -->
+	<update id="updateMsgRead">
+		UPDATE GEO.MSG
+			SET MSG_RECV_READ_YN='Y', MOD_DATE=SYSDATE
+			WHERE MSG_NO=#{msg_no}
+	</update>
+	
+	<!-- 받은 쪽지 삭제(update) deleteMsgRecv -->
+	<update id="deleteMsgRecv">
+		UPDATE GEO.MSG
+			SET MSG_RECV_DEL_YN='Y', MOD_DATE=SYSDATE
+			WHERE MSG_NO IN
+			<foreach collection="list" item="msg_no"
+					open="(" separator="," close=")">
+				#{msg_no}
+			</foreach>
+	</update>
+	
+	<!-- 보낸 쪽지 삭제(update) deleteMsgSend -->
+	
 
 	
 </mapper>
