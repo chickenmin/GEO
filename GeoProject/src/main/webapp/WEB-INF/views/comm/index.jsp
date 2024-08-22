@@ -9,10 +9,22 @@
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
 		
+<<<<<<< HEAD
 		
 
   	</main><!-- End #main -->
 
+=======
+		<div id="mdp-demo"></div>
+		
+		<script type="text/javascript">
+		var date = new Date();
+		$('#mdp-demo').multiDatesPicker({
+		});
+		</script>
+
+  	</main><!-- End #main -->
+>>>>>>> branch 'main' of https://github.com/chickenmin/GEO.git
 
 </body>
   <%@ include file="./footer.jsp" %>

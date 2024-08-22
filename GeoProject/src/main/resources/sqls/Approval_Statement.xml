@@ -3,6 +3,37 @@
 
 <mapper namespace="com.nike.geo.model.ApprovalDaoImpl">
 
-
+	<select id="selectFavList" resultType="com.nike.geo.vo.appr.Ap_FavVo">
+		SELECT APF_ID, EMP_NO, APD_FORM, 
+				REG_ID,TO_CHAR(REG_DATE ,'YYYYMMDD') AS REG_DATE, MOD_ID, 
+				TO_CHAR(MOD_DATE ,'YYYYMMDD') AS REG_DATE, APF_NAME
+		 FROM AP_FAV
+		 WHERE EMP_NO =  #{empNo}
+	</select>
+	
+	<insert id="addFav">
+		<selectKey keyProperty="name" resultType="java.lang.String" order="BEFORE">
+			SELECT  CODE_NAME 
+                 FROM COM c 
+                 WHERE COMMON_CODE =#{apd_form}
+		</selectKey>
+	
+		 INSERT INTO AP_FAV (APF_ID, EMP_NO, APD_FORM,
+	                         REG_ID, REG_DATE, MOD_ID, 
+	                         MOD_DATE,APF_NAME )
+        			VALUES (FAV_SEQ.NEXTVAL, #{emp_no}, #{apd_form}, 
+           					#{emp_no}, SYSDATE, #{emp_no}, 
+           					SYSDATE, #{name}
+          
+    )
+	</insert>
+	
+	<delete id="delFav">
+		DELETE FROM AP_FAV
+		 WHERE EMP_NO = #{emp_no}
+		 AND APD_FORM=#{apd_form}
+	</delete>
+	
+	
 	
 </mapper>
