@@ -1,10 +1,39 @@
 package com.nike.geo.service;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nike.geo.model.IApprovalDao;
+import com.nike.geo.vo.appr.Ap_FavVo;
+
+import lombok.extern.slf4j.Slf4j;
+
 @Service
-public class ApprovalServiceImpl {
+@Slf4j
+public class ApprovalServiceImpl implements IApprovalService {
+	
+	@Autowired
+	private IApprovalDao dao;
+	
+	
+	@Override
+	public List<Ap_FavVo> selectFavList(String empNo) {
+		log.info("전자결재 서비스 selectFavList");
+		log.info("empNo : {}",empNo);
+		return dao.selectFavList(empNo);
+	}
+	
+	@Override
+	public int addFav(Map<String, Object> map) {
+		log.info("즐겨찾기 추가 addFav");
+		log.info("map {}",map);
+		return dao.addFav(map);
+	}
+	
 
 	//@Transactional은 annotation 사용
 	

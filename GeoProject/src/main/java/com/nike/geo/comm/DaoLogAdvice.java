@@ -32,4 +32,6 @@ public class DaoLogAdvice {
 		 logger.info("에러 \t{}",e.toString());
 	}
 	
+
+
 }

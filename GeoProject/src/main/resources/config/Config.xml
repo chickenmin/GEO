@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+
 <!-- 타입 알리아스 각자 추가  -->
 	<typeAliases>
 		<!-- 전자결재 -->
 		<typeAlias type="com.nike.geo.vo.appr.Ap_DocuVo" alias="Ap_DocuVo"/>
 		
+
 		<!-- 쪽지 및 로그인 -->
 		<typeAlias type="com.nike.geo.vo.msg.MsgVo" alias="MsgVo"/>
 		
@@ -14,10 +16,15 @@
 <!-- 		<typeAlias type="com.nike.geo.vo.bo.CommVo" alias="CommVo"/> -->
 <!-- 		<typeAlias type="com.nike.geo.vo.bo.LikeVo" alias="LikeVo"/> -->
 		
+
 		<!--인사 -->
 <!-- 		<typeAlias type="com.nike.geo.vo.hr.EmpVo" alias="EmpVo"/> -->
 		
-		<!-- 일정 -->
+
+<!-- 		인사 -->
+<!-- 		<typeAlias type="com.nike.geo.vo.hr.EmpVo" alias="EmpVo"/> -->
+		
+<!-- 		 일정 --> 
 <!-- 		<typeAlias type="com.nike.geo.vo.co.CalVo" alias="CalVo"/> -->
 		
 	</typeAliases>
