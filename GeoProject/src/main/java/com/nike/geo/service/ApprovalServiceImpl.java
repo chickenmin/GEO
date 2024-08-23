@@ -27,12 +27,21 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.selectFavList(empNo);
 	}
 	
+	
 	@Override
 	public int addFav(Map<String, Object> map) {
 		log.info("즐겨찾기 추가 addFav");
 		log.info("map {}",map);
 		return dao.addFav(map);
 	}
+	
+	@Override
+	public int delFav(Map<String, Object> map) {
+		log.info("즐겨찾기 삭제");
+		return dao.delFav(map);
+	}
+	
+	
 	
 
 	//@Transactional은 annotation 사용

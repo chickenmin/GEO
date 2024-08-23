@@ -46,8 +46,8 @@
 
 <!-- MESSAGE -->
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<link href="/css/Msg.css" rel="stylesheet">
-<script src="/js/Msg.js" type="text/javascript"></script>
+<link href="./css/Msg.css" rel="stylesheet">
+<script src="./js/Msg.js" type="text/javascript"></script>
 <title>GEO</title>
 </head>
 <!-- ======= Header ======= -->

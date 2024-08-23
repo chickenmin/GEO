@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 
@@ -9,6 +10,26 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
 	rel="stylesheet">
+<style type="text/css">
+ .centered-container {
+            width: 730px;
+            height: 150px;
+            border-radius: 10px;
+            background: white;
+            display: flex;
+            align-items: center; /* 세로 가운데 정렬 */
+            justify-content: center; /* 가로 가운데 정렬 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+        .centered-container h4 {
+            margin: 0; /* 기본 여백 제거 */
+        }
+        
+        .hidden{
+        	display:none;
+        }
+</style>
+<script type="text/javascript" src="./js/appr.js"></script>
 </head>
 
 <body>
@@ -21,14 +42,13 @@
 		<!-- End Page Title -->
 
 
-		<div style="height: 200px; margin: 20px;">
+		<div style="height: 200px; margin: 20px;" >
 			<span class="card-title">자주쓰는 양식</span><br>
-			<div style="display: flex; justify-content: space-evenly;">
+			<div id="bookDiv" style="display: flex; justify-content: space-evenly;">
 				<c:choose>
-					<c:when test="${favList == null}">
-						<div
-							style="width: 730px; border-radius: 10px; height: 150px; background: white; text-align: center;">
-							<h2 style="width: 400px;">자주 사용하는 양식이 없습니다.</h2>
+					<c:when test="${fn:length(favList) == 0}">
+						<div class="centered-container " id="noBook">
+							<h4>자주 사용하는 양식이 없습니다.</h4>
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -71,7 +91,7 @@
 					<tbody>
 						<tr>
 							<th scope="row">1</th>
-							<td><a href="./daily.do"> 일일 업무 일지 </a> <input name="formNo"
+							<td><a href="./daily.do" class="form_Title">일일업무일지</a> <input name="formNo"
 								value="AP001" style="display: none"></td>
 							<td></td>
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
@@ -88,7 +108,7 @@
 						</tr>
 						<tr>
 							<th scope="row">2</th>
-							<td><a href="./dayOff.do">연차 신청서</a></td>
+							<td><a href="./dayOff.do" class="form_Title">연차신청서</a></td>
 							<td></td>
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
 								<c:forEach var="fav" items="${favList}">
@@ -104,7 +124,7 @@
 						</tr>
 						<tr>
 							<th scope="row">3</th>
-							<td><a href="./pay.do">지출 결의서</a></td>
+							<td><a href="./pay.do" class="form_Title">지출결의서</a></td>
 							<td></td>
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
 								<c:forEach var="fav" items="${favList}">
@@ -120,7 +140,7 @@
 						</tr>
 						<tr>
 							<th scope="row">4</th>
-							<td><a href="./reason.do">사유서</a></td>
+							<td><a href="./reason.do" class="form_Title">사유서</a></td>
 							<td></td>
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
 								<c:forEach var="fav" items="${favList}">
@@ -136,7 +156,7 @@
 						</tr>
 						<tr>
 							<th scope="row">5</th>
-							<td><a href="./tripReport.do">출장보고서</a></td>
+							<td><a href="./tripReport.do" class="form_Title">출장보고서</a></td>
 							<td></td>
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
 							<c:forEach var="fav" items="${favList}">
@@ -166,54 +186,7 @@
 
 <script type="text/javascript">
 	
-	function bookmark(clickedElement) {
-        // 클릭된 요소가 'noMark' 클래스를 가진 경우만 처리
-        if (clickedElement.classList.contains('noMark')) {
-            
-            // yesMark 클래스를 가진 요소의 수를 확인
-            const yesMarkCount = document.querySelectorAll('.yesMark').length;
-            
-            // yesMark 클래스를 가진 요소의 수가 3개 이상인 경우 경고
-            if (yesMarkCount >= 3) {
-                alert('yesMark가 3개 이상입니다!');
-                return;
-            }
-            console.log(clickedElement.value);
-            $.ajax({
-				url : "./addFav.do",
-				type:"post",
-				data:{"apd_form" :clickedElement.value},	
-				success:function(msg){
-					console.log(typeof msg, msg)
-				},
-				error:function(){
-					alert("잘못된 요청처리");
-				}
-			});
-
-            
-            clickedElement.classList.add('yesMark');
-            clickedElement.classList.remove('noMark');
-            clickedElement.src = 'img/yesBookmark.png';  // 비북마크 이미지로 변경
-        } else {// 클릭된 요소가 'yesMark' 클래스를 가진 경우만 처리
-        	
-        	$.ajax({
-				url : "./addFav.do",
-				type:"post",
-				data:{"apd_form" :clickedElement.value},	
-				success:function(msg){
-					console.log(typeof msg, msg)
-				},
-				error:function(){
-					alert("잘못된 요청처리");
-				}
-			});
-        	
-            clickedElement.classList.add('noMark');
-            clickedElement.classList.remove('yesMark');
-            clickedElement.src = 'img/nonBookmark.png';  // 북마크 이미지로 변경
-        }
-    }
+	
 	
 </script>
 

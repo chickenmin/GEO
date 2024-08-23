@@ -5,8 +5,7 @@
 
 	<select id="selectFavList" resultType="com.nike.geo.vo.appr.Ap_FavVo">
 		SELECT APF_ID, EMP_NO, APD_FORM, 
-				REG_ID,TO_CHAR(REG_DATE ,'YYYYMMDD') AS REG_DATE, MOD_ID, 
-				TO_CHAR(MOD_DATE ,'YYYYMMDD') AS REG_DATE, APF_NAME
+			   APF_NAME
 		 FROM AP_FAV
 		 WHERE EMP_NO =  #{empNo}
 	</select>

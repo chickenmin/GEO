@@ -36,6 +36,7 @@ public class ApprovalController {
 		List<Ap_FavVo> favList = dao.selectFavList(empId);
 		model.addAttribute("favList", favList);
 		log.info("fav: {}",favList);
+		System.out.println(favList.size());
 		return "appr/AP_home";
 	}
 	
@@ -43,6 +44,7 @@ public class ApprovalController {
 	// 
 	@GetMapping(value = {"/{form}.do"})
 	public String formDetail(@PathVariable("form") String form) {
+		log.info("양식으로 이동");
 	 	      switch(form) {
 	 	         case "daily":return "appr/form_daily";
 	 	         case "dayOff":return "appr/form_dayOff";
