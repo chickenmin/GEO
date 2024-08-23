@@ -134,8 +134,8 @@ public class BoardController {
 	
 	//리얼삭제
 	@PostMapping(value = "/realDelete.do")
-	public String realDelete(@RequestParam(value="chDel", required=false) String chDel) {
-		boolean isc = service.realDelete(chDel);
+	public String realDelete(@RequestParam List<String> ch) {
+		boolean isc = service.realDelete(ch);
 		return "redirect:/delBoard.do";
 	}
 	

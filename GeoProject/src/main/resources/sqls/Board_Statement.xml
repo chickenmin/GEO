@@ -55,14 +55,17 @@
 	
 	<update id="multiDeleteBoard">
 		UPDATE BO SET BO_DEL_YN ='Y'
-		WHERE BO_NO in 
+		WHERE BO_NO IN 
 		<foreach collection="list" item="bo_no" open="(" separator="," close=")">
 		#{bo_no}
 		</foreach>
 	</update>
 	
 	<delete id="realDelete">
-		DELETE FROM BO WHERE BO_NO =#{bo_no}
+		DELETE FROM BO WHERE BO_NO IN 
+		<foreach collection="bo_no" item="bo_no" open="(" separator="," close=")">
+		#{bo_no}
+		</foreach>
 	</delete>
 	
 </mapper>

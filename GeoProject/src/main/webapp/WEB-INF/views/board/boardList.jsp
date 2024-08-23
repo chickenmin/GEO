@@ -35,7 +35,7 @@
 							<br>
 							<thead>
 								<tr class="table-active">
-									<th scope="col"><input type="checkBox" id="chkbox" name="allCheckBox" onclick="checkAll(this.checked)"></th>
+									<th scope="col"><input type="checkBox" id="chkbox" name="allCheckBox" class="allCheckBox" onclick="checkAll(this.checked)"></th>
 									<th scope="col">No.</th>
 									<th scope="col">제목</th>
 									<th scope="col">작성자</th>
@@ -105,7 +105,7 @@
 							<tbody>
 								<c:forEach var="del" items="${delBoard}" varStatus="vs">
 									<tr>
-										<th scope="row"><input id="deleteForm" type="checkbox" name="chDel" class="chDel" value="${del.bo_no}"></th>
+										<th scope="row"><input type="checkbox" name="ch" class="ch" value="${del.bo_no}"></th>
 										<td>${delBoard.size()-vs.index}</td>
 										<td onclick="location.href='./detailBoard.do?bo_no=${del.bo_no}'">${del.bo_title}</td>
 										<td>${del.emp_no}${nomal.emp_no}</td>

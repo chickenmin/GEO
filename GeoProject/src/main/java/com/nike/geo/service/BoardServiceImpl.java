@@ -61,7 +61,8 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	
 	@Override
-	public boolean realDelete(String bo_no) {
-		return dao.realDelete(bo_no);
+	public boolean realDelete(List<String> list) {
+		return dao.realDelete(list);
 	}
+	
 }

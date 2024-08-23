@@ -23,8 +23,6 @@
 		<button>댓글</button>		
 		<button onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>		
 		<button>삭제</button>
-				
-
   	</main><!-- End #main -->
 
 
