@@ -27,6 +27,7 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://cdn.datatables.net/v/bs5/dt-2.1.4/datatables.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>

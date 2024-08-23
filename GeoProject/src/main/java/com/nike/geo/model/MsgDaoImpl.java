@@ -61,4 +61,10 @@ public class MsgDaoImpl implements IMsgDao {
 		return session.update(NS+"deleteMsgRecv", noList);
 	}
 	
+	@Override
+	public int deleteMsgSend(List<String> noList) {
+		log.info("MESSAGE repository - 보낸 쪽지 삭제 deleteMsgSend");
+		log.info("MESSAGE repository - 받아온 값 : {}", noList);
+		return session.update(NS+"deleteMsgSend", noList);
+	}
 }

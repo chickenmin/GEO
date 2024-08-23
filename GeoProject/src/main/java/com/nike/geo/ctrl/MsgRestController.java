@@ -19,11 +19,20 @@ public class MsgRestController {
 	@Autowired
 	private IMsgService service;
 
-	@PostMapping(value = "deleteMsgRecv.do")
-	public String deleteMsgRecv(@RequestParam List<String> chkVal) {
+	@PostMapping(value = "/deleteMsgRecv.do")
+	public String deleteMsgRecv(@RequestParam List<String> msg_no) {
 		log.info("MESSAGE controller - 받은 쪽지 삭제");
-		log.info("MESSAGE controller - chkVal의 값 : {}", chkVal);
-		int deleteNum = service.deleteMsgRecv(chkVal);
+		log.info("MESSAGE controller - msg_no의 값 : {}", msg_no);
+		int deleteNum = service.deleteMsgRecv(msg_no);
+		log.info("MESSAGE controller - 삭제된 쪽지 갯수 : {}", deleteNum);
+		return (deleteNum>0)?"true":"false";
+	}
+	
+	@PostMapping(value = "/deleteMsgSend.do")
+	public String deleteMsgSend(@RequestParam List<String> msg_no) {
+		log.info("MESSAGE controller - 보낸 쪽지 삭제");
+		log.info("MESSAGE controller - msg_no의 값 : {}", msg_no);
+		int deleteNum = service.deleteMsgSend(msg_no);
 		log.info("MESSAGE controller - 삭제된 쪽지 갯수 : {}", deleteNum);
 		return (deleteNum>0)?"true":"false";
 	}
