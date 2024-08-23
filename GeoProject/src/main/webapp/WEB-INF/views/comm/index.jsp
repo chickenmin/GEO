@@ -10,11 +10,6 @@
  	<main id="main" class="main">
 		
 
-		
-
-  	</main><!-- End #main -->
-
-
 		<div id="mdp-demo"></div>
 		
 		<script type="text/javascript">
