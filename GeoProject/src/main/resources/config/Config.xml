@@ -10,22 +10,15 @@
 		<typeAlias type="com.nike.geo.vo.msg.MsgVo" alias="MsgVo"/>
 		
 		<!-- 캘린더 -->
+		<typeAlias type="com.nike.geo.vo.bo.BoardVo" alias="BoardVo"/>
+		<typeAlias type="com.nike.geo.vo.bo.CommVo" alias="CommVo"/>
+		<typeAlias type="com.nike.geo.vo.bo.LikeVo" alias="LikeVo"/>
 
-<!-- 		<typeAlias type="com.nike.geo.vo.bo.BoardVo" alias="BoardVo"/> -->
-<!-- 		<typeAlias type="com.nike.geo.vo.bo.CommVo" alias="CommVo"/> -->
-<!-- 		<typeAlias type="com.nike.geo.vo.bo.LikeVo" alias="LikeVo"/> -->
+		<!-- 인사 -->
+		<typeAlias type="com.nike.geo.vo.hr.EmpVo" alias="EmpVo"/>
 		
-
-		<!--인사 -->
-<!-- 		<typeAlias type="com.nike.geo.vo.hr.EmpVo" alias="EmpVo"/> -->
-		
-
-<!-- 		인사 -->
-<!-- 		<typeAlias type="com.nike.geo.vo.hr.EmpVo" alias="EmpVo"/> -->
-		
-<!-- 		 일정 --> 
+		<!-- 일정 -->
 <!-- 		<typeAlias type="com.nike.geo.vo.co.CalVo" alias="CalVo"/> -->
-
 		
 	</typeAliases>
 	<mappers>
