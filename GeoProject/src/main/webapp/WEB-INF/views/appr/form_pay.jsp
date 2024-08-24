@@ -95,6 +95,7 @@
 				</table>
 				<br>
 				<div style="display: flex; justify-content: flex-end;" >
+					<button class="btn btn-outline-primary" style="height: auto;">임시저장</button>
 					<button class="btn btn-primary" style="height: auto;">상신하기</button>
 				</div>
 			</form>

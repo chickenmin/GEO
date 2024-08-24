@@ -28,7 +28,7 @@
 				data:{"apd_form" :clickedElement.value},	
 				
 				success:function(msg){
-					console.log("북마크 추가",typeof msg, msg);
+					console.log("북마크 추가 성공");
 					
 					
 					
@@ -41,13 +41,13 @@
 					//카드 div 생성
 					const cardDiv = document.createElement('div');
 				    cardDiv.className = "card info-card revenue-card"; // 클래스 설정
-				    cardDiv.style.width = "150px";
+				   /* cardDiv.style.width = "150px";
 				    cardDiv.style.height = "150px";
 				    cardDiv.style.background = "white";
 				    cardDiv.style.display = "flex";
 				    cardDiv.style.alignItems = "center";
 				    cardDiv.style.justifyContent = "center";
-				    cardDiv.style.position = "relative";
+				    cardDiv.style.position = "relative";*/
 				    
 				     // 3. 내부 div 생성
 				    const innerDiv = document.createElement('div');
@@ -107,7 +107,7 @@
  				type:"post",
  				data:{"apd_form" :clickedElement.value},	
  				success:function(msg){
- 					console.log("북마크 제거",typeof msg, msg);
+ 					console.log("북마크 제거 성공");
 
 					//////////////////////////////// 					
  					//화면에서 삭제
@@ -117,8 +117,7 @@
 				    forms.forEach(form => {
 				        // form 내의 b 요소를 찾습니다
 				        const b = form.querySelector('b');
-				        console.log("b",b);
-				        console.log(b && b.textContent.trim() === formTitle);
+				        // console.log(b && b.textContent.trim() === formTitle);
 				        // b 요소가 존재하고, 텍스트가 일치하는지 확인합니다
 				        if (b && b.textContent.trim() === formTitle) {
 				            form.remove(); // 일치하면 form 요소를 삭제합니다
@@ -134,15 +133,14 @@
 	
 					var noBook = document.getElementById("noBook");  
 					var yesMarkCount = document.querySelectorAll('.yesMark').length;      
-					if(noBook){
-						if(yesMarkCount==0){
+					if(noBook){ // 첫 로딩때부터 즐겨찾기가 없었는지
+						if(yesMarkCount==0){	
 						document.getElementById("noBook").classList.remove('hidden');
 						}
 					}else{
-						console.log("q")
-						console.log("y",yesMarkCount);
+						console.log("즐겨찾기 없음 div 생성");
 						if(yesMarkCount == 0){
-							console.log("y",yesMarkCount)
+							console.log("yesMarkCount",yesMarkCount)
 							const anyBook = document.createElement('div');
 							anyBook.classList.add("centered-container");
 							anyBook.id ="noBook";

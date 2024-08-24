@@ -11,6 +11,8 @@
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
 	rel="stylesheet">
 <style type="text/css">
+
+/*자주 사용하는 양식이 없음 div  */
  .centered-container {
             width: 730px;
             height: 150px;
@@ -21,13 +23,25 @@
             justify-content: center; /* 가로 가운데 정렬 */
             text-align: center; /* 텍스트 가운데 정렬 */
         }
-        .centered-container h4 {
+/* 양식없음의 h4 */
+ .centered-container h4 {
             margin: 0; /* 기본 여백 제거 */
         }
-        
-        .hidden{
+ /* 양식 없어짐의 hidden : 북마크 추가되면 생김 */       
+ .hidden{
         	display:none;
         }
+        
+ .card.info-card.revenue-card {
+		    width: 150px;
+		    height: 150px;
+		    background: white;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    position: relative;
+		}
+        
 </style>
 <script type="text/javascript" src="./js/appr.js"></script>
 </head>
