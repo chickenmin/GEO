@@ -46,7 +46,7 @@
 	              <h5 class="card-title">보낸 쪽지함</h5>
 	
 	              <!-- Default Table -->
-	              <table class="table">
+	              <table class="table display" id="sendMsgTable">
 	                <thead>
 	                  <tr>
 	                  	<th scope="col" class="text-center">
@@ -90,7 +90,7 @@
 		
 		<div style="text-align: center;">
 			<button type="button" class="btn btn-primary" onclick="location.href='./insertMsg.do'" style="display: inline-block">쪽지 작성</button>
-			<button type="button" class="btn btn-danger" onclick="location.href='#'"style="display: inline-block">쪽지 삭제</button>
+			<button type="button" class="btn btn-danger" id="deleteBtn" style="display: inline-block">쪽지 삭제</button>
 		</div>
   
 
@@ -99,5 +99,42 @@
 </body>
 
   <%@ include file="../comm/footer.jsp" %>
+<script type="text/javascript">
 
+	$(document).ready(function() {
+		$("#sendMsgTable").DataTable({
+			"info": false,
+			"columnDefs":[
+				{"orderable": false, "targets":0}
+			]
+		});
+	});
+	
+	$("#deleteBtn").click(function(){
+		var i = "";
+		$('tbody>tr>td>input[type=checkbox]:checked').each(function(index, item){
+			i += item.value+",";
+		});
+		console.log(i);
+		
+		
+		if(confirm("삭제할거임?")){
+			$.ajax({
+				url : "./deleteMsgSend.do",
+				type : "post",
+				dataType:"text",
+				data : 'msg_no='+i,
+				success : function(msg) {
+					alert('삭제됨');
+				},
+				error : function(error) {
+					alert('삭제실패');
+				}
+			});
+		}else{
+			alert("삭제취소");
+		}
+		
+	});
+</script>
 </html>

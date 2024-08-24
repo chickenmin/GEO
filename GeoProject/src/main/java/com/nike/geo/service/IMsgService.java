@@ -48,4 +48,11 @@ public interface IMsgService {
 	 */
 	public int deleteMsgRecv(List<String> noList);
 	
+	/**
+	 * 보낸 쪽지 삭제(update) 
+	 * @param noList
+	 * @return 삭제한 row 갯수
+	 */
+	public int deleteMsgSend(List<String> noList);
+	
 }

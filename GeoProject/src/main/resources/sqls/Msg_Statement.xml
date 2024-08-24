@@ -12,6 +12,7 @@
 				REG_DATE , MOD_ID , MOD_DATE 
 			FROM MSG
 			WHERE MSG_RECV_ID = #{msg_recv_id}
+				AND MSG_RECV_DEL_YN = 'N'
 			ORDER BY MSG_SEND_DATE DESC
 	</select>
 	
@@ -23,6 +24,7 @@
                 REG_DATE , MOD_ID , MOD_DATE 
         	FROM MSG
         	WHERE MSG_SEND_ID = #{msg_send_id}
+        		AND MSG_SEND_DEL_YN = 'N'
         	ORDER BY MSG_SEND_DATE DESC
 	</select>
 	
@@ -72,7 +74,15 @@
 	</update>
 	
 	<!-- 보낸 쪽지 삭제(update) deleteMsgSend -->
-	
+	<update id="deleteMsgSend">
+		UPDATE GEO.MSG
+			SET MSG_SEND_DEL_YN='Y', MOD_DATE=SYSDATE
+			WHERE MSG_NO IN
+			<foreach collection="list" item="msg_no"
+					open="(" separator="," close=")">
+				#{msg_no}
+			</foreach>
+	</update>
 
 	
 </mapper>
