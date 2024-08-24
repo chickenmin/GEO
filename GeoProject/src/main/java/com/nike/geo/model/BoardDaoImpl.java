@@ -61,8 +61,8 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 	
 	@Override
-	public boolean realDelete(String bo_no) {
-		int n = sessionTemplate.delete(NS+"realDelete", bo_no);
+	public boolean realDelete(List<String> list) {
+		int n = sessionTemplate.delete(NS+"realDelete", list);
 		return (n==1)?true:false;
 	}
 }

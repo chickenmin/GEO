@@ -31,36 +31,33 @@ function chkSubmit(){
 }
 
 
-function del(event){
-	event.preventDefault();
-	//var i = [];
-	var i = "";
-	$('.chDel:checked').each(function(index, item){
-		//i.push({ch:item.value});
-		i += item.value;
-	});
-	var con=confirm("abc132선택된 글이 삭제됩니다");
-	if(con){
-		$.ajax({
-			url : "/realDelete.do",
-			type : "post",
-			dataType:"text",
-			data : 'chDel='+i,
-			success : function(msg) {
-				alert('aa');
-			},
-			error : function(error) {
-				alert('bb');
-			}
-		});
-	// frm.action="./realDelete.do";
-	// frm.method="post";
-	// frm.submit();
-	}else{
-		alert("삭제가 취소되었습니다");
-	}
-	
+function del(event) {
+    event.preventDefault(); // 기본 폼 제출 동작을 방지합니다.
+    var i = ""; // 선택된 체크박스의 값을 저장할 빈 문자열을 초기화합니다.
+    // 클래스가 'ch'이고 체크된 상태인 모든 체크박스에 대해 반복합니다.
+    $('.ch:checked').each(function(index, item) {
+        i += item.value; // 각 체크박스의 값을 문자열에 추가합니다.
+        // 이 경우, 모든 체크박스의 값이 연속된 문자열로 저장됩니다.
+    });
+    var con = confirm("선택된 글이 삭제됩니다. 삭제하시겠습니까?"); 
+    if (con) {
+        $.ajax({
+            url: "./realDelete.do", 
+            type: "post", 
+            dataType: "text", // 응답 데이터 형식을 텍스트로 설정합니다.
+            data: 'ch=' + i, // 체크박스의 값을 'ch'라는 이름으로 서버에 전송합니다.
+            success: function(msg) {
+                alert('삭제가 완료되었습니다.'); 
+            },
+            error: function(error) {
+                alert('삭제에 실패했습니다.'); 
+            }
+        });
+    } else {
+        alert("삭제가 취소되었습니다"); 
+    }
 }
+
 
 
 

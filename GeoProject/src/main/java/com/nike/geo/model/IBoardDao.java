@@ -21,5 +21,5 @@ public interface IBoardDao {
 	
 	public boolean multiDeleteBoard(List<String>list);
 	
-	public boolean realDelete(String bo_no);
+	public boolean realDelete(List<String> list);
 }
