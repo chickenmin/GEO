@@ -23,4 +23,8 @@ public interface IMsgDao {
 	
 	// 받은 쪽지 삭제(update) deleteMsgRecv
 	public int deleteMsgRecv(List<String> noList);
+	
+	// 보낸 쪽지 삭제(update) deleteMsgSend
+	public int deleteMsgSend(List<String> noList);
+	
 }

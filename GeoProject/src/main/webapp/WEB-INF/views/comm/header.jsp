@@ -46,6 +46,8 @@
 
 <!-- MESSAGE -->
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<link href="https://cdn.datatables.net/v/bs5/dt-2.1.4/datatables.min.css" rel="stylesheet">
+
 <link href="./css/Msg.css" rel="stylesheet">
 <script src="./js/Msg.js" type="text/javascript"></script>
 <title>GEO</title>

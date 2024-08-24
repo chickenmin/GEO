@@ -46,11 +46,11 @@
 	              <h5 class="card-title">받은 쪽지함</h5>
 	
 	              <!-- Default Table -->
-	              <table class="table">
+	              <table class="table display" id="recvMsgTable">
 	                <thead>
 	                  <tr>
 	                  	<th scope="col" class="text-center">
-	                  		<input type="checkbox" id="checkbox" style="display: none;"> <!-- 체크박스 -->
+	                  		<input type="checkbox" id="checkbox"> <!-- 체크박스 -->
 	                  	</th>
 	                    <th scope="col" class="text-center">쪽지번호</th>
 	                    <th scope="col" class="text-center">쪽지 내용</th>
@@ -64,7 +64,7 @@
 	                  <c:forEach var="vo" items="${msgListRecv}" varStatus="vs">
 	                    <tr>
 	                      <td class="text-center">
-	                      	<input type="checkbox" id="msgNo" value="${vo.msg_no}" style="display: none;"> <!-- 체크박스 -->
+	                      	<input type="checkbox" id="msgNo" value="${vo.msg_no}"> <!-- 체크박스 -->
 	                      </td>
 	                      
 	                      <!-- 페이징하려면 수정 -->
@@ -94,47 +94,71 @@
 		
 		<div style="text-align: center;">
 			<button type="button" class="btn btn-primary" onclick="location.href='./insertMsg.do'" style="display: inline-block">쪽지 작성</button>
-			<button type="button" class="btn btn-danger" id="deleteBtn" onclick="deleteMsg()" style="display: inline-block">쪽지 삭제</button>
+			<button type="button" class="btn btn-danger" id="deleteBtn" style="display: inline-block">쪽지 삭제</button>
+<!-- 			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#disablebackdrop">쪽지 삭제</button> -->
 		</div>
+		
+<!-- 		<div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false"> -->
+<!-- 		  <div class="modal-dialog"> -->
+<!-- 		    <div class="modal-content"> -->
+<!-- 		      <div class="modal-header"> -->
+<!-- 		        <h5 class="modal-title">경고</h5> -->
+<!-- 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+<!-- 		      </div> -->
+		
+<!-- 		      <div class="modal-body"> -->
+<!-- 		        	선택한 게시글이 삭제됩니다. 계속하시겠습니까? -->
+<!-- 		      </div> -->
+		
+<!-- 		      <div class="modal-footer"> -->
+<!-- 		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button> -->
+<!-- 		        <button type="button" id="deleteBtn" onclick="deleteMsg()" class="btn btn-primary">삭제</button> -->
+<!-- 		      </div> -->
+<!-- 		    </div> -->
+<!-- 		  </div> -->
+<!-- 		</div>End Disabled Backdrop Modal -->
 
   	</main><!-- End #main -->
 
 </body>
   <%@ include file="../comm/footer.jsp" %>
-  <script type="text/javascript">
-  		$(document).ready(function() {
-	  			$("#deleteBtn").click(function(){
-	  				$("input[type=checkbox]").show();
-	  			});
-  		});
-  		
-		function deleteMsg(){
-  			
-			var msgNo = document.getElementById("msgNo").value;
-			console.log(msgNo);
-			
-			var checkedLength = $('tbody>tr>td>input[type=checkbox]:checked').length;
-			console.log(checkedLength);
-			
-// 			if(){
-				
-// 			}
-			
-// 			fetch("./deleteMsgRecv.do?msg_no="+msgNo,{
-// 				method:"get"
-// 			})
-// 			.then(response => {
-// 				if(!response.ok){
-// 					throw new Error("잘못된 요청처리입니다.");
-// 				}
-// 				return response.text();
-// 			})
-// 			.then(msg => {
-// 				if(msg == "true"){
-// 					document.getElementById();
-// 				}
-// 			});
-			
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		$("#recvMsgTable").DataTable({
+			"info": false,
+			"columnDefs":[
+				{"orderable": false, "targets":0}
+			]
+		});
+	});
+
+	$("#deleteBtn").click(function(){
+		var i = "";
+		$('tbody>tr>td>input[type=checkbox]:checked').each(function(index, item){
+			i += item.value+",";
+		});
+		console.log(i);
+		
+		
+		if(confirm("삭제할거임?")){
+			$.ajax({
+				url : "./deleteMsgRecv.do",
+				type : "post",
+				dataType:"text",
+				data : 'msg_no='+i,
+				success : function(msg) {
+					alert('삭제됨');
+				},
+				error : function(error) {
+					alert('삭제실패');
+				}
+			});
+		}else{
+			alert("삭제취소");
 		}
+		
+	});  		
+		
 </script>
 </html>

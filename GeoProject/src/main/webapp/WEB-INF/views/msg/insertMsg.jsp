@@ -35,7 +35,7 @@
 	                <div class="row mb-4">
 	                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
 	                  <div class="col-sm-10">
-	                    <input type="text" name="msg_recv_id" class="form-control">
+	                    <input type="text" id="msg_recv_id" name="msg_recv_id" class="form-control">
 	                  </div>
 	                </div>
 	                
@@ -75,6 +75,7 @@
 	              	 // 클릭하면 에디터 내부의 텍스트 비우기
 	              	 document.getElementById("reset").addEventListener("click",function(){
 	              		 quill.setContents([]);
+	              		 document.getElementById("msg_recv_id").value = "";
 	              	 });
 	              	 
 	              	 // form에 제출하기 위해 에디터 내부의 텍스트를 hiddenContent 내용으로 가져오기

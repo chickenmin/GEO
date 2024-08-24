@@ -58,4 +58,11 @@ public class MsgServiceImpl implements IMsgService {
 		log.info("MESSAGE service - 받아온 값 : {}", noList);
 		return dao.deleteMsgRecv(noList);
 	}
+	
+	@Override
+	public int deleteMsgSend(List<String> noList) {
+		log.info("MESSAGE service - 보낸 쪽지 삭제 deleteMsgSend");
+		log.info("MESSAGE service - 받아온 값 : {}", noList);
+		return dao.deleteMsgSend(noList);
+	}
 }
