@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nike.geo.model.CommDaoImpl">
+
+<!-- division 별 공통 테이블 가져오기 -->
+<!-- REF NULL 아닌 경우만 가능 -->
+<select id="commSelect" resultType="CommonVo">
+	SELECT COMMON_CODE ,CODE_NAME ,DIVISION ,
+		REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE,REF 
+ FROM COM c 
+ WHERE DIVISION = #{division}
+</select>
+
+</mapper>

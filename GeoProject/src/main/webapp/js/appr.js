@@ -1,6 +1,4 @@
-/**
- * 
- */
+
  
  function bookmark(clickedElement) {
         // 폼 제목 가져오기
@@ -15,7 +13,7 @@
             
             // yesMark 클래스를 가진 요소의 수가 3개 이상인 경우 경고
             if (yesMarkCount >= 3) {
-                alert('yesMark가 3개 이상입니다!');
+                alert('즐겨찾기는 3개까지 가능합니다');
                 return;
             }
             console.log("양식번호",clickedElement.value);

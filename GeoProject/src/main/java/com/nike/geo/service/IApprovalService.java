@@ -15,4 +15,8 @@ public interface IApprovalService {
 	
 	//북마크 삭제
 	public int delFav(Map<String, Object> map);
+	
+	//서류 상신 
+	public int submit(Map<String, Object> map);
+	
 }

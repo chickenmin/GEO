@@ -30,5 +30,10 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	public int delFav(Map<String, Object> map) {
 		return template.delete(NS+"delFav", map);
 	}
+	
+	@Override
+	public int submit(Map<String, Object> map) {
+		return template.insert(NS+"submit", map);
+	}
 
 }

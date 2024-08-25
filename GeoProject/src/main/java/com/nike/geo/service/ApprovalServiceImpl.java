@@ -41,6 +41,12 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.delFav(map);
 	}
 	
+	@Override
+	public int submit(Map<String, Object> map) {
+		log.info("상신하기");
+		return dao.submit(map);
+	}
+	
 	
 	
 
