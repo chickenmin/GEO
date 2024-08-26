@@ -1,18 +1,25 @@
 package com.nike.geo.ctrl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nike.geo.service.IMsgService;
+import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.msg.MsgVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -81,21 +88,51 @@ public class MsgController {
 	
 	// 로그인 추가시 세션값도 받아와야함
 	@PostMapping(value = "/insertMsg.do")
-	public String insertMsg(MsgVo vo) {
-		log.info("MESSAGE controller - 쪽지 작성중");
-		vo.setMsg_send_id("TEST");
-//		vo.setMsg_recv_id("HYUN");
-//		vo.setMsg_content("테스트가 현한테 보냄");
-		int m = service.insertMsg(vo);
+	public String insertMsg(MsgVo msgVo,
+							MultipartFile file) throws IOException {
 		
-		if(m==1) {
+		// 쪽지 작성
+		msgVo.setMsg_send_id("HYUN"); // 로그인 추가시 현재 접속중인 아이디로 변경
+		int msgChk = service.insertMsg(msgVo);
+		
+		// 파일 업로드
+		if (!file.isEmpty()) { 
+			FileVo fileVo = new FileVo();
+			
+			String originFileName = file.getOriginalFilename();
+			fileVo.setFile_oname(originFileName);
+			log.info("MESSAGE controller - 받아온 파일의 원래 이름 : {}", originFileName);
+			
+			String ext = FilenameUtils.getExtension(originFileName); //파일의 확장자
+			log.info("MESSAGE controller - 받아온 파일의 확장자 : {}", ext);
+			
+			UUID uuid = UUID.randomUUID(); 
+			String fileName = uuid + "." + ext;
+			fileVo.setFile_sname(fileName);
+			log.info("MESSAGE controller - 받아온 파일의 DB 저장명 : {}", fileName);
+			
+			long fileSize = file.getSize();
+			fileVo.setFile_size(fileSize);
+			log.info("MESSAGE controller - 받아온 파일의 크기 : {}", fileSize);
+			
+			file.transferTo(new File("c:\\upload\\"+fileName)); 
+
+			fileVo.setOrigin_no(msgVo.getMsg_no());
+			fileVo.setReg_id(msgVo.getMsg_send_id());
+			
+			int fileChk = service.insertFile(fileVo);
+			if(fileChk==1) {
+				log.info("MESSAGE controller - 파일 업로드 완료");
+			}
+		}
+		
+		if(msgChk==1) {
 			log.info("MESSAGE controller - 쪽지 작성 완료. 보낸 쪽지 상세 조회로 이동");
-			return "redirect:/detailMsgSend.do?no="+vo.getMsg_no();
+			return "redirect:/detailMsgSend.do?no="+msgVo.getMsg_no();
 		}else {
 			log.info("MESSAGE controller - 쪽지 작성 실패. 받은 쪽지함으로 이동");
 			// alert 창
 			return "redirect:/recvMsg.do";
 		}
 	}
-	
 }

@@ -20,7 +20,7 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
-	<tx:annotation-driven/>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
 	<mvc:interceptors>
   		<mvc:interceptor>

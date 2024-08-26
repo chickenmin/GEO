@@ -30,7 +30,7 @@
 	              <h5 class="card-title">쪽지 작성</h5>
 	
 	              <!-- General Form Elements -->
-	              <form action="./insertMsg.do" method="post" onsubmit="sendDivContent()">
+	              <form action="./insertMsg.do" method="post" enctype="multipart/form-data" onsubmit="sendDivContent()">
 	                
 	                <div class="row mb-4">
 	                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
@@ -53,7 +53,7 @@
 	                
 	                <div class="row mb-3">
 	                  <div class="col-sm-12">
-	                    <input class="form-control" type="file" id="formFile">
+	                    <input class="form-control" type="file" name="file">
 	                  </div>
 	                </div>
 	                
@@ -80,7 +80,6 @@
 	              	 
 	              	 // form에 제출하기 위해 에디터 내부의 텍스트를 hiddenContent 내용으로 가져오기
 	              	 function sendDivContent(){
-	              		 debugger;
  	              		 // var plainText = quill.getText().trim(); // 텍스트만 가져옴
 	              		 var plainText = quill.root.innerHTML.substr(3).slice(0,-4);
 	              		 document.getElementById("hiddenContent").value = plainText;

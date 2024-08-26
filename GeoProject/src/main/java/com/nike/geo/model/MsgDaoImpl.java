@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.msg.MsgVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,20 @@ public class MsgDaoImpl implements IMsgDao {
 		log.info("MESSAGE repository - 쪽지 작성 insertMsg");
 		log.info("MESSAGE repository - 받아온 값 : {}", vo);
 		return session.insert(NS+"insertMsg", vo);
+	}
+	
+	@Override
+	public int insertFile(FileVo vo) {
+		log.info("MESSAGE repository - 쪽지 파일 업로드 insertFile");
+		log.info("MESSAGE repository - 받아온 값 : {}", vo);
+		return session.insert(NS+"insertFile", vo);
+	}
+	
+	@Override
+	public FileVo selectFile(String no) {
+		log.info("MESSAGE repository - 쪽지 파일 다운로드 selectFile");
+		log.info("MESSAGE repository - 받아온 값 : {}", no);
+		return session.selectOne(NS+"selectFile", no);
 	}
 	
 	@Override
