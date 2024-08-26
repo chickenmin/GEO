@@ -3,24 +3,28 @@
 <!DOCTYPE html>
 <html>
 
-<%@ include file="../comm/header.jsp" %>
+<%@ include file="../../comm/header.jsp" %>
 <head>
 <!-- 	<script type="text/javascript" src="js/index3.js"></script> -->
 </head>
 
 <body>
-	<%@ include file="../comm/sidebar.jsp" %>
+	<%@ include file="../../comm/sidebar.jsp" %>
  	<main id="main" class="main">
-		<div style="width: 800px;">
+		<div style="width: 800px; ">
 		
 		<!-- FORM -->
-			<form action="./submitForm"  method="post" enctype="multipart/form-data">
+			<form action="./submitForm.do"  method="post">
+				<input type="hidden" name="apd_form" value=${apd_form}>
+				<button type="button" id="apprLine" class="btn btn-primary rounded-pill" data-bs-toggle="modal" style="float: right; margin-bottom: 10px;" data-bs-target="#basicModal">
+						결재 라인
+				</button>
 				<table class="__se_tbl" style="width: 800px; border-collapse: collapse !important; color: black; background: white; 
 				border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
 				    <thead>
 				        <tr>
 				            <td style="width: 100%; padding: 10px; border: 1px solid black; font-size: 22px; font-weight: bold; text-align: center; vertical-align: middle;" colspan="3">
-				                출장 보고서
+				                연차신청서
 				            </td>
 				        </tr>
 				    </thead>
@@ -53,7 +57,7 @@
 						<tr>
 							<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
 				            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
-				                기안자
+				                출장자
 				            </td>
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
@@ -65,7 +69,7 @@
 				        <tr>
 				            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
 				            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
-				                출장 날짜
+				                연차 날짜
 				            </td>
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
@@ -74,10 +78,12 @@
 				            </td>
 				        </tr>
 				
+				        
+				
 				        <!-- 사유 -->
 				        <tr>
 				            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" colspan="3">
-				                <b style="color: rgb(255, 0, 0);">*</b>&nbsp;출장 보고
+				                <b style="color: rgb(255, 0, 0);">*</b>&nbsp;연차 사유
 				            </td>
 				        </tr>
 				        <tr>
@@ -86,26 +92,20 @@
 				            </td>
 				        </tr>
 				
-				        <!-- 파일 -->
-				        <tr>
-				        	<td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); 
-				        		font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				        		<input type="file" name="file" multiple="multiple">	
-				        	</td>
-				        </tr>
+				    
 				    </tbody>
 				</table>
-				
- 
- 				<br>
+				<br>
 				<div style="display: flex; justify-content: flex-end;" >
+					<button class="btn btn-outline-primary" style="height: auto;">임시저장</button>
 					<button class="btn btn-primary" style="height: auto;">상신하기</button>
 				</div>
+				<jsp:include page="../apprLine.jsp"></jsp:include>
 			</form>
 		</div>
   	</main><!-- End #main -->
 
-  <%@ include file="../comm/footer.jsp" %>
+  <%@ include file="../../comm/footer.jsp" %>
 
 </body>
 <script type="text/javascript">
@@ -114,7 +114,7 @@
       // multiDatesPicker 초기화
 	 $(document).ready(function() {
          $('#mdp-demo').multiDatesPicker({
-        		dateFormat: "y-m-d",
+        		dateFormat: "yy-mm-dd",
         		beforeShowDay: $.datepicker.noWeekends,
                  // 날짜가 선택될 때 호출되는 함수
              onSelect: function(dateText, inst) {

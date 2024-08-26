@@ -24,4 +24,5 @@ public interface IBoardService {
 	public boolean multiDeleteBoard(List<String>list);
 	
 	public boolean realDelete(List<String> list);
+	
 }

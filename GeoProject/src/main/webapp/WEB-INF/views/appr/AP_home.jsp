@@ -10,25 +10,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
 	rel="stylesheet">
-<style type="text/css">
- .centered-container {
-            width: 730px;
-            height: 150px;
-            border-radius: 10px;
-            background: white;
-            display: flex;
-            align-items: center; /* 세로 가운데 정렬 */
-            justify-content: center; /* 가로 가운데 정렬 */
-            text-align: center; /* 텍스트 가운데 정렬 */
-        }
-        .centered-container h4 {
-            margin: 0; /* 기본 여백 제거 */
-        }
-        
-        .hidden{
-        	display:none;
-        }
-</style>
+<link href="./css/appr_home.css" rel="stylesheet">
 <script type="text/javascript" src="./js/appr.js"></script>
 </head>
 
@@ -91,8 +73,8 @@
 					<tbody>
 						<tr>
 							<th scope="row">1</th>
-							<td><a href="./daily.do" class="form_Title">일일업무일지</a> <input name="formNo"
-								value="AP001" style="display: none"></td>
+							<td><a href="./daily.do" class="form_Title" >일일업무일지</a> 
+							<input name="formNo" value="AP001" style="display: none"></td>
 							<td></td>
 							<td><c:set var="stopLoop" value="true" scope="page" /> 
 							<c:forEach var="fav" items="${favList}">

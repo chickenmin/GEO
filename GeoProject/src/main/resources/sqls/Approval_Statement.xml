@@ -3,6 +3,7 @@
 
 <mapper namespace="com.nike.geo.model.ApprovalDaoImpl">
 
+	<!-- 북마크 -->
 	<select id="selectFavList" resultType="com.nike.geo.vo.appr.Ap_FavVo">
 		SELECT APF_ID, EMP_NO, APD_FORM, 
 			   APF_NAME
@@ -10,6 +11,7 @@
 		 WHERE EMP_NO =  #{empNo}
 	</select>
 	
+	<!-- 북마크 등록 -->
 	<insert id="addFav">
 		<selectKey keyProperty="name" resultType="java.lang.String" order="BEFORE">
 			SELECT  CODE_NAME 
@@ -23,16 +25,45 @@
         			VALUES (FAV_SEQ.NEXTVAL, #{emp_no}, #{apd_form}, 
            					#{emp_no}, SYSDATE, #{emp_no}, 
            					SYSDATE, #{name}
-          
-    )
+    						)
 	</insert>
 	
+	<!-- 북마크 삭제 -->
 	<delete id="delFav">
 		DELETE FROM AP_FAV
 		 WHERE EMP_NO = #{emp_no}
 		 AND APD_FORM=#{apd_form}
 	</delete>
 	
+	
+	
+	
+	<!--///////////////////////////////////////////////////////  -->
+	<insert id="submit">
+		INSERT INTO AP_DOCU
+				(APD_NO, EMP_NO, APD_CON, 
+				APD_STEP, APD_STATUS, APD_DAYS, 
+				APD_HALF_YN,APD_FORM, APD_CLEAR_DATE, APD_TEMP_YN, 
+				REG_ID, REG_DATE, MOD_ID, MOD_DATE)
+		VALUES(Apd_docu_seq.NEXTVAL, #{emp_no}, #{apd_con}, 
+				#{apd_step}, 'W', #{apd_days},
+				'N',	#{apd_form}, SYSDATE, 'N', 
+				#{emp_no},SYSDATE, #{emp_no}, SYSDATE)    
+	</insert>
+	
+	<!-- 결재라인 : 직급 순서 받아오기 -->
+	<select id="selectPos" resultType="java.lang.Integer" >
+	SELECT c."REF"
+		FROM COM c
+		JOIN EMP e ON c.COMMON_CODE = e.EMP_POS
+		WHERE e.EMP_NO = #{emp_no}
+	</select>
+	
+	<!-- 결재라인 : 서류 번호 받아오기 -->
+	<select id="selctAPD" resultType="java.lang.Integer">
+		SELECT MAX(APD_NO)
+ 			FROM AP_DOCU
+	</select>
 	
 	
 </mapper>
