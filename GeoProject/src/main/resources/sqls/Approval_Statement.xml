@@ -51,6 +51,19 @@
 				#{emp_no},SYSDATE, #{emp_no}, SYSDATE)    
 	</insert>
 	
+	<!-- 결재라인 : 직급 순서 받아오기 -->
+	<select id="selectPos" resultType="java.lang.Integer" >
+	SELECT c."REF"
+		FROM COM c
+		JOIN EMP e ON c.COMMON_CODE = e.EMP_POS
+		WHERE e.EMP_NO = #{emp_no}
+	</select>
+	
+	<!-- 결재라인 : 서류 번호 받아오기 -->
+	<select id="selctAPD" resultType="java.lang.Integer">
+		SELECT MAX(APD_NO)
+ 			FROM AP_DOCU
+	</select>
 	
 	
 </mapper>

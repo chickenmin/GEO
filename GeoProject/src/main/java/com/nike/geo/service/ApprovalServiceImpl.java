@@ -47,6 +47,17 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.submit(map);
 	}
 	
+	@Override
+	public int selectPos(String emp_no) {
+		log.info("직급찾기 service");
+		return 0;
+	}
+	
+	@Override
+	public int selctAPD() {
+		log.info("직급찾기 service");
+		return 0;
+	}
 	
 	
 

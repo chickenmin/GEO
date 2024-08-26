@@ -54,16 +54,20 @@ public class Kjm_Test {
 //		List<CommonVo> lists = commDao.commSelect("부서");
 //		assertNotEquals(0, lists.size());
 	
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("emp_no", "emp");
-		map.put("apd_con", "내용");
-		map.put("apd_step", 3);
-		map.put("apd_days", "2024-08-07");
-//		map.put("apd_half_yn", 'N');
-		map.put("apd_form", "AP001");
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("emp_no", "emp");
+//		map.put("apd_con", "내용");
+//		map.put("apd_step", 3);
+//		map.put("apd_days", "2024-08-07");
+////		map.put("apd_half_yn", 'N');
+//		map.put("apd_form", "AP001");
+//		
+//		int submit = dao.submit(map);
+//		assertEquals(1, submit);
 		
-		int submit = dao.submit(map);
-		assertEquals(1, submit);
+//		int n = dao.selectPos("emp");
+		int n = dao.selctAPD();
+		assertNotEquals(0, n);
 		
 	}
 	

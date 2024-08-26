@@ -16,5 +16,13 @@ public interface IApprovalDao {
 	
 	//서류 상신 ()
 	public int submit(Map<String, Object> map);
-
+	
+	//직급받기
+	public int selectPos(String emp_no);
+	
+	//서류 번호 받기
+	public int selctAPD();
+	
+	
+	
 }

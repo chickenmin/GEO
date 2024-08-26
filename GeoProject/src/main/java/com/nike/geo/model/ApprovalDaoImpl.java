@@ -1,5 +1,6 @@
 package com.nike.geo.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,16 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	@Override
 	public int submit(Map<String, Object> map) {
 		return template.insert(NS+"submit", map);
+	}
+	
+	@Override
+	public int selectPos(String emp_no) {
+		return template.selectOne(NS+"selectPos", emp_no);
+	}
+	
+	@Override
+	public int selctAPD() {
+		return template.selectOne(NS+"selctAPD");
 	}
 
 }
