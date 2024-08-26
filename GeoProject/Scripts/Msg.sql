@@ -128,8 +128,21 @@ SELECT FILE_NO, ORIGIN_NO, FILE_ONAME,
 	FROM GEO."FILE"
 	WHERE ORIGIN_NO = '156';
 
-
 ---------------------------------------------------------------------------------
+
+SELECT *
+	FROM EMP;
+	
+SELECT EMP_NO, EMP_POS, EMP_DEPT,
+		EMP_PW, EMP_NAME, EMP_GENDER,
+		EMP_HIREDATE, EMP_EMAIL, EMP_PHONE,
+		EMP_BIRTH, EMP_ADDRESS, EMP_AUTH,
+		EMP_STATUS, EMP_RETIREDATE, REG_ID,
+		REG_DATE, MOD_ID, MOD_DATE
+	FROM GEO.EMP
+	WHERE EMP_NO = 'emp5' AND EMP_PW = '111';
+
+---------------------------------------------------------------------------------	
 
 -- 다수에게 쪽지 보내기 (다중 insert) 일단 안됨
 --INSERT ALL

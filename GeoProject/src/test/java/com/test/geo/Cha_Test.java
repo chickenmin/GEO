@@ -34,8 +34,6 @@ public class Cha_Test {
 		assertNotNull(template);
 	}
 	
-
-	
 //	@Test
 	public void selectMsgListRecv_Test() { // 작동완 ㅋ
 		String recvId = "HYUN";

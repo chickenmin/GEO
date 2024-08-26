@@ -67,14 +67,12 @@
 	                      	<input type="checkbox" id="msgNo" value="${vo.msg_no}"> <!-- 체크박스 -->
 	                      </td>
 	                      
-	                      <!-- 페이징하려면 수정 -->
 	                      <th scope="row" class="text-center">${fn:length(msgListRecv) - vs.index}</th>
 	                      
-	                      <!-- 링크처럼 안보이게 CSS 수정 -->
+	                      <!-- 한번도 읽지않은 쪽지는 New 표시 -->
 	                      <td><a href="./detailMsgRecv.do?no=${vo.msg_no}">
 	                      	${vo.msg_content}
 	                      	<span class="badge bg-primary">${vo.msg_recv_read_yn == 'N' ? 'New' : ''}</span>
-<!-- 	                      	<span class="">Primary</span> -->
 	                      </a></td>
 	                      
 	                      <!-- 회원 상세 조회 추가시 그 쪽으로 이동 -->
@@ -140,22 +138,22 @@
 		});
 		console.log(i);
 		
-		
-		if(confirm("삭제할거임?")){
+		if(confirm("삭제하시겠습니까?")){
 			$.ajax({
 				url : "./deleteMsgRecv.do",
 				type : "post",
 				dataType:"text",
 				data : 'msg_no='+i,
 				success : function(msg) {
-					alert('삭제됨');
+					alert('삭제되었습니다.');
+					location.href="./recvMsg.do"
 				},
 				error : function(error) {
-					alert('삭제실패');
+					alert('삭제에 실패하였습니다.');
 				}
 			});
 		}else{
-			alert("삭제취소");
+			alert("삭제를 취소합니다.");
 		}
 		
 	});  		
