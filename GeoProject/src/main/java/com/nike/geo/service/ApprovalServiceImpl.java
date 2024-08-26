@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nike.geo.model.IApprovalDao;
+import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.appr.Ap_FavVo;
+import com.nike.geo.vo.appr.Ap_LineVo;
+import com.nike.geo.vo.appr.Ap_RfVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +44,41 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.delFav(map);
 	}
 	
+	@Override
+	public int submit(Map<String, Object> map) {
+		log.info("상신하기");
+		return dao.submit(map);
+	}
 	
+	@Override
+	public int submit2(Ap_DocuVo vo) {
+		log.info("vo로 상신");
+		return dao.submit2(vo);
+	}
+	
+	
+	@Override
+	public int selectPos(String emp_no) {
+		log.info("직급찾기 service");
+		return dao.selectPos(emp_no);
+	}
+	
+	@Override
+	public int selctAPD() {
+		log.info("문서번호 조회 service");
+		return dao.selctAPD();
+	}
+	
+	@Override
+	public int putLine(Ap_LineVo vo) {
+		log.info("결재라인 추가 service");
+		return dao.putLine(vo);
+	}
+
+	@Override
+	public int putRef(Ap_RfVo vo) {
+		return dao.putRef(vo);
+	}
 	
 
 	//@Transactional은 annotation 사용

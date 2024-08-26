@@ -3,7 +3,9 @@
 
 <!-- namespace : impl패키지 경로로 통일 -->
 <mapper namespace="com.nike.geo.model.MsgDaoImpl">
-
+	
+	<!-- 쪽지 -->
+	
 	<!--  받은 쪽지 목록 조회 selectMsgListRecv  -->
 	<select id="selectMsgListRecv" resultType="MsgVo">
 		SELECT MSG_NO , MSG_SEND_ID , MSG_RECV_ID ,
@@ -53,7 +55,30 @@
 			SYSDATE, #{msg_send_id}, SYSDATE)
 	</insert>
 	
-	<!-- 다수에게 쪽지 보내기(다중 insert) insertMsgMany -->
+	<!-- 쪽지 파일 업로드 insertFile -->
+	<insert id="insertFile">
+		<selectKey keyProperty="file_no" resultType="java.lang.Integer" order="BEFORE">
+			SELECT FILE_SEQ.NEXTVAL AS SEQ FROM DUAL
+		</selectKey>
+		INSERT INTO GEO."FILE" (FILE_NO, ORIGIN_NO, FILE_ONAME,
+								FILE_SNAME, FILE_SIZE, FILE_TYPE,
+								FILE_RANK, FILE_DEL_YN, REG_ID,
+								REG_DATE, MOD_ID, MOD_DATE)
+			VALUES(#{file_no}, #{origin_no}, #{file_oname},
+					#{file_sname}, #{file_size}, '3',
+					'0', 'N', #{reg_id},
+					SYSDATE, #{reg_id}, SYSDATE)
+	</insert>
+	
+	<!-- 쪽지 파일 다운로드 selectFile -->
+	<select id="selectFile" resultType="FileVo">
+		SELECT FILE_NO, ORIGIN_NO, FILE_ONAME,
+				FILE_SNAME, FILE_SIZE, FILE_TYPE,
+				FILE_RANK, FILE_DEL_YN, REG_ID,
+				REG_DATE, MOD_ID, MOD_DATE
+			FROM GEO."FILE"
+			WHERE ORIGIN_NO = #{origin_no}
+	</select>
 	
 	<!-- 쪽지 읽기 updateMsgRead -->
 	<update id="updateMsgRead">
@@ -83,6 +108,7 @@
 				#{msg_no}
 			</foreach>
 	</update>
-
+	
+	
 	
 </mapper>

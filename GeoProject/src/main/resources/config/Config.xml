@@ -3,6 +3,10 @@
 <configuration>
 <!-- 타입 알리아스 각자 추가  -->
 	<typeAliases>
+	
+		<!-- 공통부분 -->
+		<typeAlias type="com.nike.geo.vo.comm.FileVo" alias="FileVo"/>
+	
 		<!-- 전자결재 -->
 		<typeAlias type="com.nike.geo.vo.appr.Ap_DocuVo" alias="Ap_DocuVo"/>
 
@@ -19,6 +23,9 @@
 		
 		<!-- 일정 -->
 <!-- 		<typeAlias type="com.nike.geo.vo.co.CalVo" alias="CalVo"/> -->
+
+		<!-- 공통테이블 -->
+		<typeAlias type="com.nike.geo.vo.comm.CommonVo" alias="CommonVo"/>
 		
 	</typeAliases>
 	<mappers>
@@ -28,5 +35,6 @@
 		<mapper resource="sqls/Hr_Statement.xml"/>
 		<mapper resource="sqls/Msg_Statement.xml"/>
 		<mapper resource="sqls/User_Statement.xml"/>
+		<mapper resource="sqls/Common_Statement.xml"/>
 	</mappers>
 </configuration>

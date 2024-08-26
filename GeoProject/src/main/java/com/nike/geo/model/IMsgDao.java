@@ -2,6 +2,7 @@ package com.nike.geo.model;
 
 import java.util.List;
 
+import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.msg.MsgVo;
 
 public interface IMsgDao {
@@ -18,6 +19,12 @@ public interface IMsgDao {
 	// 쪽지 작성 insertMsg
 	public int insertMsg(MsgVo vo);
 	
+	// 쪽지 파일 업로드 insertFile
+	public int insertFile(FileVo vo);
+	
+	// 쪽지 파일 다운로드 selectFile
+	public FileVo selectFile(String no);
+	
 	// 쪽지 읽기 updateMsgRead
 	public int updateMsgRead(MsgVo vo);
 	
@@ -26,5 +33,6 @@ public interface IMsgDao {
 	
 	// 보낸 쪽지 삭제(update) deleteMsgSend
 	public int deleteMsgSend(List<String> noList);
+	
 	
 }

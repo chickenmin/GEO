@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nike.geo.model.IMsgDao;
+import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.msg.MsgVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +48,20 @@ public class MsgServiceImpl implements IMsgService {
 	}
 	
 	@Override
+	public int insertFile(FileVo vo) {
+		log.info("MESSAGE service - 쪽지 파일 업로드 insertFile");
+		log.info("MESSAGE service - 받아온 값 : {}", vo);
+		return dao.insertFile(vo);
+	}
+	
+	@Override
+	public FileVo selectFile(String no) {
+		log.info("MESSAGE service - 쪽지 파일 다운로드 selectFile");
+		log.info("MESSAGE service - 받아온 값 : {}", no);
+		return dao.selectFile(no);
+	}
+	
+	@Override
 	public int updateMsgRead(MsgVo vo) {
 		log.info("MESSAGE service - 쪽지 읽기 updateMsgRead");
 		log.info("MESSAGE service - 받아온 값 : {}", vo);
@@ -65,4 +81,5 @@ public class MsgServiceImpl implements IMsgService {
 		log.info("MESSAGE service - 받아온 값 : {}", noList);
 		return dao.deleteMsgSend(noList);
 	}
+	
 }

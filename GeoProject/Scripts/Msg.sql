@@ -99,6 +99,51 @@ DROP SEQUENCE MSG_SEQ;
 
 ---------------------------------------------------------------------------------
 
+-- 파일 시퀀스 생성
+CREATE SEQUENCE FILE_SEQ START WITH 1 INCREMENT BY 1;
+
+-- 파일 시퀀스 확인(1 추가됨 주의)
+SELECT FILE_SEQ.NEXTVAL
+	FROM DUAL;
+	
+-- 파일 시퀀스 삭제
+DROP SEQUENCE FILE_SEQ;
+
+-- 파일 업로드
+INSERT INTO GEO."FILE"
+		(FILE_NO, ORIGIN_NO, FILE_ONAME,
+		FILE_SNAME, FILE_SIZE, FILE_TYPE,
+		FILE_RANK, REG_ID, REG_DATE,
+		MOD_ID, MOD_DATE)
+	VALUES(MSG_SEQ.NEXTVAL, 141, '나몰빼미.png',
+			'7937b1ad-2e33-4367-935e-9614881144de.png', '62.3', '3',
+			0, 'HYUN', SYSDATE,
+			'HYUN', SYSDATE);
+
+-- 파일 다운로드
+SELECT FILE_NO, ORIGIN_NO, FILE_ONAME,
+		FILE_SNAME, FILE_SIZE, FILE_TYPE,
+		FILE_RANK, FILE_DEL_YN, REG_ID,
+		REG_DATE, MOD_ID, MOD_DATE
+	FROM GEO."FILE"
+	WHERE ORIGIN_NO = '156';
+
+---------------------------------------------------------------------------------
+
+SELECT *
+	FROM EMP;
+	
+SELECT EMP_NO, EMP_POS, EMP_DEPT,
+		EMP_PW, EMP_NAME, EMP_GENDER,
+		EMP_HIREDATE, EMP_EMAIL, EMP_PHONE,
+		EMP_BIRTH, EMP_ADDRESS, EMP_AUTH,
+		EMP_STATUS, EMP_RETIREDATE, REG_ID,
+		REG_DATE, MOD_ID, MOD_DATE
+	FROM GEO.EMP
+	WHERE EMP_NO = 'emp5' AND EMP_PW = '111';
+
+---------------------------------------------------------------------------------	
+
 -- 다수에게 쪽지 보내기 (다중 insert) 일단 안됨
 --INSERT ALL
 --	INTO MSG (MSG_NO, MSG_SEND_ID, MSG_RECV_ID,

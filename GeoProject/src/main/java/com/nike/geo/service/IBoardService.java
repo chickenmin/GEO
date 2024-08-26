@@ -26,6 +26,7 @@ public interface IBoardService {
 	
 	public boolean realDelete(List<String> list);
 	
+
 //	public BoardVo selectOne(BoardVo Vo);
 //	
 //	public boolean insertReadOne(BoardVo vo);
@@ -34,4 +35,5 @@ public interface IBoardService {
 	
 	public BoardVo view_Count(String emp_no,String bo_no);
 	
+
 }

@@ -185,6 +185,7 @@
 		    <version>2.10.1</version>
 		</dependency>
 		
+		<!-- 잭슨 최근버전 -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
@@ -220,6 +221,7 @@
 	
 	
 		<!-- 캘린터 -->
+		<!-- 잭슨 옛날거 -->
 		<dependency>
 		   <groupId>com.fasterxml.jackson.core</groupId>
 			    <artifactId>jackson-core</artifactId>

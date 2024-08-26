@@ -2,6 +2,7 @@ package com.nike.geo.service;
 
 import java.util.List;
 
+import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.msg.MsgVo;
 
 public interface IMsgService {
@@ -33,6 +34,20 @@ public interface IMsgService {
 	 * @return 0 혹은 1
 	 */
 	public int insertMsg(MsgVo vo);
+	
+	/**
+	 * 쪽지 파일 업로드
+	 * @param Filevo
+	 * @return 0 혹은 1
+	 */
+	public int insertFile(FileVo vo);
+	
+	/**
+	 * 쪽지 파일 다운로드 
+	 * @param no
+	 * @return FileVo
+	 */
+	public FileVo selectFile(String no);
 	
 	/**
 	 * 쪽지 읽기
