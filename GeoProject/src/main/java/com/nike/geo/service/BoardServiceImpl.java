@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.nike.geo.model.IBoardDao;
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.bo.LikeVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +67,32 @@ public class BoardServiceImpl implements IBoardService {
 		return dao.realDelete(list);
 	}
 	
+
+//	@Override
+//	public BoardVo selectOne(BoardVo Vo) {
+//		return dao.selectOne(Vo);
+//	}
+//	
+//	@Override
+//	public boolean insertReadOne(BoardVo vo) {
+//		return dao.insertReadOne(vo);
+//	}
+//	
+//	@Override
+//	public BoardVo searchBoardOne(String emp_no) {
+//		return dao.searchBoardOne(emp_no);
+//	}
 	
+	@Override
+	public BoardVo view_Count(String emp_no, String bo_no) {
+		BoardVo vo = dao.selectOne(bo_no);
+		int cnt=dao.searchBoardOne(emp_no);
+		if(cnt==0) {
+			dao.insertReadOne(vo);
+		}
+		return vo;
+	}
+
 }
 
 

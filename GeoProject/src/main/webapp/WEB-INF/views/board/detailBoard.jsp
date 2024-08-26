@@ -10,16 +10,20 @@
 	<%@ include file="../comm/sidebar.jsp" %>
  	<main id="main" class="main">
 		<br>
-		<h1>게시글1</h1>
+		<h1>${Vo.bo_title}</h1>
 		${Vo.emp_no} · ${Vo.bo_regdate}
 		<button>첨부파일</button>
+		<input type="hidden" id="postId" value="${Vo.bo_title}">
 		<br><a onclick="history.back(-1)">뒤로가기</a><br>
 		<br><br>
 		${Vo.bo_title}
 		<br><br>
 		${Vo.bo_content}
 		<hr>
-		<button>추천</button>		
+		<input type="hidden" ${like.bo_no}>
+		<form action="./likeCount.do" method="post">
+		<button type="submit">추천</button>
+		</form>		
 		<button>댓글</button>		
 		<button onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>		
 		<button>삭제</button>

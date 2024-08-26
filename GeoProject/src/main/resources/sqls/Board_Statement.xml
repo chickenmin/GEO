@@ -41,17 +41,19 @@
 			FROM BO
 			WHERE BO_NO=#{bo_no}
 	</select>
+
+	<update id="viewCount">
+		UPDATE BO 
+		SET BO_VIEW_COUNT = BO_VIEW_COUNT+1
+		WHERE BO_NO =#{bo_no}
+	</update>
 	
 	<update id="modifyBoard">
 		UPDATE BO 
-		SET BO_TITLE =#{bo_title}, BO_CONTENT =#{bo_content} 
+		SET BO_TITLE =#{bo_title}, BO_CONTENT =#{bo_content} ,MOD_DATE =SYSDATE
 		WHERE BO_NO = #{bo_no}
 	</update>
 
-	<update id="viewCount">
-		UPDATE BO SET BO_VIEW_COUNT = #{bo_view_count}+1
-		WHERE BO_NO =#{bo_no}
-	</update>
 	
 	<update id="multiDeleteBoard">
 		UPDATE BO SET BO_DEL_YN ='Y'
@@ -63,9 +65,47 @@
 	
 	<delete id="realDelete">
 		DELETE FROM BO WHERE BO_NO IN 
-		<foreach collection="bo_no" item="bo_no" open="(" separator="," close=")">
+		<foreach collection="list" item="bo_no" open="(" separator="," close=")">
 		#{bo_no}
 		</foreach>
 	</delete>
+	
+	<!-- 게시글 한개 조회 -->
+	<select id="selectOne" resultType="BoardVo">
+	SELECT BO_NO ,EMP_NO ,VC_CNT 
+	FROM VIEW_COUNT
+	WHERE BO_NO=#{bo_no}
+	</select>
+	<!-- 게시글 읽은 사람 입력 -->
+	<insert id="insertReadOne">
+	INSERT INTO VIEW_COUNT (
+		BO_NO,EMP_NO 
+	)
+		VALUES(#{bo_no},#{emp_no})
+	</insert>
+	<!-- 게시글 읽은 사람 조회 -->
+	<select id="searchBoardOne" resultType="BoardVo">
+	SELECT BO_NO ,EMP_NO ,VC_CNT 
+	FROM VIEW_COUNT
+	WHERE BO_NO =#{bo_no};
+	</select>
+<!-- 	<update id="likeCount"> -->
+<!-- 		UPDATE LIKE -->
+<!-- 		SET LIKE_YN =CASE -->
+<!-- 			WHEN LIKE_YN='Y' THEN 'N' -->
+<!-- 			ELSE 'Y' -->
+<!-- 		END -->
+<!-- 		WHERE BO_NO =#{bo_no} -->
+<!-- 		AND EMP_NO=#{emp_no} -->
+<!-- 	</update> -->
+
+<!-- 	<insert id="likeCount"> -->
+<!-- 		INSERT INTO LIKE( -->
+<!-- 		BO_NO,EMP_NO,LIKE_YN -->
+<!-- 		) -->
+<!-- 		VALUES( -->
+<!-- 		#{bo_no},#{emp_no},'Y' -->
+<!-- 		) -->
+<!-- 	</insert> -->
 	
 </mapper>

@@ -8,14 +8,17 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nike.geo.service.IBoardService;
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.bo.LikeVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -119,11 +122,6 @@ public class BoardController {
 		    }
 	}
 	
-	@PostMapping(value = "/viewCount.do")
-	public String viewCount() {
-		
-		return "board/boardList";
-	}
 	
 	//삭제테이블이동
 	@PostMapping(value = "/multiDeleteBoard.do")
@@ -138,7 +136,6 @@ public class BoardController {
 		boolean isc = service.realDelete(ch);
 		return "redirect:/delBoard.do";
 	}
-	
 	
 	
 }

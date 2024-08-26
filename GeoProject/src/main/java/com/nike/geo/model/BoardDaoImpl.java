@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.bo.LikeVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,5 +65,21 @@ public class BoardDaoImpl implements IBoardDao {
 	public boolean realDelete(List<String> list) {
 		int n = sessionTemplate.delete(NS+"realDelete", list);
 		return (n==1)?true:false;
+	}
+	
+	@Override
+	public BoardVo selectOne(String bo_no) {
+	
+		return sessionTemplate.selectOne(NS+"selectOne", bo_no);
+	}
+	@Override
+	public void insertReadOne(BoardVo vo) {
+		sessionTemplate.insert(NS+"insertReadOne", vo);
+	}
+	
+	@Override
+	public int searchBoardOne(String emp_no) {
+		int cnt = sessionTemplate.selectOne(NS+"searchBoardOne", emp_no);
+		return cnt;
 	}
 }
