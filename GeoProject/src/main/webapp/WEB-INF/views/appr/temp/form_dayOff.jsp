@@ -5,7 +5,6 @@
 
 <%@ include file="../../comm/header.jsp" %>
 <head>
-<!-- 	<script type="text/javascript" src="js/index3.js"></script> -->
 </head>
 
 <body>

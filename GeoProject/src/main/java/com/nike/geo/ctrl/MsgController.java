@@ -151,6 +151,7 @@ public class MsgController {
 		if (!file.isEmpty()) { 
 			FileVo fileVo = new FileVo();
 			
+			//진짜 이름 
 			String originFileName = file.getOriginalFilename();
 			fileVo.setFile_oname(originFileName);
 			log.info("MESSAGE controller - 받아온 파일의 원래 이름 : {}", originFileName);
@@ -159,10 +160,12 @@ public class MsgController {
 			log.info("MESSAGE controller - 받아온 파일의 확장자 : {}", ext);
 			
 			UUID uuid = UUID.randomUUID(); 
+			//저장이름
 			String fileName = uuid + "." + ext;
 			fileVo.setFile_sname(fileName);
 			log.info("MESSAGE controller - 받아온 파일의 DB 저장명 : {}", fileName);
 			
+			// 파일 사이즈
 			long fileSize = file.getSize();
 			fileVo.setFile_size(fileSize);
 			log.info("MESSAGE controller - 받아온 파일의 크기 : {}", fileSize);
