@@ -111,8 +111,7 @@
 				            </td>
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
-				            	${sessionScope.empNo}	
-				            	<input type="hidden" value="${sessionScope.empNo}" name="emp_no">
+				            	${sessionScope.loginVo.emp_no}	
 				            </td>
 						</tr>
 					
@@ -140,9 +139,31 @@
 				            </td>
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
-				                <input id="dates"  name="dates" type="date" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
+				            	<c:choose>
+					            	<c:when test="${apd_form eq 'AP002' or apd_form eq 'AP005'}">
+					            		<input name="dates" type="text" id="mdp-demo" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
+					                	<button onclick="resetDay(event)" style="margin-left: 10px;">초기화</button>
+					            	</c:when>
+					            	<c:otherwise>
+					                	<input id="dates"  name="dates" type="date" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
+					                </c:otherwise>
+				           		 </c:choose>
 				            </td>
 				        </tr>
+				        <c:if test="${apd_form eq 'AP002'}">
+				        	<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
+				            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
+				            	반차사용
+				            </td>
+				             <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
+				            	colspan="2">
+				            	<select name="apd_half_yn" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;">
+				            		<option value="N" >---미사용---</option>
+				            		<option value="A" >오전반차</option>
+				            		<option value="P" >오후반차</option>
+				            	</select>
+				            </td>
+				        </c:if>
 				
 				
 				        <!-- 사유 -->
@@ -179,7 +200,7 @@
 				        <tr>
 				        	<td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); 
 				        		font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				        		<input type="file" name="file" multiple="multiple">	
+				        		<input type="file" name="file" multiple="multiple" id="reviewImgFileInput" >	
 				        	</td>
 				        </tr>
 						</c:if>				        
@@ -200,7 +221,61 @@
 
 </body>
   <%@ include file="../comm/footer.jsp" %>
+<script type="text/javascript">
 
+	
+      // multiDatesPicker 초기화
+	 $(document).ready(function() {
+         $('#mdp-demo').multiDatesPicker({
+        		dateFormat: "yy-mm-dd",
+        		beforeShowDay: $.datepicker.noWeekends,
+                 // 날짜가 선택될 때 호출되는 함수
+             onSelect: function(dateText, inst) {
+                 console.log('Selected date:', dateText);
+                 console.log('typeOf:', typeof dateText);
+             }
+             
+         });
+         
+         
+         document.getElementById("reviewImgFileInput").onchange = function(){
+	  			console.log("파일 업로드 버튼 실행");
+	  			var imgFile = this.value.toLowerCase();
+	  			var fileForm = /(.*?)\.(jpg|jpeg|bmp|png|gif|pdf|doc|docx|hwp|xls|xlsx)$/i;
+	  			var maxSize = 5*1024*1024;
+	  			var fileSize = document.getElementById("reviewImgFileInput").files[0].size;
+	  			
+	  			console.log(imgFile, fileForm,maxSize, fileSize );
+	  			
+	  			var checkImgTest = fileForm.test(imgFile);	//true/false
+	  			var checkImgMath = imgFile.match(fileForm)	//객체 혹은 null
+	  			
+	  			if(checkImgMath){
+	  				console.log("if 객체가 있으면 true이기 때문에");
+	  			}
+	  			
+	  			if(!checkImgTest){ 	//정규화가 맞다면 true, 아니라면 false
+	  				alert("가능한 파일 형식이 아닙니다.");
+	  				return;
+	  			}
+	  			if(maxSize < fileSize){
+	  				alert("이미지 파일은 5MB만 이하만 가능합니다.");
+	  				return;
+	  			}
+	  			
+	  		} // 파일 입력
+         
+         
+     });
+			
+      function resetDay(event){
+    	  event.preventDefault();
+    	  $('#mdp-demo').multiDatesPicker('resetDates');
+    	  console.log("리셋")
+      }
+
+
+</script>
 
 
 </html>

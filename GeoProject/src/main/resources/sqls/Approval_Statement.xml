@@ -65,5 +65,45 @@
  			FROM AP_DOCU
 	</select>
 	
+	<!--결재라인 추가  -->
+	<insert id="putLine">
+		INSERT INTO GEO.AP_LINE
+			(APL_NO, APD_NO, EMP_NO, 
+			APL_ORDER, APL_DATE,
+			REG_ID, REG_DATE, MOD_ID, MOD_DATE)
+		VALUES(APLINE_SEQ.NEXTVAL, #{apd_no}, #{emp_no}, 
+				#{apl_order}, SYSDATE, 
+				#{emp_no}, SYSDATE, #{emp_no}, SYSDATE)
+	</insert>	
+	
+	
+	<!-- 참조라인 추가 -->
+	<insert id="putRef">
+		INSERT INTO AP_RF
+				(APR_NO, APD_NO, APR_REF, 
+				REG_ID, REG_DATE, MOD_ID, MOD_DATE)
+			VALUES(APREF_SEQ.NEXTVAL, #{apd_no}, #{apr_ref}, 
+					#{emp_no}, SYSDATE, #{emp_no}, SYSDATE)
+	</insert>
+	
 	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

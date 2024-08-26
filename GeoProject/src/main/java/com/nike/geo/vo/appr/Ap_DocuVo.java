@@ -125,6 +125,16 @@ public class Ap_DocuVo {
 			this.mod_id = mod_id;
 			this.mod_date = mod_date;
 		}
+		public Ap_DocuVo(String emp_no, String apd_con, int apd_step, String apd_days, String apd_form) {
+			super();
+			this.emp_no = emp_no;
+			this.apd_con = apd_con;
+			this.apd_step = apd_step;
+			this.apd_days = apd_days;
+			this.apd_form = apd_form;
+		}
+		
+		
 		
 		
 		
