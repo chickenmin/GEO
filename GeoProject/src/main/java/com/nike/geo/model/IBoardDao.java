@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.bo.LikeVo;
 
 public interface IBoardDao {
 
@@ -22,4 +23,10 @@ public interface IBoardDao {
 	public boolean multiDeleteBoard(List<String>list);
 	
 	public boolean realDelete(List<String> list);
+	
+	public BoardVo selectOne(String bo_no);
+	
+	public void insertReadOne(BoardVo vo);
+	
+	public int searchBoardOne(String emp_no);
 }

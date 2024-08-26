@@ -5,6 +5,7 @@ import java.util.Map;
 
 
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.bo.LikeVo;
 
 
 public interface IBoardService {
@@ -24,4 +25,13 @@ public interface IBoardService {
 	public boolean multiDeleteBoard(List<String>list);
 	
 	public boolean realDelete(List<String> list);
+	
+//	public BoardVo selectOne(BoardVo Vo);
+//	
+//	public boolean insertReadOne(BoardVo vo);
+//	
+//	public BoardVo searchBoardOne(String emp_no);
+	
+	public BoardVo view_Count(String emp_no,String bo_no);
+	
 }
