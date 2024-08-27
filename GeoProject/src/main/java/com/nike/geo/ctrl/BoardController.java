@@ -98,7 +98,8 @@ public class BoardController {
 		map.put("bo_no", bo_no);
 		map.put("emp_no", emp_no);
 		model.addAttribute("Vo",Vo);
-		model.addAttribute("count", count);
+		model.addAttribute("count", count); ///
+		
 		return "board/detailBoard";
 	}
 	
