@@ -99,6 +99,9 @@
 			//선택된 이름들 화면에 넣기
 	   		 document.getElementById(id).innerHTML += item.text+"<br>";
 	   		 
+	   		 //체크박스 해제
+	   		 $('#tree').jstree("deselect_all");
+	   		 
 	   		 //선택된 id input value 값으로 넣기
 	   		 document.getElementById(id+"Cho").value += item.id+",";
 	   		 console.log(document.getElementById(id+"Cho"));
@@ -117,19 +120,14 @@
 		document.getElementById(id+"Cho").value = "";
 	}
 	
-	
-	function check(){
-		var dates = document.getElementById("dates").value;
-		var con = document.getElementById("con").value;
-		var apprCho = document.getElementById("apprCho").value;
-		
-		if(dates !== "" && con !== "" && apprCho !== ""){
-				return true; // 모든 입력이 완료되면 폼 전송을 허용
-			}
-	
-			alert("형식을 모두 입력해 주세요."); 
-			return false; 
+	function temp(){
+		 const form = document.getElementById('approval');
+            form.action = './tempSubmit.do'; // 다른 컨트롤러 URL로 변경
+            form.submit(); // 폼 제출
 	}
+	
+	
+	
 	
 	
 	

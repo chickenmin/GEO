@@ -33,7 +33,7 @@
           </li>
           
           <li>
-            <a href="#">
+            <a href="./apprList.do">
               <i class="bi bi-circle"></i><span>결재 문서함</span>
             </a>
           </li>

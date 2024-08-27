@@ -12,6 +12,7 @@ import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.appr.Ap_FavVo;
 import com.nike.geo.vo.appr.Ap_LineVo;
 import com.nike.geo.vo.appr.Ap_RfVo;
+import com.nike.geo.vo.comm.FileVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,10 +45,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.delFav(map);
 	}
 	
+	
 	@Override
-	public int submit(Map<String, Object> map) {
-		log.info("상신하기");
-		return dao.submit(map);
+	public int submit1(Ap_DocuVo vo) {
+		log.info("문서 임시저장");
+		return dao.submit1(vo);
 	}
 	
 	@Override
@@ -78,6 +80,18 @@ public class ApprovalServiceImpl implements IApprovalService {
 	@Override
 	public int putRef(Ap_RfVo vo) {
 		return dao.putRef(vo);
+	}
+	
+	
+	@Override
+	public int putFile(FileVo vo) {
+		return dao.putFile(vo);
+	}
+	
+	@Override
+	public List<Ap_DocuVo> selectApproval(String emp_no) {
+		// TODO Auto-generated method stub
+		return dao.selectApproval(emp_no);
 	}
 	
 

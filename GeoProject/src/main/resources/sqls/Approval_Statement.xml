@@ -39,7 +39,22 @@
 	
 	
 	<!--///////////////////////////////////////////////////////  -->
-	<insert id="submit">
+	<!-- 상신하기 -->
+	
+	<!-- 임시저장 -->
+	<insert id="submit1"> 
+		INSERT INTO AP_DOCU
+				(APD_NO, EMP_NO, APD_CON, 
+				APD_STEP, APD_STATUS, APD_DAYS, 
+				APD_HALF_YN,APD_FORM, APD_CLEAR_DATE, APD_TEMP_YN, 
+				REG_ID, REG_DATE, MOD_ID, MOD_DATE)
+		VALUES(Apd_docu_seq.NEXTVAL, #{emp_no}, #{apd_con}, 
+				#{apd_step}, 'W', #{apd_days},
+				'N',	#{apd_form}, SYSDATE, 'Y', 
+				#{emp_no},SYSDATE, #{emp_no}, SYSDATE)    
+	</insert>
+	
+	<insert id="submit2">
 		INSERT INTO AP_DOCU
 				(APD_NO, EMP_NO, APD_CON, 
 				APD_STEP, APD_STATUS, APD_DAYS, 
@@ -86,6 +101,47 @@
 					#{emp_no}, SYSDATE, #{emp_no}, SYSDATE)
 	</insert>
 	
+	
+	<!-- 파일 -->
+	<!--결재 파일 추가  -->
+	<insert id="putFile">
+		INSERT INTO GEO."FILE" (FILE_NO, ORIGIN_NO, FILE_ONAME,
+								FILE_SNAME, FILE_SIZE, FILE_TYPE,
+								FILE_RANK, FILE_DEL_YN, REG_ID,
+								REG_DATE, MOD_ID, MOD_DATE)
+			VALUES(FILE_SEQ.NEXTVAL, #{origin_no}, #{file_oname},
+					#{file_sname}, #{file_size}, '1',
+					'0', 'N', #{reg_id},
+					SYSDATE, #{reg_id}, SYSDATE)
+	</insert>
+	
+	
+	
+	<!-- ///////////////////////////////////////////// -->
+	<!-- 문서함 -->
+	<!-- 결재문서함 목록 조회 -->
+	<!-- 대기.반려.철회 상관없이 모든 거 다 나오게 -->
+	<select id="selectApproval" resultType="Ap_DocuVo">
+	SELECT APD_NO,EMP_NO ,APD_CON ,
+				APD_STEP ,APD_STATUS ,APD_DAYS ,
+				APD_HALF_YN ,APD_FORM ,APD_CLEAR_DATE ,APD_TEMP_YN ,
+				REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
+ 		FROM AP_DOCU ad 
+ 		WHERE APD_NO IN (SELECT APD_NO 
+					 FROM AP_LINE al 
+					 WHERE EMP_NO = #{emp_no})
+ 		AND APD_TEMP_YN = 'N'
+	</select>
+	
+	<!-- 문서번호로 조회 -->
+	<select id="selectDeatil" resultType="Ap_DocuVo">
+		SELECT APD_NO,EMP_NO ,APD_CON ,
+				APD_STEP ,APD_STATUS ,APD_DAYS ,
+				APD_HALF_YN ,APD_FORM ,APD_CLEAR_DATE ,APD_TEMP_YN ,
+				REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
+ 		FROM AP_DOCU ad 
+ 		WHERE APD_NO = #{apd_no}
+	</select>
 	
 </mapper>
 
