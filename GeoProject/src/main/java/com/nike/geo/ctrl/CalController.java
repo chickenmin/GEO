@@ -82,7 +82,7 @@ public class CalController {
 	 * @param map 받아오는 값 : start, end, id
 	 * @return String  "true" / "false"
 	 */
-	@RequestMapping(value = "/uadateDragAjax.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateDragAjax.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String updateAjax(@RequestParam Map<String, Object> map) {
 		log.info("CalController updateAjax 받아온 값 : {}", map);
