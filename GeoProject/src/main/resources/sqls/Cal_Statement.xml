@@ -5,5 +5,28 @@
 <mapper namespace="com.nike.geo.model.CalDaoImpl">
 
 
+<!-- insertCal 일정 작성 -->
+<insert id="insertCal" parameterType="java.util.Map">
+				INSERT INTO CAL(CAL_NO, CAL_TITLE, CAL_CONTENT, 
+                     CAL_START, CAL_STOP, CAL_TYPE, CAL_OPEN_YN)
+				VALUES(CAL_SEQ.NEXTVAL, ${cal_title}, ${cal_content},
+					  TO_DATE(#{cal_start},'YYYY-MM-DD HH24:MI'), 
+					  TO_DATE(#{cal_stop},'YYYY-MM-DD HH24:MI'), ${cal_type}, 'N')
+</insert>
+
+
+<!-- Calendar  일정리스트 -->
+<select id="calList" resultType="com.nike.geo.vo.co.CalVo">
+SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, 
+       CAL_START, CAL_STOP, CAL_OPEN_YN
+		FROM CAL
+		WHERE CAL_DEL_YN = 'N'
+</select>
+
+<!-- Calendar 드래그 앤 드롭 -->	
+<update id="dragUpdateCal" parameterType="java.util.Map">
+UPDATE CAL SET "CAL_START" = TO_DATE(#{cal_start},'YYYY-MM-DD HH24:MI'), "CAL_STOP" = TO_DATE(#{cal_stop},'YYYY-MM-DD HH24:MI')
+	WHERE CAL_NO=#{cal_no}
+</update>	
 	
 </mapper>
