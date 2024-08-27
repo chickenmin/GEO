@@ -1,0 +1,26 @@
+@charset "UTF-8";
+input[type="checkbox"], label {
+    position: relative; /* 상대 위치로 설정 */
+    top: -730px;
+}
+#calendar {
+	width: 800px;
+	height: 800px;
+	margin: auto;
+}
+
+  body { /* 보기 편한 화면 구성을 위해 css추가 */
+        margin: 40px 10px; 
+        padding: 0; 
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif; 
+        font-size: 14px; 
+    } 
+
+    #calendar { /* 보기 편한 화면 구성을 위해 css추가 */
+      max-width: 1100px;
+      margin: 40px auto;
+    }
+    
+    .koHolidays{
+    	pointer-events: none;
+    }

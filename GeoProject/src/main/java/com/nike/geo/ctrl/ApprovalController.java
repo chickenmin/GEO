@@ -267,6 +267,7 @@ public class ApprovalController {
 			}
 		}
 
+
 		//파일 아예 안받아온 form이면 이제 끝
 		if (file == null) {
 			return "appr/AP_home";
@@ -280,6 +281,8 @@ public class ApprovalController {
 					log.info("파일없음");
 				}else {	//파일 첨부 한 경우
 				FileVo vo = new FileVo();
+
+
 				
 				//결재파일 번호
 				vo.setOrigin_no(apd_no);

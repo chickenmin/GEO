@@ -19,7 +19,21 @@
 				EMP_BIRTH, EMP_ADDRESS, EMP_AUTH,
 				EMP_STATUS, EMP_RETIREDATE, REG_ID,
 				REG_DATE, MOD_ID, MOD_DATE
-		FROM GEO.EMP
-		WHERE EMP_NO = #{emp_no} AND EMP_PW = #{emp_pw}
+			FROM GEO.EMP
+			WHERE EMP_NO = #{emp_no} AND EMP_PW = #{emp_pw}
+	</select>
+	
+	<!-- 임시비밀번호 발급 전 정보 확인 -->
+	<select id="selectEmpTemp" resultType="EmpVo">
+		SELECT EMP_NO, EMP_POS, EMP_DEPT,
+				EMP_PW, EMP_NAME, EMP_GENDER,
+				EMP_HIREDATE, EMP_EMAIL, EMP_PHONE,
+				EMP_BIRTH, EMP_ADDRESS, EMP_AUTH,
+				EMP_STATUS, EMP_RETIREDATE, REG_ID,
+				REG_DATE, MOD_ID, MOD_DATE
+			FROM GEO.EMP
+			WHERE EMP_NO = #{emp_no}
+				AND EMP_NAME = #{emp_name}
+				AND EMP_EMAIL = #{emp_email}
 	</select>
 </mapper>

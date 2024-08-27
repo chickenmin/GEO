@@ -31,5 +31,12 @@ public class CommDaoImpl implements ICommDao {
 		log.info("COMMON repository - 받아온 값 : {}", vo);
 		return template.selectOne(NS+"selectEmp", vo);
 	}
+	
+	@Override
+	public EmpVo selectEmpTemp(EmpVo vo) {
+		log.info("COMMON repository - 임시비밀번호 발급 전 정보 확인 selectEmpTemp");
+		log.info("COMMON repository - 받아온 값 : {}", vo);
+		return template.selectOne(NS+"selectEmpTemp", vo);
+	}
 
 }

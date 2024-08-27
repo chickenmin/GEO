@@ -71,7 +71,7 @@
 	                      <!-- 한번도 읽지않은 쪽지는 New 표시 -->
 	                      <td><a href="./detailMsgRecv.do?no=${vo.msg_no}">
 	                      	${vo.msg_content}
-	                      	<span class="badge bg-primary">${vo.msg_recv_read_yn == 'N' ? 'New' : ''}</span>
+	                      	&nbsp<span class="badge bg-primary">${vo.msg_recv_read_yn == 'N' ? 'New' : ''}</span>
 	                      </a></td>
 	                      
 	                      <!-- 회원 상세 조회 추가시 그 쪽으로 이동 -->

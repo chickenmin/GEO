@@ -16,6 +16,17 @@
 		$('#mdp-demo').multiDatesPicker({
 		});
 		</script>
+		
+		<div>
+			<form action="./arriveWork.do" method="post">
+				<input type="hidden" name="emp_no" value="aa001">
+				<button type="submit">출근</button>
+			</form>
+			<form action="./leftWork.do" method="post">
+				<input type="hidden" name="emp_no" value="aa001">
+				<button type="submit">퇴근</button>
+			</form>
+		</div>
 
 
   	</main><!-- End #main -->

@@ -29,4 +29,11 @@ public class CommServiceImpl implements ICommService {
 		log.info("COMMON service - 받아온 값 : {}", vo);
 		return dao.selectEmp(vo);
 	}
+	
+	@Override
+	public EmpVo selectEmpTemp(EmpVo vo) {
+		log.info("COMMON service - 임시비밀번호 발급 전 정보 확인 selectEmpTemp");
+		log.info("COMMON service - 받아온 값 : {}", vo);
+		return dao.selectEmpTemp(vo);
+	}
 }
