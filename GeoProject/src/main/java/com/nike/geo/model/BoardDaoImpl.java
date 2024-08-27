@@ -73,8 +73,8 @@ public class BoardDaoImpl implements IBoardDao {
 		return sessionTemplate.selectOne(NS+"selectOne", bo_no);
 	}
 	@Override
-	public void insertReadOne(BoardVo vo) {
-		sessionTemplate.insert(NS+"insertReadOne", vo);
+	public void insertReadOne(Map<String, String>map) {
+		sessionTemplate.insert(NS+"insertReadOne", map);
 	}
 	
 	@Override

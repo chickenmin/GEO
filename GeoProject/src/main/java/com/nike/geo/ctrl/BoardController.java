@@ -92,9 +92,13 @@ public class BoardController {
 
 	//글상세
 	@GetMapping(value = "/detailBoard.do")
-	public String detailBoard(@RequestParam("bo_no")String bo_no,Model model) {
+	public String detailBoard(@RequestParam("bo_no")String bo_no,@RequestParam("emp_no")String emp_no,@RequestParam Map<String,String>map, Model model) {
 		BoardVo Vo=service.detailBoard(bo_no);
+		BoardVo count = service.view_Count(Vo, map);
+		map.put("bo_no", bo_no);
+		map.put("emp_no", emp_no);
 		model.addAttribute("Vo",Vo);
+		model.addAttribute("count", count);
 		return "board/detailBoard";
 	}
 	

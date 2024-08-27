@@ -41,12 +41,13 @@ public class BoardServiceImpl implements IBoardService {
 	
 	@Override
 	public boolean insertBoard(BoardVo Vo) {
+		
 		return dao.insertBoard(Vo);
 	}
 	
 	@Override
 	public BoardVo detailBoard(String bo_no) {
-	
+		System.out.println("브이오엔오"+bo_no);
 		return dao.detailBoard(bo_no);
 	}
 	
@@ -82,11 +83,12 @@ public class BoardServiceImpl implements IBoardService {
 //	}
 	
 	@Override
-	public BoardVo view_Count(String emp_no, String bo_no) {
-		BoardVo vo = dao.selectOne(bo_no);
-		int cnt=dao.searchBoardOne(emp_no);
+	public BoardVo view_Count(BoardVo bVo,Map<String, String>map) {	//map을 쓰는게 맞는지
+		BoardVo vo = dao.selectOne(bVo.getBo_no());
+		
+		int cnt=dao.searchBoardOne(bVo.getEmp_no());
 		if(cnt==0) {
-			dao.insertReadOne(vo);
+			dao.insertReadOne(map);
 		}
 		return vo;
 	}

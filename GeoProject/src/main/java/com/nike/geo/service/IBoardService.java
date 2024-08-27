@@ -32,6 +32,7 @@ public interface IBoardService {
 //	
 //	public BoardVo searchBoardOne(String emp_no);
 	
-	public BoardVo view_Count(String emp_no,String bo_no);
+	public BoardVo view_Count(BoardVo bVo,Map<String, String>map);	
+
 	
 }
