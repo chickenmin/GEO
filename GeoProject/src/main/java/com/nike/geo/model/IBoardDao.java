@@ -25,8 +25,9 @@ public interface IBoardDao {
 	public boolean realDelete(List<String> list);
 	
 	public BoardVo selectOne(String bo_no);
+
+	public void insertReadOne(Map<String, String>map); //emp_no와 bo_no를 넣어줘야함
 	
-	public void insertReadOne(Map<String, String>map);
+	public int searchBoardOne(Map<String, String>map); 
 	
-	public int searchBoardOne(String emp_no);
 }

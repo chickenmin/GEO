@@ -67,34 +67,27 @@ public class BoardServiceImpl implements IBoardService {
 	public boolean realDelete(List<String> list) {
 		return dao.realDelete(list);
 	}
-	
 
-//	@Override
-//	public BoardVo selectOne(BoardVo Vo) {
-//		return dao.selectOne(Vo);
-//	}
-//	
-//	@Override
-//	public boolean insertReadOne(BoardVo vo) {
-//		return dao.insertReadOne(vo);
-//	}
-//	
-//	@Override
-//	public BoardVo searchBoardOne(String emp_no) {
-//		return dao.searchBoardOne(emp_no);
-//	}
-	
 	@Override
-	public BoardVo view_Count(BoardVo bVo,Map<String, String>map) {	//map을 쓰는게 맞는지
-		BoardVo vo = dao.selectOne(bVo.getBo_no());
-		
-		int cnt=dao.searchBoardOne(bVo.getEmp_no());
+	public BoardVo view_Count(BoardVo bVo) {
+		Map<String, String> map = new HashMap<String, String>(){{
+			put("bo_no", bVo.getBo_no()); 
+			put("emp_no", bVo.getEmp_no());
+			}};
+		int cnt = dao.searchBoardOne(map);
+		System.out.println(cnt>0?"읽은 사람": "아닌 사람");
 		if(cnt==0) {
 			dao.insertReadOne(map);
+		}else {
+			
 		}
-		return vo;
+		BoardVo resultVo =  dao.selectOne(bVo.getBo_no());
+		System.out.println("상세글 조회" +resultVo);
+		
+		return resultVo;
 	}
-
+	
+	
 }
 
 
