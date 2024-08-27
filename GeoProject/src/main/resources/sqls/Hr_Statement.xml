@@ -80,6 +80,7 @@ AND ATT_LEFT_TIME IS NULL
 AND TO_CHAR(ATT_ARRIVE_TIME, 'yyyy-MM-dd') = TO_CHAR(SYSDATE, 'yyyy-MM-dd')
 </update>
 <!-- 마이페이지 -->
+
 <select id="myPage">
 SELECT EMP_NO , EMP_POS , EMP_DEPT , EMP_NAME ,
 EMP_GENDER , EMP_HIREDATE , EMP_EMAIL , EMP_PHONE ,
@@ -87,4 +88,6 @@ EMP_BIRTH , EMP_ADDRESS
 	FROM EMP e
 	WHERE EMP_NO = 'aa001';
 </select>
+
+
 </mapper>

@@ -159,7 +159,7 @@
 				<li class="nav-item" role="presentation">
 					<button class="nav-link" data-bs-toggle="tab"
 						data-bs-target="#profile-change-password" aria-selected="false"
-						tabindex="-1" role="tab">비밀번호 초기화</button>
+						tabindex="-1" role="tab">비밀번호 변경</button>
 				</li>
 
 			</ul>
@@ -387,11 +387,14 @@
 									</div>
 									<br> <input type="text" class="form-control"
 										id="sample6_address" placeholder="주소" readonly="readonly"
-										style="width: 50%; margin-bottom: 10px;" value="sample6_address"> <input
-										type="text" class="form-control" id="sample6_detailAddress"
-										placeholder="상세주소" style="margin-bottom: 10px;" value="sample6_detailAddress"> <input
-										type="text" class="form-control" id="sample6_extraAddress"
-										placeholder="참고항목" readonly="readonly" style="width: 50%;" value="sample6_extraAddress">
+										style="width: 50%; margin-bottom: 10px;"
+										value="sample6_address"> <input type="text"
+										class="form-control" id="sample6_detailAddress"
+										placeholder="상세주소" style="margin-bottom: 10px;"
+										value="sample6_detailAddress"> <input type="text"
+										class="form-control" id="sample6_extraAddress"
+										placeholder="참고항목" readonly="readonly" style="width: 50%;"
+										value="sample6_extraAddress">
 								</div>
 							</div>
 						</div>
@@ -424,44 +427,42 @@
 					<form action="./clearPw.do" method="post">
 						<div class="text-center">
 							<input type="hidden" name="emp_no" value="${vo.emp_no}">
-							<button type="submit" class="btn btn-primary">비밀번호 초기화</button>
 
-							<!-- 						<div class="row mb-3"> -->
-							<!-- 							<label for="currentPassword" -->
-							<!-- 								class="col-md-4 col-lg-3 col-form-label">현재 비밀번호</label> -->
-							<!-- 							<div class="col-md-8 col-lg-9"> -->
-							<!-- 								<input name="emp_pw" type="password" class="form-control" -->
-							<!-- 									id="currentPassword"> -->
-							<!-- 							</div> -->
-							<!-- 						</div> -->
+							<div class="row mb-3">
+								<label for="currentPassword"
+									class="col-md-4 col-lg-3 col-form-label">현재 비밀번호</label>
+								<div class="col-md-8 col-lg-9">
+									<input name="emp_pw" type="password" class="form-control"
+										id="currentPassword">
+								</div>
+							</div>
 
-							<!-- 						<div class="row mb-3"> -->
-							<!-- 							<label for="newPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호</label> -->
-							<!-- 							<div class="col-md-8 col-lg-9"> -->
-							<!-- 								<input name="newpassword" type="password" class="form-control" -->
-							<!-- 									id="newPassword"> -->
-							<!-- 							</div> -->
-							<!-- 						</div> -->
+							<div class="row mb-3">
+								<label for="newPassword"
+									class="col-md-4 col-lg-3 col-form-label">새 비밀번호</label>
+								<div class="col-md-8 col-lg-9">
+									<input name="newpassword" type="password" class="form-control"
+										id="newPassword">
+								</div>
+							</div>
 
-							<!-- 						<div class="row mb-3"> -->
-							<!-- 							<label for="renewPassword" -->
-							<!-- 								class="col-md-4 col-lg-3 col-form-label">새 비밀번호 확인</label> -->
-							<!-- 							<div class="col-md-8 col-lg-9"> -->
-							<!-- 								<input name="renewpassword" type="password" class="form-control" -->
-							<!-- 									id="renewPassword"> -->
-							<!-- 							</div> -->
-							<!-- 						</div> -->
+							<div class="row mb-3">
+								<label for="renewPassword"
+									class="col-md-4 col-lg-3 col-form-label">새 비밀번호 확인</label>
+								<div class="col-md-8 col-lg-9">
+									<input name="renewpassword" type="password"
+										class="form-control" id="renewPassword">
+								</div>
+							</div>
 
-							<!-- 						<div class="text-center"> -->
-							<!-- 							<button type="submit" class="btn btn-primary">비밀번호 변경</button> -->
-							<!-- 						</div> -->
-							<!-- 					</form> -->
-							<!-- 					End Change Password Form -->
-
-							<!-- 				</div> -->
-
+							<div class="text-center">
+								<button type="submit" class="btn btn-primary">비밀번호 변경</button>
+							</div>
 						</div>
 					</form>
+					End Change Password Form
+
+
 					<!-- End Bordered Tabs -->
 
 				</div>

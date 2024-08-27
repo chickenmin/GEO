@@ -77,7 +77,6 @@
 	</script>
 	<script type="text/javascript">
 		window.onload = function() {
-			// 폼 제출 이벤트를 리스닝하여 사번 검증을 처리
 			document.querySelector('form').addEventListener(
 					'submit',
 					function(event) {
@@ -106,7 +105,6 @@
 						}
 					});
 		}
-	</script>
 		
 	
 	

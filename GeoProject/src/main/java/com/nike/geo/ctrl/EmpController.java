@@ -96,10 +96,12 @@ public class EmpController {
 	@GetMapping(value = "/myPage.do")
 	public String myPage(String emp_no, Model model) {
 		log.info("마이 페이지");
-		EmpVo vo = service.selectOneEmp(emp_no);
+		EmpVo vo = service.selectOneEmp("aa001");
 		model.addAttribute("vo", vo);
 		return "hr/myPage";
 		
 	}
+	
+
 
 }

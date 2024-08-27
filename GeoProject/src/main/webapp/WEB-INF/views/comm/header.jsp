@@ -238,7 +238,7 @@
           </li>
 
           <li>
-            <a class="dropdown-item d-flex align-items-center" href="users-profile.jsp">
+            <a class="dropdown-item d-flex align-items-center" href="./myPage.do">
               <i class="bi bi-person"></i>
               <span>내 정보 보기</span>
             </a>
