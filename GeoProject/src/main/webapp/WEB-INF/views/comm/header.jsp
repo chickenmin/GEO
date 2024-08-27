@@ -258,7 +258,7 @@
           </li>
 
           <li>
-            <a class="dropdown-item d-flex align-items-center" href="pages-login.jsp">
+            <a class="dropdown-item d-flex align-items-center" href="./logout.do">
               <i class="bi bi-box-arrow-right"></i>
               <span>로그아웃</span>
             </a>
