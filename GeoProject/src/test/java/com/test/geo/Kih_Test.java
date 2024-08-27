@@ -2,7 +2,9 @@ package com.test.geo;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,12 +26,12 @@ public class Kih_Test {
 	@Autowired
 	private SqlSessionTemplate template;
 	
-	@Before
+//	@Before
 	public void test() {
 		assertNotNull(template);
 	}
 	
-	@Test
+//	@Test
 	public void insert() {
 	BoardVo vo = new BoardVo();
 	
@@ -50,4 +52,27 @@ public class Kih_Test {
 	int n = template.insert("com.nike.geo.model.BoardDaoImpl.insertBoard", vo);
 	assertNotNull(template);
 	}
+	
+	
+	@Test
+	public void view_Count_Test() {
+		String bo_no = "A0041";
+		String emp_no = "SY003";
+		
+		Map<String, String> map = new HashMap<String, String>(){{
+			put("bo_no", bo_no); 
+			put("emp_no", emp_no);
+			}};
+		int cnt = template.selectOne("com.nike.geo.model.BoardDaoImpl.searchBoardOne", map);
+		System.out.println(cnt>0?"읽은 사람": "아닌 사람");
+		if(cnt==0) {
+			template.insert("com.nike.geo.model.BoardDaoImpl.insertReadOne", map);
+		}
+		BoardVo resultVo =  template.selectOne("com.nike.geo.model.BoardDaoImpl.selectOne", bo_no);
+		System.out.println("상세글 조회" +resultVo);
+		
+	}
+	
+	
+	
 }
