@@ -38,7 +38,7 @@
 	                        <span class="input-group-text" id="inputGroupPrepend">@</span>
 	                        <input type="text" name="emp_no" class="form-control" id="emp_no" required>
 	                        <div class="invalid-feedback">사원번호를 입력하세요!</div>
-	                      </div>
+	                      </div> 
 	                    </div>
 	                    
 	                    <div class="col-12">
@@ -89,7 +89,7 @@
 	
 	    </div>
 	  </main><!-- End #main -->
-
+//
 
 </body>
   <%@ include file="./footer.jsp" %>
