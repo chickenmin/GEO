@@ -58,6 +58,7 @@ public class MsgController {
 		EmpVo loginVo = commService.selectEmp(vo);
 		if(loginVo != null) {
 			log.info("MESSAGE controller - 로그인 성공");
+			// 세션에 loginVo 추가
 			session.setAttribute("loginVo", loginVo);
 			session.setMaxInactiveInterval(60*10*6);
 			return "redirect:/index.do";
