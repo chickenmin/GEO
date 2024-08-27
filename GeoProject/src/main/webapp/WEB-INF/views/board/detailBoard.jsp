@@ -21,14 +21,12 @@
 		${Vo.bo_content}
 		<hr>
 		<input type="hidden" ${like.bo_no}>
-		<form action="./likeCount.do" method="post">
-		<button type="submit">추천</button>
-		</form>		
+		<button>추천</button>
 		<button>댓글</button>		
 		<button onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>		
 		<button>삭제</button>
   	</main><!-- End #main -->
-
+		${count.vc_cnt}
 
 </body>
   <%@ include file="../comm/footer.jsp" %>

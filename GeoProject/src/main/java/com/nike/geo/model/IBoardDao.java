@@ -26,7 +26,7 @@ public interface IBoardDao {
 	
 	public BoardVo selectOne(String bo_no);
 	
-	public void insertReadOne(BoardVo vo);
+	public void insertReadOne(Map<String, String>map);
 	
 	public int searchBoardOne(String emp_no);
 }

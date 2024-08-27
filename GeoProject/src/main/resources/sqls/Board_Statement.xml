@@ -79,9 +79,9 @@
 	<!-- 게시글 읽은 사람 입력 -->
 	<insert id="insertReadOne">
 	INSERT INTO VIEW_COUNT (
-		BO_NO,EMP_NO 
+		BO_NO,EMP_NO,VC_CNT
 	)
-		VALUES(#{bo_no},#{emp_no})
+		VALUES(#{bo_no},#{emp_no},1)
 	</insert>
 	<!-- 게시글 읽은 사람 조회 -->
 	<select id="searchBoardOne" resultType="BoardVo">
