@@ -73,6 +73,40 @@
 		
 		
 	}
+	
+	</script>
+	<script type="text/javascript">
+		window.onload = function() {
+			// 폼 제출 이벤트를 리스닝하여 사번 검증을 처리
+			document.querySelector('form').addEventListener(
+					'submit',
+					function(event) {
+						const empNoInput = document.querySelector('input[name="emp_no"]');
+						const empPhoneInput = document.querySelector('input[name="emp_phone"]')
+						const empEmailInput = document.querySelector('input[name="emp_email"]')
+						
+						
+						const empNoValue = empNoInput.value;
+						const empPhoneValue = empPhoneInput.value;
+						const empEmailValue = empEmailInput.value;
+						const empNoRegex = /^[A-Z]{2}\d{3}$/;
+						const empPhoneRegex = /^(010-\d{4}-\d{4})$/;
+						const empEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+						if (!empNoRegex.test(empNoValue)) {
+							alert("잘못된 사번 형식입니다.");
+							event.preventDefault();
+						}
+						if (!empPhoneRegex.test(empPhoneValue)) {
+							alert("잘못된 전화번호 형식입니다.");
+							event.preventDefault();
+						}
+						if (!empEmailRegex.test(empEmailValue)) {
+							alert("잘못된 이메일 형식입니다.");
+							event.preventDefault();
+						}
+					});
+		}
+	</script>
 		
 	
 	
@@ -92,7 +126,7 @@
 				<div class="row mb-3">
 					<label for="inputText" class="col-sm-2 col-form-label">사번</label>
 					<div class="col-sm-10" style="width: 50%;">
-						<input type="text" class="form-control" name="emp_no">
+						<input type="text" class="form-control" name="emp_no" placeholder="영어 대문자 2자 + 숫자 3자 형식으로 입력해주세요.">
 					</div>
 				</div>
 				<div>
@@ -156,7 +190,7 @@
 						<div class="row mb-3">
 							<label for="inputText" class="col-sm-2 col-form-label">연락처</label>
 							<div class="col-sm-10" style="width: 50%;">
-								<input type="text" class="form-control" placeholder="ex) 000-0000-0000" name="emp_phone">
+								<input type="text" class="form-control" placeholder="ex) 000-0000-0000(' - '포함)" name="emp_phone">
 							</div>
 						</div>
 					</div>
