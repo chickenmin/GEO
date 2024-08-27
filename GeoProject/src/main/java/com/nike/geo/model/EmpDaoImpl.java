@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.nike.geo.vo.hr.AttVo;
 import com.nike.geo.vo.hr.EmpVo;
 
 import lombok.RequiredArgsConstructor;
@@ -41,9 +42,27 @@ public class EmpDaoImpl implements IEmpDao {
 	}
 	
 	@Override
-	public int modPw(EmpVo vo) {
-		log.info(NS + "modPw");
-		return session.update(NS + "modPw", vo);
+	public int clearPw(EmpVo vo) {
+		log.info(NS + "clearPw");
+		return session.update(NS + "clearPw", vo);
+	}
+	
+	@Override
+	public int arriveWork(AttVo vo) {
+		log.info(NS + "arriveWork");
+		return session.insert(NS + "arriveWork", vo);
+	}
+	
+	@Override
+	public int leftWork(AttVo vo) {
+		log.info(NS + "leftWork");
+		return session.update(NS + "leftWork", vo);
+	}
+	
+	@Override
+	public EmpVo myPage(String emp_no) {
+		log.info(NS + "myPage");
+		return session.selectOne(NS + "myPage");
 	}
 	
 }

@@ -52,17 +52,39 @@ SET emp_pos = #{emp_pos},
 WHERE emp_no = #{emp_no}
 </update>
 
-<!-- 비밀번호 변경 -->
-<!-- <update id="modPw"> -->
-<!-- UPDATE GEO.EMP -->
-<!-- SET EMP_PW = #{emp_pw} -->
-<!-- WHERE EMP_NO = #{emp_no} -->
-<!-- </update> -->
-
 <!-- 비밀번호 초기화 -->
-<!-- <update id="clearPw"> -->
-<!-- UPDATE GEO.EMP -->
-<!-- SET EMP_PW = '1234' -->
-<!-- WHERE EMP_NO = #{emp_no} -->
-<!-- </update> -->
+<update id="clearPw" parameterType="EmpVo">
+UPDATE GEO.EMP
+SET emp_pw = '1234',
+	emp_status = 'W'
+WHERE emp_no = #{emp_no}
+</update>
+<!-- 출근 -->
+<insert id="arriveWork">
+INSERT INTO GEO.ATT
+(EMP_NO, ATT_ARRIVE_TIME, ATT_LEFT_TIME, REG_ID, REG_DATE, MOD_ID, MOD_DATE)
+SELECT e.EMP_NO, SYSDATE, '', e.EMP_NO, TO_CHAR(SYSDATE, 'yyyy-MM-dd'),
+e.EMP_NO, TO_CHAR(SYSDATE, 'yyyy-MM-dd')
+FROM EMP e
+LEFT JOIN ATT a ON e.EMP_NO = a.EMP_NO
+WHERE e.EMP_NO = #{emp_no, jdbcType=VARCHAR}
+</insert>
+<!-- 퇴근 -->
+<update id="leftWork">
+UPDATE GEO.ATT
+SET ATT_LEFT_TIME = SYSDATE,
+	MOD_ID = EMP_NO,
+	MOD_DATE = SYSDATE
+WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
+AND ATT_LEFT_TIME IS NULL
+AND TO_CHAR(ATT_ARRIVE_TIME, 'yyyy-MM-dd') = TO_CHAR(SYSDATE, 'yyyy-MM-dd')
+</update>
+<!-- 마이페이지 -->
+<select id="myPage">
+SELECT EMP_NO , EMP_POS , EMP_DEPT , EMP_NAME ,
+EMP_GENDER , EMP_HIREDATE , EMP_EMAIL , EMP_PHONE ,
+EMP_BIRTH , EMP_ADDRESS
+	FROM EMP e
+	WHERE EMP_NO = 'aa001';
+</select>
 </mapper>
