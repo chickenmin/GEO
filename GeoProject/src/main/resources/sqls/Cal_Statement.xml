@@ -9,9 +9,10 @@
 <insert id="insertCal" parameterType="java.util.Map">
 				INSERT INTO CAL(CAL_NO, CAL_TITLE, CAL_CONTENT, 
                      CAL_START, CAL_STOP, CAL_TYPE, CAL_OPEN_YN)
-				VALUES(CAL_SEQ.NEXTVAL, ${cal_title}, ${cal_content},
-					  TO_DATE(#{cal_start},'YYYY-MM-DD HH24:MI'), 
-					  TO_DATE(#{cal_stop},'YYYY-MM-DD HH24:MI'), ${cal_type}, 'N')
+				VALUES(CAL_SEQ.NEXTVAL, #{cal_title}, #{cal_content},
+					  TO_DATE(#{cal_start}, 'YYYY/MM/DD HH24:MI'), 
+					  TO_DATE(#{cal_stop}, 'YYYY/MM/DD HH24:MI')
+					  ,${cal_type}, 'N')
 </insert>
 
 
@@ -25,8 +26,11 @@ SELECT CAL_NO, CAL_TITLE, CAL_CONTENT,
 
 <!-- Calendar 드래그 앤 드롭 -->	
 <update id="dragUpdateCal" parameterType="java.util.Map">
-UPDATE CAL SET "CAL_START" = TO_DATE(#{cal_start},'YYYY-MM-DD HH24:MI'), "CAL_STOP" = TO_DATE(#{cal_stop},'YYYY-MM-DD HH24:MI')
-	WHERE CAL_NO=#{cal_no}
-</update>	
+    UPDATE CAL 
+    SET "CAL_START" = TO_DATE(#{cal_start},'YYYY/MM/DD HH24:MI'), 
+        "CAL_STOP" = TO_DATE(#{cal_stop},'YYYY/MM/DD HH24:MI')
+    WHERE CAL_NO = #{cal_no}
+</update>
+
 	
 </mapper>
