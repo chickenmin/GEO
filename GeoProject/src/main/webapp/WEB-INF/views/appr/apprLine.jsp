@@ -28,7 +28,7 @@
 				<div class="choices-container">
 					<div class="choice card info-card revenue-card">
 						<span>결재자</span>
-						<div id="appr" style="flex: 1; margin-top: 10px;"></div>
+						<div class="must"  id="appr" style="flex: 1; margin-top: 10px;"></div>
 						<input id="apprCho" name="apprLine" type="hidden">
 					</div>
 					<div class="choice card info-card revenue-card">

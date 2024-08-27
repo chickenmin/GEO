@@ -63,10 +63,9 @@
 	                <tbody>
 	                  <c:forEach var="vo" items="${msgListRecv}" varStatus="vs">
 	                    <tr>
-	                      <td class="text-center">
-	                      	<input type="checkbox" id="msgNo" value="${vo.msg_no}"> <!-- 체크박스 -->
-	                      </td>
-	                      
+	                      	<td class="text-center">
+	                      		<input type="checkbox" id="msgNo" value="${vo.msg_no}"> <!-- 체크박스 -->
+	                      	</td>
 	                      <th scope="row" class="text-center">${fn:length(msgListRecv) - vs.index}</th>
 	                      
 	                      <!-- 한번도 읽지않은 쪽지는 New 표시 -->

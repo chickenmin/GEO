@@ -47,7 +47,8 @@
 		<div style="width: 800px; ">
 		
 		<!-- FORM -->
-			<form action="./submitForm.do"  method="post">
+<!-- 			<form action="./submitForm.do"  method="post" enctype="multipart/form-data" onsubmit="return check()"> -->
+			<form action="./submitForm.do"  method="post" enctype="multipart/form-data" id="approval">
 				<input type="hidden" name="apd_form" value="${apd_form}">
 				<button type="button" id="apprLine" class="btn btn-primary rounded-pill" data-bs-toggle="modal" style="float: right; margin-bottom: 10px;" data-bs-target="#basicModal">
 					결재 라인
@@ -141,11 +142,11 @@
 				            	colspan="2">
 				            	<c:choose>
 					            	<c:when test="${apd_form eq 'AP002' or apd_form eq 'AP005'}">
-					            		<input name="dates" type="text" id="mdp-demo" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
+					            		<input name="dates" type="text" id="mdp-demo"  class="must" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
 					                	<button onclick="resetDay(event)" style="margin-left: 10px;">초기화</button>
 					            	</c:when>
 					            	<c:otherwise>
-					                	<input id="dates"  name="dates" type="date" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
+					                	<input id="dates"  class="must"  name="dates" type="date" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
 					                </c:otherwise>
 				           		 </c:choose>
 				            </td>
@@ -191,11 +192,11 @@
 				        </tr>
 				        <tr>
 				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				                <textarea id="con" rows="15" name="content" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
+				                <textarea id="con" rows="15"  class="must" name="content" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
 				            </td>
 				        </tr> 
 				        
-						<c:if test="${apd_form eq 'AP003' or apd_form eq 'AP004' or apd_form eq 'AP005' }">
+						<c:if test="${apd_form eq 'AP003' or apd_form eq 'AP004' or apd_form eq 'AP005'}">
 						 <!-- 파일 -->
 				        <tr>
 				        	<td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); 
@@ -210,8 +211,9 @@
 				
 				<!-- 문서 하단 버튼 -->
 				<div style="display: flex; justify-content: flex-end;" >
-					<button class="btn btn-outline-primary" style="height: auto; margin: 5px 10px 0 0;">임시저장</button>
-					<button class="btn btn-primary" style="height: auto; margin: 5px 10px 0 0;" onsubmit="return check()">상신하기</button>
+					<button class="btn btn-outline-primary" style="height: auto; margin: 5px 10px 0 0;" type="button" onclick="temp()">임시저장</button>
+					<button class="btn btn-primary" style="height: auto; margin: 5px 10px 0 0;" >상신하기</button>
+					<button type="button" onclick="check()">체크</button>
 				</div>
 				<jsp:include page="./apprLine.jsp"></jsp:include>
 			</form>
@@ -245,7 +247,7 @@
 	  			var maxSize = 5*1024*1024;
 	  			var fileSize = document.getElementById("reviewImgFileInput").files[0].size;
 	  			
-	  			console.log(imgFile, fileForm,maxSize, fileSize );
+	  			console.log(imgFile, fileForm,maxSize, fileSize);
 	  			
 	  			var checkImgTest = fileForm.test(imgFile);	//true/false
 	  			var checkImgMath = imgFile.match(fileForm)	//객체 혹은 null
@@ -256,6 +258,7 @@
 	  			
 	  			if(!checkImgTest){ 	//정규화가 맞다면 true, 아니라면 false
 	  				alert("가능한 파일 형식이 아닙니다.");
+	  				this.value = "";
 	  				return;
 	  			}
 	  			if(maxSize < fileSize){
@@ -273,6 +276,28 @@
     	  $('#mdp-demo').multiDatesPicker('resetDates');
     	  console.log("리셋")
       }
+      
+//    function check(){
+// 	   const musts = document.getElementsByClassName("must");
+// 	   let all = true;
+// 	   Array.from(musts).forEach(function(element){
+		   
+// 		  if(element.value || element.innerHTML.trim()===''){
+// 			  all = false;
+// 			  console.log("inner",element.innerHTML.trim());
+// 		  } 
+// 	   });
+	   
+// 	   if (!all) {
+// 		alert('입력되지 않은 필수값이 있습니다.');
+// 		return false;
+// 		}
+// 	   console.log(musts);
+	   
+// 	   return true;
+//    } 
+      
+     
 
 
 </script>

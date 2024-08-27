@@ -16,8 +16,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nike.geo.model.ApprovalDaoImpl;
 import com.nike.geo.model.IApprovalDao;
 import com.nike.geo.model.ICommDao;
+import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.appr.Ap_FavVo;
 import com.nike.geo.vo.comm.CommonVo;
+import com.nike.geo.vo.comm.FileVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,8 +68,21 @@ public class Kjm_Test {
 //		assertEquals(1, submit);
 		
 //		int n = dao.selectPos("emp");
-		int n = dao.selctAPD();
-		assertNotEquals(0, n);
+//		int n = dao.selctAPD();
+//		assertNotEquals(0, n);
+		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		FileVo vo = new FileVo(1, "찐이름", "저장이름", 500, "emp");
+//		map.put("origin_no", 1);
+//		map.put("file_oname", "찐이름");
+//		map.put("file_sname", "저장이름");
+//		map.put("file_size", 500);
+//		map.put("emp_no", "emp");
+//		int n = dao.putFile(vo);
+//		assertEquals(1, n);
+		
+		List<Ap_DocuVo> lists = dao.selectApproval("emp");
+		assertNotEquals(0, lists.size());
 		
 	}
 	

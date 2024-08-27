@@ -11,6 +11,7 @@ import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.appr.Ap_FavVo;
 import com.nike.geo.vo.appr.Ap_LineVo;
 import com.nike.geo.vo.appr.Ap_RfVo;
+import com.nike.geo.vo.comm.FileVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,14 +36,16 @@ public class ApprovalDaoImpl implements IApprovalDao{
 		return template.delete(NS+"delFav", map);
 	}
 	
-	@Override
-	public int submit(Map<String, Object> map) {
-		return template.insert(NS+"submit", map);
-	}
+	
 	
 	@Override
 	public int submit2(Ap_DocuVo vo) {
-		return template.insert(NS+"submit", vo);
+		return template.insert(NS+"submit2", vo);
+	}
+	
+	@Override
+	public int submit1(Ap_DocuVo vo) {
+		return template.insert(NS+"submit1", vo);
 	}
 	
 	@Override
@@ -64,5 +67,16 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	public int putRef(Ap_RfVo vo) {
 		return template.insert(NS+"putRef", vo);
 	}
+	
+	@Override
+	public int putFile(FileVo vo) {
+		return template.insert(NS+"putFile", vo);
+	}
+	
+	@Override
+	public List<Ap_DocuVo> selectApproval(String emp_no) {
+		return template.selectList(NS+"selectApproval", emp_no);
+	}
+	
 
 }
