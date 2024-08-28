@@ -30,5 +30,8 @@ public interface IEmpService {
 
 	// 마이 페이지
 	public EmpVo myPage(String emp_no);
+	
+	// 사원 근태 조회
+	public AttVo empAtt(String emp_no);
 
 }

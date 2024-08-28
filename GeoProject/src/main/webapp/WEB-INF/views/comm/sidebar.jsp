@@ -82,7 +82,7 @@
             	</li>
             	
             	<li>
-            		<a href="#">
+            		<a href="./empAtt.do">
 		              <i class="bi bi-circle"></i><span>사유서 관리</span>
 		            </a>
             	</li>
