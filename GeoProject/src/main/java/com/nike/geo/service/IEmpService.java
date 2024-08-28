@@ -32,6 +32,6 @@ public interface IEmpService {
 	public EmpVo myPage(String emp_no);
 	
 	// 사원 근태 조회
-	public AttVo empAtt(String emp_no);
+	public List<AttVo> empAtt(String emp_no);
 
 }

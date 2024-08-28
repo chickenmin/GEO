@@ -2,6 +2,8 @@ package com.nike.geo.model;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.nike.geo.vo.hr.AttVo;
 import com.nike.geo.vo.hr.EmpVo;
 
@@ -32,6 +34,6 @@ public interface IEmpDao {
 	public EmpVo myPage(String emp_no);
 	
 	// 사원 근태 조회
-	public AttVo empAtt(String emp_no);
+	public List<AttVo> empAtt(String emp_no);
 	
 }

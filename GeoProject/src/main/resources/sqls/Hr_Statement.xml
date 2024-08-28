@@ -92,7 +92,7 @@ EMP_BIRTH , EMP_ADDRESS
 </select>
 
 <!-- 사원 근태 조회 -->
-<select id="empAtt" resultType="AttVo">
+<select id="empAtt" parameterType="java.lang.String" resultType="AttVo">
 SELECT EMP_NO , ATT_ARRIVE_TIME , ATT_LEFT_TIME
 	FROM ATT a 
 	WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
