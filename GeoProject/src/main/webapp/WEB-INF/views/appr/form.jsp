@@ -47,9 +47,14 @@
 		<div style="width: 800px; ">
 		
 		<!-- FORM -->
-<!-- 			<form action="./submitForm.do"  method="post" enctype="multipart/form-data" onsubmit="return check()"> -->
 			<form  action="./submitForm2.do"  method="post" name="submitForm"  enctype="multipart/form-data" >
+			
+				<!-- 화면에 노출없이, 폼으로 넘겨야 하는 값 -->
 				<input type="hidden" name="apd_form" value="${apd_form}">
+				<c:if test="${apd_form ne 'AP002'}">
+					<input type="hidden" name="apd_half_yn" value="N">
+				</c:if>
+				
 				<button type="button" id="apprLine" class="btn btn-primary rounded-pill" data-bs-toggle="modal" style="float: right; margin-bottom: 10px;" data-bs-target="#basicModal">
 					결재 라인
 				</button>
@@ -143,7 +148,7 @@
 				            	colspan="2">
 				            	<c:choose>
 					            	<c:when test="${apd_form eq 'AP002' or apd_form eq 'AP005'}">
-					            		<input name="dates" type="text" id="mdp-demo"  class="must" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
+					            		<input name="apd_days" type="text" id="mdp-demo"  class="must" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
 					                	<button onclick="resetDay(event)" style="margin-left: 10px;">초기화</button>
 					            	</c:when>
 					            	<c:otherwise>
@@ -153,20 +158,21 @@
 				            </td>
 				        </tr>
 				        <c:if test="${apd_form eq 'AP002'}">
-				        	<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
-				            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
-				            	반차사용
-				            </td>
-				             <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
-				            	colspan="2">
-				            	<select name="apd_half_yn" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;">
-				            		<option value="N" >---미사용---</option>
-				            		<option value="A" >오전반차</option>
-				            		<option value="P" >오후반차</option>
-				            	</select>
-				            </td>
+					        <tr>
+					        	<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
+					            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
+					            	반차사용
+					            </td>
+					             <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
+					            	colspan="2">
+					            	<select name="apd_half_yn" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;">
+					            		<option value="N" >---미사용---</option>
+					            		<option value="A" >오전반차</option>
+					            		<option value="P" >오후반차</option>
+					            	</select>
+					            </td>
+							</tr>
 				        </c:if>
-				
 				
 				        <!-- 사유 -->
 				        <tr>
@@ -215,7 +221,6 @@
 					<input type="hidden" name="type" id="dataType">
 					<button class="btn btn-outline-primary frmbtn"  style="height: auto; margin: 5px 10px 0 0;">임시저장</button>
 					<button class="btn btn-primary frmbtn"  style="height: auto; margin: 5px 10px 0 0;" >상신하기</button>
-					<button type="button"onclick="check()">체크</button>
 				</div>
 				<jsp:include page="./apprLine.jsp"></jsp:include>
 			</form>
