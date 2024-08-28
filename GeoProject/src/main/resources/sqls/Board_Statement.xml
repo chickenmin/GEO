@@ -5,7 +5,7 @@
 <mapper namespace="com.nike.geo.model.BoardDaoImpl">
 
 	<select id="announcements" resultType="BoardVo">
-		SELECT BO_NO,EMP_NO,BO_STATUS,
+	SELECT BO_NO,EMP_NO,BO_STATUS,
 		BO_TITLE,BO_CONTENT ,
 		BO_REGDATE,BO_LIKE_COUNT,
 		(SELECT COUNT(*) FROM VIEW_COUNT v WHERE v.BO_NO = b.BO_NO)	AS BO_VIEW_COUNT,
@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="nomalBoard" resultType="BoardVo">
-		SELECT BO_NO,EMP_NO,BO_STATUS,
+	SELECT BO_NO,EMP_NO,BO_STATUS,
 		BO_TITLE,BO_CONTENT ,
 		BO_REGDATE,BO_LIKE_COUNT,
 		(SELECT COUNT(*) FROM VIEW_COUNT v WHERE v.BO_NO = b.BO_NO)	AS BO_VIEW_COUNT,
@@ -27,9 +27,9 @@
 	</select>
 	
 	<select id="delBoard" resultType="BoardVo">
-		SELECT BO_NO,EMP_NO,BO_STATUS,
+	SELECT BO_NO,EMP_NO,BO_STATUS,
 		BO_TITLE,BO_CONTENT ,
-		BO_REGDATE,BO_LIKE_COUNT,
+		BO_REGDATE,(SELECT COUNT(*) FROM LIKER l WHERE l.BO_NO = b.BO_NO)	AS LIKER,
 		(SELECT COUNT(*) FROM VIEW_COUNT v WHERE v.BO_NO = b.BO_NO)	AS BO_VIEW_COUNT,
 		BO_DEL_YN ,MOD_ID ,MOD_DATE 
 			FROM BO b
@@ -38,33 +38,33 @@
 	</select>
 	
 	<insert id="insertBoard">
-		INSERT INTO BO (BO_NO,BO_TITLE,EMP_NO,
-				BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT
-				,BO_CONTENT ,BO_STATUS,BO_DEL_YN,
-				REG_ID,REG_DATE,MOD_ID
-				,MOD_DATE)
-		VALUES('A' || TO_CHAR(BO_NO_SEQ.NEXTVAL,'FM0000'),#{bo_title},'SY001',
-				SYSDATE,0,0
-				,#{bo_content},'announcements','N'
-				,'SY001',SYSDATE,'SY001'
-				,SYSDATE)
+	INSERT INTO BO (BO_NO,BO_TITLE,EMP_NO,
+			BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT
+			,BO_CONTENT ,BO_STATUS,BO_DEL_YN,
+			REG_ID,REG_DATE,MOD_ID
+			,MOD_DATE)
+	VALUES('A' || TO_CHAR(BO_NO_SEQ.NEXTVAL,'FM0000'),#{bo_title},#{emp_no},
+			SYSDATE,0,0
+			,#{bo_content},'announcements','N'
+			,#{emp_no},SYSDATE,#{emp_no}
+			,SYSDATE)
 	</insert>
 	
 	<select id="detailBoard" resultType="BoardVo">
-		SELECT BO_NO,EMP_NO,BO_STATUS,BO_TITLE,BO_CONTENT ,BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT,BO_DEL_YN ,MOD_ID ,MOD_DATE 
-			FROM BO
-			WHERE BO_NO=#{bo_no}
+	SELECT BO_NO,EMP_NO,BO_STATUS,BO_TITLE,BO_CONTENT ,BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT,BO_DEL_YN ,MOD_ID ,MOD_DATE 
+		FROM BO
+		WHERE BO_NO=#{bo_no}
 	</select>
 	
 	<update id="modifyBoard">
-		UPDATE BO 
+	UPDATE BO 
 		SET BO_TITLE =#{bo_title}, BO_CONTENT =#{bo_content} ,MOD_DATE =SYSDATE
 		WHERE BO_NO = #{bo_no}
 	</update>
 
 	
 	<update id="multiDeleteBoard">
-		UPDATE BO SET BO_DEL_YN ='Y'
+	UPDATE BO SET BO_DEL_YN ='Y'
 		WHERE BO_NO IN 
 		<foreach collection="list" item="bo_no" open="(" separator="," close=")">
 		#{bo_no}
@@ -72,7 +72,7 @@
 	</update>
 	
 	<delete id="realDelete">
-		DELETE FROM BO WHERE BO_NO IN 
+	DELETE FROM BO WHERE BO_NO IN 
 		<foreach collection="list" item="bo_no" open="(" separator="," close=")">
 		#{bo_no}
 		</foreach>
@@ -81,9 +81,9 @@
 	<!-- 게시글 한개 조회 -->
 	<select id="selectOne" resultType="BoardVo">
 	SELECT BO_NO, EMP_NO, BO_STATUS, BO_TITLE|| '(' ||(SELECT COUNT(*) FROM VIEW_COUNT WHERE BO_NO = #{bo_no}) || ')'
-   ,  BO_REGDATE, BO_VIEW_COUNT, BO_LIKE_COUNT, BO_DEL_YN, REG_ID, REG_DATE, MOD_ID, MOD_DATE 
-	FROM BO
-	WHERE BO_NO=#{bo_no}
+		  ,  BO_REGDATE, BO_VIEW_COUNT, BO_LIKE_COUNT, BO_DEL_YN, REG_ID, REG_DATE, MOD_ID, MOD_DATE 
+		FROM BO
+		WHERE BO_NO=#{bo_no}
 	</select>
 	
 	
@@ -98,22 +98,17 @@
 	
 	<!-- 게시글 읽은 사람 조회 -->
 	<select id="searchBoardOne" resultType="java.lang.Integer">
-		SELECT COUNT(*)
+	SELECT COUNT(*)
 		FROM VIEW_COUNT
 		WHERE BO_NO =#{bo_no} AND EMP_NO = #{emp_no}
 	</select>
 	
-	<!-- 추천 2번째부턴 업데이트 -->
-	<update id="likeUpdate">
-	UPDATE "LIKER"
-	SET LIKE_YN = CASE
-	    WHEN LIKE_YN = 'Y' THEN 'N'
-	    WHEN LIKE_YN = 'N' THEN 'Y'
-	    ELSE LIKE_YN -- 다른 값이 들어오는 경우 (혹은 디폴트 값) 그대로 유지
-	END
-	WHERE BO_NO = #{bo_no}
-	AND EMP_NO = #{emp_no}
-	</update>
+	<!-- 추천삭제 -->
+	<delete id="likeDel">
+	DELETE FROM LIKER 
+		WHERE BO_NO =#{bo_no}
+		AND EMP_NO=#{emp_no}
+	</delete>
 	
 	
 	<!-- 추천 누른사람 사람 입력 -->
@@ -129,9 +124,15 @@
 	
 	<!-- 추천 누른 사람 조회 -->
 	<select id="likeSearchBoardOne" resultType="java.lang.Integer">
-		SELECT COUNT(*)
+	SELECT COUNT(*)
 		FROM LIKER
 		WHERE BO_NO =#{bo_no} AND EMP_NO = #{emp_no}
 	</select>
 	
+	<!-- 게시글 한개 조회 -->
+	<select id="likeSelectOne" resultType="LikeVo">
+	SELECT BO_NO, EMP_NO, LIKE_YN
+	    FROM LIKER
+	    WHERE BO_NO=#{bo_no} AND EMP_NO=#{emp_no}
+	</select>
 </mapper>
