@@ -40,7 +40,6 @@ import lombok.extern.slf4j.Slf4j;
 public class ApprovalController {
 	
 	private final IApprovalService apprService; 
-	private final IEmpService empService; 
 	
 	// 양식홈 로드시, 즐겨찾기 리스트 전달
 	@GetMapping("/apprHome.do")
