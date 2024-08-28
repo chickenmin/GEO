@@ -36,4 +36,7 @@ public interface IEmpDao {
 	// 사원 근태 조회
 	public List<AttVo> empAtt(String emp_no);
 	
+	// 비밀번호 변경
+	public int modPw(String emp_no);
+	
 }

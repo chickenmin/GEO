@@ -72,4 +72,9 @@ public class EmpDaoImpl implements IEmpDao {
 		return session.selectList(NS + "empAtt");
 	}
 	
+	@Override
+	public int modPw(String emp_no) {
+		log.info(NS + "modPw");
+		return session.update(NS + "modPw");
+	}
 }

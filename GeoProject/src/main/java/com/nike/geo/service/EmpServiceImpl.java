@@ -83,5 +83,13 @@ public class EmpServiceImpl implements IEmpService {
 		log.info("사원 근무 조회");
 		return dao.empAtt(emp_no);
 	}
+	
+	// 비밀번호 변경
+	@Override
+	public int modPw(String emp_no) {
+		log.info("비밀번호 변경");
+		return dao.modPw(emp_no);
+	}
+	
 
 }

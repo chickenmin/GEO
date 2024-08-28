@@ -89,25 +89,25 @@
 
 			<img src="assets/img/profile-img.jpg" alt="Profile"
 				class="rounded-circle"> <input type="hidden" name="emp_no">
-			<h2>${vo.emp_name}</h2>
+			<h2>${loginVo.emp_name}</h2>
 			<h3>
 				<c:choose>
-					<c:when test="${vo.emp_dept eq 'DE001'}">
+					<c:when test="${loginVo.emp_dept eq 'DE001'}">
 													개발
 												</c:when>
-					<c:when test="${vo.emp_dept eq 'DE002'}">
+					<c:when test="${loginVo.emp_dept eq 'DE002'}">
 													인사
 												</c:when>
-					<c:when test="${vo.emp_dept eq 'DE003'}">
+					<c:when test="${loginVo.emp_dept eq 'DE003'}">
 													생산
 												</c:when>
-					<c:when test="${vo.emp_dept eq 'DE004'}">
+					<c:when test="${loginVo.emp_dept eq 'DE004'}">
 													총무
 												</c:when>
-					<c:when test="${vo.emp_dept eq 'DE005'}">
+					<c:when test="${loginVo.emp_dept eq 'DE005'}">
 													영업
 												</c:when>
-					<c:when test="${vo.emp_dept eq 'DE006'}">
+					<c:when test="${loginVo.emp_dept eq 'DE006'}">
 													마케팅
 												</c:when>
 				</c:choose>
@@ -116,22 +116,22 @@
 
 			<h3>
 				<c:choose>
-					<c:when test="${vo.emp_pos eq 'PO001'}">
+					<c:when test="${loginVo.emp_pos eq 'PO001'}">
 													사원
 												</c:when>
-					<c:when test="${vo.emp_pos eq 'PO002'}">
+					<c:when test="${loginVo.emp_pos eq 'PO002'}">
 													주임
 												</c:when>
-					<c:when test="${vo.emp_pos eq 'PO003'}">
+					<c:when test="${loginVo.emp_pos eq 'PO003'}">
 													대리
 												</c:when>
-					<c:when test="${vo.emp_pos eq 'PO004'}">
+					<c:when test="${loginVo.emp_pos eq 'PO004'}">
 													과장
 												</c:when>
-					<c:when test="${vo.emp_pos eq 'PO005'}">
+					<c:when test="${loginVo.emp_pos eq 'PO005'}">
 													차장
 												</c:when>
-					<c:when test="${vo.emp_pos eq 'PO006'}">
+					<c:when test="${loginVo.emp_pos eq 'PO006'}">
 													부장
 												</c:when>
 
@@ -173,29 +173,29 @@
 
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label ">이름</div>
-						<div class="col-lg-9 col-md-8">${vo.emp_name}</div>
+						<div class="col-lg-9 col-md-8">${loginVo.emp_name}</div>
 					</div>
 
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label">부서</div>
 						<div class="col-lg-9 col-md-8">
 							<c:choose>
-								<c:when test="${vo.emp_dept eq 'DE001'}">
+								<c:when test="${loginVo.emp_dept eq 'DE001'}">
 													개발
 												</c:when>
-								<c:when test="${vo.emp_dept eq 'DE002'}">
+								<c:when test="${loginVo.emp_dept eq 'DE002'}">
 													인사
 												</c:when>
-								<c:when test="${vo.emp_dept eq 'DE003'}">
+								<c:when test="${loginVo.emp_dept eq 'DE003'}">
 													생산
 												</c:when>
-								<c:when test="${vo.emp_dept eq 'DE004'}">
+								<c:when test="${loginVo.emp_dept eq 'DE004'}">
 													총무
 												</c:when>
-								<c:when test="${vo.emp_dept eq 'DE005'}">
+								<c:when test="${loginVo.emp_dept eq 'DE005'}">
 													영업
 												</c:when>
-								<c:when test="${vo.emp_dept eq 'DE006'}">
+								<c:when test="${loginVo.emp_dept eq 'DE006'}">
 													마케팅
 												</c:when>
 							</c:choose>
@@ -206,22 +206,22 @@
 						<div class="col-lg-3 col-md-4 label">직급</div>
 						<div class="col-lg-9 col-md-8">
 							<c:choose>
-								<c:when test="${vo.emp_pos eq 'PO001'}">
+								<c:when test="${loginVo.emp_pos eq 'PO001'}">
 													사원
 												</c:when>
-								<c:when test="${vo.emp_pos eq 'PO002'}">
+								<c:when test="${loginVo.emp_pos eq 'PO002'}">
 													주임
 												</c:when>
-								<c:when test="${vo.emp_pos eq 'PO003'}">
+								<c:when test="${loginVo.emp_pos eq 'PO003'}">
 													대리
 												</c:when>
-								<c:when test="${vo.emp_pos eq 'PO004'}">
+								<c:when test="${loginVo.emp_pos eq 'PO004'}">
 													과장
 												</c:when>
-								<c:when test="${vo.emp_pos eq 'PO005'}">
+								<c:when test="${loginVo.emp_pos eq 'PO005'}">
 													차장
 												</c:when>
-								<c:when test="${vo.emp_pos eq 'PO006'}">
+								<c:when test="${loginVo.emp_pos eq 'PO006'}">
 													부장
 												</c:when>
 
@@ -231,13 +231,13 @@
 
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label">성별</div>
-						<div class="col-lg-9 col-md-8">${vo.emp_gender}</div>
+						<div class="col-lg-9 col-md-8">${loginVo.emp_gender}</div>
 					</div>
 
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label">생년월일</div>
 						<div class="col-lg-9 col-md-8">
-							<fmt:parseDate var="cDate01" value="${vo.emp_birth}" type="date"
+							<fmt:parseDate var="cDate01" value="${loginVo.emp_birth}" type="date"
 								pattern="yyyy-MM-dd" />
 							<fmt:formatDate var="emp_birth02" value="${cDate01}" />
 							${emp_birth02}
@@ -246,23 +246,23 @@
 
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label">연락처</div>
-						<div class="col-lg-9 col-md-8">${vo.emp_phone}</div>
+						<div class="col-lg-9 col-md-8">${loginVo.emp_phone}</div>
 					</div>
 
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label">Email</div>
-						<div class="col-lg-9 col-md-8">${vo.emp_email}</div>
+						<div class="col-lg-9 col-md-8">${loginVo.emp_email}</div>
 					</div>
 
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label">주소</div>
-						<div class="col-lg-9 col-md-8">${vo.emp_address}</div>
+						<div class="col-lg-9 col-md-8">${loginVo.emp_address}</div>
 					</div>
 
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label">입사일자</div>
 						<div class="col-lg-9 col-md-8">
-							<fmt:parseDate var="cDate02" value="${vo.emp_hiredate}"
+							<fmt:parseDate var="cDate02" value="${loginVo.emp_hiredate}"
 								type="date" pattern="yyyy-MM-dd" />
 							<fmt:formatDate var="emp_hiredate02" value="${cDate02}" />
 							${emp_hiredate02}
@@ -277,7 +277,7 @@
 
 					<!-- Profile Edit Form -->
 					<form action="./updateEmp.do" method="post">
-						<input type="hidden" name="emp_no" value="${vo.emp_no}">
+						<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
 						<div class="row mb-3">
 							<label for="profileImage"
 								class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
@@ -297,7 +297,7 @@
 							<label for="name" class="col-md-4 col-lg-3 col-form-label">이름</label>
 							<div class="col-md-8 col-lg-9">
 								<input name="emp_name" type="text" class="form-control"
-									id="name" value="${vo.emp_name}" readonly="readonly"
+									id="name" value="${loginVo.emp_name}" readonly="readonly"
 									style="background-color: silver;">
 							</div>
 						</div>
@@ -345,7 +345,7 @@
 						<div class="row mb-3">
 							<label for="birth" class="col-md-4 col-lg-3 col-form-label">생년월일</label>
 							<div class="col-md-8 col-lg-9">
-								<fmt:parseDate var="cDate" value="${vo.emp_birth}"
+								<fmt:parseDate var="cDate" value="${loginVo.emp_birth}"
 									pattern="yyyy-MM-dd" />
 								<fmt:formatDate var="emp_birth01" value="${cDate}" />
 								<input name="emp_birth" type="text" class="form-control"
@@ -358,7 +358,7 @@
 							<label for="phone" class="col-md-4 col-lg-3 col-form-label">연락처</label>
 							<div class="col-md-8 col-lg-9">
 								<input name="emp_phone" type="text" class="form-control"
-									value="${vo.emp_phone}">
+									value="${loginVo.emp_phone}">
 							</div>
 						</div>
 
@@ -366,15 +366,15 @@
 							<label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
 							<div class="col-md-8 col-lg-9">
 								<input name="emp_email" type="text" class="form-control"
-									id="email" value="${vo.emp_email}">
+									id="email" value="${loginVo.emp_email}">
 							</div>
 						</div>
 
 						<div class="row mb-3">
 							<label for="address" class="col-md-4 col-lg-3 col-form-label">주소</label>
 							<div class="col-md-8 col-lg-9">
-								<!-- 								<input name="emp_address" type="text" class="form-control" id="address" -->
-								<%-- 									value="${vo.emp_address}"> --%>
+																<input name="emp_address" type="text" class="form-control" id="address"
+																	value="${loginVo.emp_address}">
 								<div class="col-sm-10">
 									<div class="input-group mb-3" style="width: 25%;">
 										<input type="text" class="form-control" id="sample6_postcode"
@@ -402,7 +402,7 @@
 						<div class="row mb-3">
 							<label for="hiredate" class="col-md-4 col-lg-3 col-form-label">입사일자</label>
 							<div class="col-md-8 col-lg-9">
-								<fmt:parseDate var="cDate" value="${vo.emp_hiredate}"
+								<fmt:parseDate var="cDate" value="${loginVo.emp_hiredate}"
 									pattern="yyyy-MM-dd" />
 								<fmt:formatDate var="emp_hireDate01" value="${cDate}" />
 								<input name="emp_hiredate" type="text" class="form-control"
@@ -426,7 +426,7 @@
 					role="tabpanel">
 					<form action="./clearPw.do" method="post">
 						<div class="text-center">
-							<input type="hidden" name="emp_no" value="${vo.emp_no}">
+							<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
 
 							<div class="row mb-3">
 								<label for="currentPassword"
