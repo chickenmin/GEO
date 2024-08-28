@@ -101,7 +101,7 @@
 					#{emp_no}, SYSDATE, #{emp_no}, SYSDATE)
 	</insert>
 	
-	
+	<!--  -->
 	<!-- 파일 -->
 	<!--결재 파일 추가  -->
 	<insert id="putFile">
