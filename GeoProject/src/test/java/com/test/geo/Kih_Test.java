@@ -54,7 +54,7 @@ public class Kih_Test {
 	}
 	
 	
-	@Test
+//	@Test
 	public void view_Count_Test() {
 		String bo_no = "A0041";
 		String emp_no = "SY003";
@@ -73,6 +73,25 @@ public class Kih_Test {
 		
 	}
 	
+	@Test
+	public void like_Count_Test() {
+		String bo_no = "A0062";
+		String emp_no="SY001";
+		
+		Map<String, String>map = new HashMap<String, String>(){{
+			put("bo_no", bo_no); 
+			put("emp_no", emp_no);
+		}};
+		int cnt = template.selectOne("com.nike.geo.model.BoardDaoImpl.likeSearchBoardOne", map);
+		int up =template.update("com.nike.geo.model.BoardDaoImpl.likeUpdate", map);
+		if(up==0) {
+			template.insert("com.nike.geo.model.BoardDaoImpl.likeInsert", map);
+		}
+		BoardVo resultVo =  template.selectOne("com.nike.geo.model.BoardDaoImpl.likeSelectOne", bo_no);
+		System.out.println("상세글 조회" +resultVo);
+		
+		
+	}
 	
 	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <body>
 
   <!-- ======= Sidebar ======= -->
@@ -96,14 +97,16 @@
             <ul>
             	<li>
             		<a href="./selectAll.do">
-		              <i class="bi bi-circle"></i><span>사원 조회</span>
-		            </a>
+		              	<i class="bi bi-circle"></i><span>사원 조회</span>
+					</a>
             	</li>
             	
             	<li>
+            		<c:if test="${loginVo.emp_auth eq 'A'}">
             		<a href="./insertEmp.do">
-		              <i class="bi bi-circle"></i><span>사원 추가(관리자만 보이게)</span>
-		            </a>
+		              	<i class="bi bi-circle"></i><span>사원 추가(관리자만 보이게)</span>
+					</a>
+					</c:if>
             	</li>
             </ul>
           </li>

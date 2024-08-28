@@ -20,11 +20,13 @@
 		${Vo.bo_content}
 		<hr>
 		<form action="./likeCount.do" method="post">
-<!-- 		<input type="submit" value="추천"> -->
+		<input type="hidden" name="bo_no" value="${Vo.bo_no}">
+		<input type="hidden" name="emp_no" value="${Vo.emp_no}">
+		<input type="submit" value="추천">
 		</form>	
 		<button>댓글</button>		
 		<button onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>		
-		<button>삭제</button>
+		<button onclick="del(event)">삭제</button>
   	</main><!-- End #main -->
 
 </body>

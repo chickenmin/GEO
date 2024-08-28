@@ -18,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
 public class ApprovalDaoImpl implements IApprovalDao{
+	
 	private String NS="com.nike.geo.model.ApprovalDaoImpl.";
+	
 	private final SqlSessionTemplate template;
 
 	@Override
@@ -38,9 +40,13 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	
 	
 	
+//	@Override
+//	public int submit2(Ap_DocuVo vo) {
+//		return template.insert(NS+"submit2", vo);
+//	}
 	@Override
-	public int submit2(Ap_DocuVo vo) {
-		return template.insert(NS+"submit2", vo);
+	public int submit2(Map<String, Object> map) {
+		return template.insert(NS+"submit2", map);
 	}
 	
 	@Override
@@ -77,6 +83,49 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	public List<Ap_DocuVo> selectApproval(String emp_no) {
 		return template.selectList(NS+"selectApproval", emp_no);
 	}
+	
+	@Override
+	public Ap_DocuVo selectDeatil(String apd_no) {
+		return template.selectOne(NS+"selectDeatil", apd_no);
+	}
+	
+	@Override
+	public List<Ap_LineVo> selectLine(String apd_no) {
+		return template.selectList(NS+"selectLine", apd_no);
+	}
+	
+	@Override
+	public List<FileVo> selectFile(String apd_no) {
+		return template.selectList(NS+"selectFile", apd_no);
+	}
+	
+	
+	@Override
+	public FileVo findFile(String file_no) {
+		return template.selectOne("com.nike.geo.model.CommDaoImpl.findFile", file_no);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

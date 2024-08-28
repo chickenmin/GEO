@@ -11,15 +11,10 @@
 <body>
 	<%@ include file="../comm/sidebar.jsp"%>
 	<main id="main" class="main">
-		
-		<c:forEach var="vo" items="${vo}" varStatus="vs">
-			<tr>
-				<td>${vo.emp_no}</td>
-			</tr>
-		</c:forEach>
-		
-		
-		
+
+
+
+
 		<script type="text/javascript"
 			src="https://www.gstatic.com/charts/loader.js"></script>
 		<script type="text/javascript">
@@ -93,8 +88,10 @@
 					}, 0);
 		</script>
 
+
+
 		<div id="calendar_basic" style="width: 1000px; height: 350px;"></div>
-		
+
 
 
 

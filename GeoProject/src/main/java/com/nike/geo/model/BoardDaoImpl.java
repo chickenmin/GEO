@@ -1,5 +1,6 @@
 package com.nike.geo.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,10 +67,9 @@ public class BoardDaoImpl implements IBoardDao {
 		int n = sessionTemplate.delete(NS+"realDelete", list);
 		return (n==1)?true:false;
 	}
-	
+	//조회수
 	@Override
 	public BoardVo selectOne(String bo_no) {
-	
 		return sessionTemplate.selectOne(NS+"selectOne", bo_no);
 	}
 	
@@ -87,20 +87,27 @@ public class BoardDaoImpl implements IBoardDao {
 	
 	//추천
 	@Override
+	public int likeSearchBoardOne(Map<String, String> map) {
+		int cnt = sessionTemplate.selectOne(NS+"likeSearchBoardOne", map);
+		return cnt;
+	}
+	@Override
+	public boolean likeDel(Map<String, String>map) {
+		int n = sessionTemplate.delete(NS+"likeDel", map);
+		return (n==1)?true:false;
+	}
+	@Override
+	public LikeVo likeSelectOne(String bo_no,String emp_no) {
+		Map<String, String>param=new HashMap<>();
+		param.put("bo_no", bo_no);
+		param.put("emp_no", emp_no);
+		return sessionTemplate.selectOne(NS+"likeSelectOne", param);
+	}
+	@Override
 	public boolean likeInsert(Map<String, String>map) {
 		int n = sessionTemplate.insert(NS+"likeInsert",map);
 		return (n==1)?true:false;
 	}
 	
-	@Override
-	public boolean likeUpdate(Map<String, String>map) {
-		int n = sessionTemplate.update(NS+"likeUpdate",map);
-		return (n==1)?true:false;
-	}
 	
-	@Override
-	public int likeSearchBoardOne(Map<String, String> map) {
-		int cnt = sessionTemplate.selectOne(NS+"likeSearchBoardOne", map);
-		return cnt;
-	}
 }

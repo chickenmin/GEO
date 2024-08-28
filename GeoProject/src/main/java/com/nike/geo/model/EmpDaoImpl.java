@@ -67,9 +67,14 @@ public class EmpDaoImpl implements IEmpDao {
 	}
 	
 	@Override
-	public AttVo empAtt(String emp_no) {
+	public List<AttVo> empAtt(String emp_no) {
 		log.info(NS + "empAtt");
-		return session.selectOne(NS + "empAtt");
+		return session.selectList(NS + "empAtt");
 	}
 	
+	@Override
+	public int modPw(String emp_no) {
+		log.info(NS + "modPw");
+		return session.update(NS + "modPw");
+	}
 }

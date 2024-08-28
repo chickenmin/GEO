@@ -48,6 +48,7 @@ function del(event) {
             data: 'ch=' + i, // 체크박스의 값을 'ch'라는 이름으로 서버에 전송합니다.
             success: function(msg) {
                 alert('삭제가 완료되었습니다.'); 
+                location.href="./delBoard.do";
             },
             error: function(error) {
                 alert('삭제에 실패했습니다.'); 
@@ -57,6 +58,7 @@ function del(event) {
         alert("삭제가 취소되었습니다"); 
     }
 }
+
 
 
 

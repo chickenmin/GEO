@@ -28,6 +28,6 @@ public interface IBoardService {
 
 	public BoardVo view_Count(BoardVo bVo);
 	//추천
-	public BoardVo likeCount(BoardVo vo);
+	public LikeVo likeCount(LikeVo vo);
 
 }

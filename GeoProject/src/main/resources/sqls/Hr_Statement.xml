@@ -83,19 +83,26 @@ AND TO_CHAR(ATT_ARRIVE_TIME, 'yyyy-MM-dd') = TO_CHAR(SYSDATE, 'yyyy-MM-dd')
 </update>
 
 <!-- 마이페이지 -->
-<select id="myPage">
+<select id="myPage" parameterType="java.lang.String" resultType="EmpVo">
 SELECT EMP_NO , EMP_POS , EMP_DEPT , EMP_NAME ,
 EMP_GENDER , EMP_HIREDATE , EMP_EMAIL , EMP_PHONE ,
 EMP_BIRTH , EMP_ADDRESS
 	FROM EMP e
-	WHERE EMP_NO = #{emp_no}
+	WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
 </select>
 
 <!-- 사원 근태 조회 -->
-<select id="empAtt" resultType="AttVo">
+<select id="empAtt" parameterType="java.lang.String" resultType="AttVo">
 SELECT EMP_NO , ATT_ARRIVE_TIME , ATT_LEFT_TIME
 	FROM ATT a 
 	WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
+</select>
+
+<!-- 비밀번호 변경 -->
+<select id="modPw" parameterType="java.lang.String" resultType="EmpVo">
+UPDATE GEO.EMP
+SET EMP_PW='1234'
+WHERE EMP_NO = #{emp_no}
 </select>
 
 
