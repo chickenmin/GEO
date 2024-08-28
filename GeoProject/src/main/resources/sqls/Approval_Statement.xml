@@ -50,7 +50,7 @@
 				REG_ID, REG_DATE, MOD_ID, MOD_DATE)
 		VALUES(Apd_docu_seq.NEXTVAL, #{emp_no}, #{apd_con}, 
 				#{apd_step}, 'W', #{apd_days},
-				'N',	#{apd_form}, SYSDATE,
+				#{apd_half_yn},	#{apd_form}, SYSDATE,
 				<choose>
 					<when test='type == "상신하기"'>
 						'N'
@@ -63,17 +63,7 @@
 				,#{emp_no},SYSDATE, #{emp_no}, SYSDATE)    
 	</insert>
 	
-<!-- 	<insert id="submit2"> -->
-<!-- 		INSERT INTO AP_DOCU -->
-<!-- 				(APD_NO, EMP_NO, APD_CON,  -->
-<!-- 				APD_STEP, APD_STATUS, APD_DAYS,  -->
-<!-- 				APD_HALF_YN,APD_FORM, APD_CLEAR_DATE, APD_TEMP_YN,  -->
-<!-- 				REG_ID, REG_DATE, MOD_ID, MOD_DATE) -->
-<!-- 		VALUES(Apd_docu_seq.NEXTVAL, #{emp_no}, #{apd_con},  -->
-<!-- 				#{apd_step}, 'W', #{apd_days}, -->
-<!-- 				'N',	#{apd_form}, SYSDATE, 'N',  -->
-<!-- 				#{emp_no},SYSDATE, #{emp_no}, SYSDATE)     -->
-<!-- 	</insert> -->
+
 	
 	<!-- 결재라인 : 직급 순서 받아오기 -->
 	<select id="selectPos" resultType="java.lang.Integer" >
