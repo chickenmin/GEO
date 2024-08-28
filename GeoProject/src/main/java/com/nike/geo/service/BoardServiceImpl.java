@@ -86,8 +86,21 @@ public class BoardServiceImpl implements IBoardService {
 		
 		return resultVo;
 	}
-	
-	
+	//추천
+	@Override
+	public BoardVo likeCount(BoardVo vo) {
+		BoardVo resultVo = dao.selectOne(vo.getBo_no());
+		Map<String, String>map = new HashMap<String, String>(){{
+			put("bo_no", vo.getBo_no());
+			put("emp_no",vo.getEmp_no());
+		}};
+		boolean up = dao.likeUpdate(map);
+		if(!up) {
+			dao.likeInsert(map);
+	}
+		return resultVo;
+			
+	}
 }
 
 

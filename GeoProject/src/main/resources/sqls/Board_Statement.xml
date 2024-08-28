@@ -88,7 +88,7 @@
 	
 	
 	<!-- 게시글 읽은 사람 입력 -->
-		<insert id="insertReadOne">
+	<insert id="insertReadOne">
 	INSERT INTO VIEW_COUNT (
 		SEQ, BO_NO,EMP_NO
 	)
@@ -100,6 +100,37 @@
 	<select id="searchBoardOne" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM VIEW_COUNT
+		WHERE BO_NO =#{bo_no} AND EMP_NO = #{emp_no}
+	</select>
+	
+	<!-- 추천 2번째부턴 업데이트 -->
+	<update id="likeUpdate">
+	UPDATE "LIKER"
+	SET LIKE_YN = CASE
+	    WHEN LIKE_YN = 'Y' THEN 'N'
+	    WHEN LIKE_YN = 'N' THEN 'Y'
+	    ELSE LIKE_YN -- 다른 값이 들어오는 경우 (혹은 디폴트 값) 그대로 유지
+	END
+	WHERE BO_NO = #{bo_no}
+	AND EMP_NO = #{emp_no}
+	</update>
+	
+	
+	<!-- 추천 누른사람 사람 입력 -->
+	<insert id="likeInsert">
+	INSERT INTO "LIKER" (
+		BO_NO,EMP_NO ,LIKE_YN 
+		)
+		VALUES(
+		#{bo_no},#{emp_no},'Y'
+		)
+	</insert>
+
+	
+	<!-- 추천 누른 사람 조회 -->
+	<select id="likeSearchBoardOne" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM LIKER
 		WHERE BO_NO =#{bo_no} AND EMP_NO = #{emp_no}
 	</select>
 	

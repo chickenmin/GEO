@@ -30,4 +30,10 @@ public interface IBoardDao {
 	
 	public int searchBoardOne(Map<String, String>map); 
 	
+	//추천
+	public boolean likeInsert(Map<String, String>map);
+	
+	public boolean likeUpdate(Map<String, String>map);
+	
+	public int likeSearchBoardOne(Map<String, String>map);
 }

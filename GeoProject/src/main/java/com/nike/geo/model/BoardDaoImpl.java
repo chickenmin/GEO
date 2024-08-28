@@ -85,4 +85,22 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 	
 	
+	//추천
+	@Override
+	public boolean likeInsert(Map<String, String>map) {
+		int n = sessionTemplate.insert(NS+"likeInsert",map);
+		return (n==1)?true:false;
+	}
+	
+	@Override
+	public boolean likeUpdate(Map<String, String>map) {
+		int n = sessionTemplate.update(NS+"likeUpdate",map);
+		return (n==1)?true:false;
+	}
+	
+	@Override
+	public int likeSearchBoardOne(Map<String, String> map) {
+		int cnt = sessionTemplate.selectOne(NS+"likeSearchBoardOne", map);
+		return cnt;
+	}
 }

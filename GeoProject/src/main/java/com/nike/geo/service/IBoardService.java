@@ -27,6 +27,7 @@ public interface IBoardService {
 	public boolean realDelete(List<String> list);
 
 	public BoardVo view_Count(BoardVo bVo);
-
+	//추천
+	public BoardVo likeCount(BoardVo vo);
 
 }
