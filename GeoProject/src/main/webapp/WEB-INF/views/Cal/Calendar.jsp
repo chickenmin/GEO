@@ -60,46 +60,15 @@
 		                        <span>공개여부</span>
 		                        <input type="text" class="form-control" id="cal_open_yn" required>
 		                    </div>
-		                    <button type="button" class="btn btn-primary" onclick="insertAjax()">등록</button>
-		                    <!-- 고쳐야됌 onClick -->
-		                    <button type="button" class="btn btn-danger" onclick="location.href='Calendar.html'">취소</button>
+		                    <button type="button" class="btn btn-primary" onclick="insertAjax(); alert('일정이 등록되었습니다'); location.href='calendar.do';">등록</button>
+		                    <button type="button" class="btn btn-danger" onclick="location.href='calendar.do';" style="cursor:pointer;">취소</button>
 		                </form>
 		            </div>
 		        </div>
 		    </div>
 		</div>
-<!--  				<form action="./insertCal.do" method="post"> -->
-<!-- 				<div> -->
-<!-- 					<b>일정번호 : </b> -->
-<!-- 					<input type="text" id="cal_no" name="cal_no"> -->
-<!-- 					<b>일정명 : </b> -->
-<!-- 					<input type="text" id="cal_title" name="cal_title"> -->
-<!-- 					<b>내용 : </b> -->
-<!-- 					<input type="text" id="cal_content" name="cal_content"> -->
-<!-- 				</div> -->
-			
-<!-- 				<div style="margin-top: 10px;"> -->
-					
-<!-- 					datetimepicker -->
-<!-- 					<b>일정 시작일 : </b> -->
-<!-- 					<input type="text" name="cal_start" id="datetimepicker1" readonly="readonly" ondblclick="return false"><img src="./imges/reply.png" id="imagebutton"> -->
-<!-- 					datetimepicker -->
-<!-- 					<b>일정 종료일 : </b> -->
-<!-- 					<input type="text" name="cal_stop" id="datetimepicker2" readonly="readonly"><img src="./imges/reply.png" id="imagebutton2">	<br>	 -->
-<!-- 					<b>일정 종류 : </b> -->
-<!-- 					<input type="text" id="cal_type" name="cal_type">	 -->
-<!-- 					<b>공개여부 : </b> -->
-<!-- 					<input type="text" id="cal_open_yn" name="cal_open_yn">						 -->
-<!-- 				</div> -->
-
-<!-- 				<div> -->
-<!-- 					<input type="hidden" name="cal_type" value="1"/> -->
-<!-- 					<input type="button" onclick="insertAjax()" value="전송"> -->
-<!-- 				</div> -->
-				
-<!-- 			</form> -->
-			</div>
-		<div id="calendar"></div>
+	</div>
+	<div id="calendar"></div>
   
   	</main><!-- End #main -->
 

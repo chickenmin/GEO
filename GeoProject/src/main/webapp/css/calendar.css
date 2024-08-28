@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 input[type="checkbox"], label {
     position: relative; /* 상대 위치로 설정 */
     top: -730px;
@@ -24,3 +25,28 @@ input[type="checkbox"], label {
     .koHolidays{
     	pointer-events: none;
     }
+
+/* calendar.html */
+
+.fc-col-header-cell-cushion, .fc-daygrid-day-number {
+    text-decoration: none;
+}
+
+.fc-scrollgrid-sync-inner > .fc-col-header-cell-cushion,
+.fc-day-mon .fc-daygrid-day-number,
+.fc-day-tue .fc-daygrid-day-number,
+.fc-day-wed .fc-daygrid-day-number,
+.fc-day-thu .fc-daygrid-day-number,
+.fc-day-fri .fc-daygrid-day-number {
+    color: black;
+}
+
+.fc-day-sun .fc-col-header-cell-cushion,
+.fc-day-sun a{
+    color : red;
+}
+
+.fc-day-sat .fc-col-header-cell-cushion,
+.fc-day-sat a {
+    color : blue;
+}    

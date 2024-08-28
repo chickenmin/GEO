@@ -1,6 +1,5 @@
 //fullcalendar
 $( document ).ready(function() {
-//  $('#addEventModal').modal({ show: false }); // 초기화
   selectAjax();
 });
 
@@ -26,22 +25,15 @@ function selectAjax(){
 			        selectable: true, // 달력 셀 선택 활성화
 			        displayEventTime: false, // 시간 표시 제거
 			        editable: true,
+			        slotMinTime: "09:00:00",
+			        slotMaxTime: "18:00:00",
+			        navLinks: true,
+			        local:'ko',
 			        select: function(info) {	
 			            $('#addEventModal').modal('show'); // 달력 셀을 클릭할 때 모달 열기
 			            $('#cal_start').val(info.cal_start); 
 			            $('#cal_stop').val(info.cal_stop);
 			        },
-//					 dateClick: function(info) {    
-//			            // 날짜 클릭 시 모달 열기 및 입력 필드 초기화
-//			            $('#cal_no').val(''); // 새로운 이벤트이므로 번호 초기화
-//			            $('#cal_title').val(''); // 새로운 이벤트이므로 타이틀 초기화
-//			            $('#cal_content').val(''); // 새로운 이벤트이므로 내용 초기화
-//			            $('#cal_start').val(info.dateStr); // 클릭한 날짜로 시작일 설정
-//			            $('#cal_stop').val(info.dateStr); // 종료일도 동일하게 설정 (사용자가 수정할 수 있음)
-//			            $('#cal_type').val('');
-//			            $('#cal_open_yn').val('');
-//			            $('#addEventModal').modal('show'); // 모달 열기
-//			        },
 
 			       	
 					eventSources: [
@@ -54,7 +46,7 @@ function selectAjax(){
 						}
 					],
 					editable: true,
-//					events: loadEvents,				
+							
 					events:data,
 					eventDrop: function(info) {
 						console.log(dateFormat(info.event.cal_start));
@@ -64,84 +56,20 @@ function selectAjax(){
 						// updateDragAjax를 통해 일정 업데이트
 						updateDragAjax(dateFormat(info.event.cal_start), dateFormat(info.event.cal_stop), info.event.extendedProps.cal_no);
 						
-					}
-								
-				});
-				// 달력 초기화시 필수
-				calendar.render();
-				
-			// 추가 폼 제출 시
-//            $('#post').submit(function(e) {
-//                e.preventDefault(); // 폼의 기본 동작 방지
-//
-//                // 입력된 정보 가져오기
-//                const no = $('#cal_no').val();
-//                const title = $('#cal_title').val();
-//                const content = $('#cal_content').val();
-//                const start = $('#cal_start').val();
-//                const end = $('#cal_stop').val();
-//                const type = $('#cal_type').val();
-//                const open_yn = $('#cal_open_yn').val();
-//
-//                docTime(); // 고유번호 리셋(개인적으로 사용하는 고유번호임)
-//                
-//                //  과제 추가
-//                db.collection("events").doc(docName).set({
-//                    no: cal_no,
-//                    title: cal_title,
-//                    content: cal_content,
-//                    start: cal_start,
-//                    end: cal_stop,
-//                    type: cal_type,
-//                    open: cal_open_yn,
-//                })
-//                .then(function() {
-//                    $('#addEventModal').modal('hide'); // 모달 닫기
-//                    calendar.refetchEvents(); // 달력 갱신
-//                    resetForm(); // form 초기화
-//                })
-//                .catch(function(error) {
-//                    console.error("과제 추가 오류:", error);
-//                });
-//            });            		
-//			
-//			//  일정 가져오기
-//			function loadEvents(fetchInfo, successCallback, failureCallback) {
-//			        db.collection("events").get().then((querySnapshot) => {
-//			            let events = [];
-//			            querySnapshot.forEach((doc) => {
-//			                const eventData = doc.data();
-//			                events.push({
-//								no : eventData.extendedProps.cal_no,
-//			                    title: eventData.cal_title,
-//			                    content : eventData.extendedProps.cal_content ,
-//			                    start: eventData.start,
-//			                    end: eventData.end,
-//			                    type: cal_type,
-//                    			open: cal_open_yn,			                   
-//			               	    
-//			               	    eventClick: function(info) {    // 클릭된 이벤트의 정보를 모달에 표시   
-//							    $('.insertAjax').text('수정');
-//							    $('#no').val(info.event.extendedProps.cal_no);
-//							    $('#title').val(info.event.extendedProps.cal_title);
-//							    $('#content').val(info.event.extendedProps.cal_content);
-//							    $('#start').val(info.event.start);
-//							    $('#end').val(info.event.end);
-//							    $('#type').val(info.event.extendedProps.cal_type);
-//							    $('#open').val(info.event.extendedProps.cal_open_yn);
-//							    $('#addEventModal').modal('show');
-//							}
-//			                });
-//			                
-//			            });
-//            successCallback(events); // 가져온 이벤트 배열 전달
-//        })
-//        .catch(function(error) {
-//            console.error("일정 불러오기 오류:", error);
-//            failureCallback(error); // 오류 발생 시 실패 콜백 호출
-//        });
-//        
-//    }
+					},	
+//					dateClick: function(info) {    
+//		            // 날짜 클릭 시 모달 열기 및 입력 필드 초기화
+//		            $('#cal_no').val(''); // 새로운 이벤트이므로 번호 초기화
+//		            $('#cal_title').val(''); // 새로운 이벤트이므로 타이틀 초기화
+//		            $('#cal_content').val(''); // 새로운 이벤트이므로 내용 초기화
+//		            $('#cal_start').val(info.dateStr); // 클릭한 날짜로 시작일 설정
+//		            $('#cal_stop').val(info.dateStr); // 종료일도 동일하게 설정 (사용자가 수정할 수 있음)
+//		            $('#cal_type').val('');
+//		            $('#cal_open_yn').val('');
+//		            $('#addEventModal').modal('show'); // 모달 열기
+//			        },			
+				});				
+				calendar.render();// 달력 초기화시 필수		
 				
 			},
 			error: function() {
@@ -170,15 +98,7 @@ function insertAjax() {
 	var cal_start = $("#datetimepicker1").val();
 	var cal_stop = $("#datetimepicker2").val();
 	var cal_type = $("#cal_type").val();
-//	var cal_open_yn = $("#cal_open_yn").val();
 	
-	
-	// 작성자칸이 비었을 경우
-//	if ($("#cal_no").val() == "") {
-//		alert("번호를 입력해주세요")
-//		$("#cal_no").focus();
-//		return false;
-//	}
 	
 	// 일정명 칸이 비었을 경우
 	if ($("#title").val() == "") {
@@ -216,8 +136,7 @@ function insertAjax() {
 		data: { "cal_title": cal_title, "cal_content": cal_content, "cal_start": cal_start, "cal_stop": cal_stop, "cal_type": cal_type },
 		type: "post",
 		dataType: "json",
-//		contentType: false,
-//  		processData: false,
+
 		success: function(msg) {
 			console.log(msg);
 			if (msg !== true) {
@@ -274,11 +193,9 @@ function updateDragAjax(cal_start, cal_stop, cal_no) {
 
 
 function dateVal(dtp, dtp2) {
-	// start 의 date 값 ex) Wed May 11 2022 11:10:17 GMT+0900 (한국 표준시)
-	let date1 = $("#" + dtp + "")
-	let i = date1.datetimepicker('getValue');
-	// end 의 date 값 ex) Wed May 11 2022 11:10:17 GMT+0900 (한국 표준시)
-	let date2 = $("#" + dtp2 + "")
+	let date1 = $("#" + dtp + "")  // start 의 date 값 ex) Wed May 11 2022 11:10:17 GMT+0900 (한국 표준시)
+	let i = date1.datetimepicker('getValue');	
+	let date2 = $("#" + dtp2 + "")  // end 의 date 값 ex) Wed May 11 2022 11:10:17 GMT+0900 (한국 표준시)
 	let i2 = date2.datetimepicker('getValue');
 	console.log(i, i2)
 	// test.valueOf() 밀리세컨트로 반환
@@ -291,10 +208,9 @@ function dateVal(dtp, dtp2) {
 	}
 }	
 
-// date( Thu May 12 2022 09:30:00 GMT+0900 (한국 표준시) ) 를 202205120903 형식으로 바꾸어줌
-function dateFormat(date) {
+
+function dateFormat(date) {  // date( Thu May 12 2022 09:30:00 GMT+0900 (한국 표준시) ) 를 202205120903 형식으로 바꾸어줌
 	var date = new Date();
-	//var getFullYear = getFullYear();
 	
 	let year = date.getFullYear();
 	let month = zeroPlus(date.getMonth() + 1);
@@ -312,3 +228,4 @@ function zeroPlus(time) {
 	console.log("###################", time)
 	return time < 10 ? "0" + time : time;
 }
+
