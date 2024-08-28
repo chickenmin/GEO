@@ -32,6 +32,24 @@
  		 </mvc:interceptor>
 	</mvc:interceptors>
 	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="geo.project.notify@gmail.com" />
+		<property name="password" value="jpva wlzz iunn ndhw" />
+		<property name="defaultEncoding" value="utf-8"/>
+		
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.debug">true</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			</props>
+		</property>
+	</bean>
 	
 	<!--스케쥴러 사용  -->
 <!-- <task:annotation-driven scheduler=""/>

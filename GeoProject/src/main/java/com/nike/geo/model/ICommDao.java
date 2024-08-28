@@ -14,4 +14,7 @@ public interface ICommDao {
 
 	// 임시비밀번호 발급 전 정보 확인 selectEmpTemp
 	public EmpVo selectEmpTemp(EmpVo vo);
+	
+	// 임시비밀번호 발급 updateTempPw
+	public int updateTempPw(EmpVo vo);
 }

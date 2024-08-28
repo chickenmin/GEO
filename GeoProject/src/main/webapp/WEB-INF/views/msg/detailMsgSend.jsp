@@ -56,7 +56,7 @@
 	                  <div class="col-sm-10">
 				  		<c:choose>
 				  			<c:when test="${file != null}">
-							  	<form action="./download.do" method="post">
+							  	<form action="./downloadMsgFile.do" method="post">
 						  			${file.file_oname}
 							  		&nbsp&nbsp
 							  		<input type="hidden" name="no" value="${msgDetail.msg_no}">

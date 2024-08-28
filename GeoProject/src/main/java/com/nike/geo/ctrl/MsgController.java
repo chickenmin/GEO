@@ -7,10 +7,14 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,33 +52,6 @@ public class MsgController {
 		return "comm/login";
 	}
 	
-	@PostMapping(value = "/login.do")
-	public String login(EmpVo vo, HttpSession session) {
-		log.info("MESSAGE controller - 로그인 진행중");
-		log.info("MESSAGE controller - 받아온 값 : {}", vo);
-		
-		EmpVo loginVo = commService.selectEmp(vo);
-		if(loginVo != null) {
-			log.info("MESSAGE controller - 로그인 성공");
-			// 세션에 loginVo 추가
-			session.setAttribute("loginVo", loginVo);
-			
-			if(loginVo.getEmp_status().equals("W")) {
-				log.info("MESSAGE controller - 비밀번호 변경 대상");
-				session.setAttribute("loginStatus", "update-Password-Needed");
-				return "comm/loginStatus";
-			} else {
-				log.info("MESSAGE controller - 비밀번호 변경 대상 아님");
-				session.setAttribute("loginStatus", "success");
-			}
-			
-		}else {
-			log.info("MESSAGE controller - 로그인 실패");
-			session.setAttribute("loginStatus", "fail");
-		}
-		return "comm/loginStatus";
-	}
-	
 	@GetMapping(value = "/logout.do")
 	public String logout(HttpSession session) {
 		log.info("MESSAGE controller - 로그아웃 진행중");
@@ -83,12 +60,11 @@ public class MsgController {
 	}
 	
 	@GetMapping(value = "/tempPw.do")
-	public String tempPw() {
+	public String tempPwForm() {
 		log.info("MESSAGE controller - 임시 비밀번호 발급 페이지로 이동");
 		return "comm/tempPw";
 	}
 	
-
 	@GetMapping(value = "/index.do")
 	public String index() {
 		log.info("MESSAGE controller - index 페이지로 이동");
@@ -96,18 +72,22 @@ public class MsgController {
 	}
 	
 	@GetMapping(value = "/recvMsg.do")
-	public String recvMsg(Model model) {
+	public String recvMsg(Model model, HttpSession session) {
 		log.info("MESSAGE controller - 받은 쪽지함으로 이동");
-		String recvId = "HYUN";
+		
+		EmpVo vo = (EmpVo)session.getAttribute("loginVo");
+		String recvId = vo.getEmp_no();
 		List<MsgVo> msgListRecv = service.selectMsgListRecv(recvId);
 		model.addAttribute("msgListRecv",msgListRecv);
 		return "msg/recvMsg";
 	}
 	
 	@GetMapping(value = "/sendMsg.do")
-	public String sendMsg(Model model) {
+	public String sendMsg(Model model, HttpSession session) {
 		log.info("MESSAGE controller - 보낸 쪽지함으로 이동");
-		String sendId = "TEST";
+		
+		EmpVo vo = (EmpVo)session.getAttribute("loginVo");
+		String sendId = vo.getEmp_no();
 		List<MsgVo> msgListSend = service.selectMsgListSend(sendId);
 		model.addAttribute("msgListSend", msgListSend);
 		return "msg/sendMsg";
@@ -166,9 +146,9 @@ public class MsgController {
 							HttpSession session) throws IOException {
 		
 		// 쪽지 작성
-		String empName = ((EmpVo)session.getAttribute("loginVo")).getEmp_name();
+		String empNo = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
 //		msgVo.setMsg_send_id("HYUN"); // 로그인 추가시 현재 접속중인 아이디로 변경
-		msgVo.setMsg_send_id(empName);
+		msgVo.setMsg_send_id(empNo);
 		int msgChk = service.insertMsg(msgVo);
 		
 		// 파일 업로드
@@ -221,7 +201,7 @@ public class MsgController {
 		}
 	}
 	
-	@PostMapping(value = "/download.do")
+	@PostMapping(value = "/downloadMsgFile.do")
 	public void fileDownload(String no,
 							HttpServletResponse response) throws IOException {
 		FileVo msgFile = service.selectFile(no);

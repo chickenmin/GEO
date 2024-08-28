@@ -64,7 +64,7 @@
 						<div class="pd-2"></div>
 
 	                    <div class="col-12">
-	                      <button class="btn btn-primary w-100" type="submit">임시 비밀번호 전송</button>
+	                      <button class="btn btn-primary w-100" type="button" onclick="sendTempPw()">임시 비밀번호 전송</button>
 	                    </div>
 	                    
 	                    <div class="pd-2"></div>
@@ -89,10 +89,29 @@
 	
 	    </div>
 	  </main><!-- End #main -->
-//
 
+<script type="text/javascript">
+	function sendTempPw(){
+		var formData = new FormData(document.getElementById("tempPwForm"));		
+		
+		fetch("./tempPw.do", {
+			method: "POST",
+			body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				alert(data.message);
+				if(data.status === "success"){
+					location.href="./login.do";
+				}else if (data.status === "fail"){
+					location.href="./login.do";
+				}else if (data.status === "select-fail"){
+					location.href="./tempPw.do";
+				}
+		});
+	}
+</script>
 </body>
   <%@ include file="./footer.jsp" %>
-
 
 </html>

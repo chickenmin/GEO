@@ -50,7 +50,7 @@
 	                <thead>
 	                  <tr>
 	                  	<th scope="col" class="text-center">
-	                  		<input type="checkbox" id="checkbox"> <!-- 체크박스 -->
+	                  		<input type="checkbox" name="chkAll" onclick="checkAll(this.checked)"> <!-- 체크박스 -->
 	                  	</th>
 	                    <th scope="col" class="text-center">쪽지번호</th>
 	                    <th scope="col" class="text-center">쪽지 내용</th>
@@ -64,7 +64,7 @@
 	                  <c:forEach var="vo" items="${msgListRecv}" varStatus="vs">
 	                    <tr>
 	                      	<td class="text-center">
-	                      		<input type="checkbox" id="msgNo" value="${vo.msg_no}"> <!-- 체크박스 -->
+	                      		<input type="checkbox" name="ch" id="msgNo" value="${vo.msg_no}"> <!-- 체크박스 -->
 	                      	</td>
 	                      <th scope="row" class="text-center">${fn:length(msgListRecv) - vs.index}</th>
 	                      
@@ -120,6 +120,12 @@
 </body>
   <%@ include file="../comm/footer.jsp" %>
 <script type="text/javascript">
+	function checkAll(bool){
+		var chs = document.getElementsByName("ch");
+		for (var i = 0; i < chs.length; i++) {
+			chs[i].checked = bool;
+		}
+	}
 
 	$(document).ready(function() {
 		$("#recvMsgTable").DataTable({
@@ -128,11 +134,19 @@
 				{"orderable": false, "targets":0}
 			]
 		});
+		
+		var chs = $("input[name=ch]");
+		var chkbox = $("input[name=chkAll]");
+		
+		chs.click(function() {
+			chkbox.prop("checked", chs.filter(":checked").length === chs.length);
+		});
 	});
 
 	$("#deleteBtn").click(function(){
 		var i = "";
-		$('tbody>tr>td>input[type=checkbox]:checked').each(function(index, item){
+		$('input[name=ch]:checked').each(function(index, item){
+// 		$('tbody>tr>td>input[type=checkbox]:checked').each(function(index, item){
 			i += item.value+",";
 		});
 		console.log(i);
@@ -154,7 +168,6 @@
 		}else{
 			alert("삭제를 취소합니다.");
 		}
-		
 	});  		
 		
 </script>

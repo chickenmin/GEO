@@ -1,10 +1,12 @@
 package com.nike.geo.service;
 
+import java.security.SecureRandom;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.nike.geo.model.IMsgDao;
 import com.nike.geo.vo.comm.FileVo;
@@ -18,6 +20,9 @@ public class MsgServiceImpl implements IMsgService {
 
 	@Autowired
 	private IMsgDao dao;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 
 	@Override
 	public List<MsgVo> selectMsgListRecv(String recvId) {
@@ -81,5 +86,26 @@ public class MsgServiceImpl implements IMsgService {
 		log.info("MESSAGE service - 받아온 값 : {}", noList);
 		return dao.deleteMsgSend(noList);
 	}
+	
+//	public String init() {
+//		Random ran = new Random();
+//		StringBuffer sb = new StringBuffer();
+//		int num = 0;
+//		
+//		return null;
+//	}
+	
+	public static String generateRandomMixStr() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(6);
+
+        for (int i = 0; i < 6; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+        return sb.toString();
+    }
 	
 }

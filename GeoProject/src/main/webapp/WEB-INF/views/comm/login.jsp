@@ -107,7 +107,7 @@
 		                  </div>
 		
 		                  <!-- form -->
-		                  <form class="row g-3 needs-validation" id="loginForm" action="./login.do" method="post">
+		                  <form class="row g-3 needs-validation" id="loginForm" action="./login.do" method="POST">
 		
 		                    <div class="col-12">
 		                      <label for="yourUsername" class="form-label">사원번호</label>
@@ -131,7 +131,7 @@
 		                      </div>
 		                    </div>
 		                    <div class="col-12">
-		                      <button class="btn btn-primary w-100" type="submit">로그인</button>
+		                      <button class="btn btn-primary w-100" type="button" onclick="login()">로그인</button>
 		                    </div>
 		                    <div class="col-12">
 		                      <p class="small mb-0">비밀번호를 잊어버리셨나요?&nbsp&nbsp<a href="./tempPw.do">임시 비밀번호 발급</a></p>
@@ -159,7 +159,29 @@
 		</div>
   	</main><!-- End #main -->
 
-
+<script type="text/javascript">
+	function login(){
+		var formData = new FormData(document.getElementById("loginForm"));		
+		
+		fetch("./login.do", {
+			method: "POST",
+			body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				if(data.status === "success"){
+					location.href="./index.do";
+				}else if (data.status === "fail"){
+					alert(data.message);
+					location.href="./login.do";
+				}else if (data.status === "update-Password-Needed"){
+					alert(data.message);
+					// 내 정보 변경 - 비밀번호 변경 탭으로 이동
+					location.href="./index.do";
+				}
+		});
+	}
+</script>
 </body>
   <%@ include file="./footer.jsp" %>
 

@@ -11,7 +11,7 @@
 	 WHERE DIVISION = #{division}
 	</select>
 
-	<!-- 로그인 -->
+	<!-- 로그인 selectEmp -->
 	<select id="selectEmp" resultType="EmpVo">
 		SELECT EMP_NO, EMP_POS, EMP_DEPT,
 				EMP_PW, EMP_NAME, EMP_GENDER,
@@ -23,7 +23,7 @@
 			WHERE EMP_NO = #{emp_no} AND EMP_PW = #{emp_pw}
 	</select>
 	
-	<!-- 임시비밀번호 발급 전 정보 확인 -->
+	<!-- 임시비밀번호 발급 전 정보 확인 selectEmpTemp -->
 	<select id="selectEmpTemp" resultType="EmpVo">
 		SELECT EMP_NO, EMP_POS, EMP_DEPT,
 				EMP_PW, EMP_NAME, EMP_GENDER,
@@ -36,4 +36,11 @@
 				AND EMP_NAME = #{emp_name}
 				AND EMP_EMAIL = #{emp_email}
 	</select>
+	
+	<!-- 임시비밀번호 발급 updateTempPw -->
+	<update id="updateTempPw">
+		UPDATE GEO.EMP
+			SET EMP_PW=#{emp_pw}, EMP_STATUS='W',  MOD_ID='ADMIN', MOD_DATE=SYSDATE
+			WHERE EMP_NO=#{emp_no}
+	</update>
 </mapper>

@@ -117,7 +117,7 @@
       </li><!-- End orgChart Nav -->
       
       <li class="nav-item">
-        <a class="nav-link" data-bs-target="#calendar-nav" href="./calendar.do">
+        <a class="nav-link collapsed" href="./calendar.do">
           <i class="bi bi-calendar-check"></i><span>일정 관리</span>
         </a>
       </li><!-- End Calendar Nav -->

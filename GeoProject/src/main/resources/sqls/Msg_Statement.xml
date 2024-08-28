@@ -109,6 +109,14 @@
 			</foreach>
 	</update>
 	
+	<!-- 안읽은 쪽지 갯수 확인 cntUnreadMsg -->
+	<select id="cntUnreadMsg" resultType="int">
+		SELECT COUNT(*)
+			FROM MSG
+			WHERE MSG_RECV_ID = #{msg_recv_id}
+				AND MSG_RECV_READ_YN = 'N'
+				AND MSG_RECV_DEL_YN = 'N'
+	</select>
 	
 	
 </mapper>

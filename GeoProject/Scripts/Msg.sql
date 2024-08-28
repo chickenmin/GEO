@@ -155,6 +155,23 @@ SELECT EMP_NO, EMP_POS, EMP_DEPT,
 	WHERE EMP_NO = 'emp5'
 		AND EMP_NAME = '최현아'
 		AND EMP_EMAIL = 'limehyun15@gmail.com';
+		
+-- 임시 비밀번호 발급
+UPDATE GEO.EMP
+	SET EMP_PW='ABC123', EMP_STATUS='W',  MOD_ID='ADMIN', MOD_DATE=SYSDATE
+	WHERE EMP_NO='emp5';
+
+-- 확인
+SELECT *
+	FROM EMP
+	WHERE EMP_NO = 'emp5';
+
+-- 안읽은 쪽지 갯수 확인	
+SELECT COUNT(*)
+	FROM MSG
+	WHERE MSG_RECV_ID = 'emp5'
+		AND MSG_RECV_READ_YN = 'N'
+		AND MSG_RECV_DEL_YN = 'N';
 	
 ---------------------------------------------------------------------------------	
 

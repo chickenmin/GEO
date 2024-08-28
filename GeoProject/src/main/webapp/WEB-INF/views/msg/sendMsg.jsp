@@ -50,7 +50,7 @@
 	                <thead>
 	                  <tr>
 	                  	<th scope="col" class="text-center">
-	                  		<input type="checkbox"> <!-- 체크박스 -->
+	                  		<input type="checkbox" name="chkAll" onclick="checkAll(this.checked)"> <!-- 체크박스 -->
 	                  	</th>
 	                    <th scope="col" class="text-center">쪽지번호</th>
 	                    <th scope="col" class="text-center">쪽지 내용</th>
@@ -64,7 +64,7 @@
 	                  <c:forEach var="vo" items="${msgListSend}" varStatus="vs">
 	                    <tr>
 	                      <td class="text-center">
-	                      	<input type="checkbox" value="${vo.msg_no}"> <!-- 체크박스 -->
+	                      	<input type="checkbox" name="ch" value="${vo.msg_no}"> <!-- 체크박스 -->
 	                      </td>
 	                      
 	                      <th scope="row" class="text-center">${fn:length(msgListSend) - vs.index}</th>
@@ -98,6 +98,12 @@
 
   <%@ include file="../comm/footer.jsp" %>
 <script type="text/javascript">
+	function checkAll(bool){
+		var chs = document.getElementsByName("ch");
+		for (var i = 0; i < chs.length; i++) {
+			chs[i].checked = bool;
+		}
+	}
 
 	$(document).ready(function() {
 		$("#sendMsgTable").DataTable({
@@ -105,6 +111,13 @@
 			"columnDefs":[
 				{"orderable": false, "targets":0}
 			]
+		});
+		
+		var chs = $("input[name=ch]");
+		var chkbox = $("input[name=chkAll]");
+		
+		chs.click(function() {
+			chkbox.prop("checked", chs.filter(":checked").length === chs.length);
 		});
 	});
 	
