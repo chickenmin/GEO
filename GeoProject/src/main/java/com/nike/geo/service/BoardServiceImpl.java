@@ -88,19 +88,44 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	//추천
 	@Override
-	public BoardVo likeCount(BoardVo vo) {
-		BoardVo resultVo = dao.selectOne(vo.getBo_no());
+	public LikeVo likeCount(LikeVo vo) {
 		Map<String, String>map = new HashMap<String, String>(){{
+			System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★서비스");
 			put("bo_no", vo.getBo_no());
 			put("emp_no",vo.getEmp_no());
 		}};
-		boolean up = dao.likeUpdate(map);
-		if(!up) {
+		int n = dao.likeSearchBoardOne(map);
+		System.out.println("받은값:"+n);
+		if(n==0) {
 			dao.likeInsert(map);
-	}
+			System.out.println("생성됨");
+		}else {
+			dao.likeDel(map);
+			System.out.println("삭제됨");
+		}
+		LikeVo resultVo = dao.likeSelectOne(vo.getBo_no(),vo.getEmp_no());
+		System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆resultVo:"+resultVo);
 		return resultVo;
-			
 	}
+//	//추천
+//	@Override
+//	public BoardVo likeCount(BoardVo vo) {
+//		Map<String, String>map = new HashMap<String, String>(){{
+//			System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★서비스");
+//			put("bo_no", vo.getBo_no());
+//			put("emp_no",vo.getEmp_no());
+//		}};
+//		int n = dao.likeSearchBoardOne(map);
+//		System.out.println("여긴:"+n);
+//		if(n==0) {
+//			dao.likeInsert(map);
+//		}else {
+//			dao.likeDel(map);
+//		}
+////		BoardVo resultVo = dao.likeSelectOne(vo.getBo_no());
+////		return resultVo;
+//		return null;
+//	}
 }
 
 

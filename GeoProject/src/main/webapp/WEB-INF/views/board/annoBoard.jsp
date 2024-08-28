@@ -20,7 +20,7 @@
 	  
 		<form action="./multiDeleteBoard.do" method="post" onsubmit="return chkSubmit()">
 				<!-- 게시판 테이블 -->
-	  <table class="table display" id="recvMsgTable">
+	  <table class="table display" id="BoardTable">
 				<!-- 게시판 선택 -->
 					
 							<br>
@@ -71,7 +71,7 @@
 <%@ include file="../comm/footer.jsp"%>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#recvMsgTable").DataTable({
+	$("#BoardTable").DataTable({
 		"info": false,
 		"columnDefs":[
 			{"orderable": false, "targets":0}

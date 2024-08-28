@@ -139,9 +139,10 @@ public class BoardController {
 	
 	//추천수
 	@PostMapping(value = "/likeCount.do")
-	public String likeCount(BoardVo vo) {
-		service.likeCount(vo);
-		return "redirect:/detailBoard.do";
+	public String likeCount(LikeVo vo) {
+	    service.likeCount(vo);
+	    return "redirect:/detailBoard.do?bo_no=" + vo.getBo_no();
 	}
+
 	
 }

@@ -24,6 +24,7 @@ public interface IBoardDao {
 	
 	public boolean realDelete(List<String> list);
 	
+	//조회수
 	public BoardVo selectOne(String bo_no);
 
 	public void insertReadOne(Map<String, String>map); //emp_no와 bo_no를 넣어줘야함
@@ -31,9 +32,11 @@ public interface IBoardDao {
 	public int searchBoardOne(Map<String, String>map); 
 	
 	//추천
-	public boolean likeInsert(Map<String, String>map);
+	public boolean likeInsert(Map<String, String>map);	//이게 문제인듯
 	
-	public boolean likeUpdate(Map<String, String>map);
+	public boolean likeDel(Map<String, String>map);
 	
 	public int likeSearchBoardOne(Map<String, String>map);
+	
+	public LikeVo likeSelectOne(String bo_no,String emp_no);
 }
