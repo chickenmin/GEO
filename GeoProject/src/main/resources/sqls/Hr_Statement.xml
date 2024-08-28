@@ -42,7 +42,7 @@ EMP_EMAIL , EMP_ADDRESS , EMP_HIREDATE
 
 
 <!-- 사원 정보 변경 -->
-<update id="updateEmp" parameterType="EmpVO">
+<update id="updateEmp" parameterType="EmpVo">
 UPDATE GEO.EMP
 SET emp_pos = #{emp_pos}, 
 	emp_dept = #{emp_dept}, 
@@ -59,6 +59,7 @@ SET emp_pw = '1234',
 	emp_status = 'W'
 WHERE emp_no = #{emp_no}
 </update>
+
 <!-- 출근 -->
 <insert id="arriveWork">
 INSERT INTO GEO.ATT
@@ -69,6 +70,7 @@ FROM EMP e
 LEFT JOIN ATT a ON e.EMP_NO = a.EMP_NO
 WHERE e.EMP_NO = #{emp_no, jdbcType=VARCHAR}
 </insert>
+
 <!-- 퇴근 -->
 <update id="leftWork">
 UPDATE GEO.ATT
@@ -79,14 +81,21 @@ WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
 AND ATT_LEFT_TIME IS NULL
 AND TO_CHAR(ATT_ARRIVE_TIME, 'yyyy-MM-dd') = TO_CHAR(SYSDATE, 'yyyy-MM-dd')
 </update>
-<!-- 마이페이지 -->
 
+<!-- 마이페이지 -->
 <select id="myPage">
 SELECT EMP_NO , EMP_POS , EMP_DEPT , EMP_NAME ,
 EMP_GENDER , EMP_HIREDATE , EMP_EMAIL , EMP_PHONE ,
 EMP_BIRTH , EMP_ADDRESS
 	FROM EMP e
-	WHERE EMP_NO = 'aa001';
+	WHERE EMP_NO = #{emp_no}
+</select>
+
+<!-- 사원 근태 조회 -->
+<select id="empAtt" resultType="AttVo">
+SELECT EMP_NO , ATT_ARRIVE_TIME , ATT_LEFT_TIME
+	FROM ATT a 
+	WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
 </select>
 
 

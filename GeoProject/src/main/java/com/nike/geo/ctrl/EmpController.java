@@ -102,6 +102,14 @@ public class EmpController {
 		
 	}
 	
+	@GetMapping(value = "/empAtt.do")
+	public String empAtt(String emp_no, Model model) {
+		log.info("사원 근태 조회");
+		AttVo vo = service.empAtt("aa001");
+		model.addAttribute("vo", vo);
+		return "hr/empAtt";
+	}
+	
 
 
 }

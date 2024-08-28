@@ -75,5 +75,13 @@ public class EmpServiceImpl implements IEmpService {
 		log.info("마이 페이지");
 		return dao.myPage(emp_no);
 	}
+	
+	
+	// 사원 근무 조회
+	@Override
+	public AttVo empAtt(String emp_no) {
+		log.info("사원 근무 조회");
+		return dao.empAtt(emp_no);
+	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 
 import com.nike.geo.vo.hr.AttVo;
 import com.nike.geo.vo.hr.EmpVo;
@@ -63,6 +64,12 @@ public class EmpDaoImpl implements IEmpDao {
 	public EmpVo myPage(String emp_no) {
 		log.info(NS + "myPage");
 		return session.selectOne(NS + "myPage");
+	}
+	
+	@Override
+	public AttVo empAtt(String emp_no) {
+		log.info(NS + "empAtt");
+		return session.selectOne(NS + "empAtt");
 	}
 	
 }
