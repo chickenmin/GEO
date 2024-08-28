@@ -34,7 +34,7 @@ public class CalController {
 	@RequestMapping(value = "/calendar.do", method = RequestMethod.GET)
 	public String list() {
 		log.info("CalendarController list");
-		return "calendar";
+		return "Cal/Calendar";
 	}
 	
 	@SuppressWarnings("unchecked")
