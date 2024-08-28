@@ -4,7 +4,7 @@
 <mapper namespace="com.nike.geo.model.ApprovalDaoImpl">
 
 	<!-- 북마크 -->
-	<select id="selectFavList" resultType="com.nike.geo.vo.appr.Ap_FavVo">
+	<select id="selectFavList" resultType="Ap_FavVo">
 		SELECT APF_ID, EMP_NO, APD_FORM, 
 			   APF_NAME
 		 FROM AP_FAV
@@ -42,7 +42,7 @@
 	<!-- 상신하기 -->
 	
 	<!-- 임시저장 -->
-	<insert id="submit1"> 
+	<insert id="submit2"> 
 		INSERT INTO AP_DOCU
 				(APD_NO, EMP_NO, APD_CON, 
 				APD_STEP, APD_STATUS, APD_DAYS, 
@@ -50,21 +50,30 @@
 				REG_ID, REG_DATE, MOD_ID, MOD_DATE)
 		VALUES(Apd_docu_seq.NEXTVAL, #{emp_no}, #{apd_con}, 
 				#{apd_step}, 'W', #{apd_days},
-				'N',	#{apd_form}, SYSDATE, 'Y', 
-				#{emp_no},SYSDATE, #{emp_no}, SYSDATE)    
+				'N',	#{apd_form}, SYSDATE,
+				<choose>
+					<when test='type == "상신하기"'>
+						'N'
+					</when>
+					<otherwise>
+						'Y'
+					</otherwise>
+				</choose> 
+				 
+				,#{emp_no},SYSDATE, #{emp_no}, SYSDATE)    
 	</insert>
 	
-	<insert id="submit2">
-		INSERT INTO AP_DOCU
-				(APD_NO, EMP_NO, APD_CON, 
-				APD_STEP, APD_STATUS, APD_DAYS, 
-				APD_HALF_YN,APD_FORM, APD_CLEAR_DATE, APD_TEMP_YN, 
-				REG_ID, REG_DATE, MOD_ID, MOD_DATE)
-		VALUES(Apd_docu_seq.NEXTVAL, #{emp_no}, #{apd_con}, 
-				#{apd_step}, 'W', #{apd_days},
-				'N',	#{apd_form}, SYSDATE, 'N', 
-				#{emp_no},SYSDATE, #{emp_no}, SYSDATE)    
-	</insert>
+<!-- 	<insert id="submit2"> -->
+<!-- 		INSERT INTO AP_DOCU -->
+<!-- 				(APD_NO, EMP_NO, APD_CON,  -->
+<!-- 				APD_STEP, APD_STATUS, APD_DAYS,  -->
+<!-- 				APD_HALF_YN,APD_FORM, APD_CLEAR_DATE, APD_TEMP_YN,  -->
+<!-- 				REG_ID, REG_DATE, MOD_ID, MOD_DATE) -->
+<!-- 		VALUES(Apd_docu_seq.NEXTVAL, #{emp_no}, #{apd_con},  -->
+<!-- 				#{apd_step}, 'W', #{apd_days}, -->
+<!-- 				'N',	#{apd_form}, SYSDATE, 'N',  -->
+<!-- 				#{emp_no},SYSDATE, #{emp_no}, SYSDATE)     -->
+<!-- 	</insert> -->
 	
 	<!-- 결재라인 : 직급 순서 받아오기 -->
 	<select id="selectPos" resultType="java.lang.Integer" >
@@ -133,7 +142,7 @@
  		AND APD_TEMP_YN = 'N'
 	</select>
 	
-	<!-- 문서번호로 조회 -->
+	<!-- 문서번호로 상세 조회 -->
 	<select id="selectDeatil" resultType="Ap_DocuVo">
 		SELECT APD_NO,EMP_NO ,APD_CON ,
 				APD_STEP ,APD_STATUS ,APD_DAYS ,
@@ -142,6 +151,27 @@
  		FROM AP_DOCU ad 
  		WHERE APD_NO = #{apd_no}
 	</select>
+	
+	<!-- 결재자 조회 -->
+	<select id="selectLine" resultType="Ap_FavVo">
+		SELECT APL_NO,APD_NO,EMP_NO,
+				APL_ORDER,APL_DATE,APL_STATUS,APL_MSG,
+				REG_ID,REG_DATE,MOD_ID,MOD_DATE,
+				FILE_ONAME
+		  FROM AP_LINE al
+		  WHERE APD_NO = #{apd_no}
+		  ORDER BY APL_ORDER
+	</select>
+	
+	
+<!-- 	첨부파일 조회 -->
+	<select id="selectFile" resultType="FileVo">
+		SELECT *
+		 FROM "FILE" f 
+		 WHERE ORIGIN_NO = #{apd_no}
+	</select>
+	
+
 	
 </mapper>
 

@@ -58,7 +58,7 @@
 	                    <tr>
 	                      <th scope="row" class="text-center"><a> ${fn:length(lists) - vs.index} </a></th>
 	                      <td class="text-center"> 
-	                      <a href="./detailAppr.do?apd_form=${vo.apd_no}">
+	                      <a href="./detailAppr.do?apd_no=${vo.apd_no}">
 		                      	<c:choose>
 					                	<c:when test="${vo.apd_form eq 'AP001'}">
 					                		일일 업무 일지

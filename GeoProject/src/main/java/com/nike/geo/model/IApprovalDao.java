@@ -21,7 +21,8 @@ public interface IApprovalDao {
 	
 	//서류 상신 ()
 	public int submit1(Ap_DocuVo vo);
-	public int submit2(Ap_DocuVo vo);
+//	public int submit2(Ap_DocuVo vo);
+	public int submit2(Map<String, Object> map);
 	
 	//직급받기
 	public int selectPos(String emp_no);
@@ -38,8 +39,41 @@ public interface IApprovalDao {
 	// 결재 파일 추가
 	public int putFile(FileVo vo);
 	
-	//결재목록 조회
+	//결재문서 목록 조회
 	public List<Ap_DocuVo> selectApproval(String emp_no);
+	
+	//문서 상세 조회
+	public Ap_DocuVo selectDeatil(String apd_no);
+	
+	//문서 결재자 조회
+	public List<Ap_LineVo> selectLine(String apd_no);
+	
+	//첨부 파일 조회
+	public List<FileVo> selectFile(String apd_no);
+	
+	//파일 조회
+	public FileVo findFile(String file_no);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

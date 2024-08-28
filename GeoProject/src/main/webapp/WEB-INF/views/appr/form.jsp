@@ -48,7 +48,7 @@
 		
 		<!-- FORM -->
 <!-- 			<form action="./submitForm.do"  method="post" enctype="multipart/form-data" onsubmit="return check()"> -->
-			<form action="./submitForm.do"  method="post" enctype="multipart/form-data" id="approval">
+			<form  action="./submitForm2.do"  method="post" name="submitForm"  enctype="multipart/form-data" >
 				<input type="hidden" name="apd_form" value="${apd_form}">
 				<button type="button" id="apprLine" class="btn btn-primary rounded-pill" data-bs-toggle="modal" style="float: right; margin-bottom: 10px;" data-bs-target="#basicModal">
 					결재 라인
@@ -113,6 +113,7 @@
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
 				            	${sessionScope.loginVo.emp_no}	
+				            	<input type="hidden" name="emp_no" value="${sessionScope.loginVo.emp_no}">
 				            </td>
 						</tr>
 					
@@ -146,7 +147,7 @@
 					                	<button onclick="resetDay(event)" style="margin-left: 10px;">초기화</button>
 					            	</c:when>
 					            	<c:otherwise>
-					                	<input id="dates"  class="must"  name="dates" type="date" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
+					                	<input id="dates"  class="must"  name="apd_days" type="date" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
 					                </c:otherwise>
 				           		 </c:choose>
 				            </td>
@@ -192,7 +193,7 @@
 				        </tr>
 				        <tr>
 				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				                <textarea id="con" rows="15"  class="must" name="content" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
+				                <textarea id="con" rows="15"  class="must" name="apd_con" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
 				            </td>
 				        </tr> 
 				        
@@ -211,9 +212,10 @@
 				
 				<!-- 문서 하단 버튼 -->
 				<div style="display: flex; justify-content: flex-end;" >
-					<button class="btn btn-outline-primary" style="height: auto; margin: 5px 10px 0 0;" type="button" onclick="temp()">임시저장</button>
-					<button class="btn btn-primary" style="height: auto; margin: 5px 10px 0 0;" >상신하기</button>
-					<button type="button" onclick="check()">체크</button>
+					<input type="hidden" name="type" id="dataType">
+					<button class="btn btn-outline-primary frmbtn"  style="height: auto; margin: 5px 10px 0 0;">임시저장</button>
+					<button class="btn btn-primary frmbtn"  style="height: auto; margin: 5px 10px 0 0;" >상신하기</button>
+					<button type="button"onclick="check()">체크</button>
 				</div>
 				<jsp:include page="./apprLine.jsp"></jsp:include>
 			</form>
@@ -226,59 +228,82 @@
 <script type="text/javascript">
 
 	
-      // multiDatesPicker 초기화
-	 $(document).ready(function() {
-         $('#mdp-demo').multiDatesPicker({
-        		dateFormat: "yy-mm-dd",
-        		beforeShowDay: $.datepicker.noWeekends,
-                 // 날짜가 선택될 때 호출되는 함수
-             onSelect: function(dateText, inst) {
-                 console.log('Selected date:', dateText);
-                 console.log('typeOf:', typeof dateText);
-             }
-             
-         });
-         
-         
-         document.getElementById("reviewImgFileInput").onchange = function(){
-	  			console.log("파일 업로드 버튼 실행");
-	  			var imgFile = this.value.toLowerCase();
-	  			var fileForm = /(.*?)\.(jpg|jpeg|bmp|png|gif|pdf|doc|docx|hwp|xls|xlsx)$/i;
-	  			var maxSize = 5*1024*1024;
-	  			var fileSize = document.getElementById("reviewImgFileInput").files[0].size;
-	  			
-	  			console.log(imgFile, fileForm,maxSize, fileSize);
-	  			
-	  			var checkImgTest = fileForm.test(imgFile);	//true/false
-	  			var checkImgMath = imgFile.match(fileForm)	//객체 혹은 null
-	  			
-	  			if(checkImgMath){
-	  				console.log("if 객체가 있으면 true이기 때문에");
-	  			}
-	  			
-	  			if(!checkImgTest){ 	//정규화가 맞다면 true, 아니라면 false
-	  				alert("가능한 파일 형식이 아닙니다.");
-	  				this.value = "";
-	  				return;
-	  			}
-	  			if(maxSize < fileSize){
-	  				alert("이미지 파일은 5MB만 이하만 가능합니다.");
-	  				return;
-	  			}
-	  			
-	  		} // 파일 입력
-         
-         
-     });
-			
-      function resetDay(event){
-    	  event.preventDefault();
-    	  $('#mdp-demo').multiDatesPicker('resetDates');
-    	  console.log("리셋")
-      }
- 
+      // multiDatesPicker 초기화 및 상신버튼
+	$(document).ready(function() {
+		
+		var frm = document.submitForm;
+		var submitBtns = document.querySelectorAll(".frmbtn");
 
+		for (let i = 0; i < submitBtns.length; i++) 	{
+			submitBtns[i].onclick = function(event) {
+				event.preventDefault(); 
+				console.log(this.textContent);
+				document.getElementById("dataType").value = this.textContent;
+				var result = check();
+				if (!result) {
+					return;					
+				}
+				
+				frm.submit(); // 폼 제출
+								
+			}
+		}
 
+		
+		
+		
+		$('#mdp-demo').multiDatesPicker({
+			dateFormat : "yy-mm-dd",
+			beforeShowDay : $.datepicker.noWeekends,
+			// 날짜가 선택될 때 호출되는 함수
+			onSelect : function(dateText, inst) {
+				console.log('Selected date:', dateText);
+				console.log('typeOf:', typeof dateText);
+			}
+
+		}); // mdp 실행
+		
+		//파일첨부가 있는 양식인지
+		if (document.getElementById('reviewImgFileInput')) {
+		    console.log("reviewImgFileInput 요소가 존재합니다.");
+	         document.getElementById("reviewImgFileInput").onchange = function(){
+		  			console.log("파일 업로드 버튼 실행");
+		  			var imgFile = this.value.toLowerCase();
+		  			var fileForm = /(.*?)\.(jpg|jpeg|bmp|png|gif|pdf|doc|docx|hwp|xls|xlsx)$/i;
+		  			var maxSize = 5*1024*1024;
+		  			var fileSize = document.getElementById("reviewImgFileInput").files[0].size;
+
+		  			console.log(imgFile, fileForm,maxSize, fileSize);
+
+		  			var checkImgTest = fileForm.test(imgFile);	//true/false
+		  			var checkImgMath = imgFile.match(fileForm)	//객체 혹은 null
+
+		  			if(checkImgMath){
+		  				console.log("if 객체가 있으면 true이기 때문에");
+		  			}
+
+		  			if(!checkImgTest){ 	//정규화가 맞다면 true, 아니라면 false
+		  				alert("가능한 파일 형식이 아닙니다.");
+		  				this.value = "";
+		  				return;
+		  			}
+		  			if(maxSize < fileSize){
+		  				alert("이미지 파일은 5MB만 이하만 가능합니다.");
+		  				return;
+		  			}
+
+		  		} // 파일 입력
+		} else {
+		    console.log("reviewImgFileInput 요소가 존재하지 않습니다.");
+		}
+
+	}); //로드 끝
+
+	function resetDay(event) {
+		event.preventDefault();
+		$('#mdp-demo').multiDatesPicker('resetDates');
+		console.log("리셋")
+	}
 </script>
 
 
