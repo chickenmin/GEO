@@ -16,7 +16,7 @@
 <script type="text/javascript" src="./js/datatime.js"></script>
 <script type="text/javascript" src="./js/cal.js"></script>
 
- 
+
 
 <body>
 	<%@ include file="../comm/sidebar.jsp" %>

@@ -23,7 +23,7 @@
 		<typeAlias type="com.nike.geo.vo.hr.AttVo" alias="AttVo"/>
 		
 		<!-- 일정 -->
-<!-- 		<typeAlias type="com.nike.geo.vo.co.CalVo" alias="CalVo"/> -->
+ 		<typeAlias type="com.nike.geo.vo.co.CalVo" alias="CalVo"/> 
 
 		<!-- 공통테이블 -->
 		<typeAlias type="com.nike.geo.vo.comm.CommonVo" alias="CommonVo"/>
