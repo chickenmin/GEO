@@ -45,9 +45,6 @@ public class ApprovalController {
 	// 양식홈 로드시, 즐겨찾기 리스트 전달
 	@GetMapping("/apprHome.do")
 	public String apprHome(Model model,HttpSession session) {
-		EmpVo loginVo = new EmpVo();
-		loginVo.setEmp_no("emp6");
-		session.setAttribute("loginVo", loginVo);
 		String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
 		
 		//테스트 사원 : emp ; 로그인 구현하면, 세션에 담긴 로그인 정보 id로 파라미터 태우기
@@ -354,7 +351,7 @@ public class ApprovalController {
 				}
 				int n = apprService.putFile(vo);
 				if (n ==1 ) {
-					log.info("파일저장 성공");
+					log.info("파일 임시저장 성공");
 				}
 				}
 			}	// file 의 foreach 끝
@@ -376,7 +373,7 @@ public class ApprovalController {
 	@GetMapping("/detailAppr.do")
 	public String detailAppr(String apd_no) {
 		log.info("상신문서함 상세보기");
-		return "appr/AP_home";
+		return "appr/formView";
 	}
 
 	

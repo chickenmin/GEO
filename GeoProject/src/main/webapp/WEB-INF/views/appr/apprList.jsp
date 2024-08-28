@@ -86,13 +86,13 @@
 				                		<span class="badge border-primary border-1 text-primary">대기중</span>
 				                	</c:when>
 				                	<c:when test="${vo.apd_status eq 'C'}">
-				                		<span class="badge border-primary border-1 text-primary">완료</span>
+				                		<span class="badge border-warning border-1 text-warning">완료</span>
 				                	</c:when>
 				                	<c:when test="${vo.apd_status eq 'P'}">
-				                		<span class="badge border-primary border-1 text-primary">진행중</span>
+				                		<span class="badge border-success border-1 text-success">진행중</span>
 				                	</c:when>
 				                	<c:otherwise>
-				                		<span class="badge border-primary border-1 text-primary">반려</span>
+				                		<span class="badge border-secondary border-1 text-secondary">반려</span>
 				                	</c:otherwise>
 				                </c:choose>
 	                      </td>
