@@ -138,7 +138,7 @@
 				            </td>
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
-				            	${vo.apd_days }
+				            	${vo.apd_days}
 				            </td>
 				        </tr>
 				        <c:if test="${vo.apd_form eq 'AP002'}">
@@ -190,17 +190,29 @@
 				        </tr> 
 				        
 						
-						<c:if test="${vo.apd_form eq 'AP003' or vo.apd_form eq 'AP004' or vo.apd_form eq 'AP005'}">
 						 <!-- 파일 -->
-				        <tr>
-				        	<td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); 
-				        		font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-								<div>${파일이름 }</div>
-								<button>다운로드</button>
-				        	</td>
-				        </tr>
-						</c:if>				        
-					
+						<c:if test="${vo.apd_form eq 'AP003' or vo.apd_form eq 'AP004' or vo.apd_form eq 'AP005'}">
+						        <tr>
+						        	<td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); 
+						        		font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
+										<c:choose>
+								  			<c:when test="${file == null}">
+								  				첨부파일 없음
+								  			</c:when>
+								  			<c:otherwise>
+								  				<c:forEach var="f" items="${file}">
+								  					<form action="./apprFile.do" method="post">
+									  					${f.file_oname}
+												  		&nbsp&nbsp
+												  		<input type="hidden" name="file_no" value="${f.file_no}">
+												  		<button type="submit">다운로드</button>
+								  					</form>
+								  				</c:forEach>
+								  			</c:otherwise>
+								  		</c:choose>
+						        	</td>
+						        </tr>
+						    </c:if>
 				    </tbody>
 				</table>
 				
@@ -214,84 +226,6 @@
 
 </body>
   <%@ include file="../comm/footer.jsp" %>
-<script type="text/javascript">
-
-	
-      // multiDatesPicker 초기화
-	 $(document).ready(function() {
-         $('#mdp-demo').multiDatesPicker({
-        		dateFormat: "yy-mm-dd",
-        		beforeShowDay: $.datepicker.noWeekends,
-                 // 날짜가 선택될 때 호출되는 함수
-             onSelect: function(dateText, inst) {
-                 console.log('Selected date:', dateText);
-                 console.log('typeOf:', typeof dateText);
-             }
-             
-         });
-         
-         
-         document.getElementById("reviewImgFileInput").onchange = function(){
-	  			console.log("파일 업로드 버튼 실행");
-	  			var imgFile = this.value.toLowerCase();
-	  			var fileForm = /(.*?)\.(jpg|jpeg|bmp|png|gif|pdf|doc|docx|hwp|xls|xlsx)$/i;
-	  			var maxSize = 5*1024*1024;
-	  			var fileSize = document.getElementById("reviewImgFileInput").files[0].size;
-	  			
-	  			console.log(imgFile, fileForm,maxSize, fileSize);
-	  			
-	  			var checkImgTest = fileForm.test(imgFile);	//true/false
-	  			var checkImgMath = imgFile.match(fileForm)	//객체 혹은 null
-	  			
-	  			if(checkImgMath){
-	  				console.log("if 객체가 있으면 true이기 때문에");
-	  			}
-	  			
-	  			if(!checkImgTest){ 	//정규화가 맞다면 true, 아니라면 false
-	  				alert("가능한 파일 형식이 아닙니다.");
-	  				this.value = "";
-	  				return;
-	  			}
-	  			if(maxSize < fileSize){
-	  				alert("이미지 파일은 5MB만 이하만 가능합니다.");
-	  				return;
-	  			}
-	  			
-	  		} // 파일 입력
-         
-         
-     });
-			
-      function resetDay(event){
-    	  event.preventDefault();
-    	  $('#mdp-demo').multiDatesPicker('resetDates');
-    	  console.log("리셋")
-      }
-      
-//    function check(){
-// 	   const musts = document.getElementsByClassName("must");
-// 	   let all = true;
-// 	   Array.from(musts).forEach(function(element){
-		   
-// 		  if(element.value || element.innerHTML.trim()===''){
-// 			  all = false;
-// 			  console.log("inner",element.innerHTML.trim());
-// 		  } 
-// 	   });
-	   
-// 	   if (!all) {
-// 		alert('입력되지 않은 필수값이 있습니다.');
-// 		return false;
-// 		}
-// 	   console.log(musts);
-	   
-// 	   return true;
-//    } 
-      
-     
-
-
-</script>
 
 
 </html>

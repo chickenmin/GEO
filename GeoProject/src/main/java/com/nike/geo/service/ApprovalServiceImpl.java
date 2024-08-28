@@ -53,10 +53,16 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 	
 	@Override
-	public int submit2(Ap_DocuVo vo) {
+	public int submit2(Map<String, Object> map) {
 		log.info("vo로 상신");
-		return dao.submit2(vo);
+		return dao.submit2(map);
 	}
+	
+//	@Override
+//	public int submit2(Ap_DocuVo vo) {
+//		log.info("vo로 상신");
+//		return dao.submit2(vo);
+//	}
 	
 	
 	@Override
@@ -90,8 +96,28 @@ public class ApprovalServiceImpl implements IApprovalService {
 	
 	@Override
 	public List<Ap_DocuVo> selectApproval(String emp_no) {
-		// TODO Auto-generated method stub
 		return dao.selectApproval(emp_no);
+	}
+	
+	@Override
+	public Ap_DocuVo selectDeatil(String apd_no) {
+		return dao.selectDeatil(apd_no);
+	}
+	
+	@Override
+	public List<Ap_LineVo> selectLine(String apd_no) {
+		return dao.selectLine(apd_no);
+	}
+	
+	@Override
+	public List<FileVo> selectFile(String apd_no) {
+		return dao.selectFile(apd_no);
+	}
+	
+	
+	@Override
+	public FileVo findFile(String file_no) {
+		return dao.findFile(file_no);
 	}
 	
 

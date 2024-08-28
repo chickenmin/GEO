@@ -36,4 +36,13 @@
 				AND EMP_NAME = #{emp_name}
 				AND EMP_EMAIL = #{emp_email}
 	</select>
+	
+	<select id="findFile" resultType="FileVo">
+		SELECT FILE_NO, ORIGIN_NO, FILE_ONAME,
+				FILE_SNAME, FILE_SIZE, FILE_TYPE,
+				FILE_RANK, FILE_DEL_YN, REG_ID,
+				REG_DATE, MOD_ID, MOD_DATE
+			FROM GEO."FILE"
+			WHERE FILE_NO = #{file_no}
+	</select>
 </mapper>
