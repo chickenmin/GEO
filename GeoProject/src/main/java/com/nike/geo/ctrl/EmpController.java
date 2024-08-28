@@ -4,15 +4,12 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.nike.geo.service.IEmpService;
 import com.nike.geo.vo.hr.AttVo;
@@ -125,9 +122,21 @@ public class EmpController {
 		System.out.println("emp_no 파라미터 값: " + emp_no);
 		return "hr/empAtt";
 	}
-	
 
-	
+	@Scheduled(cron = "0 0 4 * * *")
+	@GetMapping(value = "/batchRow.do")
+	public String batchRow(Model model, HttpServletRequest request) {
+		log.info("batchRow");
+		List<EmpVo> vo = null;
+		//공휴일조회 API 값을 아래 if문에 넣는다.
+		if (true) { //공휴일이 아니면
+			service.batchRow();
+		} else { //공휴일이면
+
+		}
+		model.addAttribute("vo", vo);
+		return "hr/selectAll";
+	}
 
 
 }

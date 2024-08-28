@@ -105,5 +105,13 @@ SET EMP_PW='1234'
 WHERE EMP_NO = #{emp_no}
 </select>
 
+<insert id="batchRow">
+	INSERT INTO GEO.ATT
+	(EMP_NO, ATT_ARRIVE_TIME, ATT_LEFT_TIME, REG_ID, REG_DATE, MOD_ID, MOD_DATE)
+	SELECT e.EMP_NO, null, null, 'batch', TO_CHAR(SYSDATE, 'yyyy-MM-dd'),
+		   'batch', TO_CHAR(SYSDATE, 'yyyy-MM-dd')
+	FROM EMP e
+	where e.EMP_STATUS = 'ST001'
+</insert>
 
 </mapper>

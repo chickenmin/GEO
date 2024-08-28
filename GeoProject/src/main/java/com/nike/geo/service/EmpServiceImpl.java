@@ -90,6 +90,12 @@ public class EmpServiceImpl implements IEmpService {
 		log.info("비밀번호 변경");
 		return dao.modPw(emp_no);
 	}
+
+	@Override
+	public void batchRow() {
+		dao.batchRow();
+	}
+
 	
 
 }
