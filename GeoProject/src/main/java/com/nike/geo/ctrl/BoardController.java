@@ -1,5 +1,6 @@
 package com.nike.geo.ctrl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,37 +29,33 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class BoardController {
 
-	@Autowired
 	private final IBoardService service;
 	
 	//공지게시판
 	@GetMapping(value = "/announcements.do")
-	public String announcements(@RequestParam(value = "type", defaultValue = "announcements") String type,Model model) {
+	public String announcements(Model model) {
 		log.info("BoardController announcements");
 		List<BoardVo> announcements=service.announcements();
 		model.addAttribute("announcements",announcements);
-		model.addAttribute("type", type);
-		return "board/boardList";
+		return "board/annoBoard";
 	}
 	
 	//일반게시판
 	@GetMapping(value = "/nomalBoard.do")
-	public String nomalBoard(@RequestParam(value = "type", defaultValue = "nomalBoard") String type,Model model) {
+	public String nomalBoard(Model model) {
 		log.info("BoardController nomalBoard");
 		List<BoardVo> nomalBoard=service.nomalBoard();
 		model.addAttribute("nomalBoard", nomalBoard);
-		model.addAttribute("type", type);
-		return "board/boardList";
+		return "board/nomalBoard";
 	}
 	
 	//삭제게시판
 	@GetMapping(value = "/delBoard.do")
-	public String delBoard(@RequestParam(value = "type", defaultValue = "delBoard") String type,Model model) {
+	public String delBoard(Model model) {
 		log.info("BoardController delBoard");
 		List<BoardVo> delBoard=service.delBoard();
 		model.addAttribute("delBoard", delBoard);
-		model.addAttribute("type", type);
-		return "board/boardList";
+		return "board/delBoard";
 	}
 	
 	
@@ -69,6 +66,7 @@ public class BoardController {
 		model.addAttribute("mode", "insert");
 		return "board/insertBoardForm";
 	}
+	
 	@PostMapping(value = "/writeBoard.do")
 	public String writeBoard(BoardVo Vo,@RequestParam("bo_title") String bo_title, @RequestParam("bo_content") String bo_content) {
 //	    Vo.setBo_content(bo_content);
@@ -84,7 +82,7 @@ public class BoardController {
 	    boolean isc = service.insertBoard(Vo);
 	    
 	    if (isc) {
-	        return "redirect:/announcements.do";
+	        return "redirect:/announcements.do";	//뒤로가기를 해야하나?
 	    } else {
 	        return "redirect:/writeBoard.do";
 	    }
@@ -110,7 +108,7 @@ public class BoardController {
 	}
 	
 	@PostMapping(value = "/modifyBoard.do")
-	public String modifyBoard(@RequestParam("bo_title")String bo_title,@RequestParam("bo_content")String bo_content,@RequestParam("bo_no")String bo_no,@RequestParam Map<String, String> map,Model model) {
+	public String modifyBoard(@RequestParam("bo_title")String bo_title,@RequestParam("bo_content")String bo_content,@RequestParam("bo_no")String bo_no,@RequestParam Map<String, String> map) {
 		 map.put("bo_title", bo_title);
 		 map.put("bo_content", bo_content);
 		 map.put("bo_no", bo_no);
@@ -139,5 +137,11 @@ public class BoardController {
 		return "redirect:/delBoard.do";
 	}
 	
+	//추천수
+	@PostMapping(value = "/likeCount.do")
+	public String likeCount(BoardVo vo) {
+		service.likeCount(vo);
+		return "redirect:/detailBoard.do";
+	}
 	
 }

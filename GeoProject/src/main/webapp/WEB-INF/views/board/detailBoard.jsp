@@ -19,7 +19,9 @@
 		<br><br>
 		${Vo.bo_content}
 		<hr>
-		<button>추천</button>
+		<form action="./likeCount.do" method="post">
+<!-- 		<input type="submit" value="추천"> -->
+		</form>	
 		<button>댓글</button>		
 		<button onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>		
 		<button>삭제</button>
