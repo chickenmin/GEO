@@ -128,6 +128,34 @@
 	
 	
 	
+	function check() {
+    // must 클래스를 가진 모든 요소를 선택
+    var mustFields = document.querySelectorAll('.must');
+    var isEmpty = false;
+
+    // 각 요소를 순회하면서 비어있는지 확인
+    mustFields.forEach(function(field) {
+        if (field.tagName.toLowerCase() === 'input' || field.tagName.toLowerCase() === 'textarea') {
+            // input이나 textarea의 값이 비어있는지 확인
+            if (field.value.trim() === '') {
+                isEmpty = true;
+            }
+        } else if (field.innerText.trim() === '') {
+            // 그 외의 요소들(예: div 등)의 innerText가 비어있는지 확인
+            isEmpty = true;
+        }
+    });
+
+    if (isEmpty) {
+        alert('모든 필수 입력 필드를 작성해 주세요.');
+    } else {
+        // 모든 필드가 작성되어 있으면 폼을 제출하거나 다른 작업을 수행
+        document.getElementById('approval').submit();
+    }
+}
+	
+	
+	
 	
 	
 	

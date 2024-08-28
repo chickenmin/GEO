@@ -189,6 +189,7 @@
 				            </td>
 				        </tr> 
 				        
+						
 						<c:if test="${vo.apd_form eq 'AP003' or vo.apd_form eq 'AP004' or vo.apd_form eq 'AP005'}">
 						 <!-- 파일 -->
 				        <tr>

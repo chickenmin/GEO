@@ -276,28 +276,7 @@
     	  $('#mdp-demo').multiDatesPicker('resetDates');
     	  console.log("리셋")
       }
-      
-//    function check(){
-// 	   const musts = document.getElementsByClassName("must");
-// 	   let all = true;
-// 	   Array.from(musts).forEach(function(element){
-		   
-// 		  if(element.value || element.innerHTML.trim()===''){
-// 			  all = false;
-// 			  console.log("inner",element.innerHTML.trim());
-// 		  } 
-// 	   });
-	   
-// 	   if (!all) {
-// 		alert('입력되지 않은 필수값이 있습니다.');
-// 		return false;
-// 		}
-// 	   console.log(musts);
-	   
-// 	   return true;
-//    } 
-      
-     
+ 
 
 
 </script>
