@@ -205,7 +205,7 @@
 				</div>
 				<div>
 					<div class="row mb-3">
-						<label for="inputText" class="col-sm-2 col-form-label">주소</label>
+						<label for="sample6_postcode" class="col-sm-2 col-form-label">주소</label>
 							<div class="col-sm-10">
 								<div class="input-group mb-3" style="width: 25%;">
 									<input type="text" class="form-control" id="sample6_postcode" placeholder="우편번호" readonly="readonly">

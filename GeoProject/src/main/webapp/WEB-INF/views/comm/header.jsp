@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -225,13 +226,30 @@
 
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
           <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-          <span class="d-none d-md-block dropdown-toggle ps-2">최현아</span>
+          <span class="d-none d-md-block dropdown-toggle ps-2">${loginVo.emp_name}</span>
         </a><!-- End Profile Iamge Icon -->
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
-            <h6>최현아</h6>
-            <span>개발팀 사원</span>
+            <h6>${loginVo.emp_name}</h6>
+            <span>
+            	<c:choose>
+            		<c:when test="${loginVo.emp_dept eq 'DE001'}">개발팀</c:when>
+            		<c:when test="${loginVo.emp_dept eq 'DE002'}">인사팀</c:when>
+            		<c:when test="${loginVo.emp_dept eq 'DE003'}">생산팀</c:when>
+            		<c:when test="${loginVo.emp_dept eq 'DE004'}">총무팀</c:when>
+            		<c:when test="${loginVo.emp_dept eq 'DE005'}">영업팀</c:when>
+            		<c:when test="${loginVo.emp_dept eq 'DE006'}">마케팅팀</c:when>	
+            	</c:choose>
+            	<c:choose>
+            		<c:when test="${loginVo.emp_pos eq 'PO001'}">사원</c:when>
+            		<c:when test="${loginVo.emp_pos eq 'PO002'}">주임</c:when>
+            		<c:when test="${loginVo.emp_pos eq 'PO003'}">대리</c:when>
+            		<c:when test="${loginVo.emp_pos eq 'PO004'}">과장</c:when>
+            		<c:when test="${loginVo.emp_pos eq 'PO005'}">차장</c:when>
+            		<c:when test="${loginVo.emp_pos eq 'PO006'}">부장</c:when>	
+            	</c:choose>
+            </span>
           </li>
           <li>
             <hr class="dropdown-divider">

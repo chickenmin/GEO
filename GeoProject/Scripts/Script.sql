@@ -45,6 +45,11 @@ WHERE
 	EMP_NO = 'aa001';
 
 
+-- 비밀번호 변경 --
+UPDATE GEO.EMP
+SET EMP_PW='1234'
+WHERE EMP_NO='JJ001';
+
 
 
 
