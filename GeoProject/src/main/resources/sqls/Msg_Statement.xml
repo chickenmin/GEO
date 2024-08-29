@@ -118,5 +118,4 @@
 				AND MSG_RECV_DEL_YN = 'N'
 	</select>
 	
-	
 </mapper>
