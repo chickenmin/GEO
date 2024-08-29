@@ -56,7 +56,7 @@
 <!-- </table> -->
 			
 			<input type="submit" value="삭제">
-			<input type="button" onclick="location.href='./writeBoard.do'" value="새글쓰기">
+			<input type="button" onclick="location.href='./writeBoard.do?bo_status=announcements'" value="새글쓰기">
 			</form>
 	<br>
 
