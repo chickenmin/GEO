@@ -3,6 +3,20 @@ $( document ).ready(function() {
   selectAjax();
 });
 
+function formatDateToKST(date) {
+    // UTC 시간 기준으로 한국 시간(KST)으로 변환
+    const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        timeZone: 'Asia/Seoul'  // KST 타임존 적용
+    };
+    
+    return date.toLocaleString('ko-KR', options);
+}
 
 
 function selectAjax(){
@@ -57,17 +71,52 @@ function selectAjax(){
 						updateDragAjax(dateFormat(info.event.cal_start), dateFormat(info.event.cal_stop), info.event.extendedProps.cal_no);
 						
 					},	
-//					dateClick: function(info) {    
-//		            // 날짜 클릭 시 모달 열기 및 입력 필드 초기화
-//		            $('#cal_no').val(''); // 새로운 이벤트이므로 번호 초기화
-//		            $('#cal_title').val(''); // 새로운 이벤트이므로 타이틀 초기화
-//		            $('#cal_content').val(''); // 새로운 이벤트이므로 내용 초기화
-//		            $('#cal_start').val(info.dateStr); // 클릭한 날짜로 시작일 설정
-//		            $('#cal_stop').val(info.dateStr); // 종료일도 동일하게 설정 (사용자가 수정할 수 있음)
-//		            $('#cal_type').val('');
-//		            $('#cal_open_yn').val('');
-//		            $('#addEventModal').modal('show'); // 모달 열기
-//			        },			
+					//상세보기 모달창
+					eventClick:function(info){
+						var cal_content = $("#cal_content").val();
+						
+						document.getElementById('eventTitle').textContent = "Title: " + info.event.title;
+					      document.getElementById('eventStart').textContent = "Start: " + formatDateToKST(info.event.start);
+					      document.getElementById('eventEnd').textContent = info.event.end ? "End: " + formatDateToKST(info.event.end) : "End: N/A";
+					      
+					      // Bootstrap 모달 표시
+					      var eventModal = new bootstrap.Modal(document.getElementById('eventModal'), {});
+					      eventModal.show();
+					      
+					      // 클릭된 이벤트가 기본 동작(새 페이지로 열리는 것 등)을 하지 않도록 방지
+					      info.jsEvent.preventDefault();
+					},
+                        /**
+                         * 이벤트 선택해서 삭제하기
+                         */
+//                        eventClick: function (info){
+//                            if(confirm("'"+ info.event.cal_title +"' 일정을 삭제하시겠습니까 ?")){
+//                                // 확인 클릭 시
+//                                info.event.remove();
+// 
+// 
+//                            console.log(info.event);
+//                            var events = new Array(); // Json 데이터를 받기 위한 배열 선언
+//                            var obj = new Object();
+//                                obj.title = info.event._def.title;
+//                                obj.start = info.event._instance.range.start;
+//                                obj.end = info.event._instance.range.end;
+//                                events.push(obj);
+// 
+//                            console.log(events);
+//                            }
+//                            $(function deleteData(){
+//                                $.ajax({
+//                                    url: "/full-calendar/calendar-admin-update",
+//                                    method: "DELETE",
+//                                    dataType: "json",
+//                                    data: JSON.stringify(events),
+//                                    contentType: 'application/json',
+//                                })
+//                            })
+//                        },
+                        events: data
+                        		
 				});				
 				calendar.render();// 달력 초기화시 필수		
 				
@@ -170,7 +219,7 @@ function updateDragAjax(cal_start, cal_stop, cal_no) {
     console.log("시작일2:", cal_start);
     console.log("종료일2:", cal_stop);
     $.ajax({
-    url: '/GeoProject2/updateDragAjax.do',
+    url: '/GeoProject/updateDragAjax.do',
     type: 'POST',
     data: {
         cal_no: cal_no,  
@@ -228,4 +277,12 @@ function zeroPlus(time) {
 	console.log("###################", time)
 	return time < 10 ? "0" + time : time;
 }
+
+function openEventModal(){
+//	$('#addEventModal').modal('show');
+	$('#addEventModal .modal-content').load("addEventModal").modal('show');
+	$('#addEventModal').modal();
+}
+
+
 
