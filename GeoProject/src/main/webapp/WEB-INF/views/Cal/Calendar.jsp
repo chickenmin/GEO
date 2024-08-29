@@ -94,7 +94,7 @@
 	        <p id="eventEnd"></p>
 	      </div>
 	      <div class="modal-footer">
-	      	<button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#addEventModal" onclick="openEventModal()">수정</button>
+	      	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal" onclick="openEventModal()">수정</button>
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 	      </div>
 	    </div>
