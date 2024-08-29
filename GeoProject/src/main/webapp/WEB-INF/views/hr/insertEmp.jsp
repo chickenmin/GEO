@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <!DOCTYPE html>
 <html>
 
@@ -109,15 +110,89 @@
 	
 	
 </script>
+<script type="text/javascript">
+            window.onload = function() {
+                document.querySelector('form').addEventListener('submit', function(event) {
+                    const empNoInput = document.querySelector('input[name="emp_no"]');
+                    const empPhoneInput = document.querySelector('input[name="emp_phone"]');
+                    const empEmailInput = document.querySelector('input[name="emp_email"]');
+                    
+                    const empNoValue = empNoInput.value;
+                    const empPhoneValue = empPhoneInput.value;
+                    const empEmailValue = empEmailInput.value;
+                    const empNoRegex = /^[A-Z]{2}\d{3}$/;
+                    const empPhoneRegex = /^(010-\d{4}-\d{4})$/;
+                    const empEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    if (!empNoRegex.test(empNoValue)) {
+                        alert("잘못된 사번 형식입니다.");
+                        event.preventDefault();
+                    }
+                    if (!empPhoneRegex.test(empPhoneValue)) {
+                        alert("잘못된 전화번호 형식입니다.");
+                        event.preventDefault();
+                    }
+                    if (!empEmailRegex.test(empEmailValue)) {
+                        alert("잘못된 이메일 형식입니다.");
+                        event.preventDefault();
+                    }
+                });
+
+                document.getElementById("formFile").onchange = function() {
+                    console.log("파일 업로드 버튼 실행");
+                    var imgFile = this.value.toLowerCase();
+                    var fileForm = /(.*?)\.(jpg|jpeg|bmp|png|gif|pdf)$/;
+                    var maxSize = 5 * 1024 * 1024;
+                    var fileSize = this.files[0].size;
+
+                    if (!fileForm.test(imgFile)) {
+                        alert("이미지 파일만 가능합니다");
+                        return;
+                    }
+                    if (fileSize > maxSize) {
+                        alert("이미지 파일은 5Mb 이하만 가능합니다");
+                        return;
+                    }
+
+                    readUrl(this);
+                };
+
+                document.querySelector(".list_thumb").addEventListener("click", function(event) {
+                    if (event.target.classList.contains('deleteImg')) {
+                        event.target.parentElement.remove();
+                    }
+                });
+            }
+
+            function readUrl(input) {
+                const target = input;
+                const fileLength = target.files.length;
+
+                $.each(target.files, function(index, file) {
+                    var render = new FileReader();
+                    render.onload = function(e) {
+                        var reviewImg = "<li class='item'>";
+                        reviewImg += "<a href='#' class='anchor'>";
+                        reviewImg += "<span class='subImage'>전송</span>";
+                        reviewImg += "</a>";
+                        reviewImg += "<img src='" + e.target.result + "' width='50px' class='item_thumb'>";
+                        reviewImg += "<button class='deleteImg'>삭제</button>";
+                        reviewImg += "<span class='img_border'></span>";
+                        reviewImg += "</li>";
+                        $(".list_thumb").append(reviewImg);
+                    }
+                    render.readAsDataURL(file);
+                });
+            }
+        </script>
 
 		<div class="card">
-			<form action="./insertEmp.do" method="post" onsubmit="fullAddress()" enctype="multipart/form-data">
+			<form action="./insertEmp.do" method="post" enctype="multipart/form-data">
 			<div class="card-body">
 				<h5 class="card-title">사원 추가</h5>
 				<div class="row mb-3">
 					<label for="inputNumber" class="col-sm-2 col-form-label">프로필 사진</label>
 					<div class="col-sm-10" style="width: 50%;">
-						<input class="form-control" type="file" id="formFile">
+						<input class="form-control" type="file" id="formFile" name="emp_img">
 					</div>
 				</div>
 				<div class="row mb-3">

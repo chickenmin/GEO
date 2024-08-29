@@ -86,9 +86,15 @@
 
 		<div
 			class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-			<img src="assets/img/profile-img.jpg" alt="Profile"
-				class="rounded-circle"> <input type="hidden" name="emp_no">
+			<ul>
+				<li>${originFileName}</li>
+<%-- 				<li>${saveFileName}</li> --%>
+<%-- 				<li>${path}</li> --%>
+			</ul>
+			<img src="./storage/${vo.emp_img}" alt="Profile"
+				class="rounded-circle">
+				<input type="text" name="saveFileName" value="${saveFileName}" readonly="readonly">
+				<input type="hidden" name="emp_no">
 			<h2>${vo.emp_name}</h2>
 			<h3>
 				<c:choose>
@@ -167,7 +173,8 @@
 			<div class="tab-content pt-30">
 
 				<div class="tab-pane fade show active profile-overview"
-					id="profile-overview" role="tabpanel">
+					id="profile-overview" role="tabpanel" >
+					
 
 					<h5 class="card-title">Profile</h5>
 
@@ -301,7 +308,7 @@
    var intervalId = setInterval(function() {
        var svg = document.querySelector('#calendar_basic svg');
        if (svg) {
-           var pathToRemove1 = svg.querySelector('path[fill*="url(http://localhost:8080/Proto_JobsInfo/#_ABSTRACT_RENDERER_ID_2)"]');
+           var pathToRemove1 = svg.querySelector('path[fill*="url(http://localhost:8080/GeoProject/#_ABSTRACT_RENDERER_ID_2)"]');
            if (pathToRemove1) {
                pathToRemove1.remove();
            }

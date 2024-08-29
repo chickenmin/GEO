@@ -87,7 +87,7 @@
 		<div
 			class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-			<img src="assets/img/profile-img.jpg" alt="Profile"
+			<img src="./storage/${saveFileName}" alt="Profile"
 				class="rounded-circle"> <input type="hidden" name="emp_no">
 			<h2>${loginVo.emp_name}</h2>
 			<h3>
