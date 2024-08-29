@@ -7,19 +7,15 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.SecureRandom;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nike.geo.service.ICommService;
 import com.nike.geo.service.IMsgService;
 import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.hr.EmpVo;
@@ -42,9 +37,6 @@ public class MsgController {
 	
 	@Autowired
 	private IMsgService service;
-	
-	@Autowired
-	private ICommService commService; 
 	
 	@GetMapping(value = "/login.do")
 	public String loginFrom() {
@@ -78,6 +70,17 @@ public class MsgController {
 		EmpVo vo = (EmpVo)session.getAttribute("loginVo");
 		String recvId = vo.getEmp_no();
 		List<MsgVo> msgListRecv = service.selectMsgListRecv(recvId);
+		
+		// 목록에서 내용 조회시 태그 빼고 순수 텍스트만 보이도록
+		for (MsgVo msg : msgListRecv) {
+			String content = msg.getMsg_content();
+			content = Jsoup.parse(content).text();
+			if(content.length() > 30) { // 텍스트가 30자 넘을 때는 자르고 (앞부분)...
+				content = content.substring(0, 30).concat("...");			
+			} 
+			msg.setMsg_content(content);
+		}
+		
 		model.addAttribute("msgListRecv",msgListRecv);
 		return "msg/recvMsg";
 	}
@@ -89,6 +92,14 @@ public class MsgController {
 		EmpVo vo = (EmpVo)session.getAttribute("loginVo");
 		String sendId = vo.getEmp_no();
 		List<MsgVo> msgListSend = service.selectMsgListSend(sendId);
+		
+		// 목록에서 내용 조회시 태그 빼고 순수 텍스트만 보이도록
+		for (MsgVo msg : msgListSend) {
+			String content = msg.getMsg_content();
+			content = Jsoup.parse(content).text();
+			msg.setMsg_content(content);
+		}
+		
 		model.addAttribute("msgListSend", msgListSend);
 		return "msg/sendMsg";
 	}
@@ -147,7 +158,6 @@ public class MsgController {
 		
 		// 쪽지 작성
 		String empNo = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
-//		msgVo.setMsg_send_id("HYUN"); // 로그인 추가시 현재 접속중인 아이디로 변경
 		msgVo.setMsg_send_id(empNo);
 		int msgChk = service.insertMsg(msgVo);
 		

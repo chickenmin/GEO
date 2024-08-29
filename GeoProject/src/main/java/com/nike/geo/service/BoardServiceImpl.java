@@ -24,31 +24,26 @@ public class BoardServiceImpl implements IBoardService {
 	
 	@Override
 	public List<BoardVo> announcements() {
-		
 		return dao.announcements();
 	}
 	
 	@Override
 	public List<BoardVo> nomalBoard() {
-		
 		return dao.nomalBoard();
 	}
 	
 	@Override
 	public List<BoardVo> delBoard() {
-	
 		return dao.delBoard();
 	}
 	
 	@Override
 	public boolean insertBoard(BoardVo Vo) {
-		
 		return dao.insertBoard(Vo);
 	}
 	
 	@Override
 	public BoardVo detailBoard(String bo_no) {
-		System.out.println("브이오엔오"+bo_no);
 		return dao.detailBoard(bo_no);
 	}
 	
@@ -107,25 +102,6 @@ public class BoardServiceImpl implements IBoardService {
 		System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆resultVo:"+resultVo);
 		return resultVo;
 	}
-//	//추천
-//	@Override
-//	public BoardVo likeCount(BoardVo vo) {
-//		Map<String, String>map = new HashMap<String, String>(){{
-//			System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★서비스");
-//			put("bo_no", vo.getBo_no());
-//			put("emp_no",vo.getEmp_no());
-//		}};
-//		int n = dao.likeSearchBoardOne(map);
-//		System.out.println("여긴:"+n);
-//		if(n==0) {
-//			dao.likeInsert(map);
-//		}else {
-//			dao.likeDel(map);
-//		}
-////		BoardVo resultVo = dao.likeSelectOne(vo.getBo_no());
-////		return resultVo;
-//		return null;
-//	}
 }
 
 

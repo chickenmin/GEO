@@ -77,6 +77,7 @@ public class EmpDaoImpl implements IEmpDao {
 		log.info(NS + "modPw");
 		return session.update(NS + "modPw");
 	}
+	
 	@Override
 	public void batchRow() {
 		session.insert(NS + "batchRow");
