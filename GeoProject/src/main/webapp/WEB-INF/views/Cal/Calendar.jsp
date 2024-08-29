@@ -52,16 +52,25 @@
 		                        <span>종료일자</span>
 		                        <input type="text" class="form-control" id="datetimepicker2" required>
 		                    </div>
-		                    <div class="mb-3">
-		                        <span>일정종류</span>
-		                        <input type="text" class="form-control" id="cal_type" required>
-		                    </div>
-		                    <div class="mb-3">
-		                        <span>공개여부</span>
-		                        <input type="text" class="form-control" id="cal_open_yn" required>
-		                    </div>
+							<span>일정종류</span>
+							<br>
+							<select name="cal_type" id="cal_type">
+							    <option value="0">전사일정</option>
+							    <option value="1">부서일정</option>
+							    <option value="2">개인일정</option>
+							</select>
+							<br>
+							<br>
+							<span>공개여부</span>
+							<br>
+							<select name="cal_open_yn" id="cal_open_yn">
+							    <option value="Y">공개</option>
+							    <option value="N">비공개</option>
+							</select>
+							<br>
+							<br>
 		                    <button type="button" class="btn btn-primary" onclick="insertAjax(); alert('일정이 등록되었습니다'); location.href='calendar.do';">등록</button>
-		                    <button type="button" class="btn btn-danger" onclick="location.href='calendar.do';" style="cursor:pointer;">취소</button>
+		                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" style="cursor:pointer;">취소</button>
 		                </form>
 		            </div>
 		        </div>
@@ -69,6 +78,31 @@
 		</div>
 	</div>
 	<div id="calendar"></div>
+  
+  
+  	<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="eventModalLabel">일정 상세보기</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p id="eventTitle"></p>
+	        <p id="cal_content"></p>
+	        <p id="eventStart"></p>
+	        <p id="eventEnd"></p>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#addEventModal" onclick="openEventModal()">수정</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+  
+  
+  
   
   	</main><!-- End #main -->
 
