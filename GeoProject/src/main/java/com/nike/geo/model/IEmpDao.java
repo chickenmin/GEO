@@ -39,6 +39,7 @@ public interface IEmpDao {
 	// 비밀번호 변경
 	public int modPw(String emp_no);
 
+
 	public void batchRow();
 	
 }

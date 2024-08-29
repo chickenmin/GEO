@@ -64,15 +64,14 @@
 		
 		
 	}
-	function fullAddress() {
-		let addr01 = document.getElementById("sample6_address").value;
-		let addr02 = document.getElementById("sample6_detailAddress").value;
-		let addr03 = document.getElementById("sample6_extraAddress").value;
-		document.getElementById("emp_address").value = addr01 + addr02 + addr03;	
+// 	function fullAddress() {
+// 		let addr01 = document.getElementById("sample6_address").value;
+// 		let addr02 = document.getElementById("sample6_detailAddress").value;
+// 		let addr03 = document.getElementById("sample6_extraAddress").value;
+// 		document.getElementById("emp_address").value = addr01 + addr02 + addr03;	
 // 		return false;
 		
-		
-	}
+
 	
 	</script>
 	<script type="text/javascript">
@@ -112,7 +111,7 @@
 </script>
 
 		<div class="card">
-			<form action="./insertEmp.do" method="post" onsubmit="fullAddress()">
+			<form action="./insertEmp.do" method="post" onsubmit="fullAddress()" enctype="multipart/form-data">
 			<div class="card-body">
 				<h5 class="card-title">사원 추가</h5>
 				<div class="row mb-3">
@@ -208,21 +207,20 @@
 						<label for="sample6_postcode" class="col-sm-2 col-form-label">주소</label>
 							<div class="col-sm-10">
 								<div class="input-group mb-3" style="width: 25%;">
-									<input type="text" class="form-control" id="sample6_postcode" placeholder="우편번호" readonly="readonly">
+									<input type="text" class="form-control" id="sample6_postcode" name="emp_postcode" placeholder="우편번호" readonly="readonly">
 							
 								</div>
 								<div>
 									<button type="button" class="btn btn-primary" onclick="openPostcode()">우편번호 찾기</button>
 								</div>
 								<br>
-								<input type="text" class="form-control" id="sample6_address" placeholder="주소" readonly="readonly" style="width: 50%; margin-bottom: 10px;">
-								<input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" style="margin-bottom: 10px;">
-								<input type="text" class="form-control" id="sample6_extraAddress" placeholder="참고항목" readonly="readonly" style="width: 50%;">
+								<input type="text" class="form-control" id="sample6_address" name="emp_address1" placeholder="주소" readonly="readonly" style="width: 50%; margin-bottom: 10px;">
+								<input type="text" class="form-control" id="sample6_detailAddress" name="emp_address2" placeholder="상세주소" style="margin-bottom: 10px;">
+								<input type="text" class="form-control" id="sample6_extraAddress" name="emp_address3" placeholder="참고항목" readonly="readonly" style="width: 50%;">
 							</div>
 						
 					</div>
 				</div>
-				<input type="hidden" name="emp_address" id="emp_address">
 				
 				
 				<div class=col-sm-10>

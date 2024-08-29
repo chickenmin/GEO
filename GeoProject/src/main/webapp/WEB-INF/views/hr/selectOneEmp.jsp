@@ -72,13 +72,13 @@
 						}).open();
 				fullAddress();
 
-			}
-			function fullAddress() {
-				let addr01 = document.getElementById("sample6_address").value;
-				let addr02 = document.getElementById("sample6_detailAddress").value;
-				let addr03 = document.getElementById("sample6_extraAddress").value;
-				document.getElementById("emp_address").value = addr01 + addr02
-						+ addr03;
+// 			}
+// 			function fullAddress() {
+// 				let addr01 = document.getElementById("sample6_address").value;
+// 				let addr02 = document.getElementById("sample6_detailAddress").value;
+// 				let addr03 = document.getElementById("sample6_extraAddress").value;
+// 				document.getElementById("emp_address").value = addr01 + addr02
+// 						+ addr03;
 				// 		return false;
 
 			}
@@ -256,7 +256,7 @@
 
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label">주소</div>
-						<div class="col-lg-9 col-md-8">${vo.emp_address}</div>
+						<div class="col-lg-9 col-md-8">${vo.emp_address1} ${vo.emp_address2} ${vo.emp_address3}</div>
 					</div>
 
 					<div class="row" style="margin-bottom: 10px;">
@@ -434,7 +434,7 @@
 								<div class="col-sm-10">
 									<div class="input-group mb-3" style="width: 25%;">
 										<input type="text" class="form-control" id="sample6_postcode"
-											placeholder="우편번호" readonly="readonly">
+											value="${vo.emp_postcode}" name="emp_postcode" placeholder="우편번호" readonly="readonly">
 
 									</div>
 									<div>
@@ -443,11 +443,11 @@
 									</div>
 									<br> <input type="text" class="form-control"
 										id="sample6_address" placeholder="주소" readonly="readonly"
-										style="width: 50%; margin-bottom: 10px;" value="sample6_address"> <input
+										style="width: 80%; margin-bottom: 10px;" value="${vo.emp_address1}" name="emp_address1"> <input
 										type="text" class="form-control" id="sample6_detailAddress"
-										placeholder="상세주소" style="margin-bottom: 10px;" value="sample6_detailAddress"> <input
+										placeholder="상세주소" style="margin-bottom: 10px;" value="${vo.emp_address2}" name="emp_address2"> <input
 										type="text" class="form-control" id="sample6_extraAddress"
-										placeholder="참고항목" readonly="readonly" style="width: 50%;" value="sample6_extraAddress">
+										placeholder="참고항목" readonly="readonly" style="width: 80%;" value="${vo.emp_address3}" name="emp_address3">
 								</div>
 							</div>
 						</div>
