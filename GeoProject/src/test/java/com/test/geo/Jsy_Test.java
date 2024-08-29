@@ -44,7 +44,7 @@ public class Jsy_Test {
 		vo.setEmp_email("SY001");
 		vo.setEmp_phone("010-0000-0000");
 		vo.setEmp_birth("1994-04-24");
-		vo.setEmp_address("ㅁㄴㅇㅁㄴㅇ");
+//		vo.setEmp_address("ㅁㄴㅇㅁㄴㅇ");
 		vo.setEmp_auth("W");
 		vo.setEmp_status("Y");
 		vo.setEmp_retiredate(" ");
