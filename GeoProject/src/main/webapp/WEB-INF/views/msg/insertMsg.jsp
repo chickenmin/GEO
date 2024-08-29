@@ -80,8 +80,9 @@
 	              	 
 	              	 // form에 제출하기 위해 에디터 내부의 텍스트를 hiddenContent 내용으로 가져오기
 	              	 function sendDivContent(){
- 	              		 // var plainText = quill.getText().trim(); // 텍스트만 가져옴
-	              		 var plainText = quill.root.innerHTML.substr(3).slice(0,-4);
+//  	              		 var plainText = quill.getText().trim(); // 텍스트만 가져옴
+// 	              		 var plainText = quill.root.innerHTML.substr(3).slice(0,-4);
+	              		 var plainText = quill.root.innerHTML; // HTML만 가져옴
 	              		 document.getElementById("hiddenContent").value = plainText;
 	              	 }
 	              </script>
