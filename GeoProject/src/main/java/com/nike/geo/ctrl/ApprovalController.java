@@ -3,9 +3,7 @@ package com.nike.geo.ctrl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,7 +22,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -114,33 +111,52 @@ public class ApprovalController {
 	/////////////////////////////////////////////////////////////////////////
 	//결재문서함 상세보기
 	@GetMapping("/detailAppr.do")
-	public String detailAppr(String apd_no,Model model, HttpServletRequest request) {
+	public String detailAppr(String apd_no,Model model, HttpServletRequest request,HttpSession session) {
 		log.info("결재 문서함 상세보기");
+		String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("apd_no", apd_no);
+		map.put("emp_no", emp_no);
 		
 		Ap_DocuVo vo = apprService.selectDeatil(apd_no);	//문서 상세조회
 		List<Ap_LineVo> apprLists = apprService.selectLine(apd_no);	//결재자 조회
-		List<FileVo> file = apprService.selectFile(apd_no);	// 첨부파일 조회
-		String apl_msg = apprService.sel_Msg(Integer.parseInt(apd_no));
+		List<FileVo> file = apprService.selectFile(apd_no);	// 이미 승인한 서명 이미지
+		String apl_msg = apprService.sel_Msg(Integer.parseInt(apd_no));	//반려메시지
+		int order = apprService.checkOrder(map);
+		List<FileVo> mySign = apprService.selMySign(emp_no);	//내 전자서명
 		
 		
-		//파일 다운
-		String path;
+		//파일 다운~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		String path="";	//전자서명
 		try {
 			//상대경로
-			path = WebUtils.getRealPath(request.getSession().getServletContext(),"/signature/");
+			path = WebUtils.getRealPath(request.getSession().getServletContext(),"/signature/");	//전자서명 경로
+			log.info("path {}",path);
 			if (file.size()>0) {
 				model.addAttribute("file", file);
 			}
-			model.addAttribute("path", path);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} 
+		
+		
+		
+		if (order == 1) {
+			model.addAttribute("order", 1);
+//			List<String> signs;
+			//전자서명 이미지 가져가기
+			
+			
+		}else {
+			model.addAttribute("order", 0);
+		}
 
 		model.addAttribute("vo", vo);
 		model.addAttribute("apprLists", apprLists);
 		model.addAttribute("apd_no", apd_no);
 		model.addAttribute("apl_msg", apl_msg);
+		model.addAttribute("mySign", mySign);
 		
 		return "appr/formView";
 	}

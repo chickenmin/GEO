@@ -14,7 +14,9 @@ import com.nike.geo.vo.appr.Ap_RfVo;
 import com.nike.geo.vo.comm.FileVo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class ApprovalDaoImpl implements IApprovalDao{
@@ -85,6 +87,11 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	}
 	
 	@Override
+	public List<Ap_DocuVo> selectStatus(Map<String, Object> map) {
+		return template.selectList(NS+"selectStatus", map);
+	}
+	
+	@Override
 	public Ap_DocuVo selectDeatil(String apd_no) {
 		return template.selectOne(NS+"selectDeatil", apd_no);
 	}
@@ -95,13 +102,29 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	}
 	
 	@Override
+	public int selMinOrder(Map<String, Object> map) {
+		return template.selectOne(NS+"selMinOrder", map);
+	}
+	
+	@Override
+	public int selMyOrder(Map<String, Object> map) {
+		log.info("map: {}",map);
+		return template.selectOne(NS+"selMyOrder", map);
+	}
+	
+	@Override
+	public List<FileVo> selMySign(String emp_no) {
+		return template.selectList(NS+"selMySign", emp_no);
+	}
+	
+	@Override
 	public List<Ap_LineVo> selectLine(String apd_no) {
 		return template.selectList(NS+"selectLine", apd_no);
 	}
 	
 	@Override
-	public List<FileVo> selectFile(String apd_no) {
-		return template.selectList(NS+"selectFile", apd_no);
+	public List<FileVo> selectFile(String origin_no) {
+		return template.selectList(NS+"selectFile", origin_no);
 	}
 	
 	

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nike.geo.service.IApprovalService;
 import com.nike.geo.service.ICommService;
 import com.nike.geo.service.IEmpService;
+import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.appr.Ap_FavVo;
 import com.nike.geo.vo.appr.JsTreeVo;
 import com.nike.geo.vo.comm.CommonVo;
@@ -83,6 +85,18 @@ public class ApprovalRestController {
 		return jsTreeNodes;
 		
 	}	//jsTree.do 끝
+	
+	
+	@PostMapping("/changeClass.do")
+	public List<Ap_DocuVo> changeClass(String apd_status, HttpSession session) {
+		String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_no", emp_no);
+		map.put("apd_status", apd_status);
+		List<Ap_DocuVo> statusList = service.selectStatus(map);
+		
+		return statusList;
+	}
 	
 	
 

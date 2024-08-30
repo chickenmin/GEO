@@ -14,42 +14,44 @@
 <body>
 	<%@ include file="../comm/sidebar.jsp"%>
 	<main id="main" class="main">
-			<input type="hidden" name="apd_no" value="${vo.apd_no}">
-	
-		<div style="width: 800px;"> <!-- 시작 -->
+		<input type="hidden" name="apd_no" value="${vo.apd_no}"> 
+
+		<div style="width: 800px;">
+			<!-- 시작 -->
 			<!-- 결재칸 -->
 			<div style="text-align: right;">
 				<c:forEach var="signer" items="${apprLists}">
-				    <div class="sign">
-				        <div class="sign-name">${signer.emp_name }</div>
-				        <div class="sign-signature" style="height: 100px;">
-				        	<c:choose>
-				        		<c:when test="${empty signer.file_oname}">
-				        			<span style="text-align: center;">-</span>
-				        		</c:when>
-				        		<c:otherwise>
-						        	<img alt="서명이미지" src="${path}${signer.file_oname}">
-				        		</c:otherwise>
-				        	</c:choose>
-				        </div>
-				        <div class="sign-date">
-				        	<c:choose>
-				        		<c:when test="${empty signer.file_oname}">
-				        			<span style="text-align: center;">-</span>
-				        		</c:when>
-				        		<c:otherwise>
+					<div class="sign">
+						<div class="sign-name">${signer.emp_name }</div>
+						<div class="sign-signature" style="height: 100px;">
+							<c:choose>
+								<c:when test="${empty signer.file_oname}">
+									<span style="text-align: center;">-</span>
+								</c:when>
+								<c:otherwise>
+									<img alt="서명이미지" src="${path}${signer.file_oname}">
+								</c:otherwise>
+							</c:choose>
+						</div>
+						<div class="sign-date">
+							<c:choose>
+								<c:when test="${empty signer.file_oname}">
+									<span style="text-align: center;">-</span>
+								</c:when>
+								<c:otherwise>
 						        	${signer.apl_date}
 				        		</c:otherwise>
-				        	</c:choose>
-				        </div>
-				    </div>
+							</c:choose>
+						</div>
+					</div>
 				</c:forEach>
-			</div><!-- right끝 -->
+			</div>
+			<!-- right끝 -->
 
 
 			<br>
 
-			
+
 			<table class="__se_tbl"
 				style="width: 800px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
 				<thead>
@@ -132,7 +134,8 @@
 
 					<!-- 사유 -->
 					<tr>
-						<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;"
+						<td
+							style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;"
 							colspan="3"><b style="color: rgb(255, 0, 0);">*</b>&nbsp; <c:choose>
 								<c:when test="${vo.apd_form eq 'AP001'}">
 				                		업무내용
@@ -171,8 +174,8 @@
 									<c:otherwise>
 										<c:forEach var="f" items="${file}">
 											<form action="./apprFile.do" method="post">
-												${f.file_oname} &nbsp&nbsp <input type="hidden"
-													name="file_no" value="${f.file_no}">
+												${f.file_oname} &nbsp&nbsp 
+												<input type="hidden" name="file_no" value="${f.file_no}">
 												<button type="submit">다운로드</button>
 											</form>
 										</c:forEach>
@@ -180,29 +183,48 @@
 								</c:choose>
 							</td>
 						</tr>
-						</c:if>
-						
+					</c:if>
+
 				</tbody>
 			</table>
+			<img alt="무민" src="${moomin }">
+			
 			<c:if test="${apl_msg != null}">
-			<br>
+				<br>
 				<div class="container">
 					<div>반려메시지</div>
 					<textarea cols="50" readonly="readonly">${apl_msg }</textarea>
 				</div>
 			</c:if>
-			
-			<jsp:include page="./return.jsp"></jsp:include>
 
-			<!-- 문서 하단 버튼 -->
-			<div style="display: flex; justify-content: flex-end;">
-				<button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" style="height: auto; margin: 5px 10px 0 0;" data-bs-target="#basicModal">
-					반려하기
-				</button>
-				<button class="btn btn-primary frmbtn"
-					style="height: auto; margin: 5px 10px 0 0;">결재하기</button>
-			</div>
-		</div><!-- 끝 -->
+			<!--반려  -->
+			<jsp:include page="./return.jsp"></jsp:include>
+			<!--승인하기  -->
+			<jsp:include page="./signModal.jsp"></jsp:include>
+
+			<c:choose>
+				<c:when test="${order == 1}">
+					<!-- 문서 하단 버튼 -->
+					<div style="display: flex; justify-content: flex-end;">
+						<button type="button" class="btn btn-outline-primary "
+							data-bs-toggle="modal"
+							style="height: auto; margin: 5px 10px 0 0;"
+							data-bs-target="#basicModal">반려하기</button>
+
+						<button class="btn btn-primary frmbtn"
+							style="height: auto; margin: 5px 10px 0 0;"
+							data-bs-target="#sign" data-bs-toggle="modal">결재하기</button>
+					</div>
+				</c:when>
+			</c:choose>
+
+		</div>
+		
+<!-- 		<div> -->
+<!-- 			<img alt="" src="./signature/무민2.png"> -->
+<!-- 		</div> -->
+		
+		<!-- 끝 -->
 	</main>
 	<!-- End #main -->
 
@@ -211,7 +233,6 @@
 <%@ include file="../comm/footer.jsp"%>
 
 <script type="text/javascript">
-
 	
 </script>
 

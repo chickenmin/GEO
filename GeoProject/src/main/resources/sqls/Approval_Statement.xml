@@ -132,6 +132,23 @@
  		AND APD_TEMP_YN = 'N'
 	</select>
 	
+	<!-- 상태별로 가져오기 -->
+	<select id="selectStatus" resultType="Ap_DocuVo">
+		SELECT APD_NO,EMP_NO , SUBSTR(APD_CON, 1, 10) AS APD_CON,
+				APD_STEP ,APD_STATUS ,APD_DAYS ,
+				APD_HALF_YN ,APD_FORM ,APD_CLEAR_DATE ,APD_TEMP_YN ,
+				REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
+ 		FROM AP_DOCU ad 
+ 		WHERE APD_NO IN (SELECT APD_NO 
+					 FROM AP_LINE al 
+					 WHERE EMP_NO = #{emp_no})
+ 		AND APD_TEMP_YN = 'N'
+ 		AND APD_STATUS =#{apd_status}
+ 		ORDER BY REG_DATE DESC
+	</select>
+	
+	
+	
 	
 	<!-- //////////////////////////////////////////////////////////////// -->
 	<!-- 상세조회 -->
@@ -147,7 +164,7 @@
 	
 	<!-- 결재자 순서대로 조회 -->
 	<select id="selectLine" resultType="Ap_LineVo">
-				SELECT al.APL_NO,al.APD_NO,al.EMP_NO,
+		  	SELECT al.APL_NO,al.APD_NO,EMP_NO,
 				al.APL_ORDER,TO_CHAR(NVL(al.APL_DATE, SYSDATE), 'YY-MM-DD HH24:MI') AS APL_DATE,
 				al.APL_STATUS,al.APL_MSG,
 				al.REG_ID,TO_CHAR(al.REG_DATE, 'YY-MM-DD HH24:MI') AS REG_DATE,
@@ -155,7 +172,7 @@
 				al.FILE_ONAME,e.EMP_NAME 
 		  FROM AP_LINE al
 		  INNER JOIN EMP e 
-		  ON al.EMP_NO = e.EMP_NO 
+		  USING (EMP_NO)
 		  WHERE APD_NO = #{apd_no}
 		  ORDER BY APL_ORDER
 	</select>
@@ -163,17 +180,48 @@
 	<!-- 반려메시지 조회 -->
 	<select id="sel_Msg" resultType="java.lang.String">
 		SELECT APL_MSG 
-		 FROM AP_LINE al
-		 WHERE APD_NO = #{apd_no}
+		 FROM AP_LINE al 
+		 	WHERE APD_NO = #{apd_no}
+			AND APL_MSG IS NOT NULL 
 	</select>
 	
 <!-- 	첨부파일 조회 -->
 	<select id="selectFile" resultType="FileVo">
-		SELECT *
+		SELECT FILE_NO, ORIGIN_NO,FILE_ONAME,
+			FILE_SNAME, FILE_SIZE, FILE_TYPE,
+			FILE_RANK,FILE_DEL_YN,
+			REG_ID,REG_DATE,MOD_ID,MOD_DATE
 		 FROM "FILE" f 
-		 WHERE ORIGIN_NO = #{apd_no}
+		 WHERE ORIGIN_NO = #{origin_no}
 	</select>
 	
+	<!-- 최소 결재 순서 찾기 -->
+	<select id="selMinOrder" resultType="java.lang.Integer">
+		SELECT MIN(APL_ORDER) AS APL_ORDER
+		 FROM AP_LINE al 
+		 WHERE APD_NO = #{apd_no}
+		 AND APL_STATUS = 0
+	</select>
+	
+	<!-- 본인 순서 찾기 -->
+	<select id="selMyOrder" resultType="java.lang.Integer">
+		SELECT APL_ORDER
+		 FROM AP_LINE al 
+		 WHERE APD_NO =#{apd_no}
+		 AND EMP_NO =#{emp_no}
+	</select>
+	
+	<!-- 본인 서명 찾기 -->
+	<select id="selMySign" resultType="FileVo">
+		SELECT FILE_NO, ORIGIN_NO,FILE_ONAME,
+			FILE_SNAME, FILE_SIZE, FILE_TYPE,
+			FILE_RANK,FILE_DEL_YN,
+			REG_ID,REG_DATE,MOD_ID,MOD_DATE
+		 FROM "FILE" f 
+		 WHERE REG_ID = #{emp_no}
+		 AND FILE_DEL_YN = 'N'
+		 AND FILE_TYPE=4
+	</select>
 	
 	<!-- 반려하기 -->
 	<!-- 결재번호 조회 -->
@@ -195,6 +243,8 @@
 	<update id="update_aStatus">
 		UPDATE  AP_DOCU SET APD_STATUS =#{apd_status} WHERE APD_NO =#{apd_no}
 	</update>
+	
+	
 	
 
 	

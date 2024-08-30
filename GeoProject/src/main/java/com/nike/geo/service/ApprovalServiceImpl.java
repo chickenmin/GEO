@@ -100,6 +100,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 	
 	@Override
+	public List<Ap_DocuVo> selectStatus(Map<String, Object> map) {
+		return dao.selectStatus(map);
+	}
+	
+	@Override
 	public Ap_DocuVo selectDeatil(String apd_no) {
 		return dao.selectDeatil(apd_no);
 	}
@@ -110,13 +115,34 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 	
 	@Override
+	public List<FileVo> selMySign(String emp_no) {
+		return dao.selMySign(emp_no);
+	}
+	
+	@Transactional(readOnly = false)
+	@Override
+	public int checkOrder(Map<String, Object> map) {
+		int n = dao.selMinOrder(map);
+		int m = dao.selMyOrder(map);
+		log.info("min 순서 : {}",n);
+		log.info("내 순서 : {}",m);
+		if (n == m) {
+			log.info("본인의 결재순서인 서류");
+			return 1;
+		}else {
+			log.info("아직 결재 순서 안옴");
+			return 0;
+		}
+	}
+	
+	@Override
 	public List<Ap_LineVo> selectLine(String apd_no) {
 		return dao.selectLine(apd_no);
 	}
 	
 	@Override
-	public List<FileVo> selectFile(String apd_no) {
-		return dao.selectFile(apd_no);
+	public List<FileVo> selectFile(String origin_no) {
+		return dao.selectFile(origin_no);
 	}
 	
 	
