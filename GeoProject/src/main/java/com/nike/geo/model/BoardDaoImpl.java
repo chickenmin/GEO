@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
 
 import lombok.RequiredArgsConstructor;
@@ -39,10 +40,17 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 	
 	@Override
-	public boolean insertBoard(BoardVo Vo) {
-		int n = sessionTemplate.insert(NS+"insertBoard",Vo);
+	public boolean insertAnnoBoard(BoardVo Vo) {
+		int n = sessionTemplate.insert(NS+"insertAnnoBoard",Vo);
 		return (n==1)?true:false;
 	}
+	@Override
+	public boolean insertNomalBoard(BoardVo Vo) {
+		int n = sessionTemplate.insert(NS+"insertNomalBoard",Vo);
+		return (n==1)?true:false;
+	}
+	
+	
 	
 	@Override
 	public BoardVo detailBoard(String bo_no) {
@@ -108,6 +116,13 @@ public class BoardDaoImpl implements IBoardDao {
 		int n = sessionTemplate.insert(NS+"likeInsert",map);
 		return (n==1)?true:false;
 	}
+	
+	@Override
+	public List<CommVo> commList() {
+		
+		return sessionTemplate.selectList(NS+"commList");
+	}
+		
 	
 	
 }

@@ -24,12 +24,34 @@
 		<input type="hidden" name="emp_no" value="${detailId.emp_no}">
 		<input type="submit" value="추천">
 		</form>	
-		<button>댓글</button>		
 		<button onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>		
-		<button onclick="del(event)">삭제</button>
+		<button type="button" onclick="del(event)">삭제</button>
+		<button id="descBtn">댓글</button>		
+		<div id="description">
+		<pre>
+		${Cvo}
+		</pre>
+		</div>
   	</main><!-- End #main -->
 
 </body>
   <%@ include file="../comm/footer.jsp" %>
-
+<script type="text/javascript">
+window.onload = function () {
+	var desc = document.getElementById("description");
+	var descBtn =document.getElementById("descBtn");
+	desc.style.display= "none";
+	
+	descBtn.onclick=function(){
+		if(desc.style.display == "none"){
+			desc.style.display = "block";
+			descBtn.textContent ="댓글닫기";
+		}else{
+			desc.style.display="none";
+			descBtn.textContent="댓글열기"
+		}
+		window.location.href = './commList.do';
+	}
+}
+</script>
 </html>
