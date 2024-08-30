@@ -21,7 +21,7 @@
 		<hr>
 		<form action="./likeCount.do" method="post">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}">
-		<input type="hidden" name="emp_no" value="${Vo.emp_no}">
+		<input type="hidden" name="emp_no" value="${detailId.emp_no}">
 		<input type="submit" value="추천">
 		</form>	
 		<button>댓글</button>		

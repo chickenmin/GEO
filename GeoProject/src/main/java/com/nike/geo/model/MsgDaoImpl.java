@@ -82,4 +82,11 @@ public class MsgDaoImpl implements IMsgDao {
 		log.info("MESSAGE repository - 받아온 값 : {}", noList);
 		return session.update(NS+"deleteMsgSend", noList);
 	}
+	
+	@Override
+	public int cntUnreadMsg(String no) {
+		log.info("MESSAGE repository - 안읽은 쪽지 갯수 확인 cntUnreadMsg");
+		log.info("MESSAGE repository - 받아온 값 : {}", no);
+		return session.selectOne(NS+"cntUnreadMsg", no);
+	}
 }

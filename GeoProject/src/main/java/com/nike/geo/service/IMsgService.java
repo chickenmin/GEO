@@ -69,5 +69,11 @@ public interface IMsgService {
 	 * @return 삭제한 row 갯수
 	 */
 	public int deleteMsgSend(List<String> noList);
-	
+
+	/**
+	 * 안읽은 쪽지 갯수 확인 cntUnreadMsg
+	 * @param no
+	 * @return 안읽은 쪽지 갯수
+	 */
+	public int cntUnreadMsg(String no);
 }

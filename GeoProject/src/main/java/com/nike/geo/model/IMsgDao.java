@@ -34,5 +34,7 @@ public interface IMsgDao {
 	// 보낸 쪽지 삭제(update) deleteMsgSend
 	public int deleteMsgSend(List<String> noList);
 	
+	// 안읽은 쪽지 갯수 확인 cntUnreadMsg
+	public int cntUnreadMsg(String no);
 	
 }

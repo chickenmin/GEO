@@ -87,25 +87,11 @@ public class MsgServiceImpl implements IMsgService {
 		return dao.deleteMsgSend(noList);
 	}
 	
-//	public String init() {
-//		Random ran = new Random();
-//		StringBuffer sb = new StringBuffer();
-//		int num = 0;
-//		
-//		return null;
-//	}
-	
-	public static String generateRandomMixStr() {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-        SecureRandom random = new SecureRandom();
-        StringBuilder sb = new StringBuilder(6);
-
-        for (int i = 0; i < 6; i++) {
-            int index = random.nextInt(characters.length());
-            sb.append(characters.charAt(index));
-        }
-        return sb.toString();
-    }
+	@Override
+	public int cntUnreadMsg(String no) {
+		log.info("MESSAGE service - 안읽은 쪽지 갯수 확인 cntUnreadMsg");
+		log.info("MESSAGE service - 받아온 값 : {}", no);
+		return dao.cntUnreadMsg(no);
+	}
 	
 }

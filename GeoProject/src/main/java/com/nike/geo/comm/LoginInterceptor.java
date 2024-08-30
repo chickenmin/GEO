@@ -23,18 +23,21 @@ public class LoginInterceptor implements HandlerInterceptor{
 			return true;
 		}
 		
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(false);
 		if(session == null || session.getAttribute("loginVo") == null) {
 			log.info("LoginInterceptor - 미인증 사용자 요청");
 			log.info("LoginInterceptor - 로그인 확인 : {}", session.getAttribute("loginVo"));
-			session.setAttribute("loginStatus", "login-Needed");
-			response.sendRedirect("./login.do");
+			
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().write(
+					"<script>alert('로그인이 필요합니다.'); location.href='./login.do';</script>"
+					);
+			response.getWriter().flush();
 			return false;
 		} else {
 			log.info("LoginInterceptor - 로그인 확인 : {}", session.getAttribute("loginVo"));
 			return true;
 		}
-//		return true;
 	}
 	
 }

@@ -172,3 +172,146 @@
 		
 		return "appr/AP_home";
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	옛날 임시저장
+	@PostMapping(value = "/tempSubmit.do")
+	public String tempSubmit(@RequestParam Map<String, Object> map, 
+			@RequestParam(required = false)String ccLine,
+			@RequestParam(required = false) List<MultipartFile> file,HttpSession session){
+		
+		//기안자 emp_no
+		String emp_no = 
+				((EmpVo)session.getAttribute("loginVo")).getEmp_no(); //
+		
+		//전달받은 값들
+		String date = (String)map.get("dates");		//날짜
+		String content = (String)map.get("content");	// 내용
+		String appr_Origin = (String)map.get("apprLine");	//결재라인
+		String apd_form = (String)map.get("apd_form"); 	//기안양식
+		String[] appLine = appr_Origin.split(",");
+		String[] cc = ccLine.split(",");
+		System.out.println(appLine);
+		
+		
+		// form 내용으로 docu vo 생성
+		Ap_DocuVo docuVo = new Ap_DocuVo(emp_no, content, appLine.length, date, apd_form);
+		int submit = apprService.submit1(docuVo);
+		
+		//만들어진 문서 번호 가져오기
+		int apd_no = apprService.selctAPD();
+		//결재수
+		int approval = 0;
+		
+		//결재라인 생성
+		for (String app : appLine) {
+			//직급 순차
+			int apl_order = apprService.selectPos(app);
+			Ap_LineVo LineVo= new Ap_LineVo(apd_no, app, apl_order);
+			approval += apprService.putLine(LineVo);
+		}
+		
+		//참조
+		if (ccLine != null && !ccLine.trim().isEmpty()) {
+			for (String c : cc) {
+				Ap_RfVo vo = new Ap_RfVo(apd_no, c,emp_no);
+				apprService.putRef(vo);
+			}
+		}
+
+
+		//파일 아예 안받아온 form이면 이제 끝
+		if (file == null) {
+			return "appr/AP_home";
+		}
+		
+
+			//파일 저장
+			for (MultipartFile f : file) {
+				//file첨부 가능하나, 안한 경우
+				if (f.isEmpty()) {
+					log.info("파일없음");
+				}else {	//파일 첨부 한 경우
+				FileVo vo = new FileVo();
+
+
+				
+				//결재파일 번호
+				vo.setOrigin_no(apd_no);
+				//첨부자 이름
+				vo.setReg_id(emp_no);
+				
+				log.info("파일의 이름 : {}",f.getOriginalFilename() );
+				
+				//파일 진자 이름
+				String originFileName = f.getOriginalFilename();
+				vo.setFile_oname(originFileName);
+				
+				//저장이름
+				String saveFileName = UUID.randomUUID().toString().concat(originFileName.substring(originFileName.indexOf(".")));
+				vo.setFile_sname(saveFileName);
+				
+				log.info("기존 파일명 {}",originFileName);
+				log.info("저장 파일명 {}",saveFileName);
+				
+				//파일 사이즈
+				long fileSize = f.getSize();
+				vo.setFile_size(fileSize);
+				
+				InputStream inputStream = null;
+				OutputStream outputStream = null;
+				
+				try {
+					// 1)파일을 읽는다
+					inputStream = f.getInputStream();
+					
+					//2) 저장 위치를 만든다
+					String path1 = "C:/GeoProject/storage/appr";
+					log.info("저장경로 path : {}",path1);
+					
+					
+					// 3) 파일 저장 위치
+					File storage = new File(path1);
+					if (!storage.exists()) {
+						storage.mkdirs();
+						log.info("경로 폴더 생성");
+					}
+					
+					//4) 저장 파일 : 저장할 파일이 없다면 생성하고 있다면 오버라이드함
+					File newFile = new File(path1+"/"+saveFileName);
+					if (!newFile.exists()) {
+						newFile.createNewFile();
+					}
+					
+					// 5) 읽은 파일을 써주기  (저장)
+					outputStream = new FileOutputStream(newFile);
+					
+					//6) 파일을 읽어서 대상 파일에 써줌 
+					int read = 0;
+					byte[] b = new byte[(int)f.getSize()];
+					while ((read = inputStream.read(b)) != -1) {
+						outputStream.write(b,0,read);
+						
+					}
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}finally {
+					try {
+						inputStream.close();
+						outputStream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				int n = apprService.putFile(vo);
+				if (n ==1 ) {
+					log.info("파일 임시저장 성공");
+				}
+				}
+			}	// file 의 foreach 끝
+
+		
+		return "appr/AP_home";
+	}

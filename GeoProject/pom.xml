@@ -84,7 +84,7 @@
           <artifactId>aspectjweaver</artifactId>
           <version>${org.aspectj-version}</version>
       </dependency>
-      
+
       <!-- db 연결-->
       <dependency>
 		    <groupId>com.oracle.database.jdbc</groupId>
@@ -224,7 +224,6 @@
 		    <version>32.1.3-jre</version>
 		</dependency>
 	
-	
 		<!-- 캘린터 -->
 		<!-- 잭슨 옛날거 -->
 		<dependency>
@@ -243,6 +242,12 @@
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-annotations</artifactId>
 		    <version>2.16.1</version>
+		</dependency>
+		
+		<dependency>
+	    	<groupId>org.jsoup</groupId>
+	   		<artifactId>jsoup</artifactId>
+	   		<version>1.16.1</version>
 		</dependency>
 		
   </dependencies>
