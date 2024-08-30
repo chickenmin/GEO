@@ -79,6 +79,26 @@
 	</div>
 	<div id="calendar"></div>
   
+  			<fieldset>
+			<div id='calch'>
+				<input type="checkbox" id="company" name="interest" value="company" checked /> 
+				<label for="coding">전사일정</label>
+			</div>
+			<div id='calch'>
+				<input type="checkbox" id="department" name="interest" value="department" /> 
+				<label for="coding">부서일정</label>
+			</div>
+			<div id='calch'>
+				<input type="checkbox" id="employee" name="interest" value="employee" /> 
+				<label for="coding">사원일정</label>
+			</div>
+			<div id='calch'>
+				<input type="checkbox" id="personal" name="interest" value="personal" /> 
+				<label for="coding">개인일정</label>
+			</div>
+
+		</fieldset>
+  
   
   	<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
