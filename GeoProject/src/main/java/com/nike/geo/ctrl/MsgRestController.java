@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nike.geo.service.ICommService;
 import com.nike.geo.service.IMsgService;
 import com.nike.geo.vo.hr.EmpVo;
+import com.nike.geo.vo.msg.MsgVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,7 +56,6 @@ public class MsgRestController {
 				response.put("message", "로그인에 성공하였습니다.");
 				return response;
 			}
-			
 		}else {
 			log.info("MESSAGE controller - 로그인 실패");
 			response.put("status", "fail");
@@ -134,5 +135,21 @@ public class MsgRestController {
 			return response;
 		}
 	}
-
+	
+	@GetMapping(value = "/cntUnreadMsg.do")
+	public int cntUnreadMsg(HttpSession session) {
+		log.info("MESSAGE controller - 안 읽은 쪽지 갯수 세기");
+		EmpVo loginVo = (EmpVo)session.getAttribute("loginVo");
+		int cnt = service.cntUnreadMsg(loginVo.getEmp_no());
+		return cnt;
+	}
+	
+	@GetMapping(value = "/selectLatestMsg.do")
+	public List<MsgVo> selectLatestMsg(HttpSession session){
+		log.info("MESSAGE controller - 안읽은 쪽지 최신순 3개 조회");
+		EmpVo loginVo = (EmpVo)session.getAttribute("loginVo");
+		List<MsgVo> latestMsg = service.selectLatestMsg(loginVo.getEmp_no()); 
+		return latestMsg;
+	}
+	
 }

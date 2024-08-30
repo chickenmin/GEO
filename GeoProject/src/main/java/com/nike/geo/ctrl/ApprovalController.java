@@ -2,6 +2,7 @@ package com.nike.geo.ctrl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -22,11 +24,15 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.WebUtils;
 
 import com.nike.geo.service.IApprovalService;
 import com.nike.geo.vo.appr.Ap_DocuVo;
@@ -95,7 +101,8 @@ public class ApprovalController {
 	
 	/////////////////////////////////////////////////////////////////////////
 	//결재함으로 이동
-	@GetMapping("/apprList.do")
+//	@GetMapping("/apprList.do")
+	@RequestMapping(value = "/apprList.do",method = {RequestMethod.GET,RequestMethod.POST})
 	public String apprList(Model model,HttpSession session) {
 		log.info("결재함으로 이동");
 		String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
@@ -105,27 +112,58 @@ public class ApprovalController {
 	}
 	
 	/////////////////////////////////////////////////////////////////////////
+	//결재문서함 상세보기
 	@GetMapping("/detailAppr.do")
-	public String detailAppr(String apd_no,Model model) {
+	public String detailAppr(String apd_no,Model model, HttpServletRequest request) {
 		log.info("결재 문서함 상세보기");
 		
 		
 		Ap_DocuVo vo = apprService.selectDeatil(apd_no);	//문서 상세조회
-		List<Ap_LineVo> lists = apprService.selectLine(apd_no);	//결재자 조회
+		List<Ap_LineVo> apprLists = apprService.selectLine(apd_no);	//결재자 조회
 		List<FileVo> file = apprService.selectFile(apd_no);	// 첨부파일 조회
+		String apl_msg = apprService.sel_Msg(Integer.parseInt(apd_no));
+		
 		
 		//파일 다운
-		String path=null;
-		if (file.size()>0) {
-			model.addAttribute("file", file);
-		}
-		
-		
-		model.addAttribute("path", path);
+		String path;
+		try {
+			//상대경로
+			path = WebUtils.getRealPath(request.getSession().getServletContext(),"/signature/");
+			if (file.size()>0) {
+				model.addAttribute("file", file);
+			}
+			model.addAttribute("path", path);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} 
+
 		model.addAttribute("vo", vo);
-		model.addAttribute("lists", lists);
+		model.addAttribute("apprLists", apprLists);
+		model.addAttribute("apd_no", apd_no);
+		model.addAttribute("apl_msg", apl_msg);
 		
 		return "appr/formView";
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////
+	// 반려하기
+	@PostMapping(value="/return.do")
+	public String returnMsg(String apl_msg,int apd_no,HttpSession session,Model model) {
+		String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_no", emp_no);
+		map.put("apd_no", apd_no);
+		map.put("apl_msg", apl_msg);
+		
+		int returnSubmit = apprService.returnSubmit(map);
+		if (returnSubmit ==1) {
+			log.info("반려처리 완료");
+			return "redirect:/apprList.do";
+		}else {
+			log.info("반려처리 실패");
+			model.addAttribute("apd_no", apd_no);
+			return "redirect:/detailAppr.do";
+		}
 	}
 
 	
@@ -142,7 +180,13 @@ public class ApprovalController {
 		log.info("o:{}",fileOriginName);
 		log.info("s:{}",fileStoredName);
 		
-		String dir = "C:/Users/kkjm1/git/GEO/GeoProject/src/main/webapp/upload/";
+		
+		// C 로컬 폴더
+		String dir = "C:/GeoProject/storage/appr/";
+		
+		//프로젝트 안의 폴더
+//		String dir = "C:/Users/kkjm1/git/GEO/GeoProject/src/main/webapp/upload/";		//노트북 경로
+//		String dir = "C:/Users/GDJ/git/GEO/GeoProject/src/main/webapp/upload/";			// 학원 모니터 경로
 		Path path = Paths.get(dir);
 		File f = new File(dir, fileStoredName);
 		fileOriginName = new String(fileOriginName.getBytes("UTF-8"), "8859_1");
@@ -234,8 +278,8 @@ public class ApprovalController {
 							vo.setFile_size(fileSize);
 							log.info("전자결재 - 받아온 파일의 크기 : {}", fileSize);
 							
-							//C에 저장
-//							String path = "C:/GeoProject/storage/appr/";
+							//C 로컬에 저장
+							String path = "C:/GeoProject/storage/appr/";
 //							File dir = new File(path);
 //							if (!dir.exists()) {
 //								dir.mkdirs();
@@ -244,7 +288,9 @@ public class ApprovalController {
 							
 						   
 //							// 현재 클래스의 클래스 로더를 사용하여 프로젝트 루트 경로 얻기
-							String path ="C:/Users/kkjm1/git/GEO/GeoProject/src/main/webapp/upload/";
+							
+//							String path ="C:/Users/kkjm1/git/GEO/GeoProject/src/main/webapp/upload/";	//노트북 경로
+//							String path ="C:/Users/GDJ/git/GEO/GeoProject/src/main/webapp/upload/"; 	//학원 모니터 경로
 					        log.info("path : {}",path);
 					        File dir = new File(path);
 					        if (!dir.exists()) {
@@ -270,8 +316,12 @@ public class ApprovalController {
 				}
 				
 		
-			return "redirect:/apprHome.do";
+			return "redirect:/apprList.do";
 		}
+		
+		
+		
+		
 	
 	
 	

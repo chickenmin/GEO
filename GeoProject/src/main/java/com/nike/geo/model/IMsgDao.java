@@ -37,4 +37,7 @@ public interface IMsgDao {
 	// 안읽은 쪽지 갯수 확인 cntUnreadMsg
 	public int cntUnreadMsg(String no);
 	
+	// 안읽은 쪽지 최신순 3개 조회 selectLatestMsg
+	public List<MsgVo> selectLatestMsg(String recvId);
+	
 }

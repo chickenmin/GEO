@@ -71,9 +71,17 @@ public interface IMsgService {
 	public int deleteMsgSend(List<String> noList);
 
 	/**
-	 * 안읽은 쪽지 갯수 확인 cntUnreadMsg
+	 * 안읽은 쪽지 갯수 확인 
 	 * @param no
 	 * @return 안읽은 쪽지 갯수
 	 */
 	public int cntUnreadMsg(String no);
+	
+	/**
+	 * 안읽은 쪽지 최신순 3개 조회 
+	 * @param recvId
+	 * @return 안읽은 쪽지 최신순 3개
+	 */
+	public List<MsgVo> selectLatestMsg(String recvId);
+	
 }

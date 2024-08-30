@@ -121,7 +121,7 @@
 	<!-- 결재문서함 목록 조회 -->
 	<!-- 대기.반려.철회 상관없이 모든 거 다 나오게 -->
 	<select id="selectApproval" resultType="Ap_DocuVo">
-	SELECT APD_NO,EMP_NO ,APD_CON ,
+	SELECT APD_NO,EMP_NO , SUBSTR(APD_CON, 1, 10) AS APD_CON,
 				APD_STEP ,APD_STATUS ,APD_DAYS ,
 				APD_HALF_YN ,APD_FORM ,APD_CLEAR_DATE ,APD_TEMP_YN ,
 				REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
@@ -132,6 +132,9 @@
  		AND APD_TEMP_YN = 'N'
 	</select>
 	
+	
+	<!-- //////////////////////////////////////////////////////////////// -->
+	<!-- 상세조회 -->
 	<!-- 문서번호로 상세 조회 -->
 	<select id="selectDeatil" resultType="Ap_DocuVo">
 		SELECT APD_NO,EMP_NO ,APD_CON ,
@@ -142,17 +145,27 @@
  		WHERE APD_NO = #{apd_no}
 	</select>
 	
-	<!-- 결재자 조회 -->
-	<select id="selectLine" resultType="Ap_FavVo">
-		SELECT APL_NO,APD_NO,EMP_NO,
-				APL_ORDER,APL_DATE,APL_STATUS,APL_MSG,
-				REG_ID,REG_DATE,MOD_ID,MOD_DATE,
-				FILE_ONAME
+	<!-- 결재자 순서대로 조회 -->
+	<select id="selectLine" resultType="Ap_LineVo">
+				SELECT al.APL_NO,al.APD_NO,al.EMP_NO,
+				al.APL_ORDER,TO_CHAR(NVL(al.APL_DATE, SYSDATE), 'YY-MM-DD HH24:MI') AS APL_DATE,
+				al.APL_STATUS,al.APL_MSG,
+				al.REG_ID,TO_CHAR(al.REG_DATE, 'YY-MM-DD HH24:MI') AS REG_DATE,
+				al.MOD_ID,TO_CHAR(al.MOD_DATE, 'YY-MM-DD HH24:MI') AS MOD_DATE,
+				al.FILE_ONAME,e.EMP_NAME 
 		  FROM AP_LINE al
+		  INNER JOIN EMP e 
+		  ON al.EMP_NO = e.EMP_NO 
 		  WHERE APD_NO = #{apd_no}
 		  ORDER BY APL_ORDER
 	</select>
 	
+	<!-- 반려메시지 조회 -->
+	<select id="sel_Msg" resultType="java.lang.String">
+		SELECT APL_MSG 
+		 FROM AP_LINE al
+		 WHERE APD_NO = #{apd_no}
+	</select>
 	
 <!-- 	첨부파일 조회 -->
 	<select id="selectFile" resultType="FileVo">
@@ -160,6 +173,28 @@
 		 FROM "FILE" f 
 		 WHERE ORIGIN_NO = #{apd_no}
 	</select>
+	
+	
+	<!-- 반려하기 -->
+	<!-- 결재번호 조회 -->
+	<select id="selectAPL_NO" resultType="java.lang.Integer">
+		SELECT APL_NO 
+		 FROM AP_LINE al
+		 WHERE al.APD_NO = #{apd_no}
+		 AND EMP_NO =#{emp_no}
+	</select>
+	
+	<!-- 결재라인 수정 -->
+	<update id="updateReturn">
+		UPDATE AP_LINE 
+			SET APL_DATE=SYSDATE, APL_STATUS=2, APL_MSG=#{apl_msg}, MOD_ID=#{emp_no}, MOD_DATE=SYSDATE
+			WHERE APL_NO=#{apl_no}
+	</update>
+	
+	<!-- 서류 상태 수정 -->
+	<update id="update_aStatus">
+		UPDATE  AP_DOCU SET APD_STATUS =#{apd_status} WHERE APD_NO =#{apd_no}
+	</update>
 	
 
 	

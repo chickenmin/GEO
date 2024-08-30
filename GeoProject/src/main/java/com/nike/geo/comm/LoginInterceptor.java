@@ -26,7 +26,12 @@ public class LoginInterceptor implements HandlerInterceptor{
 		HttpSession session = request.getSession(false);
 		if(session == null || session.getAttribute("loginVo") == null) {
 			log.info("LoginInterceptor - 미인증 사용자 요청");
-			log.info("LoginInterceptor - 로그인 확인 : {}", session.getAttribute("loginVo"));
+			
+			if (session == null) {
+				log.info("LoginInterceptor - 세션이 존재하지 않습니다.");
+			} else {
+				log.info("LoginInterceptor - 로그인 확인 : {}", session.getAttribute("loginVo"));
+			}
 			
 			response.setContentType("text/html; charset=UTF-8");
 			response.getWriter().write(

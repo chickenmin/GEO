@@ -71,13 +71,14 @@ public class MsgController {
 		String recvId = vo.getEmp_no();
 		List<MsgVo> msgListRecv = service.selectMsgListRecv(recvId);
 		
-		// 목록에서 내용 조회시 태그 빼고 순수 텍스트만 보이도록
+		// 목록에서 내용 조회시 데이터 처리
 		for (MsgVo msg : msgListRecv) {
 			String content = msg.getMsg_content();
 			content = Jsoup.parse(content).text();
-			if(content.length() > 30) { // 텍스트가 30자 넘을 때는 자르고 (앞부분)...
+			if(content.length() > 30) {
 				content = content.substring(0, 30).concat("...");			
-			} 
+			}
+			content = content.replaceAll("(\r\n|\r|\n|\n\r)", " ");
 			msg.setMsg_content(content);
 		}
 		
@@ -97,6 +98,10 @@ public class MsgController {
 		for (MsgVo msg : msgListSend) {
 			String content = msg.getMsg_content();
 			content = Jsoup.parse(content).text();
+			if(content.length() > 30) {
+				content = content.substring(0, 30).concat("...");			
+			}
+			content = content.replaceAll("(\r\n|\r|\n|\n\r)", " ");
 			msg.setMsg_content(content);
 		}
 		

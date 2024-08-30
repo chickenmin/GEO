@@ -85,12 +85,10 @@ public class BoardServiceImpl implements IBoardService {
 	@Override
 	public LikeVo likeCount(LikeVo vo) {
 		Map<String, String>map = new HashMap<String, String>(){{
-			System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★서비스");
 			put("bo_no", vo.getBo_no());
 			put("emp_no",vo.getEmp_no());
 		}};
 		int n = dao.likeSearchBoardOne(map);
-		System.out.println("받은값:"+n);
 		if(n==0) {
 			dao.likeInsert(map);
 			System.out.println("생성됨");
@@ -99,7 +97,6 @@ public class BoardServiceImpl implements IBoardService {
 			System.out.println("삭제됨");
 		}
 		LikeVo resultVo = dao.likeSelectOne(vo.getBo_no(),vo.getEmp_no());
-		System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆resultVo:"+resultVo);
 		return resultVo;
 	}
 }

@@ -38,13 +38,18 @@
 	          <div class="card">
 	            <div class="card-body">
 	              <h5 class="card-title">결재 문서</h5>
+	              <button class="btn btn-outline-dark" >전체  </button>
+	              <button class="btn btn-outline-primary" >대기  </button>
+	              <button class="btn btn-outline-info" >진행  </button>
+	              <button class="btn btn-outline-success" >완료  </button>
+	              <button class="btn btn-outline-danger" >반려  </button>
 	
 	              <!-- Default Table -->
 	              <table class="table display" id="apprList">
 	                <thead>
 	                  <tr>
 	                    <th scope="col" class="text-center">No.</th>
-	                    <th scope="col" class="text-center">양식종류</th>
+	                    <th scope="col" class="text-center">기안내용</th>
 	                    <th scope="col" class="text-center">기안자</th>
 	                    <th scope="col" class="text-center">기안일자</th>
 	                    <th scope="col" class="text-center">결재상태</th>
@@ -59,23 +64,24 @@
 	                      <th scope="row" class="text-center"><a> ${fn:length(lists) - vs.index} </a></th>
 	                      <td class="text-center"> 
 	                      <a href="./detailAppr.do?apd_no=${vo.apd_no}">
-		                      	<c:choose>
-					                	<c:when test="${vo.apd_form eq 'AP001'}">
-					                		일일 업무 일지
-					                	</c:when>
-					                	<c:when test="${vo.apd_form eq 'AP002'}">
-					                		연차 신청서 
-					                	</c:when>
-					                	<c:when test="${vo.apd_form eq 'AP003'}">
-					                		지출 결의서
-					                	</c:when>
-					                	<c:when test="${vo.apd_form eq 'AP004'}">
-					                		사유서
-					                	</c:when>
-					                	<c:otherwise>
-					                		출장 보고서
-					                	</c:otherwise>
-					                </c:choose>
+	                      	${vo.apd_con }...
+<%-- 		                      	<c:choose> --%>
+<%-- 					                	<c:when test="${vo.apd_form eq 'AP001'}"> --%>
+<!-- 					                		일일 업무 일지 -->
+<%-- 					                	</c:when> --%>
+<%-- 					                	<c:when test="${vo.apd_form eq 'AP002'}"> --%>
+<!-- 					                		연차 신청서  -->
+<%-- 					                	</c:when> --%>
+<%-- 					                	<c:when test="${vo.apd_form eq 'AP003'}"> --%>
+<!-- 					                		지출 결의서 -->
+<%-- 					                	</c:when> --%>
+<%-- 					                	<c:when test="${vo.apd_form eq 'AP004'}"> --%>
+<!-- 					                		사유서 -->
+<%-- 					                	</c:when> --%>
+<%-- 					                	<c:otherwise> --%>
+<!-- 					                		출장 보고서 -->
+<%-- 					                	</c:otherwise> --%>
+<%-- 					                </c:choose> --%>
 					          </a>      
 	                      </td> 
 	                      <td class="text-center">  ${vo.emp_no}</td>
@@ -83,13 +89,13 @@
 	                      <td class="text-center">
 	                      	<c:choose>
 				                	<c:when test="${vo.apd_status eq 'W'}">
-				                		<span class="badge border-primary border-1 text-primary">대기중</span>
+				                		<span class="badge border-primary border-1 text-primary">대기</span>
 				                	</c:when>
 				                	<c:when test="${vo.apd_status eq 'C'}">
 				                		<span class="badge border-warning border-1 text-warning">완료</span>
 				                	</c:when>
 				                	<c:when test="${vo.apd_status eq 'P'}">
-				                		<span class="badge border-success border-1 text-success">진행중</span>
+				                		<span class="badge border-success border-1 text-success">진행</span>
 				                	</c:when>
 				                	<c:otherwise>
 				                		<span class="badge border-secondary border-1 text-secondary">반려</span>

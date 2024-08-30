@@ -90,6 +90,11 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	}
 	
 	@Override
+	public String sel_Msg(int apd_no) {
+		return template.selectOne(NS+"sel_Msg", apd_no);
+	}
+	
+	@Override
 	public List<Ap_LineVo> selectLine(String apd_no) {
 		return template.selectList(NS+"selectLine", apd_no);
 	}
@@ -105,6 +110,20 @@ public class ApprovalDaoImpl implements IApprovalDao{
 		return template.selectOne("com.nike.geo.model.CommDaoImpl.findFile", file_no);
 	}
 	
+	@Override
+	public int selectAPL_NO(Map<String, Object> map) {
+		return template.selectOne(NS+"selectAPL_NO", map);
+	}
+	
+	@Override
+	public int updateReturn(Map<String, Object> map) {
+		return template.update(NS+"updateReturn", map);
+	}
+	
+	@Override
+	public int update_aStatus(Map<String, Object> map) {
+		return template.update(NS+"update_aStatus", map);
+	}
 	
 	
 	
