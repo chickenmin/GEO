@@ -35,7 +35,7 @@ public class EmpController {
 	private final IEmpService service;
 
 	@PostMapping(value = "/insertEmp.do")
-	public String insertEmp(EmpVo vo, Model model, HttpServletRequest request, @RequestParam("file") List<MultipartFile> file) {
+	public String insertEmp(EmpVo vo, Model model, HttpServletRequest request, @RequestParam List<MultipartFile> file) {
 		log.info("사원 추가 :{}", vo);
 		int n = service.insertEmp(vo);
 		if (n == 1) {
@@ -52,7 +52,6 @@ public class EmpController {
 			String saveFileName = UUID.randomUUID().toString().concat(originFileName.substring(originFileName.indexOf(".")));
 			log.info("기존파일명 : {}", originFileName);
 			log.info("저장파일명 : {}", saveFileName);
-			log.info("저장 파일명: {}", saveFileName);
 			
 			InputStream inputStream = null;
 			OutputStream outputStream = null;
