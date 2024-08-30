@@ -172,7 +172,24 @@ SELECT COUNT(*)
 	WHERE MSG_RECV_ID = 'emp5'
 		AND MSG_RECV_READ_YN = 'N'
 		AND MSG_RECV_DEL_YN = 'N';
+
+-- 드롭다운 클릭시 안읽은 쪽지 가장 최근에 온거 3개만 표시
+SELECT MSG_SEND_ID , MSG_CONTENT , MSG_SEND_DATE 
+	FROM (SELECT MSG_SEND_ID , MSG_CONTENT , MSG_SEND_DATE 
+	FROM MSG
+	WHERE MSG_RECV_ID = 'AA005'
+		AND MSG_RECV_READ_YN = 'N'
+		AND MSG_RECV_DEL_YN = 'N'
+	ORDER BY MSG_SEND_DATE DESC)
+	WHERE ROWNUM <= 3;
 	
+SELECT *
+	FROM MSG
+	WHERE MSG_RECV_ID = 'AA005'
+		AND MSG_RECV_READ_YN = 'N'
+		AND MSG_RECV_DEL_YN = 'N'
+	ORDER BY MSG_SEND_DATE DESC;
+
 ---------------------------------------------------------------------------------	
 
 -- 다수에게 쪽지 보내기 (다중 insert) 일단 안됨

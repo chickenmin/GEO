@@ -83,7 +83,12 @@
       <li class="nav-item dropdown">
         <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
           <i class="bi bi-bell"></i>
-          <span class="badge bg-primary badge-number">4</span>
+          
+          <!-- 확인안한 알림 갯수 -->
+          <span class="badge bg-primary badge-number">
+          		10
+          </span>
+          
         </a><!-- End Notification Icon -->
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -159,18 +164,29 @@
 
       </li><!-- End Notification Nav -->
 
+
+
+	  <!-- 쪽지 알림 -->
       <li class="nav-item dropdown">
 
-        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+        <a class="nav-link nav-icon" href="#" id="msgIcon" data-bs-toggle="dropdown">
           <i class="bi bi-chat-left-text"></i>
-          <span class="badge bg-success badge-number">3</span>
+          
+          <span class="badge bg-success badge-number" id="cntUnreadMsg">
+	          <!-- 안읽은 쪽지 갯수 -->
+          </span>
+          
         </a><!-- End Messages Icon -->
 
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-          <li class="dropdown-header">
-            쪽지 3개 / 길이때문에 이것저것넣어봄
-            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" id="msgUl">
+          <li class="dropdown-header" id="cntDropdown">
+            <a href="#">
+	            <span class="badge rounded-pill bg-primary p-2 ms-2">
+		          	<!-- 'n개의 읽지않은 쪽지가 있습니다.' 텍스트 들어가는 곳 -->
+	            </span>
+            </a>
           </li>
+          
           <li>
             <hr class="dropdown-divider">
           </li>
@@ -218,7 +234,7 @@
           </li>
 
           <li class="dropdown-footer">
-            <a href="#">모든 쪽지 보기</a>
+            <a href="./recvMsg.do">모든 쪽지 보기</a>
           </li>
         </ul><!-- End Messages Dropdown Items -->
       </li><!-- End Messages Nav -->

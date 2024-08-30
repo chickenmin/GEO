@@ -89,4 +89,11 @@ public class MsgDaoImpl implements IMsgDao {
 		log.info("MESSAGE repository - 받아온 값 : {}", no);
 		return session.selectOne(NS+"cntUnreadMsg", no);
 	}
+	
+	@Override
+	public List<MsgVo> selectLatestMsg(String recvId) {
+		log.info("MESSAGE repository - 안읽은 쪽지 최신순 3개 조회 selectLatestMsg");
+		log.info("MESSAGE repository - 받아온 값 : {}", recvId);
+		return session.selectList(NS+"selectLatestMsg", recvId);
+	}
 }

@@ -1,11 +1,8 @@
 package com.nike.geo.service;
 
-import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.nike.geo.model.IMsgDao;
@@ -21,9 +18,6 @@ public class MsgServiceImpl implements IMsgService {
 	@Autowired
 	private IMsgDao dao;
 	
-	@Autowired
-	private JavaMailSender mailSender;
-
 	@Override
 	public List<MsgVo> selectMsgListRecv(String recvId) {
 		log.info("MESSAGE service - 받은 쪽지 목록 조회 selectMsgListRecv");
@@ -92,6 +86,13 @@ public class MsgServiceImpl implements IMsgService {
 		log.info("MESSAGE service - 안읽은 쪽지 갯수 확인 cntUnreadMsg");
 		log.info("MESSAGE service - 받아온 값 : {}", no);
 		return dao.cntUnreadMsg(no);
+	}
+	
+	@Override
+	public List<MsgVo> selectLatestMsg(String recvId) {
+		log.info("MESSAGE service - 안읽은 쪽지 최신순 3개 조회 selectLatestMsg");
+		log.info("MESSAGE service - 받아온 값 : {}", recvId);
+		return dao.selectLatestMsg(recvId);
 	}
 	
 }
