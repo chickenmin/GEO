@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -93,17 +94,7 @@ public class MsgRestController {
 			log.info("MESSAGE controller - 임시 비밀번호 발급 전 정보확인 성공");
 			
 			// 임시 비밀번호로 쓸 난수 생성
-			String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-	        SecureRandom random = new SecureRandom();
-	        StringBuilder sb = new StringBuilder(6);
-
-	        for (int i = 0; i < 6; i++) {
-	            int index = random.nextInt(characters.length());
-	            sb.append(characters.charAt(index));
-	        }
-	        
-	        String tempPw = sb.toString();
+			String tempPw = commService.generateTempPw();
 	        TempVo.setEmp_pw(tempPw);
 			
 			// 비밀번호 변경
@@ -148,7 +139,17 @@ public class MsgRestController {
 	public List<MsgVo> selectLatestMsg(HttpSession session){
 		log.info("MESSAGE controller - 안읽은 쪽지 최신순 3개 조회");
 		EmpVo loginVo = (EmpVo)session.getAttribute("loginVo");
-		List<MsgVo> latestMsg = service.selectLatestMsg(loginVo.getEmp_no()); 
+		List<MsgVo> latestMsg = service.selectLatestMsg(loginVo.getEmp_no());
+		
+		for (MsgVo msg : latestMsg) {
+			String content = msg.getMsg_content();
+			content = Jsoup.parse(content).text();
+			if(content.length() > 20) {
+				content = content.substring(0, 20).concat("...");			
+			}
+			content = content.replaceAll("(\r\n|\r|\n|\n\r)", " ");
+			msg.setMsg_content(content);
+		}
 		return latestMsg;
 	}
 	

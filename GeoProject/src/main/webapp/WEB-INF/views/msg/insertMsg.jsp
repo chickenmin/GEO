@@ -38,6 +38,14 @@
 	                    <input type="text" id="msg_recv_id" name="msg_recv_id" class="form-control">
 	                  </div>
 	                </div>
+
+	                <div class="row mb-4">
+	                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
+	                  <div class="col-sm-10">
+	                    <input type="text" id="msg_recv_id" name="msg_recv_id" class="form-control">
+	                    <button type="button" class="btn btn-primary" onclick="selectRecv()">선택</button>
+	                  </div>
+	                </div>
 	                
 	                <!-- 여유 되면 아래 div 제거하고 여백 추가. -->
 	                <div class="row mb-5">

@@ -82,6 +82,7 @@
 	                </tbody>
 	              </table>
 	              <!-- End Default Table Example -->
+	              
 	            </div>
 	          </div>
 	
@@ -130,6 +131,7 @@
 	$(document).ready(function() {
 		$("#recvMsgTable").DataTable({
 			"info": false,
+			"order": [[4, "desc"]],
 			"columnDefs":[
 				{"orderable": false, "targets":0}
 			]

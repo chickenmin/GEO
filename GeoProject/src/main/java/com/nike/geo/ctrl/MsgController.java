@@ -24,7 +24,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nike.geo.service.IBoardService;
+import com.nike.geo.service.ICommService;
 import com.nike.geo.service.IMsgService;
+import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.hr.EmpVo;
 import com.nike.geo.vo.msg.MsgVo;
@@ -37,6 +40,12 @@ public class MsgController {
 	
 	@Autowired
 	private IMsgService service;
+	
+	@Autowired
+	private ICommService commService;
+	
+	@Autowired
+	private IBoardService boardService;
 	
 	@GetMapping(value = "/login.do")
 	public String loginFrom() {
@@ -58,8 +67,28 @@ public class MsgController {
 	}
 	
 	@GetMapping(value = "/index.do")
-	public String index() {
+	public String index(HttpSession session, Model model) {
 		log.info("MESSAGE controller - index 페이지로 이동");
+		EmpVo loginVo = (EmpVo)session.getAttribute("loginVo");
+		
+		// 사원 정보
+		EmpVo mainVo = commService.selectMainEmp(loginVo.getEmp_no());
+		log.info("MESSAGE controller - index에 띄울 사원정보 {}", mainVo);
+		model.addAttribute("mainVo", mainVo);
+		
+		// 게시판 (공지/일반)
+		String status = "announcements";
+		List<BoardVo> board = commService.selectMainBoard(status);
+		model.addAttribute("board", board);
+		
+		// 결재 현황
+		
+		// 결재 문서함
+		
+		// 근태 현황
+		
+		// 일정
+		
 		return "comm/index";
 	}
 	
@@ -239,5 +268,5 @@ public class MsgController {
 		fis.close();
 		os.close();
 	}
-	
+
 }
