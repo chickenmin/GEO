@@ -37,6 +37,7 @@
 			ORDER BY BO_REGDATE DESC
 	</select>
 	
+	<!-- status 분배해야함 -->
 	<insert id="insertBoard">
 	INSERT INTO BO (BO_NO,BO_TITLE,EMP_NO,
 			BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT
@@ -46,7 +47,7 @@
 	VALUES('A' || TO_CHAR(BO_NO_SEQ.NEXTVAL,'FM0000'),#{bo_title},#{emp_no},
 			SYSDATE,0,0
 			,#{bo_content},'announcements','N'
-			,#{reg_id},SYSDATE,#{reg_id}
+			,#{emp_no},SYSDATE,#{emp_no}
 			,SYSDATE)
 	</insert>
 	
@@ -58,7 +59,7 @@
 	
 	<update id="modifyBoard">
 	UPDATE BO 
-		SET BO_TITLE =#{bo_title}, BO_CONTENT =#{bo_content} ,MOD_DATE =SYSDATE, MOD_ID=#{mod_id}
+		SET BO_TITLE =#{bo_title}, BO_CONTENT =#{bo_content} ,MOD_DATE =SYSDATE, MOD_ID=#{emp_no}
 		WHERE BO_NO = #{bo_no}
 	</update>
 

@@ -1,21 +1,15 @@
 package com.nike.geo.ctrl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nike.geo.service.IBoardService;
 import com.nike.geo.vo.bo.BoardVo;
@@ -61,26 +55,27 @@ public class BoardController {
 	
 	
 	
-	//글작성
+	//글작성 bo_status 로 값을 보내줘야 쿼리가 동작 가능
 	@GetMapping(value = "/writeBoard.do")
 	public String writePostForm(Model model) {
-	
+		model.addAttribute("type", "announcements");
 		model.addAttribute("mode", "insert");
-		return "board/insertBoardForm";
+		
+		return "board/insertAnnoBoard";
 	}
 	
 	@PostMapping(value = "/writeBoard.do")
-	public String writeBoard(BoardVo Vo,@RequestParam("bo_title") String bo_title, @RequestParam("bo_content") String bo_content,HttpSession session) {
+	public String writeBoard(BoardVo Vo,
+							@RequestParam("bo_title") String bo_title, 
+							@RequestParam("bo_content") String bo_content,
+							HttpSession session) {
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		String writeId = Evo.getEmp_no();
-		
 		Vo.setEmp_no(writeId);
-		Vo.setReg_id(writeId);
-		
 	    boolean isc = service.insertBoard(Vo);
 	    
 	    if (isc) {
-	        return "redirect:/announcements.do";	//뒤로가기를 해야하나?
+	        return "redirect:/announcements.do";	//소스 실행 후 리턴을 어디로 잡아야 정상적으로 화면이 나올것인가
 	    } else {
 	        return "redirect:/writeBoard.do";
 	    }
@@ -88,8 +83,13 @@ public class BoardController {
 
 	//글상세
 	@GetMapping(value = "/detailBoard.do")
-	public String detailBoard(@RequestParam("bo_no")String bo_no, Model model) {
+	public String detailBoard(@RequestParam("bo_no")String bo_no, 
+								Model model,
+								HttpSession session) {
+		EmpVo Evo = (EmpVo) session.getAttribute("loginVo");
+		String detailId=Evo.getEmp_no();
 		BoardVo Vo=service.detailBoard(bo_no);
+		Vo.setEmp_no(detailId);
 		service.view_Count(Vo);
 		model.addAttribute("Vo",Vo);
 		return "board/detailBoard";
@@ -98,21 +98,25 @@ public class BoardController {
 	
 	//글수정
 	@GetMapping(value = "/modifyBoard.do")
-	public String modifyBoard(@RequestParam("bo_no") String bo_no,Model model) {
+	public String modifyBoard(@RequestParam("bo_no") String bo_no,
+								Model model) {
 		BoardVo Vo=service.detailBoard(bo_no);
-		
 		model.addAttribute("Vo",Vo);
 		model.addAttribute("mode","modify");
-		return "board/insertBoardForm";
+		return "board/insertAnnoBoard";	//출력화면 변경해야함
 	}
 	
 	@PostMapping(value = "/modifyBoard.do")
-	public String modifyBoard(@RequestParam("bo_title")String bo_title,@RequestParam("bo_content")String bo_content,@RequestParam("bo_no")String bo_no,@RequestParam Map<String, String> map,HttpSession session) {
+	public String modifyBoard(@RequestParam("bo_title")String bo_title,
+								@RequestParam("bo_content")String bo_content,
+								@RequestParam("bo_no")String bo_no,
+								@RequestParam Map<String, String> map,
+								HttpSession session) {
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		map.put("bo_title", bo_title);
 		 map.put("bo_content", bo_content);
 		 map.put("bo_no", bo_no);
-		 map.put("mod_id", Evo.getMod_id());
+		 map.put("emp_no", Evo.getEmp_no());
 			
 			
 		boolean isc = service.modifyBoard(map);
@@ -128,20 +132,23 @@ public class BoardController {
 	//삭제테이블이동
 	@PostMapping(value = "/multiDeleteBoard.do")
 	public String multiDeleteBoard(@RequestParam List<String> ch) {
-	    boolean isc = service.multiDeleteBoard(ch);
+	    service.multiDeleteBoard(ch);
 	    return "redirect:/announcements.do"; // 삭제 후 게시판 목록으로 리다이렉트
 	}
 	
 	//리얼삭제
 	@PostMapping(value = "/realDelete.do")
 	public String realDelete(@RequestParam List<String> ch) {
-		boolean isc = service.realDelete(ch);
+		service.realDelete(ch);
 		return "redirect:/delBoard.do";
 	}
 	
 	//추천수
 	@PostMapping(value = "/likeCount.do")
-	public String likeCount(LikeVo vo) {
+	public String likeCount(LikeVo vo,HttpSession session) {
+		EmpVo Evo= (EmpVo) session.getAttribute("loginVo");
+		String likeId=Evo.getEmp_no();
+		vo.setEmp_no(likeId);
 	    service.likeCount(vo);
 	    return "redirect:/detailBoard.do?bo_no=" + vo.getBo_no();
 	}
