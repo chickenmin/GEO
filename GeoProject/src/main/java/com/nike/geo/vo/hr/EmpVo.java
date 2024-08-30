@@ -11,7 +11,6 @@ import lombok.ToString;
 @ToString
 public class EmpVo {
 
-	private String emp_img;
 	private String emp_no;
 	private String emp_pos;
 	private String emp_dept;

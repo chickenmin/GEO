@@ -1,6 +1,7 @@
 package com.nike.geo.ctrl;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,55 +35,74 @@ public class EmpController {
 	private final IEmpService service;
 
 	@PostMapping(value = "/insertEmp.do")
-	public String insertEmp(EmpVo vo, HttpServletRequest request, @RequestParam List<MultipartFile> file) throws IOException {
+	public String insertEmp(EmpVo vo, Model model, HttpServletRequest request, @RequestParam("file") List<MultipartFile> file) {
 		log.info("사원 추가 :{}", vo);
 		int n = service.insertEmp(vo);
 		if (n == 1) {
-			return "redirect:selectOneEmp.do?emp_no=" + vo.getEmp_no();
+			log.info("사원 추가 성공");
 		} else {
-			return null;
+			log.info("사원 추가 실패");
 		}
 		
-//		log.info("파일 사이즈 : {}", file.size());
-//		
-//		for (MultipartFile f : file) {
-//			log.info("파일의 이름 : {}", f.getOriginalFilename());
-//			String originFileName = f.getOriginalFilename();
-//			String saveFileName = UUID.randomUUID().toString().concat(originFileName.substring(originFileName.indexOf(".")));
-//			log.info("기존파일명 : {}", originFileName);
-//			log.info("저장파일명 : {}", saveFileName);
-//			
-//			InputStream inputStream = null;
-//			OutputStream outputStream = null;
-//			String path = "";
-//			
-//			try {
-//				inputStream = f.getInputStream();
-//				
-//				path = WebUtils.getRealPath(request.getSession().getServletContext(), "/storage");
-//				String path02 = request.getSession().getServletContext().getRealPath("storage");
-//				log.info("저장경로 path : {} \n path02 : {}", path, path02);
-//				
-//				File storage = new File(path);
-//				if(!storage.exists());{
-//					storage.mkdirs();
-//				}
-//				
-//				File newFile = new File(path+"/"+saveFileName);
-//				if(!newFile.exists()) {
-//					newFile.createNewFile();
-//				}
-//				
-//				outputStream = new FileOutputStream(newFile);
-//				
-//				int read = 0;
-//				byte[] b = new byte[(int)f.getSize()];
-//				while((read = inputStream.read(b)) != -1) {
-//					outputStream.write()
-//				}
-//			}
-//		}
+		log.info("파일 사이즈 : {}", file.size());
 		
+		for (MultipartFile f : file) {
+			log.info("파일의 이름 : {}", f.getOriginalFilename());
+			String originFileName = f.getOriginalFilename();
+			String saveFileName = UUID.randomUUID().toString().concat(originFileName.substring(originFileName.indexOf(".")));
+			log.info("기존파일명 : {}", originFileName);
+			log.info("저장파일명 : {}", saveFileName);
+			log.info("저장 파일명: {}", saveFileName);
+			
+			InputStream inputStream = null;
+			OutputStream outputStream = null;
+			String path = "";
+			
+			try {
+				inputStream = f.getInputStream();
+				
+				path = WebUtils.getRealPath(request.getSession().getServletContext(), "/storage");
+				String path02 = request.getSession().getServletContext().getRealPath("storage");
+				log.info("저장경로 path : {} \n path02 : {}", path, path02);
+				
+				
+				File storage = new File(path);
+				if(!storage.exists()) {
+					storage.mkdirs();
+				}
+				
+				File newFile = new File(path+"/"+saveFileName);
+				if(!newFile.exists()) {
+					newFile.createNewFile();
+				}
+				
+				outputStream = new FileOutputStream(newFile);
+				
+				int read = 0;
+				byte[] b = new byte[(int)f.getSize()];
+				while((read = inputStream.read(b)) != -1) {
+					outputStream.write(b, 0, read);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					inputStream.close();
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			
+			model.addAttribute("originFileName", originFileName);
+			model.addAttribute("saveFileName", saveFileName);
+			model.addAttribute("path", path);
+			
+		}
+		
+		
+		return "redirect:selectOneEmp.do?emp_no=" + vo.getEmp_no();
 		
 	}
 
