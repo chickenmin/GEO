@@ -9,8 +9,11 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nike.geo.service.ICalService;
 import com.nike.geo.vo.co.CalVo;
+import com.nike.geo.vo.hr.EmpVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -82,17 +86,36 @@ public class CalController {
 	 * @param map 받아오는 값 : start, end, id
 	 * @return String  "true" / "false"
 	 */
-	@RequestMapping(value = "/updateDragAjax.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String updateAjax(@RequestParam Map<String, Object> map) {
-		log.info("CalController updateAjax 받아온 값 : {}", map);
-		String isc = "false";
-			if (iService.dragUpdateCal(map) > 0) {
-				isc = "true";
-				System.out.println(isc);
-			}
-		return isc;
+//	@RequestMapping(value = "/updateDragAjax.do", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String updateAjax(@RequestParam Map<String, Object> map) {
+//		log.info("CalController updateAjax 받아온 값 : {}", map);
+//		String isc = "false";
+//			if (iService.dragUpdateCal(map) > 0) {
+//				isc = "true";
+//				System.out.println(isc);
+//			}
+//		return isc;
+//	}
+	
+	
+	@GetMapping(value = "/delflagCal.do")
+	public String deleteMsgRecv(@RequestParam String cal_no) {
+		log.info("Calendar controller - 일정 삭제");
+		log.info("Calendar controller - cal_no의 값 : {}", cal_no);
+		int deleteNum = iService.delflagCal(cal_no);
+		return "redirect:/calendar.do";
 	}
+	
+	@PostMapping(value = "/updateCal.do")
+	@ResponseBody
+	public String updateCal(CalVo vo) {
+		log.info("사원 정보 업데이트: {}", vo);
+		iService.updateCal(vo);
+		return "redirect:selectOneCal.do?cal_no=" + vo.getCal_no();
+
+	}
+	
 	
 	
 }

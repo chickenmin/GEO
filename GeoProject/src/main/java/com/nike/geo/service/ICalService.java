@@ -16,4 +16,11 @@ public interface ICalService {
 // Calendar 드래그 앤 드롭	
 	public int dragUpdateCal(Map<String, Object> map);
 
+// Calendar 일정 삭제
+	public int delflagCal(String seqs);
+	
+// 일정 변경
+	public int updateCal(CalVo vo);
+	
+	public CalVo getOneCal(int no);
 }

@@ -24,13 +24,36 @@ SELECT CAL_NO, CAL_TITLE, CAL_CONTENT,
 		WHERE CAL_DEL_YN = 'N'
 </select>
 
+<!-- Calendar  일정리스트 -->
+<select id="getOneCal" resultType="com.nike.geo.vo.co.CalVo">
+SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, 
+       CAL_START, CAL_STOP, CAL_OPEN_YN
+		FROM CAL
+		WHERE CAL_DEL_YN = 'N'
+			AND CAL_NO = #{cal_no}
+</select>
+
 <!-- Calendar 드래그 앤 드롭 -->	
-<update id="dragUpdateCal" parameterType="java.util.Map">
+<!-- <update id="dragUpdateCal" parameterType="java.util.Map">
     UPDATE CAL 
     SET "CAL_START" = TO_DATE(#{cal_start},'YYYY/MM/DD HH24:MI'), 
         "CAL_STOP" = TO_DATE(#{cal_stop},'YYYY/MM/DD HH24:MI')
     WHERE CAL_NO = #{cal_no}
-</update>
+</update> -->
 
+
+<!-- 게시글 삭제 -->
+<delete id="delflagCal">
+UPDATE CAL SET CAL_DEL_YN = 'Y'
+	WHERE CAL_NO = #{cal_no}
+</delete>
+
+<update id="updateCal" parameterType="CalVo">
+UPDATE CAL
+SET CAL_TITLE= #{title}, 
+        CAL_CONTENT = #{cal_content}, 
+        CAL_TYPE= #{cal_type} , CAL_OPEN_YN= #{cal_open_yn}
+WHERE CAL_NO = #{cal_no}
+</update>
 	
 </mapper>
