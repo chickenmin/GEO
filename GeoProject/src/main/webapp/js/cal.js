@@ -70,51 +70,37 @@ function selectAjax(){
 						// updateDragAjax를 통해 일정 업데이트
 						updateDragAjax(dateFormat(info.event.cal_start), dateFormat(info.event.cal_stop), info.event.extendedProps.cal_no);
 						
-					},	
+					},
+					
 					//상세보기 모달창
-					eventClick:function(info){
-						var cal_content = $("#cal_content").val();
-						
-						document.getElementById('eventTitle').textContent = "Title: " + info.event.title;
-					      document.getElementById('eventStart').textContent = "Start: " + formatDateToKST(info.event.start);
-					      document.getElementById('eventEnd').textContent = info.event.end ? "End: " + formatDateToKST(info.event.end) : "End: N/A";
+					eventClick:function(info){	
+		
+						  //서버에서 받은 데이터로 모달 내용 업데이트			
+						  document.getElementById('eventTitle').textContent = "일정제목: " + info.event.title;
+						  document.getElementById('cal_content').textContent = "Content: " + info.event.content;
+					      document.getElementById('eventStart').textContent = "시작일자: " + formatDateToKST(info.event.start);
+					      document.getElementById('eventEnd').textContent = info.event.end ? "종료일자: " + formatDateToKST(info.event.end) : "End: N/A";
 					      
 					      // Bootstrap 모달 표시
 					      var eventModal = new bootstrap.Modal(document.getElementById('eventModal'), {});
 					      eventModal.show();
-					      
 					      // 클릭된 이벤트가 기본 동작(새 페이지로 열리는 것 등)을 하지 않도록 방지
 					      info.jsEvent.preventDefault();
+					      
+					      
+//  					eventClick:function(info){						
+//						  document.getElementById('eventTitle').textContent = "Title: " + info.event.title;
+//					      document.getElementById('eventStart').textContent = "Start: " + formatDateToKST(info.event.start);
+//					      document.getElementById('eventEnd').textContent = info.event.end ? "End: " + formatDateToKST(info.event.end) : "End: N/A";
+//					      
+//					      // Bootstrap 모달 표시
+//					      var eventModal = new bootstrap.Modal(document.getElementById('eventModal'), {});
+//					      eventModal.show();
+//					      
+//					      // 클릭된 이벤트가 기본 동작(새 페이지로 열리는 것 등)을 하지 않도록 방지
+//					      info.jsEvent.preventDefault();
 					},
-                        /**
-                         * 이벤트 선택해서 삭제하기
-                         */
-//                        eventClick: function (info){
-//                            if(confirm("'"+ info.event.cal_title +"' 일정을 삭제하시겠습니까 ?")){
-//                                // 확인 클릭 시
-//                                info.event.remove();
-// 
-// 
-//                            console.log(info.event);
-//                            var events = new Array(); // Json 데이터를 받기 위한 배열 선언
-//                            var obj = new Object();
-//                                obj.title = info.event._def.title;
-//                                obj.start = info.event._instance.range.start;
-//                                obj.end = info.event._instance.range.end;
-//                                events.push(obj);
-// 
-//                            console.log(events);
-//                            }
-//                            $(function deleteData(){
-//                                $.ajax({
-//                                    url: "/full-calendar/calendar-admin-update",
-//                                    method: "DELETE",
-//                                    dataType: "json",
-//                                    data: JSON.stringify(events),
-//                                    contentType: 'application/json',
-//                                })
-//                            })
-//                        },
+
                         events: data
                         		
 				});				
@@ -126,8 +112,6 @@ function selectAjax(){
 			}
 		});
 	}
-
-
 
 
 
@@ -279,9 +263,15 @@ function zeroPlus(time) {
 }
 
 function openEventModal(){
-//	$('#addEventModal').modal('show');
-	$('#addEventModal .modal-content').load("addEventModal").modal('show');
-	$('#addEventModal').modal();
+	var cal_title = $("#cal_title").val(cal_title);
+	var cal_content = $("#cal_content").val(cal_content);
+	var cal_start = $("#datetimepicker1").val(datetimepicker1);
+	var cal_stop = $("#datetimepicker2").val(datetimepicker2);
+	var cal_type = $("#cal_type").val(cal_type);
+	
+
+
+
 }
 
 
