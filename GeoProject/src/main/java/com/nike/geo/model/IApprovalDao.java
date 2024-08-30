@@ -45,6 +45,9 @@ public interface IApprovalDao {
 	//문서 상세 조회
 	public Ap_DocuVo selectDeatil(String apd_no);
 	
+	//반려메시지 조회
+	public String sel_Msg(int apd_no);
+	
 	//문서 결재자 조회
 	public List<Ap_LineVo> selectLine(String apd_no);
 	
@@ -53,6 +56,15 @@ public interface IApprovalDao {
 	
 	//파일 조회
 	public FileVo findFile(String file_no);
+	
+	// 결재번호 조회
+	public int selectAPL_NO(Map<String, Object> map);
+	
+	// 결재라인 반려메시지 및 시간 수정
+	public int updateReturn(Map<String, Object> map);
+	
+	//서류 상태 수정 (철회, 진행중,완료 )
+	public int update_aStatus(Map<String, Object> map);
 	
 	
 	

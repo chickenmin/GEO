@@ -46,6 +46,9 @@ public interface IApprovalService {
 	//문서 상세 조회
 	public Ap_DocuVo selectDeatil(String apd_no);
 	
+	//반려메시지 조회
+	public String sel_Msg(int apd_no);
+	
 	//문서 결재자 조회
 	public List<Ap_LineVo> selectLine(String apd_no);
 	
@@ -54,4 +57,8 @@ public interface IApprovalService {
 	
 	//파일 조회
 	public FileVo findFile(String file_no);
+
+	//반려처리
+	public int returnSubmit(Map<String, Object> map);
+
 }

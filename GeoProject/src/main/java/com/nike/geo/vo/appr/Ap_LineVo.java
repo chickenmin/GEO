@@ -6,13 +6,16 @@ public class Ap_LineVo {
 	private int	apd_no      ;
 	private String	emp_no      ;
 	private int	apl_order   ;
-	private int	apl_date    ;
+	private String	apl_date    ;
 	private int	apl_status  ;
 	private String	apl_msg     ;
 	private String	reg_id      ;
-	private int	reg_date    ;
+	private String	reg_date    ;
 	private String	mod_id      ;
-	private int	mod_date	;
+	private String	mod_date	;
+	private String emp_name;
+	
+	private String file_oname;
 	
 	//게터세터
 	public int getApl_no() {
@@ -39,12 +42,7 @@ public class Ap_LineVo {
 	public void setApl_order(int apl_order) {
 		this.apl_order = apl_order;
 	}
-	public int getApl_date() {
-		return apl_date;
-	}
-	public void setApl_date(int apl_date) {
-		this.apl_date = apl_date;
-	}
+	
 	public int getApl_status() {
 		return apl_status;
 	}
@@ -63,24 +61,16 @@ public class Ap_LineVo {
 	public void setReg_id(String reg_id) {
 		this.reg_id = reg_id;
 	}
-	public int getReg_date() {
-		return reg_date;
-	}
-	public void setReg_date(int reg_date) {
-		this.reg_date = reg_date;
-	}
+
 	public String getMod_id() {
 		return mod_id;
 	}
 	public void setMod_id(String mod_id) {
 		this.mod_id = mod_id;
 	}
-	public int getMod_date() {
-		return mod_date;
-	}
-	public void setMod_date(int mod_date) {
-		this.mod_date = mod_date;
-	}
+	
+	
+
 	public Ap_LineVo() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -91,6 +81,40 @@ public class Ap_LineVo {
 		this.emp_no = emp_no;
 		this.apl_order = apl_order;
 	}
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+	
+	
+	public String getFile_oname() {
+		return file_oname;
+	}
+	public void setFile_oname(String file_oname) {
+		this.file_oname = file_oname;
+	}
+	public String getApl_date() {
+		return apl_date;
+	}
+	public void setApl_date(String apl_date) {
+		this.apl_date = apl_date;
+	}
+	public String getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}
+	public String getMod_date() {
+		return mod_date;
+	}
+	public void setMod_date(String mod_date) {
+		this.mod_date = mod_date;
+	}
+	
+	
 	
 	
 	
