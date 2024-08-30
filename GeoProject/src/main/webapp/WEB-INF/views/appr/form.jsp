@@ -219,7 +219,7 @@
 				<!-- 문서 하단 버튼 -->
 				<div style="display: flex; justify-content: flex-end;" >
 					<input type="hidden" name="type" id="dataType">
-					<button class="btn btn-outline-primary frmbtn"  style="height: auto; margin: 5px 10px 0 0;">임시저장</button>
+					<button class="btn btn-outline-primary frmbtn"  style="height: auto; margin: 5px 10px 0 0;" >임시저장</button>
 					<button class="btn btn-primary frmbtn"  style="height: auto; margin: 5px 10px 0 0;" >상신하기</button>
 				</div>
 				<jsp:include page="./apprLine.jsp"></jsp:include>

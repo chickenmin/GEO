@@ -105,6 +105,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 	
 	@Override
+	public String sel_Msg(int apd_no) {
+		return dao.sel_Msg(apd_no);
+	}
+	
+	@Override
 	public List<Ap_LineVo> selectLine(String apd_no) {
 		return dao.selectLine(apd_no);
 	}
@@ -119,6 +124,36 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public FileVo findFile(String file_no) {
 		return dao.findFile(file_no);
 	}
+	
+	//반려처리
+	@Transactional(readOnly = false)
+	@Override
+	public int returnSubmit(Map<String, Object> map) {
+		
+		//서류번호 조회
+		int n = dao.selectAPL_NO(map);
+		map.put("apl_no", n);	//조회한 서류번호 넣기
+		map.put("apd_status", "R");	
+		
+		if (n == 0) {
+			log.info("서류번호 조회 실패");
+		}
+		
+		//결재자 반려처리
+		int m = dao.updateReturn(map);
+		if (m == 0) {
+			log.info("결재자 반려처리 및 반려메시지 입력 실패");
+		}
+		
+		//서류 반려처리
+		int o = dao.update_aStatus(map);
+		if (o == 0) {
+			log.info("결재자 반려처리 및 반려메시지 입력 실패");
+		}
+		
+		return (n>0 || m>0 || o>0)?1:0;
+	}
+	
 	
 
 	//@Transactional은 annotation 사용

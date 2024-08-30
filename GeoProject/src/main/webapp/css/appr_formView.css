@@ -1,0 +1,96 @@
+@charset "UTF-8";
+
+	
+    .modal-body {
+        display: flex; /* Flexbox를 사용 */
+        justify-content: space-evenly; /* 요소들 사이에 균등한 간격을 두고 정렬 */
+        align-items: start; /* 요소들을 컨테이너의 시작 부분에 정렬 */
+    }
+    .info-card {
+        width: 200px; 
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .main-card {
+        height: 400px; /* 첫 번째 카드의 높이 */
+    }
+    .choice {
+        height: 150px; /* choice 클래스를 가진 카드의 높이 */
+    }
+    .choices-container {
+        display: flex; /* 내부 카드들을 세로로 배치 */
+        flex-direction: column; /* 세로 방향으로 요소들을 배치 */
+        justify-content: space-between; /* 요소 사이의 간격을 균등하게 배분 */
+    }
+    .selTitle{
+    	background-color: lightgreen;
+    }
+    
+   
+   
+ /*결재칸*/
+    
+.start{
+	text-align: right; /* 텍스트와 인라인 요소를 오른쪽 정렬 */
+    border: 1px solid #000; /* 경계선은 선택 사항 */
+    padding: 10px; /* 내부 여백은 선택 사항 */
+}
+
+.sign {
+    display: inline-block; /* 내부 요소들이 부모의 text-align을 따름 */
+    text-align: right; /* 내부 텍스트가 오른쪽 정렬됨 */
+    border: 1px solid #000; /* 선택사항: 경계선 추가 */
+    padding: 10px; /* 선택사항: 내부 여백 추가 */
+}
+
+.sign div {
+    margin-bottom: 5px; /* 각 항목 사이의 간격 */
+}
+
+.sign div:last-child {
+    margin-bottom: 0; /* 마지막 항목의 아래 간격 제거 */
+}
+
+
+
+.sign div {
+     padding: 5px 0; /* 텍스트와 경계선 사이의 여백 */
+    border-bottom: 1px solid #000; /* 각 항목 사이의 경계선 추가 */
+    display: flex; /* Flexbox로 설정 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    height: 20px; /* 기본 높이 설정 */
+}
+
+.sign div:last-child {
+    border-bottom: none; /* 마지막 항목의 경계선을 제거 */
+}
+
+.sign {
+   display: inline-block; /* 부모의 text-align을 따름 */
+    text-align: center; /* 내부 텍스트를 가운데 정렬 */
+    border: 1px solid #000; /* 외곽 경계선 추가 */
+    padding: 10px; /* 내부 여백 추가 */
+    width: 150px; /* 너비 설정 */
+}
+
+.sign-name,
+.sign-date {
+    height: 20px; /* 결재자와 결재날짜의 높이를 낮춤 */
+    border-bottom: 1px solid #000; /* 각 항목 사이의 경계선 추가 */
+    display: flex;
+    align-items: center; /* 텍스트가 중앙에 위치하도록 조정 */
+    padding-left: 10px; /* 왼쪽 여백 */
+}
+
+.sign-signature {
+      height: 250px; /* 결재싸인의 높이를 설정 */
+}
+
+.sign-date {
+    border-bottom: none; /* 마지막 항목의 경계선을 제거 */
+}
+
