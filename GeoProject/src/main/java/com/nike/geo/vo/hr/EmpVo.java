@@ -32,5 +32,7 @@ public class EmpVo {
 	private String emp_address1;
 	private String emp_address2;
 	private String emp_address3;
+//	private String emp_img;
+	
 
 }
