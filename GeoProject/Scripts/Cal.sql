@@ -11,6 +11,11 @@ VALUES(CAL_SEQ.NEXTVAL, '최이사 연차', '이사는 연차가 마음대로란
 TO_DATE('2024/08/23 23:59','YYYY/MM/DD HH24:MI'), '2', 'N', 'N');
 
 
+--게시글 삭제
+UPDATE CAL SET CAL_DEL_YN = 'Y'
+	WHERE CAL_DEL_YN = 'N'
+	AND CAL_NO = '12';
+
 --게시글 상세보기
 SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, 
        CAL_START, CAL_STOP

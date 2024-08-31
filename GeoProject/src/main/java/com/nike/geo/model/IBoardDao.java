@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
 
 public interface IBoardDao {
@@ -14,7 +15,9 @@ public interface IBoardDao {
 
 	public List<BoardVo> delBoard();
 	
-	public boolean insertBoard(BoardVo Vo);
+	public boolean insertAnnoBoard(BoardVo Vo);
+	
+	public boolean insertNomalBoard(BoardVo Vo);
 	
 	public BoardVo detailBoard(String bo_no);
 
@@ -39,4 +42,6 @@ public interface IBoardDao {
 	public int likeSearchBoardOne(Map<String, String>map);
 	
 	public LikeVo likeSelectOne(String bo_no,String emp_no);
+	
+	public List<CommVo> commList();
 }

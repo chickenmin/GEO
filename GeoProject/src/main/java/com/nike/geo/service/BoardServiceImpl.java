@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.nike.geo.model.IBoardDao;
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
 
 import lombok.RequiredArgsConstructor;
@@ -38,8 +39,13 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	
 	@Override
-	public boolean insertBoard(BoardVo Vo) {
-		return dao.insertBoard(Vo);
+	public boolean insertAnnoBoard(BoardVo Vo) {
+		return dao.insertAnnoBoard(Vo);
+	}
+	
+	@Override
+	public boolean insertNomalBoard(BoardVo Vo) {
+		return dao.insertNomalBoard(Vo);
 	}
 	
 	@Override
@@ -98,6 +104,12 @@ public class BoardServiceImpl implements IBoardService {
 		}
 		LikeVo resultVo = dao.likeSelectOne(vo.getBo_no(),vo.getEmp_no());
 		return resultVo;
+	}
+	
+	@Override
+	public List<CommVo> commList() {
+		// TODO Auto-generated method stub
+		return dao.commList();
 	}
 }
 

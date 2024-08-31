@@ -178,7 +178,7 @@
           
         </a><!-- End Messages Icon -->
 
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" id="msgUl">
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" id="msgUl" style="width: 350px;">
           <li class="dropdown-header" id="cntDropdown">
             <a href="#">
 	            <span class="badge rounded-pill bg-primary p-2 ms-2">
@@ -201,43 +201,22 @@
               </div>
             </a>
           </li>
+          
           <li>
             <hr class="dropdown-divider">
           </li>
-
-          <li class="message-item">
-            <a href="#">
-              <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-              <div>
-                <h4>김동혁 부장</h4>
-                <p>문서 취합하게 마무리해주세요</p>
-                <p>4시간 전</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="message-item">
-            <a href="#">
-              <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-              <div>
-                <h4>정수용 부장</h4>
-                <p>카카오오븐 링크 제출해주세요</p>
-                <p>8시간 전</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
+          
           <li class="dropdown-footer">
             <a href="./recvMsg.do">모든 쪽지 보기</a>
           </li>
         </ul><!-- End Messages Dropdown Items -->
       </li><!-- End Messages Nav -->
+      
+      
+      
+      
+      
+      
       <li class="nav-item dropdown pe-3">
 
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">

@@ -1,5 +1,6 @@
 package com.nike.geo.service;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -9,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.nike.geo.model.ICommDao;
+import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.comm.CommonVo;
 import com.nike.geo.vo.hr.EmpVo;
 
@@ -27,6 +30,8 @@ public class CommServiceImpl implements ICommService {
 	@Autowired
 	private JavaMailSender mailSender;
 
+	private final SecureRandom random = new SecureRandom();
+	
 	@Override
 	public List<CommonVo> commSelect(String division) {
 		return dao.commSelect(division);
@@ -47,12 +52,28 @@ public class CommServiceImpl implements ICommService {
 	}
 	
 	@Override
+	public String generateTempPw() {
+		log.info("COMMON service - 임시비밀번호 발급 generateTempPw");
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder sb = new StringBuilder(6);
+
+        for (int i = 0; i < 6; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+        
+        String tempPw = sb.toString();
+		return tempPw;
+	}
+	
+	@Override
 	public int updateTempPw(EmpVo vo) {
 		log.info("COMMON service - 임시비밀번호 발급 updateTempPw");
 		log.info("COMMON service - 받아온 값 : {}", vo);
 		return dao.updateTempPw(vo);
 	}
 	
+	@Async
 	@Override
 	public void sendMail(String to, String subject, String content) throws MessagingException {
 		log.info("COMMON service - 메일로 임시 비밀번호 전송 sendMail");
@@ -74,4 +95,21 @@ public class CommServiceImpl implements ICommService {
 
 		mailSender.send(message);
 	}
+	
+	@Override
+	public EmpVo selectMainEmp(String no) {
+		log.info("COMMON service - 메인화면 사원정보 조회 selectMainEmp");
+		log.info("COMMON service - 받아온 값 : {}", no);
+		return dao.selectMainEmp(no);
+	}
+	
+	@Override
+	public List<BoardVo> selectMainBoard(String status) {
+		log.info("COMMON service - 메인화면 공지게시판 조회 selectMainBoard");
+		log.info("COMMON service - 받아온 값 : {}", status);
+		return dao.selectMainBoard(status);
+	}
+	
+	
+	
 }

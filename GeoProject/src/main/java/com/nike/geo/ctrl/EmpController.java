@@ -35,24 +35,27 @@ public class EmpController {
 	private final IEmpService service;
 
 	@PostMapping(value = "/insertEmp.do")
-	public String insertEmp(EmpVo vo, Model model, HttpServletRequest request, @RequestParam("file") List<MultipartFile> file) {
+	public String insertEmp(EmpVo vo, Model model, HttpServletRequest request, List<MultipartFile> file) {
 		log.info("사원 추가 :{}", vo);
 		int n = service.insertEmp(vo);
+		
+		
 		if (n == 1) {
 			log.info("사원 추가 성공");
 		} else {
 			log.info("사원 추가 실패");
 		}
 		
-		log.info("파일 사이즈 : {}", file.size());
 		
+		
+		
+		String saveFileName= null;
 		for (MultipartFile f : file) {
 			log.info("파일의 이름 : {}", f.getOriginalFilename());
 			String originFileName = f.getOriginalFilename();
-			String saveFileName = UUID.randomUUID().toString().concat(originFileName.substring(originFileName.indexOf(".")));
+			saveFileName = UUID.randomUUID().toString().concat(originFileName.substring(originFileName.indexOf(".")));
 			log.info("기존파일명 : {}", originFileName);
 			log.info("저장파일명 : {}", saveFileName);
-			log.info("저장 파일명: {}", saveFileName);
 			
 			InputStream inputStream = null;
 			OutputStream outputStream = null;
@@ -93,12 +96,8 @@ public class EmpController {
 					e.printStackTrace();
 				}
 			}
-			
-			
-			model.addAttribute("originFileName", originFileName);
-			model.addAttribute("saveFileName", saveFileName);
-			model.addAttribute("path", path);
-			
+
+		
 		}
 		
 		
@@ -121,11 +120,12 @@ public class EmpController {
 	}
 
 	@GetMapping(value = "/selectOneEmp.do")
-	public String selectOneEmp(String emp_no, Model model) {
+	public String selectOneEmp(String emp_no, String saveFileName, Model model) {
 		log.info("사원 상세 조회");
 //		emp_no = "PR001";
 		EmpVo vo = service.selectOneEmp(emp_no);
 		model.addAttribute("vo", vo);
+		model.addAttribute("saveFileName", saveFileName);
 		return "hr/selectOneEmp";
 	}
 

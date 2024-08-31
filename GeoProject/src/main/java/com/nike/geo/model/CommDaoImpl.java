@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.comm.CommonVo;
 import com.nike.geo.vo.hr.EmpVo;
 
@@ -46,4 +47,17 @@ public class CommDaoImpl implements ICommDao {
 		return template.update(NS+"updateTempPw", vo);
 	}
 
+	@Override
+	public EmpVo selectMainEmp(String no) {
+		log.info("COMMON repository - 메인화면 사원정보 조회 selectMainEmp");
+		log.info("COMMON repository - 받아온 값 : {}", no);
+		return template.selectOne(NS+"selectMainEmp", no);
+	}
+	
+	@Override
+	public List<BoardVo> selectMainBoard(String status) {
+		log.info("COMMON repository - 메인화면 게시판 조회 selectMainBoard");
+		log.info("COMMON repository - 받아온 값 : {}", status);
+		return template.selectList(NS+"selectMainBoard", status);
+	}
 }

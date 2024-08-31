@@ -37,4 +37,22 @@ public class CalServiceImpl implements ICalService {
 		return dao.dragUpdateCal(map);
 	}
 	
+	@Override
+	public int delflagCal(String seqs) {
+		log.info("CalServiceImpl delflagCal 넘어온 값 : {}",seqs);
+		return dao.delflagCal(seqs);
+	}
+	
+	@Override
+	public int updateCal(CalVo vo) {
+		log.info("CalServiceImpl updateCal 넘어온 값 : {}",vo);
+		return dao.updateCal(vo);
+	}
+
+	@Override
+	public CalVo getOneCal(int no) {
+		return dao.getOneCal(no);
+	}
+	
+	
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nike.geo.service.IBoardService;
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
 import com.nike.geo.vo.hr.EmpVo;
 
@@ -68,11 +69,12 @@ public class BoardController {
 	public String writeBoard(BoardVo Vo,
 							@RequestParam("bo_title") String bo_title, 
 							@RequestParam("bo_content") String bo_content,
+							@RequestParam("bo_status")String bo_status,
 							HttpSession session) {
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		String writeId = Evo.getEmp_no();
 		Vo.setEmp_no(writeId);
-	    boolean isc = service.insertBoard(Vo);
+	    boolean isc = service.insertAnnoBoard(Vo);
 	    
 	    if (isc) {
 	        return "redirect:/announcements.do";	//소스 실행 후 리턴을 어디로 잡아야 정상적으로 화면이 나올것인가
@@ -153,5 +155,12 @@ public class BoardController {
 	    return "redirect:/detailBoard.do?bo_no=" + vo.getBo_no();
 	}
 
-	
+	//댓글
+	@GetMapping("/commList.do")
+	public String commList(Model model) {
+		System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+		List<CommVo> Cvo= service.commList();
+		model.addAttribute("Cvo", Cvo);
+		return "detailBoard";
+	}
 }

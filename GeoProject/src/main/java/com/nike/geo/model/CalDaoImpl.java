@@ -31,4 +31,19 @@ public class CalDaoImpl implements ICalDao {
 	public int dragUpdateCal(Map<String, Object> map) {
 		return session.update(NS+"dragUpdateCal", map);
 	}
+	
+	@Override
+	public int delflagCal(String seqs) {
+		return session.delete(NS+"delflagCal", seqs);
+	}
+	
+	@Override
+	public int updateCal(CalVo vo) {
+		return session.update(NS+"delflagCal", vo);
+	}
+
+	@Override
+	public CalVo getOneCal(int no) {
+		return session.selectOne(NS+"getOneCal", no);
+	}
 }

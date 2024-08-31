@@ -61,7 +61,7 @@
 					}
 				
 				}).open();	
-		fullAddress();
+// 		fullAddress();
 		
 		
 	}
@@ -156,11 +156,11 @@
                     readUrl(this);
                 };
 
-                document.querySelector(".list_thumb").addEventListener("click", function(event) {
-                    if (event.target.classList.contains('deleteImg')) {
-                        event.target.parentElement.remove();
-                    }
-                });
+//                 document.querySelector(".list_thumb").addEventListener("click", function(event) {
+//                     if (event.target.classList.contains('deleteImg')) {
+//                         event.target.parentElement.remove();
+//                     }
+//                 });
             }
 
             function readUrl(input) {
@@ -192,7 +192,7 @@
 				<div class="row mb-3">
 					<label for="inputNumber" class="col-sm-2 col-form-label">프로필 사진</label>
 					<div class="col-sm-10" style="width: 50%;">
-						<input class="form-control" type="file" id="formFile" name="emp_img">
+						<input class="form-control" type="file" id="formFile" name="saveFileName">
 					</div>
 				</div>
 				<div class="row mb-3">

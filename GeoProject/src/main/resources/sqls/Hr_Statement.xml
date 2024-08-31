@@ -13,7 +13,7 @@ INSERT INTO GEO.EMP
 	EMP_ADDRESS2 , EMP_ADDRESS3, EMP_AUTH, EMP_STATUS, 
 	EMP_RETIREDATE, REG_ID, REG_DATE, MOD_ID, 
 	MOD_DATE)
-VALUES(#{emp_img}, #{emp_no}, #{emp_pos}, #{emp_dept}, #{emp_pw}, 
+VALUES(#{emp_no}, #{emp_pos}, #{emp_dept}, #{emp_pw}, 
 	#{emp_name}, #{emp_gender}, TO_CHAR(SYSDATE, 'yyyy-MM-dd'), #{emp_email}, 
 	#{emp_phone}, #{emp_birth, jdbcType=DATE}, #{emp_postcode}, #{emp_address1},
 	#{emp_address2}, #{emp_address3}, 'AU003', 

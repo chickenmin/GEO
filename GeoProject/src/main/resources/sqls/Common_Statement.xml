@@ -55,4 +55,31 @@
 			FROM GEO."FILE"
 			WHERE FILE_NO = #{file_no}
 	</select>
+	
+	<!-- 메인화면 사원정보 조회 selectMainEmp -->
+	<select id="selectMainEmp" resultType="EmpVo">
+		 SELECT EMP_NO ,
+		 		EMP.EMP_NAME AS EMP_NAME,
+			    POS.CODE_NAME AS EMP_POS,
+			    DEPT.CODE_NAME AS EMP_DEPT
+			FROM EMP INNER JOIN COM POS 
+				ON EMP.EMP_POS = POS.COMMON_CODE
+					AND POS.DIVISION = '직급'
+			INNER JOIN COM DEPT
+				ON EMP.EMP_DEPT = DEPT.COMMON_CODE
+					AND DEPT.DIVISION = '부서'
+			WHERE EMP.EMP_NO = #{emp_no}
+	</select>
+	
+	<!-- 메인화면 게시판 조회 selectMainBoard  -->
+	<select id="selectMainBoard" resultType="BoardVo">
+		SELECT BO_NO , EMP_NO , BO_TITLE ,
+				BO_CONTENT , BO_VIEW_COUNT , BO_REGDATE
+			FROM (SELECT *
+					FROM BO
+					WHERE BO_STATUS = #{bo_status}
+						AND BO_DEL_YN = 'N'
+					ORDER BY BO_REGDATE DESC)
+			<![CDATA[WHERE ROWNUM <= 5]]>
+	</select>
 </mapper>
