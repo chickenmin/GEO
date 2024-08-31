@@ -6,6 +6,9 @@
 <html>
 
 <%@ include file="../comm/header.jsp" %>
+<head>
+	<script type="text/javascript" src="./js/apprList.js"></script>
+</head>
 <style>
 	td a {
 		color: inherit; /* 링크 색상을 부모 요소의 색상으로 설정 */
@@ -38,11 +41,11 @@
 	          <div class="card">
 	            <div class="card-body">
 	              <h5 class="card-title">결재 문서</h5>
-	              <button class="btn btn-outline-dark" >전체  </button>
-	              <button class="btn btn-outline-primary" >대기  </button>
-	              <button class="btn btn-outline-info" >진행  </button>
-	              <button class="btn btn-outline-success" >완료  </button>
-	              <button class="btn btn-outline-danger" >반려  </button>
+	              <button class="btn btn-outline-dark" onclick="location.href='./apprList.do'">전체</button>
+	              <button class="btn btn-outline-primary category">대기  </button>
+	              <button class="btn btn-outline-info category" >진행  </button>
+	              <button class="btn btn-outline-success category" >완료  </button>
+	              <button class="btn btn-outline-danger category" >반려  </button>
 	
 	              <!-- Default Table -->
 	              <table class="table display" id="apprList">
@@ -57,32 +60,15 @@
 	                </thead>
 	                
 	                <!-- tbody -->
-	                <tbody>
+	                <tbody class="listBody">
 	                  <c:forEach var="vo" items="${lists}" varStatus="vs">
 	                  
 	                    <tr>
-	                      <th scope="row" class="text-center"><a> ${fn:length(lists) - vs.index} </a></th>
+	                      <th scope="row" class="text-center"><a> ${fn:length(lists) - vs.index}</a></th>
 	                      <td class="text-center"> 
 	                      <a href="./detailAppr.do?apd_no=${vo.apd_no}">
 	                      	${vo.apd_con }...
-<%-- 		                      	<c:choose> --%>
-<%-- 					                	<c:when test="${vo.apd_form eq 'AP001'}"> --%>
-<!-- 					                		일일 업무 일지 -->
-<%-- 					                	</c:when> --%>
-<%-- 					                	<c:when test="${vo.apd_form eq 'AP002'}"> --%>
-<!-- 					                		연차 신청서  -->
-<%-- 					                	</c:when> --%>
-<%-- 					                	<c:when test="${vo.apd_form eq 'AP003'}"> --%>
-<!-- 					                		지출 결의서 -->
-<%-- 					                	</c:when> --%>
-<%-- 					                	<c:when test="${vo.apd_form eq 'AP004'}"> --%>
-<!-- 					                		사유서 -->
-<%-- 					                	</c:when> --%>
-<%-- 					                	<c:otherwise> --%>
-<!-- 					                		출장 보고서 -->
-<%-- 					                	</c:otherwise> --%>
-<%-- 					                </c:choose> --%>
-					          </a>      
+					      </a>      
 	                      </td> 
 	                      <td class="text-center">  ${vo.emp_no}</td>
 	                      <td class="text-center"> ${vo.reg_date}</td>

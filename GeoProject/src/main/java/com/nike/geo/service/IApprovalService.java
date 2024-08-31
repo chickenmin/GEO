@@ -43,17 +43,26 @@ public interface IApprovalService {
 	//결재목록 조회
 	public List<Ap_DocuVo> selectApproval(String emp_no);
 	
+	//결재문서 상태별 조회
+	public List<Ap_DocuVo> selectStatus(Map<String, Object> map);
+	
 	//문서 상세 조회
 	public Ap_DocuVo selectDeatil(String apd_no);
 	
 	//반려메시지 조회
 	public String sel_Msg(int apd_no);
 	
+	//내 서명 조회
+	public List<FileVo> selMySign(String emp_no);
+	
+	//순서인지 확인
+	public int checkOrder(Map<String, Object> map);
+	
 	//문서 결재자 조회
 	public List<Ap_LineVo> selectLine(String apd_no);
 	
 	//첨부 파일 조회
-	public List<FileVo> selectFile(String apd_no);
+	public List<FileVo> selectFile(String origin_no);
 	
 	//파일 조회
 	public FileVo findFile(String file_no);

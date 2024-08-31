@@ -95,6 +95,8 @@ public class MsgRestController {
 			
 			// 임시 비밀번호로 쓸 난수 생성
 
+
+
 //			String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 //
 //	        SecureRandom random = new SecureRandom();
@@ -106,11 +108,13 @@ public class MsgRestController {
 //	        }
 //	        
 //	        String tempPw = sb.toString();
+
 //	        TempVo.setEmp_pw(tempPw);
 	        TempVo.setEmp_pw("123456");
 
 	//		String tempPw = commService.generateTempPw();
 	  //      TempVo.setEmp_pw(tempPw);
+
 
 			
 			// 비밀번호 변경
@@ -122,7 +126,9 @@ public class MsgRestController {
 				String email = TempVo.getEmp_email();
 				String name = TempVo.getEmp_name();
 				String content = "<br>" + name + "님, 안녕하세요.<br>"
+
 						+ "임시 비밀번호는 "+ 123456 + " 입니다.<br>"
+
 						+ "보안 상의 이유로 로그인 후 바로 비밀번호를 바꾸시는 걸 권장합니다.";
 				commService.sendMail(email,	"임시 비밀번호 발급 안내", content);
 				

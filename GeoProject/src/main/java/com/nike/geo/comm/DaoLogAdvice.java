@@ -10,7 +10,7 @@ public class DaoLogAdvice {
 		logger.info("[AOP 메소드 시작]");
 		Object[]  obj = j.getArgs();
 		if (obj != null && obj.length != 0) {
-			logger.info("[AOP 실행 메소드명] \t{}",j.getSignature().getName());
+			logger.info("[AOP 실행 쿼리문] \t{}",j.getSignature().getName());
 			for (int i=0;i<obj.length;i++) {
 				logger.info("파라미터"+i+"번째:\t"+obj[i].toString());
 			}

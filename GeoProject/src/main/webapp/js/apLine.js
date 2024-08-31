@@ -3,8 +3,75 @@
  */
  $(document).ready(function(){ // 브라우저 로드시
 		
+				// 상신,임시저장
+		var frm = document.submitForm;
+		var submitBtns = document.querySelectorAll(".frmbtn");
+
+		for (let i = 0; i < submitBtns.length; i++) 	{
+			submitBtns[i].onclick = function(event) {
+				event.preventDefault(); 
+				console.log(this.textContent);
+				document.getElementById("dataType").value = this.textContent;
+				var result = check();
+				if (!result) {
+					return;					
+				}
+				frm.submit(); // 폼 제출
+			}
+		}
+
 		
 		
+		//데이트피커 설정
+		$('#mdp-demo').multiDatesPicker({
+			dateFormat : "yy-mm-dd",
+			beforeShowDay : $.datepicker.noWeekends,
+			// 날짜가 선택될 때 호출되는 함수
+			onSelect : function(dateText, inst) {
+				console.log('Selected date:', dateText);
+				console.log('typeOf:', typeof dateText);
+			}
+
+		}); // mdp 실행
+		
+		//파일첨부가 있는 양식인지
+		if (document.getElementById('reviewImgFileInput')) {
+		    console.log("reviewImgFileInput 요소가 존재합니다.");
+	         document.getElementById("reviewImgFileInput").onchange = function(){
+		  			console.log("파일 업로드 버튼 실행");
+		  			var imgFile = this.value.toLowerCase();
+		  			var fileForm = /(.*?)\.(jpg|jpeg|bmp|png|gif|pdf|doc|docx|hwp|xls|xlsx)$/i;
+		  			var maxSize = 5*1024*1024;
+		  			var fileSize = document.getElementById("reviewImgFileInput").files[0].size;
+
+		  			console.log(imgFile, fileForm,maxSize, fileSize);
+
+		  			var checkImgTest = fileForm.test(imgFile);	//true/false
+		  			var checkImgMath = imgFile.match(fileForm)	//객체 혹은 null
+
+		  			if(checkImgMath){
+		  				console.log("if 객체가 있으면 true이기 때문에");
+		  			}
+
+		  			if(!checkImgTest){ 	//정규화가 맞다면 true, 아니라면 false
+		  				alert("가능한 파일 형식이 아닙니다.");
+		  				this.value = "";
+		  				return;
+		  			}
+		  			if(maxSize < fileSize){
+		  				alert("이미지 파일은 5MB만 이하만 가능합니다.");
+		  				return;
+		  			}
+
+		  		} // 파일 입력
+		} else {
+		    console.log("reviewImgFileInput 요소가 존재하지 않습니다.");
+		}
+		
+		
+		
+		
+		//////////////////////모달
 		$.ajax({	//jsTree 값 받아오기
 		   	type : "POST",
 		   	url : './jsTree.do',
@@ -157,8 +224,12 @@
 	
 	
 	
-	
-	
+	//데이트피커 초기화
+	function resetDay(event) {
+		event.preventDefault();
+		$('#mdp-demo').multiDatesPicker('resetDates');
+		console.log("리셋")
+	}
 	
 	
 	
