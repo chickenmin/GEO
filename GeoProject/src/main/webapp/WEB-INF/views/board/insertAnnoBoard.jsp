@@ -20,10 +20,15 @@
 		
 		</c:choose>
 		<br>
-		<table class="table table-bordered">
+		<table id="BoardTable" class="table table-bordered">
 			<tr>
 				<td scope="row">게시판</td>
-				<td>공지사항</td>
+				<td>
+					<select name="cate">
+						<option id="anno" value="announcements">공지사항</option>
+						<option id="nomal" value="nomalBoard">게시판</option>
+					</select>
+				</td>
 				<td>부서</td>
 				<td>${loginVo.emp_dept}</td>
 			</tr>
@@ -46,11 +51,11 @@
 		<input type="file" name="file">
 		<c:choose>
 		<c:when test="${mode=='insert'}">
-		<button type="submit">게시</button>
+		<button name="submitButton" type="submit">게시</button>
 		</c:when>
 		<c:when test="${mode=='modify'}">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}" />
-		<button type="submit">수정</button>
+		<button name="submitButton" type="submit">수정</button>
 		</c:when>
 		</c:choose>
 		<button onclick="history.back(-1)">취소</button>
@@ -63,5 +68,7 @@
 
 </body>
 <%@ include file="../comm/footer.jsp"%>
+<script type="text/javascript">
 
+</script>
 </html>

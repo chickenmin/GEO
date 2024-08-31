@@ -5,6 +5,7 @@ import java.util.Map;
 
 
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
 
 
@@ -16,7 +17,9 @@ public interface IBoardService {
 	
 	public List<BoardVo> delBoard();
 	
-	public boolean insertBoard(BoardVo Vo);
+	public boolean insertAnnoBoard(BoardVo Vo);
+	
+	public boolean insertNomalBoard(BoardVo Vo);
 	
 	public BoardVo detailBoard(String bo_no);
 	
@@ -30,5 +33,6 @@ public interface IBoardService {
 	//추천
 	public LikeVo likeCount(LikeVo vo);
 	
+	public List<CommVo> commList();
 
 }
