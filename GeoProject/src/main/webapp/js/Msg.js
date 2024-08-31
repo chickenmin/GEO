@@ -12,7 +12,7 @@ function cntUnreadMsg(){
 }
 
 //setInterval(cntUnreadMsg, 5000); // 5초에 한번씩 실행
-setInterval(cntUnreadMsg, 10000); // 10초에 한번씩 실행(배포용)
+//setInterval(cntUnreadMsg, 10000); // 10초에 한번씩 실행(배포용)
 
 window.onload = cntUnreadMsg;
 
