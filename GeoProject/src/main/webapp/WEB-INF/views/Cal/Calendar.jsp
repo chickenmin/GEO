@@ -77,7 +77,78 @@
 		    </div>
 		</div>
 	</div>
+	
+		<!-- 일정 수정 모달 -->
+	<div class="modal fade" id="updateEventModal" tabindex="-1" aria-labelledby="updateEventModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="updateEventModalLabel">일정 수정</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <form id="updateEventForm" action="./updateCal.do" method="post">
+	                    <div class="mb-3">
+	                        <span>일정번호</span>
+	                        <input type="text" class="form-control" id="update_cal_no" readonly>
+	                    </div>
+	                    <div class="mb-3">
+	                        <span>일정명</span>
+	                        <input type="text" class="form-control" id="update_cal_title" required>
+	                    </div>
+	                    <div class="mb-3">
+	                        <span>일정내용</span>
+	                        <input type="text" class="form-control" id="update_cal_content" required>
+	                    </div>
+	                    <div class="mb-3">
+	                        <span>시작일자</span>
+	                        <input type="text" class="form-control" id="update_datetimepicker1" required>
+	                    </div>
+	                    <div class="mb-3">
+	                        <span>종료일자</span>
+	                        <input type="text" class="form-control" id="update_datetimepicker2" required>
+	                    </div>
+	                    <span>일정종류</span>
+	                    <br>
+	                    <select name="update_cal_type" id="update_cal_type">
+	                        <option value="0">전사일정</option>
+	                        <option value="1">부서일정</option>
+	                        <option value="2">개인일정</option>
+	                    </select>
+	                    <br>
+	                    <br>
+	                    <span>공개여부</span>
+	                    <br>
+	                    <select name="update_cal_open_yn" id="update_cal_open_yn">
+	                        <option value="Y">공개</option>
+	                        <option value="N">비공개</option>
+	                    </select>
+	                    <br>
+	                    <br>
+	                    <button type="button" class="btn btn-primary" onclick="updateAjax();">수정</button>
+	                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" style="cursor:pointer;">취소</button>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
 	<div id="calendar"></div>
+  
+  			<fieldset>
+			<div id='calch'>
+				<input type="checkbox" id="company" name="interest" value="company" checked /> 
+				<label for="company">전사일정</label>
+			</div>
+			<div id='calch'>
+				<input type="checkbox" id="department" name="interest" value="department" /> 
+				<label for="department">부서일정</label>
+			</div>
+			<div id='calch'>
+				<input type="checkbox" id="employee" name="interest" value="employee" /> 
+				<label for="employee">사원일정</label>
+			</div>
+		</fieldset>
   
   
   	<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
@@ -94,7 +165,8 @@
 	        <p id="eventEnd"></p>
 	      </div>
 	      <div class="modal-footer">
-	      	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal" onclick="openEventModal()">수정</button>
+	      	<button type="button" class="btn btn-primary" id="updateBtn" onclick="updateCal()">수정창 이동</button>
+	      	<button type="button" class="btn btn-danger" id="deleteBtn" onclick="deleteCal()" style="display: inline-block">일정 삭제</button>
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 	      </div>
 	    </div>

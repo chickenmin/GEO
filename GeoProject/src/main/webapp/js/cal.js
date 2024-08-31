@@ -74,13 +74,14 @@ function selectAjax(){
 					
 					//상세보기 모달창
 					eventClick:function(info){	
-		
+//							console.log(info.event._def.extendedProps.no);
 						  //서버에서 받은 데이터로 모달 내용 업데이트			
 						  document.getElementById('eventTitle').textContent = "일정제목: " + info.event.title;
 						  document.getElementById('cal_content').textContent = "Content: " + info.event.content;
 					      document.getElementById('eventStart').textContent = "시작일자: " + formatDateToKST(info.event.start);
 					      document.getElementById('eventEnd').textContent = info.event.end ? "종료일자: " + formatDateToKST(info.event.end) : "End: N/A";
-					      
+					      document.getElementById('deleteBtn').setAttribute("onclick", "deleteCal("+info.event._def.extendedProps.no+")");
+					      document.getElementById('updateBtn').setAttribute("onclick", "updateCal("+info.event._def.extendedProps.no+")")
 					      // Bootstrap 모달 표시
 					      var eventModal = new bootstrap.Modal(document.getElementById('eventModal'), {});
 					      eventModal.show();
@@ -258,21 +259,86 @@ function dateFormat(date) {  // date( Thu May 12 2022 09:30:00 GMT+0900 (한국 
 // 월, 일, 시간, 분 을 바꿀때 사용
 // ex) 1월 => 2월
 function zeroPlus(time) {
-	console.log("###################", time)
+//	console.log("###################", time)
 	return time < 10 ? "0" + time : time;
 }
 
-function openEventModal(){
-	var cal_title = $("#cal_title").val(cal_title);
-	var cal_content = $("#cal_content").val(cal_content);
-	var cal_start = $("#datetimepicker1").val(datetimepicker1);
-	var cal_stop = $("#datetimepicker2").val(datetimepicker2);
-	var cal_type = $("#cal_type").val(cal_type);
+//function openEventModal(){
+//	var cal_title = $("#cal_title").val(cal_title);
+//	var cal_content = $("#cal_content").val(cal_content);
+//	var cal_start = $("#datetimepicker1").val(datetimepicker1);
+//	var cal_stop = $("#datetimepicker2").val(datetimepicker2);
+//	var cal_type = $("#cal_type").val(cal_type);
+//	
+//
+//
+//
+//}
+
+// 캘린더 삭제
+function deleteCal(no){
+	console.log(no);
+//	location.href="./delflagCal.do?cal_no="+no;
 	
-
-
-
 }
+
+// 수정 모달을 열고 데이터 로드하기 위한 함수
+function updateCal(eventNo){
+	console.log(eventNo);
+	$.ajax({
+        url: './selectOneCal.do?eventNo='+eventNo,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+			console.log(data);
+            $('#update_cal_no').val(data.cal_no);
+//            $('#update_cal_title').val(data.sd_title);  <- 위의 내용처럼 벨류에 내용이 담기게 수정하면 된다
+//            $('#update_cal_content').val(data.sd_content);
+//            $('#update_datetimepicker1').val(info.event.start);
+//            $('#update_datetimepicker2').val(info.event.end);
+//            $('#update_cal_type').val(data.sd_type);
+//            $('#update_cal_open_yn').val(data.sd_open_yn);
+// 위쪽에 클로즈 모달창(해놓고 자연스럽게 이동하도록)
+            $('#updateEventModal').modal('show');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            console.log('Status:', status);
+            console.log('XHR:', xhr);
+        }
+    });
+}
+
+
+
+// 일정 수정 Ajax
+function updateAjax() {
+    $.ajax({
+        url: '/GeoProject/updateCal.do',
+        type: 'POST',
+        data: {
+            cal_no: $('#update_cal_no').val(),
+            cal_title: $('#update_cal_title').val(),
+            cal_content: $('#update_cal_content').val(),
+            cal_type: $('#update_cal_type').val(),
+            cal_open_yn: $('#update_cal_open_yn').val(),
+            start_date: $('#update_datetimepicker1').val(),
+            end_date: $('#update_datetimepicker2').val()
+        },
+        success: function(response) {
+            alert('일정이 수정되었습니다');
+            location.href = 'calendar.do';
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+}
+
+
+
+
+
 
 
 
