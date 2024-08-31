@@ -120,13 +120,16 @@
 	
 	<!-- 안읽은 쪽지 최신순 3개 조회 selectLatestMsg -->
 	<select id="selectLatestMsg" resultType="MsgVo">
-		SELECT MSG_SEND_ID , MSG_CONTENT , MSG_SEND_DATE 
-			FROM (SELECT MSG_SEND_ID , MSG_CONTENT , MSG_SEND_DATE 
-						FROM MSG
-						WHERE MSG_RECV_ID = #{msg_recv_id}
-							AND MSG_RECV_READ_YN = 'N'
-							AND MSG_RECV_DEL_YN = 'N'
-						ORDER BY MSG_SEND_DATE DESC)
+		SELECT MSG.MSG_NO, EMP.EMP_NAME AS MSG_SEND_ID, MSG.MSG_CONTENT,
+				 MSG.MSG_SEND_DATE
+			FROM (SELECT MSG.MSG_NO, MSG_SEND_ID, MSG_CONTENT,
+						MSG_SEND_DATE, MSG_RECV_ID
+				    FROM MSG
+				    WHERE MSG_RECV_ID = #{msg_recv_id}
+				        AND MSG_RECV_READ_YN = 'N'
+				        AND MSG_RECV_DEL_YN = 'N'
+				    ORDER BY MSG_SEND_DATE DESC) MSG
+			JOIN EMP ON MSG.MSG_SEND_ID = EMP.EMP_NO
 			<![CDATA[WHERE ROWNUM <= 3]]>
 	</select>
 	
