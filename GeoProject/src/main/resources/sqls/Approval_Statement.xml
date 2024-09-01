@@ -330,6 +330,11 @@
 	         </foreach>
 	</delete>
 	
+	<update id="cancelDocu">
+		UPDATE AP_DOCU SET APD_TEMP_YN='Y'
+		 	WHERE APD_NO=#{apd_no}
+	</update>
+	
 
 </mapper>
 

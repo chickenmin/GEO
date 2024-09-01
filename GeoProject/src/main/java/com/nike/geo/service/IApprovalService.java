@@ -79,7 +79,10 @@ public interface IApprovalService {
 	//함들 리스트 조회
 	 public List<Ap_DocuVo> selectLists(Map<String, Object> map);
 	 
-		//임시저장 삭제
-		public int delTemp(List<String> apd_no);
+	//임시저장 삭제
+	public int delTemp(List<String> apd_no);
+		
+		//철회하기
+		public int cancelDocu(String apd_no);
 
 }

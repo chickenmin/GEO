@@ -251,6 +251,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.delTemp(apd_no);
 	}
 	
+	@Override
+	public int cancelDocu(String apd_no) {
+		return dao.cancelDocu(apd_no);
+	}
+	
 
 	//@Transactional은 annotation 사용
 	

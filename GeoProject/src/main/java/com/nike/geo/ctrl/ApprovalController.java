@@ -133,7 +133,16 @@ public class ApprovalController {
 		List<Ap_LineVo> apprLists = apprService.selectLine(apd_no);	//결재자 조회
 		List<FileVo> file = apprService.selectFile(apd_no);	// 이미 승인한 서명 이미지
 		String apl_msg = apprService.sel_Msg(Integer.parseInt(apd_no));	//반려메시지
-		int order = apprService.checkOrder(map);
+		
+		// 결재함이 아닐 경우, 결재라인 정보 없어서 nullPointException 발생
+		if (variety.equals("appr")) {
+			int order = apprService.checkOrder(map);
+			if (order == 1) {
+				model.addAttribute("order", 1);
+			}else {
+				model.addAttribute("order", 0);
+			}
+		}
 		List<FileVo> mySign = apprService.selMySign(emp_no);	//내 전자서명
 
 		//파일 다운~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -149,11 +158,7 @@ public class ApprovalController {
 			e.printStackTrace();
 		} 
 		
-		if (order == 1) {
-			model.addAttribute("order", 1);
-		}else {
-			model.addAttribute("order", 0);
-		}
+		
 
 		model.addAttribute("vo", vo);
 		model.addAttribute("apprLists", apprLists);
@@ -470,6 +475,12 @@ public class ApprovalController {
 			model.addAttribute("apprLists", apprLists);
 			log.info("vo 값 :{}",vo);
 			return "appr/formTemp";
+		}
+		
+		@GetMapping("/cancel.do")
+		public String cancel(String apd_no) {
+			apprService.cancelDocu(apd_no);
+			return "redirect:/apprList.do?variety=temp";
 		}
 		
 	

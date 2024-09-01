@@ -219,7 +219,7 @@
 				</c:choose>
 			</c:if>
 			<c:if test="${variety eq 'submit' && vo.apd_status eq 'W'}">
-				<button class="btn btn-outline-danger category" >삭제 </button>
+				<button type="button" class="btn btn-outline-danger category" onclick="location.href=`./cancel.do?apd_no=${vo.apd_no}`">철회</button>
 			</c:if>
 		</div>
 		

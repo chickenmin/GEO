@@ -191,6 +191,10 @@ public class ApprovalDaoImpl implements IApprovalDao{
 		return template.delete(NS+"delTemp", apd_no);
 	}
 	
+	@Override
+	public int cancelDocu(String apd_no) {
+		return template.update(NS+"cancelDocu", apd_no);
+	}
 	
 	
 	

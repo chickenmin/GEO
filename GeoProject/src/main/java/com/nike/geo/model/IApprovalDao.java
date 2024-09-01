@@ -103,6 +103,9 @@ public interface IApprovalDao {
 	//임시저장 삭제
 	public int delTemp(List<String> apd_no);
 	
+	//철회하기
+	public int cancelDocu(String apd_no);
+	
 	
 	
 	
