@@ -1,13 +1,12 @@
 package com.nike.geo.service;
 
-import java.security.SecureRandom;
 import java.util.List;
+import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -30,7 +29,7 @@ public class CommServiceImpl implements ICommService {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	private final SecureRandom random = new SecureRandom();
+	private Random random = new Random();
 	
 	@Override
 	public List<CommonVo> commSelect(String division) {
@@ -109,7 +108,5 @@ public class CommServiceImpl implements ICommService {
 		log.info("COMMON service - 받아온 값 : {}", status);
 		return dao.selectMainBoard(status);
 	}
-	
-	
 	
 }
