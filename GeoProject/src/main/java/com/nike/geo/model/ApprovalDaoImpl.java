@@ -102,13 +102,13 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	}
 	
 	@Override
-	public int selMinOrder(Map<String, Object> map) {
+	public Integer selMinOrder(Map<String, Object> map) {
 		return template.selectOne(NS+"selMinOrder", map);
 	}
 	
 	@Override
 	public int selMyOrder(Map<String, Object> map) {
-		log.info("map: {}",map);
+		log.info("selMyOrder 입성");
 		return template.selectOne(NS+"selMyOrder", map);
 	}
 	
@@ -149,12 +149,47 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	}
 	
 	
+	@Override
+	public int delSign(Map<String, Object> map) {
+		return template.update(NS+"delSign", map);
+	}
 	
 	
+	@Override
+	public int updateApprLine(Map<String, Object> map) {
+		return template.update(NS+"updateApprLine", map);
+	}
 	
 	
+	@Override
+	public int updateDocu(Map<String, Object> map) {
+		return template.update(NS+"updateDocu", map);
+	}
 	
+	@Override
+	public int selComplete(Map<String, Object> map) {
+		return template.selectOne(NS+"selComplete", map);
+	}
 	
+	@Override
+	public int selStep(Map<String, Object> map) {
+		return template.selectOne(NS+"selStep", map);
+	}
+	
+	@Override
+	public List<Ap_DocuVo> selectSubmit_Docu(Map<String, Object> map) {
+		return template.selectList(NS+"selectSubmit_Docu", map);
+	}
+	
+	@Override
+	public List<Ap_DocuVo> selRef_Docu(String emp_no) {
+		return template.selectList(NS+"selRef_Docu", emp_no);
+	}
+	
+	@Override
+	public int delTemp(List<String> apd_no) {
+		return template.delete(NS+"delTemp", apd_no);
+	}
 	
 	
 	

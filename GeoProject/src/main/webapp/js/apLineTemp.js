@@ -3,47 +3,25 @@
  */
  $(document).ready(function(){ // 브라우저 로드시
 		
-				// 상신,임시저장
-		var frm = document.submitForm;
-		var submitBtns = document.querySelectorAll(".frmbtn");
-
-		for (let i = 0; i < submitBtns.length; i++) 	{
-			submitBtns[i].onclick = function(event) {
-				event.preventDefault(); 
-				console.log(this.textContent);
-				var temp = this.textContent;
-				var variety;
-				if (temp == "임시저장") {
-					variety = 'temp';
-				}else{
-					variety='submit';
-				}
-				var result = check();
-				if (!result) {
-					return;					
-				}
-				document.getElementById("dataType").value = this.textContent;
-				document.getElementById("variety").value = variety;
-				
-				
-				frm.submit(); // 폼 제출
-								
-			}
-		}
-
-		
+		//반차여부 기본 설정
+		var half = $('#beforeHalf').val();
+		console.log(half);
+		 $('#half').val(half);
+		 
 		
 		//데이트피커 설정
+		//임시저장했던 날짜로 지정
+		var apd_days = document.getElementById("beforeDates").value;
+		var dateArray = apd_days.split(",").map(function(date) {
+	            return date.trim(); // 날짜 앞뒤 공백 제거
+	        });
+		
+		
 		$('#mdp-demo').multiDatesPicker({
 			dateFormat : "yy-mm-dd",
-			beforeShowDay : $.datepicker.noWeekends,
-			// 날짜가 선택될 때 호출되는 함수
-			onSelect : function(dateText, inst) {
-				console.log('Selected date:', dateText);
-				console.log('typeOf:', typeof dateText);
-			}
+			addDates: dateArray
 
-		}); // mdp 실행
+		}); // mdp 실행 // mdp 실행
 		
 		//파일첨부가 있는 양식인지
 		if (document.getElementById('reviewImgFileInput')) {
@@ -198,11 +176,6 @@
 		document.getElementById(id+"Cho").value = "";
 	}
 	
-//	function temp(){
-//		 const form = document.getElementById('approval');
-//            form.action = './tempSubmit.do'; // 다른 컨트롤러 URL로 변경
-//            form.submit(); // 폼 제출
-//	}
 	
 	
 	

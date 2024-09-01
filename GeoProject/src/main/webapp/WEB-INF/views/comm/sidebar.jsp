@@ -34,31 +34,31 @@
           </li>
           
           <li>
-            <a href="./apprList.do">
+            <a href="./apprList.do?variety=appr">
               <i class="bi bi-circle"></i><span>결재 문서함</span>
             </a>
           </li>
           
           <li>
-            <a href="#">
+            <a href="./apprList.do?variety=submit">
               <i class="bi bi-circle"></i><span>상신 문서함</span>
             </a>
           </li>
           
           <li>
-            <a href="#">
+            <a href="./apprList.do?variety=ref">
               <i class="bi bi-circle"></i><span>참조 문서함</span>
             </a>
           </li>
           
           <li>
-            <a href="#">
+            <a href="./apprList.do?variety=temp">
               <i class="bi bi-circle"></i><span>임시 문서함</span>
             </a>
           </li>
           
           <li>
-            <a href="#">
+            <a href="./signHome.do">
               <i class="bi bi-circle"></i><span>전자 서명 관리</span>
             </a>
           </li>

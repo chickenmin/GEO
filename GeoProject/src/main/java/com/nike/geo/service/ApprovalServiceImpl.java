@@ -122,16 +122,21 @@ public class ApprovalServiceImpl implements IApprovalService {
 	@Transactional(readOnly = false)
 	@Override
 	public int checkOrder(Map<String, Object> map) {
-		int n = dao.selMinOrder(map);
+		Integer n = dao.selMinOrder(map);
 		int m = dao.selMyOrder(map);
 		log.info("min 순서 : {}",n);
 		log.info("내 순서 : {}",m);
-		if (n == m) {
-			log.info("본인의 결재순서인 서류");
-			return 1;
-		}else {
-			log.info("아직 결재 순서 안옴");
+		if (n == null) {
+			log.info("남은 결재 없음");
 			return 0;
+		}else {
+			if (n == m) {
+				log.info("본인의 결재순서인 서류");
+				return 1;
+			}else {
+				log.info("결재순서 아님");
+				return 0;
+			}
 		}
 	}
 	
@@ -180,6 +185,71 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return (n>0 || m>0 || o>0)?1:0;
 	}
 	
+	@Override
+	public int delSign(Map<String, Object> map) {
+		return dao.delSign(map);
+	}
+	
+	
+	//결재하기
+	@Transactional(readOnly = false)
+	@Override
+	public int approve(Map<String, Object> map) {
+		int n = dao.selectAPL_NO(map);
+		if (n==0) {
+			log.info("결재 번호 찾기 실패");
+		}else {
+			log.info("결재번호 조회 성공!");
+		}
+		map.put("apl_no", n);
+		
+		int total = dao.selStep(map);
+		int com = dao.selComplete(map);
+		
+		String apd_status = (total>com)?"P":"C";
+		
+		map.put("apd_status", apd_status);
+		
+		int m = dao.updateApprLine(map);
+		if (m==0) {
+			log.info("결재라인 수정 실패");
+		}else {
+			log.info("결재라인 수정 성공!");
+		}
+		
+		int o = dao.updateDocu(map);
+		if (o==0) {
+			log.info("서류 수정 실패");
+		}else {
+			log.info("서류 수정 성공!");
+		}
+		return (n>0 || m>0 || o>0)?1:0;
+	}
+	
+	@Override
+	public List<Ap_DocuVo> selectLists(Map<String, Object> map) {
+		String v = (String)map.get("variety");
+		String apd_temp_yn = (v.equals("submit"))?"N":"Y";
+		String emp_no = (String)map.get("emp_no");
+		map.put("apd_temp_yn", apd_temp_yn);
+		List<Ap_DocuVo> lists = null;
+		if (v.equals("appr")) {
+			lists = dao.selectApproval(emp_no);
+		}else if (v.equals("submit")){
+			lists = dao.selectSubmit_Docu(map);
+		}else if(v.equals("ref")) {
+			lists = dao.selRef_Docu(emp_no);
+		}else {
+			lists = dao.selectSubmit_Docu(map);
+		}
+			
+		return lists;
+	}
+	
+	@Override
+	public int delTemp(List<String> apd_no) {
+		return dao.delTemp(apd_no);
+	}
 	
 
 	//@Transactional은 annotation 사용
