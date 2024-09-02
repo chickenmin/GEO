@@ -86,16 +86,9 @@
 
 		<div
 			class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-			<ul>
-<%-- 				<li>${vo.emp_img}</li> --%>
-				<li>${saveFileName}</li>
-<%-- 				<li>${saveFileName}</li> --%>
-<%-- 				<li>${path}</li> --%>
-			</ul>
-			<h2>${saveFileName}</h2>
-			<img src="./storage/${saveFileName}" alt="Profile"
+			<img src="<c:url value='/storage/${vo.emp_img}'/>" alt="Profile"
 				class="rounded-circle">
-				<input type="text" name="saveFileName" value="${saveFileName}" readonly="readonly">
+<%-- 				<input type="text" name="saveFileName" value="${saveFileName}" readonly="readonly"> --%>
 				<input type="hidden" name="emp_no">
 			<h2>${vo.emp_name}</h2>
 			<h3>

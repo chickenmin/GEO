@@ -37,18 +37,7 @@ public class EmpController {
 	@PostMapping(value = "/insertEmp.do")
 	public String insertEmp(EmpVo vo, Model model, HttpServletRequest request, List<MultipartFile> file) {
 		log.info("사원 추가 :{}", vo);
-		int n = service.insertEmp(vo);
-		
-		
-		if (n == 1) {
-			log.info("사원 추가 성공");
-		} else {
-			log.info("사원 추가 실패");
-		}
-		
-		
-		
-		
+
 		String saveFileName= null;
 		for (MultipartFile f : file) {
 			log.info("파일의 이름 : {}", f.getOriginalFilename());
@@ -97,9 +86,21 @@ public class EmpController {
 				}
 			}
 
+			vo.setEmp_img(saveFileName);
 		
 		}
 		
+		int n = service.insertEmp(vo);
+		
+		if (n == 1) {
+			log.info("사원 추가 성공");
+		} else {
+			log.info("사원 추가 실패");
+		}
+		
+		model.addAttribute("saveFileName", saveFileName);
+//		String fileUrl = "/storage/" + saveFileName;
+//	    model.addAttribute("fileUrl", fileUrl);
 		
 		return "redirect:selectOneEmp.do?emp_no=" + vo.getEmp_no();
 		
