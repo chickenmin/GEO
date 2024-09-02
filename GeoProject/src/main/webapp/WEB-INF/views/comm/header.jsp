@@ -251,7 +251,7 @@
           </li>
 
           <li>
-            <a class="dropdown-item d-flex align-items-center" href="./myPage.do">
+            <a class="dropdown-item d-flex align-items-center" href="./myPage.do?tab=overview">
               <i class="bi bi-person"></i>
               <span>내 정보 보기</span>
             </a>
@@ -261,12 +261,22 @@
           </li>
 
           <li>
-            <a class="dropdown-item d-flex align-items-center" href="users-profile.jsp">
+            <a class="dropdown-item d-flex align-items-center" href="./myPage.do?tab=edit">
               <i class="bi bi-gear"></i>
               <span>내 정보 수정</span>
             </a>
           </li>
-    <li>
+    	  <li>
+            <hr class="dropdown-divider">
+          </li>
+          
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="./myPage.do?tab=password">
+              <i class="bi bi-key"></i>
+              <span>비밀번호 변경</span>
+            </a>
+          </li>
+    	  <li>
             <hr class="dropdown-divider">
           </li>
 

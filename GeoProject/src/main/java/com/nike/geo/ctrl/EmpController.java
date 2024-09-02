@@ -166,7 +166,8 @@ public class EmpController {
 	}
 
 	@GetMapping(value = "/myPage.do")
-	public String myPage(HttpSession session, Model model) {
+	public String myPage(HttpSession session, Model model,
+						@RequestParam(value = "tab", required = false) String tab) {
 		log.info("마이 페이지");
 
 		EmpVo loginVo = (EmpVo) session.getAttribute("loginVo");
@@ -175,6 +176,7 @@ public class EmpController {
 			EmpVo vo = service.myPage(emp_no);
 
 			model.addAttribute("vo", vo);
+			model.addAttribute("tab", tab);
 		} else {
 			return "redirect:/login.do";
 		}
