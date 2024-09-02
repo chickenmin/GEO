@@ -39,7 +39,7 @@ public class CalDaoImpl implements ICalDao {
 	
 	@Override
 	public int updateCal(CalVo vo) {
-		return session.update(NS+"delflagCal", vo);
+		return session.update(NS+"updateCal", vo);
 	}
 
 	@Override
