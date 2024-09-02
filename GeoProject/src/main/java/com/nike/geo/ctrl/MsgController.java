@@ -213,12 +213,12 @@ public class MsgController {
 			fileVo.setFile_sname(fileName);
 			log.info("MESSAGE controller - 받아온 파일의 DB 저장명 : {}", fileName);
 			
-			// 파일 사이즈
+//			// 파일 사이즈
 			long fileSize = file.getSize();
 			fileVo.setFile_size(fileSize);
 			log.info("MESSAGE controller - 받아온 파일의 크기 : {}", fileSize);
 			
-			// 파일 저장될 경로
+//			// 파일 저장될 경로
 			String path = "C:/GeoProject/storage/msg/";
 			File dir = new File(path);
 			if (!dir.exists()) {
