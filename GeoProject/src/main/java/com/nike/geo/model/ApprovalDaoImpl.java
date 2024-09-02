@@ -197,6 +197,27 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	}
 	
 	
+	@Override
+	public int insertVac(Map<String, Object> map) {
+		return template.insert(NS+"insertVac", map);
+	}
+	
+	@Override
+	public Integer checkLast(Map<String, Object> map) {
+		return template.selectOne(NS+"checkLast", map);
+	}
+	
+	@Override
+	public int insertHistory(Map<String, Object> map) {
+		return template.insert(NS+"insertHistory", map);
+	}
+	
+	@Override
+	public int updateVaCheck(Map<String, Object> map) {
+		return  template.insert(NS+"updateVaCheck", map);
+	}
+	
+	
 	
 	
 	

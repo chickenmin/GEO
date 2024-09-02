@@ -9,6 +9,7 @@ import java.net.http.HttpRequest;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Year;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -149,7 +150,7 @@ public class ApprovalController {
 		String path="";	//전자서명
 		try {
 			//상대경로
-			path = WebUtils.getRealPath(request.getSession().getServletContext(),"/signature/");	//전자서명 경로
+			path = WebUtils.getRealPath(request.getSession().getServletContext(),"/appr/");	//전자서명 경로
 			log.info("path {}",path);
 			if (file.size()>0) {
 				model.addAttribute("file", file);
@@ -196,7 +197,8 @@ public class ApprovalController {
 	//다운로드
 	@PostMapping(value = "/apprFile.do")
 	public void fileDownload(String file_no,
-							HttpServletResponse response) throws IOException {
+							HttpServletResponse response
+							,HttpServletRequest request) throws IOException {
 		log.info("결재 첨부파일 다운로드");
 		log.info(file_no);
 		FileVo file = apprService.findFile(file_no);
@@ -207,7 +209,9 @@ public class ApprovalController {
 		
 		
 		// C 로컬 폴더
-		String dir = "C:/GeoProject/storage/appr/";
+		String dir ;
+				/*"C:/GeoProject/storage/appr/"; */
+		dir = WebUtils.getRealPath(request.getSession().getServletContext(),"/appr/");	//전자서명 경로
 		
 		//프로젝트 안의 폴더
 //		String dir = "C:/Users/kkjm1/git/GEO/GeoProject/src/main/webapp/upload/";		//노트북 경로
@@ -237,18 +241,15 @@ public class ApprovalController {
 		public String submitForm(@RequestParam Map<String, Object> map
 								,@RequestParam(required = false, value = "ccLine")String ccLine,
 								@RequestParam(required = false) List<MultipartFile> file,HttpSession session,
-								@RequestParam(required = false) String temp) throws IOException {
+								@RequestParam(required = false) String temp, HttpServletRequest request) throws IOException {
 				System.out.println("--------------"+ map);
 				String variety = (String)map.get("variety");
-					
 				String appr_Origin = (String)map.get("apprLine");	//결재라인
 				String[] appLine = appr_Origin.split(",");
 				String[] cc = ccLine.split(",");
 				map.put("apd_step", appLine.length);
 				int submit = apprService.submit2(map);
-				
-				
-				
+
 				//만들어진 문서 번호 가져오기
 				int apd_no = apprService.selctAPD();
 				//결재수
@@ -303,13 +304,8 @@ public class ApprovalController {
 							log.info("전자결재 - 받아온 파일의 크기 : {}", fileSize);
 							
 							//C 로컬에 저장
-							String path = "C:/GeoProject/storage/appr/";
-//							File dir = new File(path);
-//							if (!dir.exists()) {
-//								dir.mkdirs();
-//							}try {
-//							f.transferTo(new File(path+fileName)); 
-							
+							String path = WebUtils.getRealPath(request.getSession().getServletContext(),"/appr/");
+									//  "C:/GeoProject/storage/appr/";
 						   
 //							// 현재 클래스의 클래스 로더를 사용하여 프로젝트 루트 경로 얻기
 							
@@ -339,12 +335,12 @@ public class ApprovalController {
 					}	// file 의 foreach 끝
 				}
 				
+				//임시저장이었던 문서를 상신한 경우, 문서 새로 INSERT 하고 , 임시저장이었던 문서는 삭제
 				if(temp != null) {
 					String no = (String)map.get("apd_no");
 					List<String> list = Collections.singletonList(no);
 					apprService.delTemp(list);
 				}
-				
 		
 			return "redirect:/apprList.do?variety="+variety;
 		}
@@ -439,16 +435,42 @@ public class ApprovalController {
 				return  "redirect:/signHome.do";
 			}
 		
-		//서명완
+		//서명하기
 		@PostMapping("/approve.do")
 		public String approve(@RequestParam Map<String, Object>map,HttpSession session,Model model) {
 			log.info("결재 승인~");
 			log.info("Map : {}",map);
 			String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
 			map.put("emp_no", emp_no);
-			apprService.approve(map);
+			
+			
+			
+			Integer last = apprService.checkLast(map);
+			if (last != null && last == 1) {		//내가 최종 승인자일때
+				if (map.get("apd_form").toString().equals("AP002")) {		//연차신청서인 경우
+					log.info("연차신청서 등록");
+					String [] date = map.get("apd_days").toString().split(",");	//일정 넘기기
+					for (String d : date) {		//날짜별로 일정, 연차히스토리 추가
+						map.put("cal_start", d);
+						map.put("cal_stop", d);
+						map.put("days", d);
+						apprService.insertVacHistory(map);
+						map.remove("cal_start");
+						map.remove("cal_stop");
+						map.remove("days");
+					}	//foreach
+					int year = Year.now().getValue();	//올해년도
+					map.put("year", year);
+					double minus = (map.get("apd_half_yn").toString().equals("N")? 1 : 0.5);	//
+					map.put("minus", minus*date.length);	//반차,연차 * 일수
+					apprService.updateVaCheck(map);
+					
+				}	//연차
+			} //최종승인
+			
+			apprService.approve(map); //승인
 			model.addAttribute("apd_no",(String)map.get("apd_no"));
-			return "redirect:/detailAppr.do";
+			return "redirect:/detailAppr.do?variety=appr";
 		}
 	
 		@PostMapping("/deleteTemp.do")

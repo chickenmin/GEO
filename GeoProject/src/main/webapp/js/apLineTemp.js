@@ -18,7 +18,7 @@
 		
 		
 		$('#mdp-demo').multiDatesPicker({
-			dateFormat : "yy-mm-dd",
+			dateFormat : "yy/mm/dd",
 			addDates: dateArray
 
 		}); // mdp 실행 // mdp 실행

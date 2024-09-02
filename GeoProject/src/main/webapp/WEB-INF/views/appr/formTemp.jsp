@@ -206,7 +206,7 @@
 					<input type="hidden" name="variety" id="variety">
 					<button class="btn btn-primary frmbtn"  style="height: auto; margin: 5px 10px 0 0;" >상신하기</button>
 				</div>
-				<jsp:include page="./apprLineTemp.jsp"></jsp:include>
+				<jsp:include page="./apprLine.jsp"></jsp:include>
 			</form>
 		</div>
   	</main><!-- End #main -->
