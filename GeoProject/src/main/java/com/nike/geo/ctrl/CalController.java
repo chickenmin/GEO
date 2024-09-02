@@ -116,6 +116,19 @@ public class CalController {
 
 	}
 	
-	
+    @GetMapping("/calendar")
+    @ResponseBody
+    public String getCalendar(@RequestParam("type") int type) {
+        switch (type) {
+            case 0:
+                return "전사일정: [일정1, 일정2, 일정3]";
+            case 1:
+                return "부서일정: [부서일정1, 부서일정2]";
+            case 2:
+                return "사원일정: [사원일정1, 사원일정2]";
+            default:
+                return "알 수 없는 일정 유형";
+        }
+    }
 	
 }

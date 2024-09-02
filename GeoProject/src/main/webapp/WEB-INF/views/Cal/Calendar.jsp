@@ -21,7 +21,9 @@
 <body>
 	<%@ include file="../comm/sidebar.jsp" %>
  	<main id="main" class="main">
- 		<div class="container">
+ 		
+
+ 		
  		<!-- 모달 -->
 		<div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
 		    <div class="modal-dialog">
@@ -134,21 +136,30 @@
 	</div>
 	
 	<div id="calendar"></div>
-  
-  			<fieldset>
-			<div id='calch'>
-				<input type="checkbox" id="company" name="interest" value="company" checked /> 
-				<label for="company">전사일정</label>
-			</div>
-			<div id='calch'>
-				<input type="checkbox" id="department" name="interest" value="department" /> 
-				<label for="department">부서일정</label>
-			</div>
-			<div id='calch'>
-				<input type="checkbox" id="employee" name="interest" value="employee" /> 
-				<label for="employee">사원일정</label>
-			</div>
-		</fieldset>
+  	
+  	 <div class="container">		
+ 		<div class="checkboxes">
+            <label><input type="checkbox" id="allCheckBox"> 전사일정</label>
+            <label><input type="checkbox" id="departmentCheckBox"> 부서일정</label>
+            <label><input type="checkbox" id="employeeCheckBox"> 사원일정</label>
+        </div>
+        
+        <div id="calendarDisplay"></div>
+     </div>
+<!--   			<fieldset> -->
+<!-- 			<div id='calch'> -->
+<!-- 				<input type="checkbox" id="company" name="interest" value="company" checked />  -->
+<!-- 				<label for="company">전사일정</label> -->
+<!-- 			</div> -->
+<!-- 			<div id='calch'> -->
+<!-- 				<input type="checkbox" id="department" name="interest" value="department" />  -->
+<!-- 				<label for="department">부서일정</label> -->
+<!-- 			</div> -->
+<!-- 			<div id='calch'> -->
+<!-- 				<input type="checkbox" id="employee" name="interest" value="employee" />  -->
+<!-- 				<label for="employee">사원일정</label> -->
+<!-- 			</div> -->
+<!-- 		</fieldset> -->
   
   
   	<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
