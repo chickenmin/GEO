@@ -114,7 +114,7 @@
       </li><!-- End HR Nav -->
       
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#orgChart-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#orgChart-nav" data-bs-toggle="collapse" href="./org.do">
           <i class="bi bi-diagram-3"></i><span>조직도</span>
         </a>
       </li><!-- End orgChart Nav -->

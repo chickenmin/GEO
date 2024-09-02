@@ -108,6 +108,7 @@
 	$(document).ready(function() {
 		$("#sendMsgTable").DataTable({
 			"info": false,
+			"order": [[4, "desc"]],
 			"columnDefs":[
 				{"orderable": false, "targets":0}
 			]

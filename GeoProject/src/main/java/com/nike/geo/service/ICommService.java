@@ -42,7 +42,7 @@ public interface ICommService {
 	public void sendMail(String to, String subject, String content) throws MessagingException;
 
 	/**
-	 *  메인화면 사원정보 조회 selectMainEmp
+	 * 메인화면 사원정보 조회 selectMainEmp
 	 * @param no
 	 * @return EmpVo
 	 */

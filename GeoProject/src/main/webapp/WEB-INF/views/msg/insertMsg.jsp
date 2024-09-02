@@ -42,7 +42,7 @@
 	                <div class="row mb-4">
 	                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
 	                  <div class="col-sm-10">
-	                    <input type="text" id="msg_recv_id" name="msg_recv_id" class="form-control">
+	                    <input type="text" id="msg_recv_id" name="msg_recv_id2" class="form-control">
 	                    <button type="button" class="btn btn-primary" onclick="selectRecv()">선택</button>
 	                  </div>
 	                </div>
