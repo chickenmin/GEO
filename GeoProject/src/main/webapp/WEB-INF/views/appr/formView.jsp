@@ -9,12 +9,12 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet" href="./css/appr_formView.css">
+<script type="text/javascript" src="./js/approve.js"></script>
 </head>
 
 <body>
 	<%@ include file="../comm/sidebar.jsp"%>
 	<main id="main" class="main">
-		<input type="hidden" name="apd_no" value="${vo.apd_no}"> 
 
 		<div style="width: 800px;">
 			<!-- 시작 -->
@@ -29,7 +29,7 @@
 									<span style="text-align: center;">-</span>
 								</c:when>
 								<c:otherwise>
-									<img alt="서명이미지" src="${path}${signer.file_oname}">
+									<img alt="서명이미지" src="./signature/${signer.file_oname}" style="width: 100px; height: 100px;">
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -156,7 +156,7 @@
 					</tr>
 					<tr>
 						<td colspan="3"
-							style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
+							style="padding: 5px; border: 1px solid black; height: 300px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
 							${vo.apd_con }</td>
 					</tr>
 
@@ -187,42 +187,41 @@
 
 				</tbody>
 			</table>
-			<img alt="무민" src="${moomin }">
 			
 			<c:if test="${apl_msg != null}">
 				<br>
 				<div class="container">
 					<div>반려메시지</div>
-					<textarea cols="50" readonly="readonly">${apl_msg }</textarea>
+					<textarea class="form-control" style="width: 800px;">${apl_msg }</textarea>
 				</div>
 			</c:if>
 
 			<!--반려  -->
-			<jsp:include page="./return.jsp"></jsp:include>
+			<jsp:include page="./returnModal.jsp"></jsp:include>
 			<!--승인하기  -->
 			<jsp:include page="./signModal.jsp"></jsp:include>
-
-			<c:choose>
-				<c:when test="${order == 1}">
-					<!-- 문서 하단 버튼 -->
-					<div style="display: flex; justify-content: flex-end;">
-						<button type="button" class="btn btn-outline-primary "
-							data-bs-toggle="modal"
-							style="height: auto; margin: 5px 10px 0 0;"
-							data-bs-target="#basicModal">반려하기</button>
-
-						<button class="btn btn-primary frmbtn"
-							style="height: auto; margin: 5px 10px 0 0;"
-							data-bs-target="#sign" data-bs-toggle="modal">결재하기</button>
-					</div>
-				</c:when>
-			</c:choose>
-
+	
+			<c:if test="${variety eq 'appr'}">
+				<c:choose>
+					<c:when test="${order == 1}">
+						<!-- 문서 하단 버튼 -->
+						<div style="display: flex; justify-content: flex-end;">
+							<button type="button" class="btn btn-outline-primary "
+								data-bs-toggle="modal"
+								style="height: auto; margin: 5px 10px 0 0;"
+								data-bs-target="#basicModal">반려하기</button>
+	
+							<button class="btn btn-primary frmbtn"
+								style="height: auto; margin: 5px 10px 0 0;"
+								data-bs-target="#sign" data-bs-toggle="modal">결재하기</button>
+						</div>
+					</c:when>
+				</c:choose>
+			</c:if>
+			<c:if test="${variety eq 'submit' && vo.apd_status eq 'W'}">
+				<button type="button" class="btn btn-outline-danger category" onclick="location.href=`./cancel.do?apd_no=${vo.apd_no}`">철회</button>
+			</c:if>
 		</div>
-		
-<!-- 		<div> -->
-<!-- 			<img alt="" src="./signature/무민2.png"> -->
-<!-- 		</div> -->
 		
 		<!-- 끝 -->
 	</main>

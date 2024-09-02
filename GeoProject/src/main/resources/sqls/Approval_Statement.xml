@@ -34,6 +34,7 @@
 		 WHERE EMP_NO = #{emp_no}
 		 AND APD_FORM=#{apd_form}
 	</delete>
+
 	
 	
 	
@@ -96,7 +97,7 @@
 		INSERT INTO AP_RF
 				(APR_NO, APD_NO, APR_REF, 
 				REG_ID, REG_DATE, MOD_ID, MOD_DATE)
-			VALUES(APREF_SEQ.NEXTVAL, #{apd_no}, #{apr_ref}, 
+			VALUES(APREF_SEQ.NEXTVAL, #{apd_no}, #{emp_no}, 
 					#{emp_no}, SYSDATE, #{emp_no}, SYSDATE)
 	</insert>
 	
@@ -109,7 +110,7 @@
 								FILE_RANK, FILE_DEL_YN, REG_ID,
 								REG_DATE, MOD_ID, MOD_DATE)
 			VALUES(FILE_SEQ.NEXTVAL, #{origin_no}, #{file_oname},
-					#{file_sname}, #{file_size}, '1',
+					#{file_sname}, #{file_size}, #{file_type},
 					'0', 'N', #{reg_id},
 					SYSDATE, #{reg_id}, SYSDATE)
 	</insert>
@@ -130,7 +131,36 @@
 					 FROM AP_LINE al 
 					 WHERE EMP_NO = #{emp_no})
  		AND APD_TEMP_YN = 'N'
+ 		ORDER BY REG_DATE DESC
 	</select>
+	
+	<!-- 상신함 / 임시저장 -->
+	<select id="selectSubmit_Docu" resultType="Ap_DocuVo">
+		SELECT APD_NO,EMP_NO , SUBSTR(APD_CON, 1, 10) AS APD_CON,
+				APD_STEP ,APD_STATUS ,APD_DAYS ,
+				APD_HALF_YN ,APD_FORM ,APD_CLEAR_DATE ,APD_TEMP_YN ,
+				REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
+ 		FROM AP_DOCU ad 
+ 		WHERE EMP_NO = #{emp_no}
+ 		AND  APD_TEMP_YN = #{apd_temp_yn}
+ 		ORDER BY REG_DATE DESC
+	</select>
+	
+	<!-- 참조함 -->
+	<select id="selRef_Docu" resultType="Ap_DocuVo">
+		SELECT APD_NO,EMP_NO , SUBSTR(APD_CON, 1, 10) AS APD_CON,
+				APD_STEP ,APD_STATUS ,APD_DAYS ,
+				APD_HALF_YN ,APD_FORM ,APD_CLEAR_DATE ,APD_TEMP_YN ,
+				REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
+		 FROM AP_DOCU ad 
+		 WHERE APD_TEMP_YN= 'N'
+		 AND ad.APD_NO IN (SELECT APD_NO 
+		 FROM AP_RF ar 
+		 WHERE APR_REF = #{emp_no})
+		 ORDER BY APD_NO 
+	</select>
+	
+	
 	
 	<!-- 상태별로 가져오기 -->
 	<select id="selectStatus" resultType="Ap_DocuVo">
@@ -149,6 +179,36 @@
 	
 	
 	
+	
+	
+	
+	<!-- //////////////////결재하기 -->
+	<!-- 결재라인 수정 -->
+	<update id="updateApprLine">
+		UPDATE AP_LINE SET FILE_ONAME=#{file_oname},APL_STATUS=1,MOD_DATE=SYSDATE
+			WHERE APL_NO=#{apl_no}
+	</update>
+	
+	<update id="updateDocu">
+		UPDATE AP_DOCU SET APD_STATUS=#{apd_status}, APD_CLEAR_DATE=SYSDATE,
+							MOD_DATE=SYSDATE,MOD_ID=#{emp_no}
+			WHERE APD_NO=#{apd_no}
+	</update>
+	
+	<!-- 결재라인 수 조회 -->
+	<select id="selStep" resultType="java.lang.Integer">
+		SELECT APD_STEP 
+		 FROM AP_DOCU ad
+		 WHERE APD_NO = #{apd_no}
+	</select>
+	
+	<!-- 결재완료 한 사람 수 -->
+	<select id="selComplete" resultType="java.lang.Integer">
+		SELECT COUNT(APL_STATUS)
+		 FROM AP_LINE al 
+		 WHERE al.APL_STATUS =1
+		 AND APD_NO =#{apd_no}
+	</select>
 	
 	<!-- //////////////////////////////////////////////////////////////// -->
 	<!-- 상세조회 -->
@@ -239,15 +299,43 @@
 			WHERE APL_NO=#{apl_no}
 	</update>
 	
+	<!-- 결재라인 상태 수정 -->
+	<update id="updateLineStatus">
+		UPDATE AP_LINE 
+			SET APL_DATE=SYSDATE, APL_STATUS=#{apl_status}, MOD_ID=#{emp_no}, MOD_DATE=SYSDATE
+			WHERE APL_NO=#{apl_no}
+	</update>
+	
 	<!-- 서류 상태 수정 -->
 	<update id="update_aStatus">
 		UPDATE  AP_DOCU SET APD_STATUS =#{apd_status} WHERE APD_NO =#{apd_no}
 	</update>
 	
+	<!-- 서명 다중 삭제 -->
+	<update id="delSign">
+		UPDATE "FILE" f SET FILE_DEL_YN ='Y'
+		 WHERE REG_ID =#{reg_id}
+		 AND FILE_ONAME IN
+		  <foreach collection="list" item="file_oname" open="(" separator="," close=")">
+         #{file_oname}
+         </foreach>
+	</update>
+
+<!--  임시저장 삭제 --> 
+	<delete id="delTemp">
+		DELETE FROM GEO.AP_DOCU
+			WHERE APD_NO IN
+			<foreach collection="list" item="apd_no" open="(" separator="," close=")">
+	         	#{apd_no}
+	         </foreach>
+	</delete>
 	
+	<update id="cancelDocu">
+		UPDATE AP_DOCU SET APD_TEMP_YN='Y'
+		 	WHERE APD_NO=#{apd_no}
+	</update>
 	
 
-	
 </mapper>
 
 
