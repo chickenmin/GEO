@@ -15,9 +15,7 @@ public interface IBoardDao {
 
 	public List<BoardVo> delBoard();
 	
-	public boolean insertAnnoBoard(BoardVo Vo);
-	
-	public boolean insertNomalBoard(BoardVo Vo);
+	public boolean insertBoard(BoardVo Vo);
 	
 	public BoardVo detailBoard(String bo_no);
 
@@ -43,5 +41,5 @@ public interface IBoardDao {
 	
 	public LikeVo likeSelectOne(String bo_no,String emp_no);
 	
-	public List<CommVo> commList();
+	public List<CommVo> commList(String bo_no);
 }
