@@ -24,7 +24,7 @@
 			<tr>
 				<td scope="row">게시판</td>
 				<td>
-					<select name="cate">
+					<select name="cate"><!-- 빼야할듯 -->
 						<option id="anno" value="announcements">공지사항</option>
 						<option id="nomal" value="nomalBoard">게시판</option>
 					</select>
