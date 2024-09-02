@@ -335,7 +335,42 @@ function updateAjax() {
     });
 }
 
+        document.addEventListener('DOMContentLoaded', function () {
+            const allCheckBox = document.getElementById('allCheckBox');
+            const departmentCheckBox = document.getElementById('departmentCheckBox');
+            const employeeCheckBox = document.getElementById('employeeCheckBox');
+            const calendarDisplay = document.getElementById('calendarDisplay');
 
+            function updateCalendar() {
+                let type = -1;
+                if (allCheckBox.checked) {
+                    type = 0;
+                } else if (departmentCheckBox.checked) {
+                    type = 1;
+                } else if (employeeCheckBox.checked) {
+                    type = 2;
+                }
+
+                if (type !== -1) {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('GET', `/calendar?type=${type}`, true);
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            calendarDisplay.innerText = xhr.responseText;
+                        } else {
+                            calendarDisplay.innerText = '데이터를 가져오는 데 실패했습니다.';
+                        }
+                    };
+                    xhr.send();
+                } else {
+                    calendarDisplay.innerText = '';
+                }
+            }
+
+            allCheckBox.addEventListener('change', updateCalendar);
+            departmentCheckBox.addEventListener('change', updateCalendar);
+            employeeCheckBox.addEventListener('change', updateCalendar);
+        });
 
 
 
