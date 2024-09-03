@@ -49,9 +49,10 @@ UPDATE CAL SET CAL_DEL_YN = 'Y'
 </delete>
 
 <update id="updateCal" parameterType="CalVo">
-UPDATE CAL
-SET CAL_TITLE= #{title}, 
-        CAL_CONTENT = #{cal_content}, 
+UPDATE CAL SET CAL_TITLE= #{cal_title}, 
+        CAL_CONTENT = #{cal_content},
+        "CAL_START" = TO_DATE(#{cal_start},'YYYY-MM-DD HH24:MI:SS'), 
+        "CAL_STOP" = TO_DATE(#{cal_stop},'YYYY-MM-DD HH24:MI:SS'), 
         CAL_TYPE= #{cal_type} , CAL_OPEN_YN= #{cal_open_yn}
 WHERE CAL_NO = #{cal_no}
 </update>

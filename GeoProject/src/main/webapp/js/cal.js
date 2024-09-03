@@ -192,38 +192,38 @@ function insertAjax() {
 // 돌아오는 반환값(data)값 : boolean
 // true : 성공 / false : 실패
 // 드래그를 통한 시간 업데이트 ajax
-function updateDragAjax(cal_start, cal_stop, cal_no) {
-    console.log("시작일:", cal_start);
-    console.log("종료일:", cal_stop);
-//    console.log("번호:", cal_no);
-//    var cal_no = $(cal_no).val();
-    var cal_no = 34;
-    var cal_stop = '202408160301';
-    var cal_start = '202408160101';
-    console.log("번호2:", cal_no);
-    console.log("시작일2:", cal_start);
-    console.log("종료일2:", cal_stop);
-    $.ajax({
-    url: '/GeoProject/updateDragAjax.do',
-    type: 'POST',
-    data: {
-        cal_no: cal_no,  
-        cal_start: cal_start,
-        cal_stop: cal_stop
-    },
-    success: function(response) {
-        if(response === 'true') {
-            alert('Event updated successfully');
-        } else {
-            alert('Failed to update event');
-        }
-    },
-    error: function() {
-        alert('Error occurred');
-    }
-});
-
-}
+//function updateDragAjax(cal_start, cal_stop, cal_no) {
+//    console.log("시작일:", cal_start);
+//    console.log("종료일:", cal_stop);
+////    console.log("번호:", cal_no);
+////    var cal_no = $(cal_no).val();
+//    var cal_no = 34;
+//    var cal_stop = '202408160301';
+//    var cal_start = '202408160101';
+//    console.log("번호2:", cal_no);
+//    console.log("시작일2:", cal_start);
+//    console.log("종료일2:", cal_stop);
+//    $.ajax({
+//    url: '/GeoProject/updateDragAjax.do',
+//    type: 'POST',
+//    data: {
+//        cal_no: cal_no,  
+//        cal_start: cal_start,
+//        cal_stop: cal_stop
+//    },
+//    success: function(response) {
+//        if(response === 'true') {
+//            alert('Event updated successfully');
+//        } else {
+//            alert('Failed to update event');
+//        }
+//    },
+//    error: function() {
+//        alert('Error occurred');
+//    }
+//});
+//
+//}
 
 // 캘린더 삭제
 function deleteCal(no){
@@ -251,35 +251,36 @@ function updateCal(eventNo){
             $('#update_cal_open_yn').val(data.cal_open_yn);
             $('#updateEventModal').modal('show');
             
+            
             // 내용칸이 비었을 경우
-			if ($("#content").val() == "") {
+			if ($("#update_cal_content").val() == "") {
 				alert("내용을 입력해주세요")
 				$("#content").focus();
 				return false;
 			}
 			
 			// 시작일, 종료일이 비엇을경우
-			if ($("#datetimepicker1").val() == "" || $("#datetimepicker2").val() == "") {
+			if ($("#update_datetimepicker1").val() == "" || $("#datetimepicker2").val() == "") {
 				alert("시간을 입력해 주세요")
 				return false;
 			}
 		
 			// 시작일이 종료일보다 클 시 아작스 강제 종료
 			 dateVal() //시작일 값과 종료일 값을 밀리세컨드로 바꿔 크기를 비교해주는 function
-			if (dateVal('datetimepicker1', 'datetimepicker2') == false) {
+			if (dateVal('update_datetimepicker1', 'update_datetimepicker2') == false) {
 				return false;
 			}         
             // 일정명 칸이 비었을 경우
-			if ($("#title").val() == "") {
+			if ($("#update_cal_title").val() == "") {
 				alert("일정명을 입력해주세요")
-				$("#title").focus();
+				$("#update_cal_title").focus();
 				return false;
 			}
 			
         },
         error: function(xhr, status, error) {
             console.error('Error:', error);
-            console.log('Status:', status);s
+            console.log('Status:', status);
             console.log('XHR:', xhr);
         }
     });
@@ -291,56 +292,20 @@ function updateCal(eventNo){
 // 일정 수정 Ajax
 function updateAjax() {
 
-	
-//	console.log(document.getElementById('update_cal_no').value);
-//	console.log(document.getElementById('update_cal_title').value);
-//	console.log(document.getElementById('update_cal_content').value);
-//	console.log(document.getElementById('update_cal_type').value);
-//	console.log(document.getElementById('update_cal_open_yn').value);
-//	console.log(document.getElementById('update_datetimepicker1').value);
-//	console.log(document.getElementById('update_datetimepicker2').value);
-
-	// datetimepicker 인스턴스를 가져오고 값 설정
-	var startDate = moment(data.cal_start); // moment.js를 사용하여 날짜와 시간 포맷 변환
-	if (startDate.isValid()) { // 날짜가 유효한지 확인
-	    $('#update_datetimepicker1').data('datetimepicker').date(startDate);
-	}
-	var selectedDate = $('#update_datetimepicker1').data('datetimepicker').date();
-	$(function() {
-    // datetimepicker 초기화
-    $('#update_datetimepicker1').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm:ss', // 날짜 및 시간 포맷
-        useCurrent: false // 현재 시간을 기본값으로 설정하지 않도록
-    });
-
-    $('#update_datetimepicker2').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm:ss', // 날짜 및 시간 포맷
-        useCurrent: false // 현재 시간을 기본값으로 설정하지 않도록
-    	});
-	});
-        // datetimepicker 인스턴스를 가져오고 값 설정
-    var startDate = moment(data.cal_start);
-    var endDate = moment(data.cal_stop);
-
-    if (startDate.isValid()) {
-        $('#update_datetimepicker1').data('datetimepicker').date(startDate);
-    }
-
-    if (endDate.isValid()) {
-        $('#update_datetimepicker2').data('datetimepicker').date(endDate);
-    }
-    
 
     $.ajax({
+
         url: '/GeoProject/updateCal.do',
         type: 'POST',
         data: {
             cal_no: $('#update_cal_no').val(),
             cal_title: $('#update_cal_title').val(),
             cal_content: $('#update_cal_content').val(),
-            
-            start_date: $('#data.cal_start').val(),
-            end_date: $('#data.cal_stop').val(),
+           
+           	cal_start : $('#update_datetimepicker1').val(),
+			cal_stop : $('#update_datetimepicker2').val(),
+//            start_date:  $( "#update_datepicker1" ).datepicker( "cal_start" ),
+//            end_date:  $( "#update_datepicker2" ).datepicker( "cal_stop" ),
             cal_type: $('#update_cal_type').val(),
             cal_open_yn: $('#update_cal_open_yn').val(),
 
