@@ -244,9 +244,8 @@
 		str = str.replace(/</gim,"&lt;");
 		str = str.replace(/>/gim,"&gt;");
 		str = str.replace(/\'/gim,"&#39;");
-		document.getElementById("con").innerHTML = str;
 		
-		content.value = str;
+		document.getElementById("con").value = str;
 	}
 	
 	
