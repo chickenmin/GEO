@@ -99,8 +99,8 @@ public class EmpController {
 		}
 		
 		model.addAttribute("saveFileName", saveFileName);
-//		String fileUrl = "/storage/" + saveFileName;
-//	    model.addAttribute("fileUrl", fileUrl);
+		String fileUrl = "/storage/" + saveFileName;
+	    model.addAttribute("fileUrl", fileUrl);
 		
 		return "redirect:selectOneEmp.do?emp_no=" + vo.getEmp_no();
 		
@@ -148,39 +148,41 @@ public class EmpController {
 	}
 
 	@PostMapping(value = "/arriveWork.do")
-	public String arriveWork(Model model, String emp_no) {
-		AttVo vo = new AttVo();
-		vo.setEmp_no(emp_no);
+	public String arriveWork(Model model, AttVo vo, HttpSession session) {
 		log.info("출근 했습니다");
+		session.getAttribute("loginVo");
 		service.arriveWork(vo);
 		model.addAttribute("vo", vo);
-		return "comm/index";
+		return "redirect:/comm/index";
 	}
 
 	@PostMapping(value = "/leftWork.do")
-	public String leftWork(Model model, AttVo vo) {
+	public String leftWork(Model model, AttVo vo, HttpSession session) {
 		log.info("퇴근 완료");
+		session.getAttribute("loginVo");
 		service.leftWork(vo);
 		model.addAttribute("vo", vo);
 		return "comm/index";
 	}
 
 	@GetMapping(value = "/myPage.do")
-	public String myPage(HttpSession session, Model model) {
+	public String myPage(HttpSession session, HttpServletRequest request, String saveFileName, Model model) {
 		log.info("마이 페이지");
 
 		EmpVo loginVo = (EmpVo) session.getAttribute("loginVo");
 		if (loginVo != null) {
 			String emp_no = loginVo.getEmp_no();
+			request.setAttribute("loginVo", loginVo);
 			EmpVo vo = service.myPage(emp_no);
-
 			model.addAttribute("vo", vo);
+
 		} else {
 			return "redirect:/login.do";
 		}
 
 		return "hr/myPage";
 	}
+	
 
 	@GetMapping(value = "/empAtt.do")
 	public String empAtt(String emp_no, Model model) {
@@ -191,6 +193,8 @@ public class EmpController {
 		System.out.println("emp_no 파라미터 값: " + emp_no);
 		return "hr/empAtt";
 	}
+	
+
 
 	@Scheduled(cron = "0 0 4 * * *")
 	@GetMapping(value = "/batchRow.do")

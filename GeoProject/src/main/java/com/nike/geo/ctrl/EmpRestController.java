@@ -40,7 +40,7 @@ public class EmpRestController {
 			  jsTreeNodes.add(new JsTreeVo(
 						e.getEmp_no(),e.getEmp_name(),e.getEmp_dept(),"http://localhost:8080/GeoProject/img/emp.png",e.getEmp_pos()
 					));  }
-		 
+
 		
 		
 		return jsTreeNodes;

@@ -87,7 +87,8 @@
 		<div
 			class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-			<img src="./storage/${saveFileName}" alt="Profile"
+			
+			<img src="<c:url value='/storage/${loginVo.emp_img}'/>" alt="Profile"
 				class="rounded-circle"> <input type="hidden" name="emp_no">
 			<h2>${loginVo.emp_name}</h2>
 			<h3>
@@ -280,14 +281,14 @@
 						<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
 						<div class="row mb-3">
 							<label for="profileImage"
-								class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+								class="col-md-4 col-lg-3 col-form-label" style="display: none;">Profile Image</label>
 							<div class="col-md-8 col-lg-9">
-								<img src="assets/img/profile-img.jpg" alt="Profile">
+								<img src="<c:url value='/storage/${loginVo.emp_img}'/>" alt="Profile" style="display: none;">
 								<div class="pt-2">
 									<a href="#" class="btn btn-primary btn-sm"
-										title="Upload new profile image"><i class="bi bi-upload"></i></a>
+										title="Upload new profile image" style="display: none;"><i class="bi bi-upload"></i></a>
 									<a href="#" class="btn btn-danger btn-sm"
-										title="Remove my profile image"><i class="bi bi-trash"></i></a>
+										title="Remove my profile image" style="display: none;"><i class="bi bi-trash"></i></a>
 								</div>
 							</div>
 						</div>

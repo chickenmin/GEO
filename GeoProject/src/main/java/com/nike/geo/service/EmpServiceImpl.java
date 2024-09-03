@@ -91,7 +91,6 @@ public class EmpServiceImpl implements IEmpService {
 		return dao.modPw(emp_no);
 	}
 
-
 	@Override
 	public void batchRow() {
 		dao.batchRow();

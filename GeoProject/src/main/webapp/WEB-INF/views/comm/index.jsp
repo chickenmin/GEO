@@ -33,8 +33,14 @@
 	            <div class="card-body" style="text-align: center;">
 	              <h5 class="card-title" style="display: inline-block">${mainVo.emp_name}</h5>
 	              <p class="card-text">${mainVo.emp_dept}팀 ${mainVo.emp_pos}</p>
-	              <button class="btn btn-primary">출근</button>
-				  <button class="btn btn-danger">퇴근</button>
+	              <form action="./arriveWork.do" method="post">
+				<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
+				<button class="btn btn-primary" type="submit">출근</button>
+			</form>
+				  <form action="./leftWork.do" method="post">
+				<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
+				<button class="btn btn-danger" type="submit">퇴근</button>
+			</form>
 	            </div>
 	          </div>
 	          <!-- End Card with an image on top -->
@@ -172,7 +178,7 @@
 		
 		<div>
 			<form action="./arriveWork.do" method="post">
-				<input type="hidden" name="emp_no" value="aa001">
+				<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
 				<button type="submit">출근</button>
 			</form>
 			<form action="./leftWork.do" method="post">

@@ -63,19 +63,17 @@ WHERE emp_no = #{emp_no}
 <update id="clearPw" parameterType="EmpVo">
 UPDATE GEO.EMP
 SET emp_pw = '1234',
-	emp_status = 'W'
+	emp_status = 'ST001'
 WHERE emp_no = #{emp_no}
 </update>
 
 <!-- 출근 -->
 <insert id="arriveWork">
-INSERT INTO GEO.ATT
-(EMP_NO, ATT_ARRIVE_TIME, ATT_LEFT_TIME, REG_ID, REG_DATE, MOD_ID, MOD_DATE)
-SELECT e.EMP_NO, SYSDATE, '', e.EMP_NO, TO_CHAR(SYSDATE, 'yyyy-MM-dd'),
-e.EMP_NO, TO_CHAR(SYSDATE, 'yyyy-MM-dd')
-FROM EMP e
-LEFT JOIN ATT a ON e.EMP_NO = a.EMP_NO
-WHERE e.EMP_NO = #{emp_no, jdbcType=VARCHAR}
+UPDATE GEO.ATT
+SET ATT_ARRIVE_TIME = SYSDATE,
+    REG_ID = EMP_NO,
+    REG_DATE = SYSDATE
+WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
 </insert>
 
 <!-- 퇴근 -->
@@ -109,9 +107,10 @@ SELECT EMP_NO , ATT_ARRIVE_TIME , ATT_LEFT_TIME
 <!-- 비밀번호 변경 -->
 <select id="modPw" parameterType="java.lang.String" resultType="EmpVo">
 UPDATE GEO.EMP
-SET EMP_PW='1234'
+SET emp_pw = #{emp_pw}
 WHERE EMP_NO = #{emp_no}
 </select>
+
 
 <insert id="batchRow">
 	INSERT INTO GEO.ATT
