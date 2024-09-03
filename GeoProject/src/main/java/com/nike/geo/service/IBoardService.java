@@ -25,6 +25,8 @@ public interface IBoardService {
 	
 	public boolean multiDeleteBoard(List<String>list);
 	
+	public boolean recoveryBoard(List<String>list);
+	
 	public boolean realDelete(List<String> list);
 
 	public BoardVo view_Count(BoardVo bVo);
@@ -32,5 +34,6 @@ public interface IBoardService {
 	public LikeVo likeCount(LikeVo vo);
 	
 	public List<CommVo> commList(String bo_no);
-
+	//댓글
+	public boolean commentInsert(CommVo vo);
 }

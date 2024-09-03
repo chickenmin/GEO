@@ -7,6 +7,8 @@
 <%@ include file="../comm/header.jsp" %>
 <script type="text/javascript">
 function del(event) {
+	var userConfirmed = confirm("삭제하시겠습니까?");
+	if(userConfirmed){
     // 게시글 번호 가져오기
     var bo_no = '${Vo.bo_no}';
 
@@ -28,7 +30,7 @@ function del(event) {
         }
     });
 }
-
+}
 
 </script>
 <body>
@@ -38,7 +40,6 @@ function del(event) {
 		<h1>${Vo.bo_title}</h1>
 		${Vo.emp_no} · ${Vo.bo_regdate}
 		<button>첨부파일</button>
-		<br><a onclick="history.back(-1)">뒤로가기</a><br>
 		<br><br>
 		${Vo.bo_title}
 		<br><br>
@@ -49,16 +50,21 @@ function del(event) {
 		<input type="hidden" name="emp_no" value="${detailId.emp_no}">
 		<input type="submit" value="추천">
 		</form>	
-		<button onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>		
+		<c:if test="${loginVo.emp_no == Vo.emp_no}">
+		<button onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>
+		</c:if>		
+		<c:if test="${loginVo.emp_no == Vo.emp_no || loginVo.emp_name == '관리자'}">
 		<button type="button" name="del" onclick="del(event)">삭제</button>
+		</c:if>		
 		<button id="descBtn">댓글</button>		
 		<div id="description">
 		 <div id="commentSection"></div>
 		</div>
 		<form action="./commentInsert.do" method="post">
+		<input type="hidden" name="bo_no" value="${Vo.bo_no}">
 		<div style="text-align: center;">
 			<textarea name="comm_content" style="width: 800px; height: 200px; box-sizing: border-box;" placeholder="내용 입력"></textarea>
-		<input style="text-align: right;" type="submit" value="댓글등록"><!-- 오른쪽으로 이동이 안된다 -->
+			<input style="text-align: right;" type="submit" value="댓글등록">
 		</div>
 		</form>
   	</main><!-- End #main -->
@@ -89,7 +95,8 @@ window.onload = function () {
                         // 댓글 데이터를 화면에 표시
                         var commentsHtml = '';
                         $.each(response, function (index, comment) {
-                            commentsHtml += '<p>'+comment.reg_id+ '<p>' + comment.comm_content + '</p>'+comment.reg_date+'</p>'; 
+                        	var brContent = comment.comm_content.replace(/\n/g, '<br>');
+                            commentsHtml += '<hr>'+'<p>'+comment.reg_id+ '<p>' + brContent + '</p>'+comment.reg_date+'</p>';
                         });
                         commentSection.html(commentsHtml);
                     }

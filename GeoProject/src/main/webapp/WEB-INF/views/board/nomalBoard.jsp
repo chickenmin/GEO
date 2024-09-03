@@ -25,6 +25,9 @@
 							<h1>일반 게시판</h1>
 							<thead>
 								<tr>
+									<c:if test="${loginVo.emp_name=='관리자'}">
+									<th class="text-center" scope="col"><input type="checkBox" id="chkbox" name="allCheckBox" class="allCheckBox" onclick="checkAll(this.checked)"></th>
+									</c:if>
 									<th scope="col"  class="text-center">No.</th>
 									<th scope="col"  class="text-center">제목</th>
 									<th scope="col"  class="text-center">작성자</th>
@@ -36,6 +39,9 @@
 							<tbody>
 								<c:forEach var="nomal" items="${nomalBoard}" varStatus="vs">
 									<tr>
+										<c:if test="${loginVo.emp_name=='관리자'}">
+										<th class="text-center" scope="row"><input type="checkbox" name="ch" class="ch" value="${anno.bo_no}"></th>
+										</c:if>
 										<td class="text-center">${nomalBoard.size()-vs.index}</td>
 										<td class="text-center" onclick="location.href='./detailBoard.do?bo_no=${nomal.bo_no}'">${nomal.bo_title}</td>
 										<td class="text-center">${nomal.emp_no}</td>
@@ -49,7 +55,9 @@
 				</table>
 <!-- </table> -->
 			
+			<c:if test="${loginVo.emp_name=='관리자'}">
 			<input type="submit" value="삭제">
+			</c:if>
 			<input type="button" onclick="location.href='./writeBoard.do'" value="새글쓰기">
 			</form>
 	<br>

@@ -17,11 +17,8 @@
 	<%@ include file="../comm/sidebar.jsp"%>
 	<main id="main" class="main">
 		
-	  
-		<form action="./multiDeleteBoard.do" method="post" onsubmit="return chkSubmit()">
-				<!-- 게시판 테이블 -->
+	  <form action="./recoveryBoard.do" method="post" onsubmit="return chkSubmit()">
 	  <table class="table display" id="BoardTable">
-				<!-- 게시판 선택 -->
 					
 							<br>
 							<h1>삭제 게시판</h1>
@@ -52,8 +49,9 @@
 
 				</table>
 <!-- </table> -->
-			<input type="submit" value="완전삭제" onclick="del(event)">
-			
+			<input type="button" value="완전삭제" onclick="del(event)">
+			<input type="submit" value="복구">
+			</form>
 	<br>
 
 

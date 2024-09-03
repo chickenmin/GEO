@@ -54,8 +54,9 @@
 
 				</table>
 <!-- </table> -->
-			
+			<c:if test="${loginVo.emp_name=='관리자'}">
 			<input type="submit" value="삭제">
+			</c:if>
 			<input type="button" onclick="location.href='./writeBoard.do'" value="새글쓰기">
 			</form>
 	<br>

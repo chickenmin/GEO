@@ -94,12 +94,8 @@ public class BoardController {
 	//글상세
 	@GetMapping(value = "/detailBoard.do")
 	public String detailBoard(@RequestParam("bo_no")String bo_no, 
-								Model model,
-								HttpSession session) {
-		EmpVo Evo = (EmpVo) session.getAttribute("loginVo");
-		String detailId=Evo.getEmp_no();
+								Model model) {
 		BoardVo Vo=service.detailBoard(bo_no);
-		Vo.setEmp_no(detailId);
 		service.view_Count(Vo);
 		model.addAttribute("Vo",Vo);
 		return "board/detailBoard";
@@ -109,7 +105,8 @@ public class BoardController {
 	//글수정
 	@GetMapping(value = "/modifyBoard.do")
 	public String modifyBoard(@RequestParam("bo_no") String bo_no,
-								Model model) {
+								Model model
+								) {
 		BoardVo Vo=service.detailBoard(bo_no);
 		model.addAttribute("Vo",Vo);
 		model.addAttribute("mode","modify");
@@ -146,6 +143,13 @@ public class BoardController {
 	    return "redirect:/announcements.do"; // 삭제 후 게시판 목록으로 리다이렉트
 	}
 	
+	//글복구
+	@PostMapping(value = "/recoveryBoard.do")
+	public String recoveryBoard(@RequestParam List<String> ch) {
+	    service.recoveryBoard(ch);
+	    return "redirect:/delBoard.do"; // 삭제 후 게시판 목록으로 리다이렉트
+	}
+	
 	//리얼삭제
 	@PostMapping(value = "/realDelete.do")
 	public String realDelete(@RequestParam List<String> ch) {
@@ -171,4 +175,16 @@ public class BoardController {
         List<CommVo> comments = service.commList(bo_no);
         return comments; // JSON으로 자동 변환되어 클라이언트에 반환됩니다
     }
+	
+	//댓글쓰기
+	@PostMapping("/commentInsert.do")
+	public String commentInsert(CommVo vo,@RequestParam("bo_no")String bo_no,@RequestParam("comm_content")String comm_content,HttpSession session) {
+		EmpVo Evo=(EmpVo) session.getAttribute("loginVo");
+		vo.setBo_no(bo_no);
+		vo.setEmp_no(Evo.getEmp_no());
+		vo.setComm_content(comm_content);
+		service.commentInsert(vo);
+		return "redirect:/detailBoard.do?bo_no=" + bo_no;
+	}
+	
 }
