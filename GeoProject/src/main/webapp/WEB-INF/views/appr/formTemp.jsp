@@ -38,12 +38,12 @@
     }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-<script type="text/javascript" src="./js/apLineTemp.js"></script>
+<script type="text/javascript" src="./js/apLine.js"></script>
 </head>
 
 <body>
 	<%@ include file="../comm/sidebar.jsp" %>
- 	<main id="main" class="main">
+ 	<main id="main" class="main  d-flex justify-content-center align-items-center" style="min-height: 100vh;">
 		<div style="width: 800px; ">
 		
 		<!-- FORM -->
