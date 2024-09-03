@@ -3,6 +3,7 @@ package com.nike.geo.model;
 import java.util.List;
 
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.CommonVo;
 import com.nike.geo.vo.hr.EmpVo;
 
@@ -24,5 +25,8 @@ public interface ICommDao {
 	
 	// 메인화면 공지게시판 조회 selectMainBoard
 	public List<BoardVo> selectMainBoard(String status);
+	
+	// 메인화면 일정 조회 selectMainCal
+	public List<CalVo> selectMainCal(String no);
 	
 }
