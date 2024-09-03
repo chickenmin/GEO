@@ -3,7 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
-
+<style>
+        /* Flexbox 스타일 추가 */
+        .button-container {
+            display: flex;
+            align-items: center; /* 세로 중앙 정렬 */
+            gap: 10px; /* 버튼 간의 간격 조정 */
+            margin-bottom: 15px;
+        }
+        .button-container form {
+            margin: 0; /* form 기본 여백 제거 */
+        }
+</style>
 <%@ include file="../comm/header.jsp" %>
 <script type="text/javascript">
 function del(event) {
@@ -38,25 +49,27 @@ function del(event) {
  	<main id="main" class="main">
 		<br>
 		<h1>${Vo.bo_title}</h1>
-		${Vo.emp_no} · ${Vo.bo_regdate}
-		<button>첨부파일</button>
+		${Vo.emp_no} · ${Vo.bo_regdate}<br>
+		<input type="file" value="첨부파일">
 		<br><br>
 		${Vo.bo_title}
 		<br><br>
 		${Vo.bo_content}
 		<hr>
+		<div class="button-container">
 		<form action="./likeCount.do" method="post">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}">
 		<input type="hidden" name="emp_no" value="${detailId.emp_no}">
-		<input type="submit" value="추천">
+		<input class="btn btn-info" type="submit" value="추천">
 		</form>	
 		<c:if test="${loginVo.emp_no == Vo.emp_no}">
-		<button onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>
+		<button class="btn btn-success" onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>
 		</c:if>		
 		<c:if test="${loginVo.emp_no == Vo.emp_no || loginVo.emp_name == '관리자'}">
-		<button type="button" name="del" onclick="del(event)">삭제</button>
+		<button class="btn btn-danger" type="button" name="del" onclick="del(event)">삭제</button>
 		</c:if>		
-		<button id="descBtn">댓글</button>		
+		<button class="btn btn-primary" id="descBtn">댓글</button>	
+		</div>	
 		<div id="description">
 		 <div id="commentSection"></div>
 		</div>
@@ -67,6 +80,8 @@ function del(event) {
 			<input style="text-align: right;" type="submit" value="댓글등록">
 		</div>
 		</form>
+		
+		
   	</main><!-- End #main -->
 
 </body>

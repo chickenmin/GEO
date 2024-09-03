@@ -40,6 +40,12 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 	
 	@Override
+	public boolean delflagY(String bo_no) {
+		int n=sessionTemplate.update(NS+"delflagY", bo_no);
+		return (n==1)?true:false;
+	}
+	
+	@Override
 	public boolean insertBoard(BoardVo Vo) {
 		int n = sessionTemplate.insert(NS+"insertBoard",Vo);
 		return (n==1)?true:false;

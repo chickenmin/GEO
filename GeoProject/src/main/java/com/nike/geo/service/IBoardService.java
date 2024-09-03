@@ -36,4 +36,6 @@ public interface IBoardService {
 	public List<CommVo> commList(String bo_no);
 	//댓글
 	public boolean commentInsert(CommVo vo);
+	
+	public boolean delflagY(String bo_no);
 }

@@ -40,7 +40,9 @@
 			</tr>
 			<tr>
 				<td scope="row">위젯에 표시</td>
-				<td colspan="3">**위젯에 표시입력</td>
+				<td colspan="3">
+				<i id="changeTiele" class="bi bi-check2-square" onclick="changeTitle()"></i><!-- ★★★★★★★★★★★★★★★★★★★ -->
+				</td>
 			</tr>
 			<tr>
 				<td colspan="4" rowspan="8">
@@ -51,14 +53,14 @@
 		<input type="file" name="file">
 		<c:choose>
 		<c:when test="${mode=='insert'}">
-		<button type="submit">게시</button>
+		<button class="btn btn-primary" type="submit">게시</button>
 		</c:when>
 		<c:when test="${mode=='modify'}">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}" />
-		<button type="submit">수정</button>
+		<button class="btn btn-warning" type="submit">수정</button>
 		</c:when>
 		</c:choose>
-		<button onclick="history.back(-1)">취소</button>
+		<button class="btn btn-danger" onclick="history.back(-1)">취소</button>
 	</form>
 	
 	
@@ -68,29 +70,32 @@
 </body>
 <%@ include file="../comm/footer.jsp"%>
 
-<script type="text/javascript">
-$.ajax({
-    url: './commList.do',
-    type: 'GET',
-    data: { bo_no: '${Vo.bo_no}' }, // 게시판 번호 전달
-    success: function (response) {
-        if (response.length === 0) {
-            // 댓글이 없을 때 메시지 표시
-            commentSection.html('<p>댓글이 없습니다.</p>');
-        } else {
-            // 댓글 데이터를 화면에 표시
-            var commentsHtml = '';
-            $.each(response, function (index, comment) {
-            	var brContent = comment.comm_content.replace(/\n/g, '<br>');
-                commentsHtml += '<hr>'+'<p>'+comment.reg_id+ '<p>' + brContent + '</p>'+comment.reg_date+'</p>';
-            });
-            commentSection.html(commentsHtml);
+<style>
+ .bi-check2-square {
+            font-size: 24px; /* 아이콘 크기 조정 */
+            cursor: pointer; /* 클릭 가능한 커서 */
         }
-    },
-    error: function (xhr, status, error) {
-        commentSection.html('<p>댓글을 불러오는 데 실패했습니다.</p>');
-    }
-});
+</style>
+
+<script type="text/javascript">
+function sendData() {
+    var content = $('#txtArea').val();
+    
+    $.ajax({
+        url: './writeBoard.do',  // 서버의 엔드포인트
+        method: 'POST',
+        data: { bo_content: content },
+        success: function(response) {
+            // 서버로부터 받은 데이터에서 줄바꿈을 <br> 태그로 변환
+            var formattedContent = response.replace(/\n/g, '<br>');
+            $('#contentDisplay').html(formattedContent);
+        }
+    });
+}
+
+function changeTitle() {
+	document.getElementById('changeTitle').innerHTML='비공개입니다';
+}
 </script>
 
 </html>

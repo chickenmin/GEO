@@ -49,8 +49,8 @@
 
 				</table>
 <!-- </table> -->
-			<input type="button" value="완전삭제" onclick="del(event)">
-			<input type="submit" value="복구">
+			<input class="btn btn-danger" type="button" value="완전삭제" onclick="del(event)">
+			<input class="btn btn-primary" type="submit" value="복구">
 			</form>
 	<br>
 

@@ -1,5 +1,6 @@
 package com.nike.geo.ctrl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,16 @@ public class BoardController {
 		return "board/delBoard";
 	}
 	
+	//비공개여부
+	@PostMapping("/delflagY.do")
+	@ResponseBody
+	public Map<String, Object> delflagY(@RequestParam("bo_no") String bo_no) {
+	    boolean delflag = service.delflagY(bo_no);
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("success", delflag);
+	    return response;
+	}
+
 	
 	
 	//글작성 bo_status 로 값을 보내줘야 쿼리가 동작 가능

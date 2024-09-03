@@ -172,4 +172,14 @@
 	)
 	</insert>
 	
+	<!-- 게시글공개여부 -->
+	<update id="delflagY">
+	UPDATE BO SET BO_DELFLAG_YN ='Y'
+	WHERE BO_NO =#{bo_no}
+	</update>
+	<update id="delflagN">
+	UPDATE BO SET BO_DELFLAG_YN ='N'
+	WHERE BO_NO =#{bo_no}
+	</update>
+	
 </mapper>
