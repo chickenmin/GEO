@@ -4,9 +4,42 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
-
 <%@ include file="../comm/header.jsp" %>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<style type="text/css">
+    .modal-body {
+        display: flex; /* Flexbox를 사용 */
+        justify-content: space-evenly; /* 요소들 사이에 균등한 간격을 두고 정렬 */
+        align-items: start; /* 요소들을 컨테이너의 시작 부분에 정렬 */
+    }
+    .modal-content {
+   		height: 700px;
+   	}
+    #tree {
+    	width: 200px;
+    }
+    .info-card {
+        width: 200px; 
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .main-card {
+        height: 400px; /* 첫 번째 카드의 높이 */
+    }
+    .choices-container {
+        display: flex; /* 내부 카드들을 세로로 배치 */
+        flex-direction: column; /* 세로 방향으로 요소들을 배치 */
+        justify-content: space-between; /* 요소 사이의 간격을 균등하게 배분 */
+    }
+    .selTitle{
+    	background-color: lightgreen;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script type="text/javascript" src="./js/msgJsTree.js"></script>
 <body>
 	<%@ include file="../comm/sidebar.jsp" %>
  	<main id="main" class="main">
@@ -32,7 +65,7 @@
 	              <!-- General Form Elements -->
 	              <form action="./insertMsg.do" method="post" enctype="multipart/form-data" onsubmit="sendDivContent()">
 	                
-	                <div class="row mb-4">
+	                <div class="row mb-4" style="display: none;">
 	                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
 	                  <div class="col-sm-10">
 	                    <input type="text" id="msg_recv_id" name="msg_recv_id" class="form-control">
@@ -40,12 +73,13 @@
 	                </div>
 
 	                <div class="row mb-4">
-	                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람 Jstree</label>
-	                  <div class="col-sm-10">
-	                    <input type="text" id="msg_recv_id" name="msg_recv_id2" class="form-control">
-	                    <button type="button" class="btn btn-primary" onclick="selectRecv()">선택</button>
-	                    <button type="button" id="recvJsTree" class="btn btn-primary rounded-pill" data-bs-toggle="modal" style="float: right; margin-bottom: 10px;" data-bs-target="#basicModal">
-	                  		JsTree
+	                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
+	                  <div class="col-sm-2">
+	                    <input type="text" id="recv_jsTree" class="form-control">
+	                  </div>
+	                  <div class="col-sm-8">
+	                    <button type="button" id="recvJsTree" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+	                  		선택
 	                  	</button>
 	                  </div>
 	                </div>
@@ -54,49 +88,28 @@
 	                <div class="modal fade" id="basicModal" tabindex="-1">
 						<div class="modal-dialog">
 							<div class="modal-content">
+							
+								<!-- modal-header -->
 								<div class="modal-header">
-									<h5 class="modal-title"><b> 결재선 선택</b> </h5>
+									<h5 class="modal-title"><b>받는사람 선택</b></h5>
 								</div>
 								
-								<!-- 모달 몸체 -->
-								<div class="modal-body"
-									style="display: flex; justify-content: space-evenly;">
-									
-									<!-- jstree / 선택칸 -->
+								<!-- modal-body -->
+								<div class="modal-body" style="display: flex; justify-content: space-evenly;">
 									<div class="card info-card revenue-card main-card">
-										<div>결재라인</div>
+										<div class="row mb-1"></div> <!-- 여백 -->
 										<div id="tree"></div>
 										<div style="display: flex; justify-content: space-between; margin-top: 10px;">
 											<input type="text" id="schName" value="" style="flex: 1; margin-right: 10px; width: 80px;">
 											<button onclick="fSch()" style="flex-shrink: 0;" type="button">탐색</button>
 										</div>
 									</div>
-									<div class="choices-container">
-										<div class="choice card info-card revenue-card">
-											<span>결재자</span>
-											<div class="must"  id="appr" style="flex: 1; margin-top: 10px;"></div>
-											<input id="apprCho" name="apprLine" type="hidden">
-										</div>
-										<div class="choice card info-card revenue-card">
-											<span>참조자</span>
-											<div id="cc" style="flex: 1; margin-top: 10px;"></div>
-											<input id="ccCho" name="ccLine" type="hidden">
-										</div>
-										
-										    <button id="apC" type="button" onclick="choice(event)">결재선택</button>
-										    <button id="apR" type="button" onclick="choice(event)">결재취소</button>
-										    <button id="reC"  type="button" onclick="choice(event)">참조선택</button>
-										    <button  id="reR" type="button" onclick="choice(event)">참조취소</button>
-										
-									</div>
+								</div> <!-- END modal-body -->
 								
-								</div> <!-- 모달 몸체 끝 -->
-								
-								
+								<!-- modal-footer -->
 								<div class="modal-footer">
-									<button type="button" class="btn btn-primary"
-										data-bs-dismiss="modal" >선택완료
-									</button>
+									<button type="button" class="btn btn-primary" id="select" data-bs-dismiss="modal">선택완료</button>
+									<button type="button" class="btn btn-danger" id="close" data-bs-dismiss="modal">닫기</button>
 								</div>
 							</div>
 						</div>
@@ -142,9 +155,10 @@
 	              		 document.getElementById("msg_recv_id").value = "";
 	              	 });
 	              	 
-	              	 // form에 제출하기 위해 에디터 내부의 텍스트를 hiddenContent 내용으로 가져오기
+	              	 // form에 제출하기 직전 거쳐가는 function
 	              	 function sendDivContent(){
-//  	              		 var plainText = quill.getText().trim(); // 텍스트만 가져옴
+	              		 // 에디터에서 가져온 값 서버로 보내기
+//  	              	 var plainText = quill.getText().trim(); // 텍스트만 가져옴
 // 	              		 var plainText = quill.root.innerHTML.substr(3).slice(0,-4);
 	              		 var plainText = quill.root.innerHTML; // HTML만 가져옴
 	              		 document.getElementById("hiddenContent").value = plainText;

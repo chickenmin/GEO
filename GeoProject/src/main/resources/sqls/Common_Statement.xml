@@ -42,7 +42,7 @@
 	<!-- 임시비밀번호 발급 updateTempPw -->
 	<update id="updateTempPw">
 		UPDATE GEO.EMP
-			SET EMP_PW=#{emp_pw}, EMP_STATUS='W',  MOD_ID='ADMIN', MOD_DATE=SYSDATE
+			SET EMP_PW=#{emp_pw}, EMP_STATUS='ST003',  MOD_ID='ADMIN', MOD_DATE=SYSDATE
 			WHERE EMP_NO=#{emp_no}
 	</update>
 	
@@ -81,5 +81,15 @@
 						AND BO_DEL_YN = 'N'
 					ORDER BY BO_REGDATE DESC)
 			<![CDATA[WHERE ROWNUM <= 5]]>
+	</select>
+	
+	<!-- 메인화면 일정 조회 selectMainCal -->
+	<select id="selectMainCal" resultType="CalVo">
+		SELECT CAL_NO , EMP_NO , CAL_TITLE ,
+				CAL_CONTENT , CAL_START , CAL_STOP 
+			FROM CAL
+			WHERE CAL_DEL_YN = 'N'
+				AND CAL_OPEN_YN = 'Y'
+				AND EMP_NO = #{emp_no}
 	</select>
 </mapper>

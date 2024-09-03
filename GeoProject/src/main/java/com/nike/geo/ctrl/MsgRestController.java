@@ -45,7 +45,7 @@ public class MsgRestController {
 			// 세션에 loginVo 추가
 			session.setAttribute("loginVo", loginVo);
 			
-			if(loginVo.getEmp_auth().equals("W")) {
+			if(loginVo.getEmp_status().equals("ST003")) {
 				log.info("MESSAGE controller - 비밀번호 변경 대상");
 				response.put("status", "update-Password-Needed");
 				response.put("message", "비밀번호 변경 대상입니다.");

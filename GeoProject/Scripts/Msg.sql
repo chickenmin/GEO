@@ -224,6 +224,13 @@ SELECT BO_NO , EMP_NO , BO_TITLE ,
 SELECT *
 	FROM COM;
 	
+SELECT CAL_NO , EMP_NO , CAL_TITLE ,
+		CAL_CONTENT , CAL_START , CAL_STOP 
+	FROM CAL
+	WHERE CAL_DEL_YN = 'N'
+		AND CAL_OPEN_YN = 'Y'
+		AND EMP_NO = 'EE001';
+	
 ---------------------------------------------------------------------------------	
 
 -- 다수에게 쪽지 보내기 (다중 insert) 일단 안됨
