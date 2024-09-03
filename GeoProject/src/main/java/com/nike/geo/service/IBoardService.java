@@ -17,9 +17,7 @@ public interface IBoardService {
 	
 	public List<BoardVo> delBoard();
 	
-	public boolean insertAnnoBoard(BoardVo Vo);
-	
-	public boolean insertNomalBoard(BoardVo Vo);
+	public boolean insertBoard(BoardVo Vo);
 	
 	public BoardVo detailBoard(String bo_no);
 	
@@ -33,6 +31,6 @@ public interface IBoardService {
 	//추천
 	public LikeVo likeCount(LikeVo vo);
 	
-	public List<CommVo> commList();
+	public List<CommVo> commList(String bo_no);
 
 }

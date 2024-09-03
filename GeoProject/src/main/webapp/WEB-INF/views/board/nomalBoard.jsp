@@ -36,7 +36,6 @@
 							<tbody>
 								<c:forEach var="nomal" items="${nomalBoard}" varStatus="vs">
 									<tr>
-										<th class="text-center" scope="row"><input type="checkbox" name="ch" class="ch" value="${nomal.bo_no}"></th>
 										<td class="text-center">${nomalBoard.size()-vs.index}</td>
 										<td class="text-center" onclick="location.href='./detailBoard.do?bo_no=${nomal.bo_no}'">${nomal.bo_title}</td>
 										<td class="text-center">${nomal.emp_no}</td>
@@ -51,7 +50,7 @@
 <!-- </table> -->
 			
 			<input type="submit" value="삭제">
-			<input type="button" onclick="location.href='./writeBoard.do?bo_status=nomal'" value="새글쓰기">
+			<input type="button" onclick="location.href='./writeBoard.do'" value="새글쓰기">
 			</form>
 	<br>
 
