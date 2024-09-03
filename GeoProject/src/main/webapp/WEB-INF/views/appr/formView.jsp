@@ -14,16 +14,18 @@
 
 <body>
 	<%@ include file="../comm/sidebar.jsp"%>
-	<main id="main" class="main">
+	<main id="main" class="main d-flex justify-content-center align-items-center" style="min-height: 100vh;" >
 		
-		<div style="width: 800px;">
+		<input type="hidden" id="con" value="${vo.apd_con }"> 
+		
+		<div style="width: 800px;" class="middle" >
 			<!-- 시작 -->
 			<!-- 결재칸 -->
 			<div style="text-align: right;">
 				<c:forEach var="signer" items="${apprLists}">
 					<div class="sign">
 						<div class="sign-name">${signer.emp_name }</div>
-						<div class="sign-signature" style="height: 100px;">
+						<div class="sign-signature" style="height: 120px; ">
 							<c:choose>
 								<c:when test="${empty signer.file_oname}">
 									<span style="text-align: center;">-</span>
@@ -47,7 +49,10 @@
 				</c:forEach>
 			</div>
 			<!-- right끝 -->
-
+			<c:if test="${variety eq 'submit' && vo.apd_status eq 'W'}">
+				<button type="button" class="btn btn-outline-danger category" 
+				  style="margin: 10px; float: right;"	onclick="location.href=`./cancel.do?apd_no=${vo.apd_no}`">철회</button>
+			</c:if>
 
 			<br>
 
@@ -158,11 +163,10 @@
 							</c:choose></td>
 					</tr>
 					<tr>
-						<td colspan="3"
-							style="padding: 5px; border: 1px solid black; height: 300px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-							${vo.apd_con }</td>
+						<td id="conText" colspan="3"
+							style="padding: 5px; border: 1px solid black; height: 300px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; 
+							vertical-align: top; background: rgb(255, 255, 255);">${vo.apd_con }</td>
 					</tr>
-
 
 					<!-- 파일 -->
 					<c:if
@@ -221,9 +225,7 @@
 					</c:when>
 				</c:choose>
 			</c:if>
-			<c:if test="${variety eq 'submit' && vo.apd_status eq 'W'}">
-				<button type="button" class="btn btn-outline-danger category" onclick="location.href=`./cancel.do?apd_no=${vo.apd_no}`">철회</button>
-			</c:if>
+			
 		</div>
 		
 		<!-- 끝 -->
