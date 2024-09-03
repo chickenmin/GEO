@@ -15,7 +15,7 @@
 <body>
 	<%@ include file="../comm/sidebar.jsp"%>
 	<main id="main" class="main">
-
+		
 		<div style="width: 800px;">
 			<!-- 시작 -->
 			<!-- 결재칸 -->
@@ -86,7 +86,7 @@
 							기안자</td>
 						<td
 							style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
-							colspan="2">${vo.emp_no}</td>
+							colspan="2">${vo.emp_name}</td>
 					</tr>
 
 					<!-- 날짜 -->
@@ -124,10 +124,13 @@
 							colspan="2"><c:choose>
 								<c:when test="${vo.apd_half_yn eq 'A'}">
 				            			오전반차
-				            		</c:when>
+				            	</c:when>
 								<c:when test="${vo.apd_half_yn eq 'P'}">
 				            			오후반차
-				            		</c:when>
+				            	</c:when>
+				            	<c:otherwise>
+				            		연차
+				            	</c:otherwise>
 							</c:choose></td>
 					</c:if>
 

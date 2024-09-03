@@ -64,6 +64,27 @@
 				,#{emp_no},SYSDATE, #{emp_no}, SYSDATE)    
 	</insert>
 	
+<!-- 연차 일정 추가 -->
+<insert id="insertVac" parameterType="java.util.Map">
+				INSERT INTO CAL(CAL_NO,EMP_NO,CAL_TITLE, CAL_CONTENT, 
+                     CAL_START, CAL_STOP,CAL_OPEN_YN,REG_DATE)
+				VALUES(CAL_SEQ.NEXTVAL,#{submit_id},
+						 <choose>
+								<when test='apd_half_yn =="A"'>
+								 	'오전반차'
+								</when>
+								<when test='apd_half_yn =="P"'>
+									'오후반차'
+								</when>
+								<otherwise>
+									'연차'
+								</otherwise>
+							</choose>
+				 		, '휴가',
+					  TO_DATE(#{cal_start}, 'YYYY/MM/DD HH24:MI'), 
+					  TO_DATE(#{cal_stop}, 'YYYY/MM/DD HH24:MI')
+					  , 'Y',SYSDATE)
+</insert>
 
 	
 	<!-- 결재라인 : 직급 순서 받아오기 -->
@@ -214,12 +235,15 @@
 	<!-- 상세조회 -->
 	<!-- 문서번호로 상세 조회 -->
 	<select id="selectDeatil" resultType="Ap_DocuVo">
-		SELECT APD_NO,EMP_NO ,APD_CON ,
-				APD_STEP ,APD_STATUS ,APD_DAYS ,
-				APD_HALF_YN ,APD_FORM ,APD_CLEAR_DATE ,APD_TEMP_YN ,
-				REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
+		SELECT ad.APD_NO,EMP_NO ,ad.APD_CON ,
+				ad.APD_STEP ,ad.APD_STATUS ,ad.APD_DAYS ,
+				ad.APD_HALF_YN ,ad.APD_FORM ,ad.APD_CLEAR_DATE ,ad.APD_TEMP_YN ,
+				ad.REG_ID ,ad.REG_DATE ,ad.MOD_ID ,ad.MOD_DATE ,e.EMP_NAME
  		FROM AP_DOCU ad 
- 		WHERE APD_NO = #{apd_no}
+ 		JOIN  EMP e  
+		USING (EMP_NO)
+		WHERE EMP_NO  = (SELECT EMP_NO FROM AP_DOCU ad2 WHERE APD_NO= #{apd_no})
+		AND APD_NO = #{apd_no}
 	</select>
 	
 	<!-- 결재자 순서대로 조회 -->
@@ -330,11 +354,49 @@
 	         </foreach>
 	</delete>
 	
+	<!-- 철회 -->
 	<update id="cancelDocu">
 		UPDATE AP_DOCU SET APD_TEMP_YN='Y'
 		 	WHERE APD_NO=#{apd_no}
 	</update>
 	
+	<!-- 연차일수 빼기 -->
+	<update id="updateVaCheck">
+	    UPDATE VA_check
+	    SET va_check_num = (SELECT VA_CHECK_NUM - #{minus}
+	                        FROM VA_check 
+	                        WHERE emp_no =  #{submit_id} 
+	                        AND TO_CHAR(VA_YEAR, 'YYYY') = #{year})
+	    WHERE emp_no = #{submit_id} 
+	    AND TO_CHAR(VA_YEAR, 'YYYY') = #{year}
+	</update>
+	
+	<!-- 연차 히스토리쌓기 -->
+	<insert id="insertHistory">
+		INSERT INTO GEO.VA
+			(EMP_NO, APD_NO, VA_USE_NUM, 
+			VA_USE_DATE, 
+			REG_ID, REG_DATE, MOD_ID, MOD_DATE)
+			VALUES(#{submit_id}, #{apd_no}, 
+			 	<choose>
+					<when test='apd_half_yn == "N"'>
+						1
+					</when>
+					<otherwise>
+						0.5
+					</otherwise>
+				</choose> 
+			,TO_DATE(#{days}, 'YYYY-MM-DD') , 
+			#{emp_no}, SYSDATE, #{emp_no}, SYSDATE)
+	</insert>
+	
+	<!-- 마지막 결재자 인지 확인 -->
+	<select id="checkLast" resultType="java.lang.Integer">
+		SELECT COUNT(APL_NO) 
+		 FROM AP_LINE al 
+		 WHERE APD_NO = #{apd_no}
+		 AND APL_STATUS =0
+	</select>
 
 </mapper>
 

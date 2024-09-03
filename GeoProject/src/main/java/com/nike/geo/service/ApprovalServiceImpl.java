@@ -156,6 +156,8 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.findFile(file_no);
 	}
 	
+
+	
 	//반려처리
 	@Transactional(readOnly = false)
 	@Override
@@ -182,7 +184,7 @@ public class ApprovalServiceImpl implements IApprovalService {
 			log.info("결재자 반려처리 및 반려메시지 입력 실패");
 		}
 		
-		return (n>0 || m>0 || o>0)?1:0;
+		return (n>0 && m>0 && o>0)?1:0;
 	}
 	
 	@Override
@@ -223,7 +225,7 @@ public class ApprovalServiceImpl implements IApprovalService {
 		}else {
 			log.info("서류 수정 성공!");
 		}
-		return (n>0 || m>0 || o>0)?1:0;
+		return (n>0 && m>0 && o>0)?1:0;
 	}
 	
 	@Override
@@ -254,6 +256,24 @@ public class ApprovalServiceImpl implements IApprovalService {
 	@Override
 	public int cancelDocu(String apd_no) {
 		return dao.cancelDocu(apd_no);
+	}
+	
+	@Override
+	public Integer checkLast(Map<String, Object> map) {
+		return dao.checkLast(map);
+	}
+	
+	@Override
+	public int updateVaCheck(Map<String, Object> map) {
+		return dao.updateVaCheck(map);
+	}
+	
+	@Transactional(readOnly = false)
+	@Override
+	public int insertVacHistory(Map<String, Object> map) {
+		int n = dao.insertHistory(map);
+		int m = dao.insertVac(map);
+		return (n>0 && m>0)?1:0;
 	}
 	
 

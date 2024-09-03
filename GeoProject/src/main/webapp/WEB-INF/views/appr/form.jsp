@@ -206,9 +206,9 @@
 
 </body>
   <%@ include file="../comm/footer.jsp" %>
-<script type="text/javascript">
-
-	
+  
+  
+<!-- <script type="text/javascript">
       // multiDatesPicker 초기화 및 상신버튼
 	$(document).ready(function() {
 		
@@ -294,7 +294,7 @@
 		$('#mdp-demo').multiDatesPicker('resetDates');
 		console.log("리셋")
 	}
-</script>
+</script> -->
 
 
 </html>

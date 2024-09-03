@@ -106,7 +106,17 @@ public interface IApprovalDao {
 	//철회하기
 	public int cancelDocu(String apd_no);
 	
+	//연차 일정 추가
+	public int insertVac(Map<String, Object> map);
 	
+	//마지막 결재자인지 확인
+	public Integer checkLast(Map<String, Object> map);
+	
+	//연차 히스토리 추가
+	public int insertHistory (Map<String, Object> map);
+	
+	//연차 갯수 삭감
+	public int updateVaCheck (Map<String, Object> map);
 	
 	
 	

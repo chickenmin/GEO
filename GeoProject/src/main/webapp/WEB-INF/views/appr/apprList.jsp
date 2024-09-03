@@ -29,9 +29,8 @@
 <body>
 	<%@ include file="../comm/sidebar.jsp" %>
  	<main id="main" class="main">
-		
 		<div class="pagetitle">
-			<h1>결재 문서함</h1>
+			<h1>문서함</h1>
 		</div><!-- End Page Title -->
 		
 		<section class="section">
@@ -69,7 +68,7 @@
 		                <thead>
 		                  <tr>
 		                    <c:if test="${variety eq 'temp' }">
-			                    <th scope="col" class="text-center"><input type="checkbox" id="allCheck"> </th>
+			                    <th scope="col" class="text-center"><input type="checkbox" id="allCheck" onclick="allSelect(this.checked)"> </th>
 		                    </c:if>
 		                    <th scope="col" class="text-center">No.</th>
 		                    <th scope="col" class="text-center">기안내용</th>

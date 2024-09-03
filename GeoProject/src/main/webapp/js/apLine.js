@@ -25,6 +25,7 @@
 				document.getElementById("dataType").value = this.textContent;
 				document.getElementById("variety").value = variety;
 				
+				validate();
 				
 				frm.submit(); // 폼 제출
 								
@@ -35,7 +36,7 @@
 		
 		//데이트피커 설정
 		$('#mdp-demo').multiDatesPicker({
-			dateFormat : "yy-mm-dd",
+			dateFormat : "yy/mm/dd",
 			beforeShowDay : $.datepicker.noWeekends,
 			// 날짜가 선택될 때 호출되는 함수
 			onSelect : function(dateText, inst) {
@@ -197,41 +198,36 @@
 		document.getElementById(id).innerHTML = "";
 		document.getElementById(id+"Cho").value = "";
 	}
-	
-//	function temp(){
-//		 const form = document.getElementById('approval');
-//            form.action = './tempSubmit.do'; // 다른 컨트롤러 URL로 변경
-//            form.submit(); // 폼 제출
-//	}
+
 	
 	
 	
-			function check() {
-				    // must 클래스를 가진 모든 요소를 선택
-				    var mustFields = document.querySelectorAll('.must');
-				    var isEmpty = false;
-				
-				    // 각 요소를 순회하면서 비어있는지 확인
-				    mustFields.forEach(function(field) {
-				        if (field.tagName.toLowerCase() === 'input' || field.tagName.toLowerCase() === 'textarea') {
-				            // input이나 textarea의 값이 비어있는지 확인
-				            if (field.value.trim() === '') {
-				                isEmpty = true;
-				            }
-				        } else if (field.innerText.trim() === '') {
-				            // 그 외의 요소들(예: div 등)의 innerText가 비어있는지 확인
-				            isEmpty = true;
-				        }
-				    });
-				
-				    if (isEmpty) {
-				        alert('모든 필수 입력 필드를 작성해 주세요.');
-				        return false;
-				    } else{
-						return true;
-				}
-				  
+		function check() {
+			    // must 클래스를 가진 모든 요소를 선택
+			    var mustFields = document.querySelectorAll('.must');
+			    var isEmpty = false;
+			
+			    // 각 요소를 순회하면서 비어있는지 확인
+			    mustFields.forEach(function(field) {
+			        if (field.tagName.toLowerCase() === 'input' || field.tagName.toLowerCase() === 'textarea') {
+			            // input이나 textarea의 값이 비어있는지 확인
+			            if (field.value.trim() === '') {
+			                isEmpty = true;
+			            }
+			        } else if (field.innerText.trim() === '') {
+			            // 그 외의 요소들(예: div 등)의 innerText가 비어있는지 확인
+			            isEmpty = true;
+			        }
+			    });
+			
+			    if (isEmpty) {
+			        alert('모든 필수 입력 필드를 작성해 주세요.');
+			        return false;
+			    } else{
+					return true;
 			}
+			  
+		}
 	
 	
 	
@@ -240,6 +236,17 @@
 		event.preventDefault();
 		$('#mdp-demo').multiDatesPicker('resetDates');
 		console.log("리셋")
+	}
+	
+	function validate(){
+		var str = document.getElementById("con").value;
+		str = str.replace(/\r\n|\r|\n|\n\r/gim,"<br>");
+		str = str.replace(/</gim,"&lt;");
+		str = str.replace(/>/gim,"&gt;");
+		str = str.replace(/\'/gim,"&#39;");
+		document.getElementById("con").innerHTML = str;
+		
+		content.value = str;
 	}
 	
 	
