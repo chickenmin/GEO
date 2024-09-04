@@ -147,18 +147,27 @@
   <%@ include file="../comm/footer.jsp" %>
 <script type="text/javascript">
 
-	$(document).ready(function() {
-		$("#apprList").DataTable({
-			"info": false,
-			"columnDefs":[
-				{"orderable": false, "targets":0}
-			]
-		});
-		
+$(document).ready(function() {
+    var variety = "${variety}";
+    
+    // DataTable 옵션 객체를 미리 선언
+    var dataTableOptions = {
+        "info": false,
+        "columnDefs": [
+            {"orderable": false, "targets": 0}
+        ]
+    };
+    
+    // 조건에 따라 order 옵션을 추가
+    if (variety == 'temp') {
+        dataTableOptions.order = [[4, "desc"]];
+    } else {
+        dataTableOptions.order = [[5, "desc"]];
+    }
 
-		
-	});// ready 끝
-
+    // DataTable 초기화 시 옵션을 전달
+    $("#apprList").DataTable(dataTableOptions);
+});//로드 끝
 	
 </script>
 </html>

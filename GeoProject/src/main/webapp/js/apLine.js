@@ -270,7 +270,7 @@
 	   
 	
 	    document.getElementById("con").value = str;
-	    //
+	    
 	}
 	
 	
