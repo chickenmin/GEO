@@ -29,6 +29,7 @@ SELECT EMP_IMG, EMP_NO , <!-- (SELECT CODE_NAME FROM COM WHERE DIVISION = '직�
 	EMP_EMAIL , EMP_PHONE , EMP_BIRTH , 
 	EMP_POSTCODE , EMP_ADDRESS1 , EMP_ADDRESS2 , EMP_ADDRESS3
 FROM EMP e
+<!-- WHERE EMP_STATUS = 'Y' -->
 </select>
 
 <!-- 사원 상세 조회 -->
@@ -68,20 +69,20 @@ WHERE emp_no = #{emp_no}
 </update>
 
 <!-- 출근 -->
-<insert id="arriveWork">
+<update id="arriveWork" parameterType="String">
 UPDATE GEO.ATT
 SET ATT_ARRIVE_TIME = SYSDATE,
-    REG_ID = EMP_NO,
+    REG_ID = #{emp_no},
     REG_DATE = SYSDATE
 WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
 AND ATT_ARRIVE_TIME IS NULL
-</insert>
+</update>
 
 <!-- 퇴근 -->
 <update id="leftWork">
 UPDATE GEO.ATT
 SET ATT_LEFT_TIME = SYSDATE,
-	MOD_ID = EMP_NO,
+	MOD_ID = #{emp_no},
 	MOD_DATE = SYSDATE
 WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
 AND ATT_LEFT_TIME IS NULL
@@ -111,6 +112,14 @@ UPDATE GEO.EMP
 SET emp_pw = #{emp_pw}
 WHERE EMP_NO = #{emp_no}
 </select>
+
+<!-- 퇴사 처리 -->
+<!-- <update id="entireEmp" parameterType="EmpVo"> -->
+<!-- UPDATE GEO.EMP -->
+<!-- SET EMP_STATUS='ST002',  -->
+<!-- EMP_RETIREDATE = SYSDATE -->
+<!-- WHERE EMP_NO=#{emp_no} -->
+<!-- </update> -->
 
 
 <insert id="batchRow">

@@ -36,6 +36,10 @@ public interface IEmpService {
 
 	// 비밀번호 변경
 	public int modPw(String emp_no);
+	
+	// 퇴사 처리
+	public int entireEmp(EmpVo vo);
 
+	// 출퇴근 테이블 모든사원 null 값 생성
 	public void batchRow();
 }

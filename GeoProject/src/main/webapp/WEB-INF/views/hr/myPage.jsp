@@ -510,7 +510,7 @@
 							</div>
 						</div>
 					</form>
-					End Change Password Form
+<!-- 					End Change Password Form -->
 
 
 					<!-- End Bordered Tabs -->

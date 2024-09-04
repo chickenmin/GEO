@@ -3,6 +3,7 @@ package com.nike.geo.model;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
@@ -50,8 +51,8 @@ public class EmpDaoImpl implements IEmpDao {
 	
 	@Override
 	public int arriveWork(String emp_no) {
-		log.info(NS + "arriveWork");
-		return session.update(NS + "arriveWork");
+		log.info(NS + "arriveWork", emp_no);
+		return session.update(NS + "arriveWork",emp_no);
 	}
 	
 	@Override
@@ -77,11 +78,18 @@ public class EmpDaoImpl implements IEmpDao {
 		log.info(NS + "modPw");
 		return session.update(NS + "modPw");
 	}
+	
+	@Override
+	public int entireEmp(EmpVo vo) {
+		log.info(NS + "entireEmp");
+		return session.update(NS + "entireEmp");
+	}
 
 	
 	@Override
 	public void batchRow() {
-		session.insert(NS + "batchRow");
+		int row = session.insert(NS + "batchRow");
+		System.out.println("DB호출 :" + row);
 	}
 
 }

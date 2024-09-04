@@ -12,6 +12,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<context:component-scan base-package="com.nike.geo"/>
+
 	
 	<mvc:resources mapping="/form/js/**" location="/js/"/>
 
@@ -52,12 +53,14 @@
 	</bean>
 	
 	<!--스케쥴러 사용  -->
-<!-- <task:annotation-driven scheduler=""/>
-	<task:scheduler id="" pool-size=""/>
+	<task:annotation-driven scheduler="scheduler"/>
+	<task:scheduler id="scheduler" pool-size="10"/>
 	
-	<task:scheduled-tasks>
-		<task:scheduled ref="" method="" cron=""/>
-		<task:scheduled ref="" method="" cron=""/>
-	</task:scheduled-tasks> -->
+	
+<task:scheduled-tasks>
+<!-- 	<task:scheduled ref="EmpDaoImpl" method="batchRow" cron="0/10 * * * * *"/> -->
+	<task:scheduled ref="empServiceImpl" method="batchRow" cron="0 0 6 * * *"/>
+</task:scheduled-tasks>
+
 
 </beans>

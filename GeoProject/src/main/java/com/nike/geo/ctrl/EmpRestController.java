@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nike.geo.service.ICommService;
@@ -32,47 +31,46 @@ public class EmpRestController {
 	private final IEmpService empService;
 
 	@PostMapping(value = "/arriveWork.do")
-	@ResponseBody
-	public Map<String, String> arriveWork(@RequestParam("emp_no") String emp_no, HttpSession session) {
+	public Map<String, String> arriveWork(String emp_no, HttpSession session) {
 		log.info("출석 체크");
-		Map<String, String> response = new HashMap<>();
-
-		try {
+		log.info("Received emp_no: {}", emp_no);
+		Map<String, String> response1 = new HashMap<>();
+		int n = empService.arriveWork(emp_no);
+		session.setAttribute("emp_no", emp_no);
+		if (n >0) {
 			// 출근 처리 로직
 			// 예: service.arriveWork(empNo);
-			empService.arriveWork(emp_no);
-			session.setAttribute("emp_no", emp_no);
+			
 
-			response.put("status", "success");
-			response.put("message", "출근 처리가 완료되었습니다.");
-		} catch (Exception e) {
-			response.put("status", "error");
-			response.put("message", "출근 처리 중 오류가 발생했습니다.");
+			response1.put("status", "success");
+			response1.put("message", "출근 처리가 완료되었습니다.");
+		} else {
+			response1.put("status", "error");
+			response1.put("message", "출근 처리 중 오류가 발생했습니다.");
 		}
 
-		return response;
+		return response1;
 	}
 
 	@PostMapping(value = "/leftWork.do")
-	@ResponseBody
-	public Map<String, String> leftWork(@RequestParam("emp_no") String emp_no, HttpSession session) {
-		Map<String, String> response = new HashMap<>();
+	public Map<String, String> leftWork(String emp_no, HttpSession session) {
+		Map<String, String> response1 = new HashMap<>();
 
 		try {
 			// 퇴근 처리 로직
 			// 예: service.leftWork(empNo);
 
-			empService.arriveWork(emp_no);
-//			session.getAttribute(emp_no);
+			empService.leftWork(emp_no);
+			session.setAttribute("emp_no", emp_no);
 
-			response.put("status", "success");
-			response.put("message", "퇴근 처리가 완료되었습니다.");
+			response1.put("status", "success");
+			response1.put("message", "퇴근 처리가 완료되었습니다.");
 		} catch (Exception e) {
-			response.put("status", "error");
-			response.put("message", "퇴근 처리 중 오류가 발생했습니다.");
+			response1.put("status", "error");
+			response1.put("message", "퇴근 처리 중 오류가 발생했습니다.");
 		}
 
-		return response;
+		return response1;
 	}
 
 //	@GetMapping("/org.do")
