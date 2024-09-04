@@ -258,4 +258,14 @@ SELECT APD_NO,EMP_NO , SUBSTR(APD_CON, 1, 10) AS APD_CON,
 
 ---------------------------------------------------------------------------------
  		
+-- 쪽지 상세보기 쿼리 수정(보낸사람, 받는사람 이름으로)
+SELECT MSG_NO , A.EMP_NAME AS MSG_SEND_ID , B.EMP_NAME AS MSG_RECV_ID ,
+                MSG_CONTENT , MSG_SEND_DATE , MSG_RECV_READ_YN ,
+                MSG_SEND_DEL_YN , MSG_RECV_DEL_YN , MSG.REG_ID ,
+                MSG.REG_DATE , MSG.MOD_ID , MSG.MOD_DATE 
+        	FROM MSG INNER JOIN EMP A 
+        		ON MSG_SEND_ID = A.EMP_NO
+        		INNER JOIN EMP B
+        			ON MSG_RECV_ID = B.EMP_NO 
+        	WHERE MSG_NO = '268';
  		
