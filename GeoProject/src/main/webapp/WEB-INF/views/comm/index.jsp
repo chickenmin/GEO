@@ -6,11 +6,9 @@
 <html>
 
 <%@ include file="./header.jsp" %>
-<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.15/index.global.min.js'></script>
 <body>
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
-		<div id="calendar"></div>
 		<div class="pagetitle">
 	      <h1>Dashboard</h1>
 	      <nav>
