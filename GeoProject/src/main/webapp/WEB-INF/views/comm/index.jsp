@@ -9,6 +9,23 @@
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales/ko.js"></script>
+<style>
+	td a {
+		color: inherit; /* 링크 색상을 부모 요소의 색상으로 설정 */
+	}
+	
+	td strong {
+		font-weight: normal; /* strong 효과 제거 */
+        }
+
+    td em {
+		font-style: normal; /* em 효과 제거 */
+    }
+    
+    td u {
+    	text-decoration: none;
+    }
+</style>
 <script>
 
 	document.addEventListener('DOMContentLoaded', function() {
@@ -62,20 +79,27 @@
 	
 			  <!-- Card with an image on top -->
 	          <div class="card">
-		        <img src="assets/img/card.jpg" class="card-img-top"alt="...">
+	            <div class="card-img-top" style="background-color: #E2E2E2; width: 100%; height: 200px; position: relative;">
+	            	<img src="assets/img/product-5.jpg" alt="profile" style="width: 150px; height: 150px;
+	            		border-radius: 50%; position: absolute; top: 50%; left: 50%;
+	            		transform: translate(-50%, -50%);">
+	            </div>
+<!-- 		        <img src="assets/img/card.jpg" class="card-img-top" alt="..."> -->
 	            <div class="card-body" style="text-align: center;">
-	              <h5 class="card-title" style="display: inline-block">${mainVo.emp_name}</h5>
-	              <p class="card-text">${mainVo.emp_dept}팀 ${mainVo.emp_pos}</p>
-	              <button class="btn btn-primary">출근</button>
-				  <button class="btn btn-danger">퇴근</button>
-<!-- 				  <form action="./arriveWork.do" method="post"> -->
-<!-- 					<input type="hidden" name="emp_no" value="aa001"> -->
-<!-- 					<button type="submit" class="btn btn-primary">출근</button> -->
-<!-- 				  </form> -->
-<!-- 				  <form action="./leftWork.do" method="post"> -->
-<!-- 					<input type="hidden" name="emp_no" value="aa001"> -->
-<!-- 					<button type="submit" class="btn btn-danger">퇴근</button> -->
-<!-- 				  </form> -->
+					<h5 class="card-title" style="display: inline-block">${mainVo.emp_name}</h5>
+					<p class="card-text">${mainVo.emp_dept}팀 ${mainVo.emp_pos}</p>
+<!-- 	              <button class="btn btn-primary">출근</button> -->
+<!-- 				  <button class="btn btn-danger">퇴근</button> -->
+					<div class="form-container" style="display: flex; justify-content: center; gap: 10px;">
+						<form action="./arriveWork.do" method="post">
+							<input type="hidden" name="emp_no" value="aa001">
+							<button type="submit" class="btn btn-outline-primary">출근</button>
+						</form>
+						<form action="./leftWork.do" method="post">
+							<input type="hidden" name="emp_no" value="aa001">
+							<button type="submit" class="btn btn-outline-danger">퇴근</button>
+						</form>
+					</div>
 	            </div>
 	          </div>
 	          <!-- End Card with an image on top -->
@@ -86,22 +110,31 @@
 	              <h5 class="card-title" style="display: inline-block">
 	              	9월 결재 현황
 	              </h5>
-	              <div class="row mb-3"></div>
+	              
 	              <table class="table">
 	              	<thead>
 		              	<tr>
 		              		<td scope="col">총합</td>
-		              		<td scope="col">승인</td>
-		              		<td scope="col">반려</td>
 		              		<td scope="col">대기</td>
+		              		<td scope="col">진행중</td>
 		              	</tr>
 	              	</thead>
 	              	<tbody>
 		              	<tr>
-		              		<th scope="col">10</th>
-		              		<th scope="col">2</th>
-		              		<th scope="col">7</th>
-		              		<th scope="col">1</th>
+		              		<!-- 총합 -->
+		              		<th rowspan="3" scope="col" style="vertical-align: middle;">${sum}</th>
+		              		<th scope="col">${waiting}</th> <!-- 대기 -->
+		              		<th scope="col">${progress}</th> <!-- 진행중 -->
+		              	</tr>
+		              	
+		              	<tr>
+		              		<td scope="col">승인</td>
+		              		<td scope="col">반려</td>
+		              	</tr>
+		              	
+		              	<tr>
+		              		<th scope="col">${complete}</th> <!-- 승인 -->
+		              		<th scope="col">${reject}</th> <!-- 반려 -->
 		              	</tr>
 	              	</tbody>
 	              </table>
@@ -113,6 +146,7 @@
 	              <h5 class="card-title" style="display: inline-block">
 	              	9월 근태 현황
 	              </h5>
+	              
 	              <!-- Pie Chart -->
 	              <canvas id="pieChart" style="max-height: 400px;"></canvas>
 	              <script>
@@ -140,6 +174,7 @@
 	                });
 	              </script>
 	              <!-- End Pie CHart -->
+	              
 	            </div>
 	          </div>
 
@@ -161,11 +196,11 @@
 		              <table class="table display" id="notiTable">
 		                <thead>
 		                  <tr>
-		                    <th scope="col" class="text-center">글번호</th>
-		                    <th scope="col" class="text-center">글제목</th>
-		                    <th scope="col" class="text-center">작성자</th>
-		                    <th scope="col" class="text-center">조회수</th>
-		                    <th scope="col" class="text-center">작성일</th>
+		                    <th scope="col" class="text-center" style="width: 10%;">No.</th>
+		                    <th scope="col" class="text-center" style="width: 40%;">글제목</th>
+		                    <th scope="col" class="text-center" style="width: 20%;">작성자</th>
+		                    <th scope="col" class="text-center" style="width: 10%;">조회수</th>
+		                    <th scope="col" class="text-center" style="width: 20%;">작성일자</th>
 		                  </tr>
 		                </thead>
 		                
@@ -175,7 +210,6 @@
 		                    <tr>
 		                      <th scope="row" class="text-center">${fn:length(board) - vs.index}</th>
 		                      
-		                      <!-- 한번도 읽지않은 쪽지는 New 표시 -->
 		                      <td><a href="./detailBoard.do?bo_no=${vo.bo_no}">
 		                      	${vo.bo_title}
 		                      </a></td>
@@ -199,34 +233,49 @@
 	              <div class="card recent-sales overflow-auto">
 	
 	                <div class="card-body">
-	                  <h5 class="card-title">상신 문서함</h5>
+	                  <h5 class="card-title">결재 문서함</h5>
 	
 	                  <!-- Default Table -->
 		              <table class="table display" id="notiTable">
 		                <thead>
 		                  <tr>
-		                    <th scope="col" class="text-center">글번호</th>
-		                    <th scope="col" class="text-center">글제목</th>
-		                    <th scope="col" class="text-center">작성자</th>
-		                    <th scope="col" class="text-center">조회수</th>
-		                    <th scope="col" class="text-center">작성일</th>
+		                    <th scope="col" class="text-center" style="width: 10%;">No.</th>
+		                    <th scope="col" class="text-center" style="width: 40%;">기안내용</th>
+		                    <th scope="col" class="text-center" style="width: 20%;">기안자</th>
+		                    <th scope="col" class="text-center" style="width: 10%;">결재상태</th>
+		                    <th scope="col" class="text-center" style="width: 20%;">기안일자</th>
 		                  </tr>
 		                </thead>
 		                
 		                <!-- tbody -->
 		                <tbody>
-		                  <c:forEach var="vo" items="${board}" varStatus="vs">
+		                  <c:forEach var="vo" items="${docu}" varStatus="vs">
 		                    <tr>
-		                      <th scope="row" class="text-center">${fn:length(board) - vs.index}</th>
+		                      <th scope="row" class="text-center">${fn:length(docu) - vs.index}</th>
 		                      
 		                      <!-- 한번도 읽지않은 쪽지는 New 표시 -->
-		                      <td><a href="./detailBoard.do?bo_no=${vo.bo_no}">
-		                      	${vo.bo_title}
+		                      <td><a href="./detailAppr.do?variety=appr&apd_no=${vo.apd_no}">
+		                      	${vo.apd_form}) ${vo.apd_con}
 		                      </a></td>
 		                      
 		                      <td class="text-center">${vo.emp_no}</td> 
-		                      <td class="text-center">${vo.bo_view_count}</td> 
-		                      <td class="text-center">${vo.bo_regdate}</td>
+		                      <td class="text-center">
+								<c:choose>
+						            <c:when test="${vo.apd_status eq 'W'}">
+						                <span class="badge border-primary border-1 text-primary">대기</span>
+						            </c:when>
+									<c:when test="${vo.apd_status eq 'C'}">
+				                		<span class="badge border-warning border-1 text-warning">완료</span>
+				                	</c:when>
+				                	<c:when test="${vo.apd_status eq 'P'}">
+				                		<span class="badge border-success border-1 text-success">진행</span>
+				                	</c:when>
+				                	<c:otherwise>
+				                		<span class="badge border-secondary border-1 text-secondary">반려</span>
+				                	</c:otherwise>
+								</c:choose>
+		                      </td> 
+		                      <td class="text-center">${vo.reg_date}</td>
 		                    </tr>
 		                  </c:forEach>
 		                </tbody>
@@ -261,19 +310,6 @@
 	
 	      </div>
 	    </section>
-
-		
-		<div>
-			<form action="./arriveWork.do" method="post">
-				<input type="hidden" name="emp_no" value="aa001">
-				<button type="submit">출근</button>
-			</form>
-			<form action="./leftWork.do" method="post">
-				<input type="hidden" name="emp_no" value="aa001">
-				<button type="submit">퇴근</button>
-			</form>
-		</div>
-
 
   	</main><!-- End #main -->
 

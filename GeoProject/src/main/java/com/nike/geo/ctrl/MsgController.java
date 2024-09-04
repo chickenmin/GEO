@@ -7,7 +7,9 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -28,6 +30,7 @@ import com.google.gson.Gson;
 import com.nike.geo.service.IBoardService;
 import com.nike.geo.service.ICommService;
 import com.nike.geo.service.IMsgService;
+import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.FileVo;
@@ -72,9 +75,10 @@ public class MsgController {
 	public String index(HttpSession session, Model model) {
 		log.info("MESSAGE controller - index 페이지로 이동");
 		EmpVo loginVo = (EmpVo)session.getAttribute("loginVo");
+		String empNo = loginVo.getEmp_no();
 		
 		// 사원 정보
-		EmpVo mainVo = commService.selectMainEmp(loginVo.getEmp_no());
+		EmpVo mainVo = commService.selectMainEmp(empNo);
 		log.info("MESSAGE controller - index에 띄울 사원정보 {}", mainVo);
 		model.addAttribute("mainVo", mainVo);
 		
@@ -83,9 +87,41 @@ public class MsgController {
 		List<BoardVo> board = commService.selectMainBoard(status);
 		model.addAttribute("board", board);
 		
-		// 결재 현황
+		// 결재 현황 - 완료C, 대기W, 진행중P, 반려R
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_no", empNo);
 		
+		map.put("apd_status", "C");
+		int complete = commService.selectMainAppr(map);
+		model.addAttribute("complete", complete);
+
+		map.put("apd_status", "W");
+		int waiting = commService.selectMainAppr(map);
+		model.addAttribute("waiting", waiting);
+
+		map.put("apd_status", "P");
+		int progress = commService.selectMainAppr(map);
+		model.addAttribute("progress", progress);
+
+		map.put("apd_status", "R");
+		int reject = commService.selectMainAppr(map);
+		model.addAttribute("reject", reject);
+
+		int sum = complete + waiting + progress + reject;
+		model.addAttribute("sum", sum);
+				
 		// 결재 문서함
+		List<Ap_DocuVo> docu = commService.selectMainDocu(empNo);
+		for (Ap_DocuVo d : docu) {
+			String content = d.getApd_con();
+			content = Jsoup.parse(content).text();
+			if(content.length() > 30) {
+				content = content.substring(0, 30).concat("...");			
+			}
+			content = content.replaceAll("(\r\n|\r|\n|\n\r)", " ");
+			d.setApd_con(content);
+		}
+		model.addAttribute("docu", docu);
 		
 		// 근태 현황
 		
