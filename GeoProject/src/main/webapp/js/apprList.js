@@ -1,6 +1,7 @@
 
 $(document).ready(function() {
 		
+		
 		var btns = document.querySelectorAll(".category");
 
 		for (let i = 0; i < btns.length; i++) 	{
@@ -13,7 +14,54 @@ $(document).ready(function() {
 				changeClass(status);
 			} //버튼 클릭 끝
 		} //버튼 for문 끝
+		
+		
+	var no = document.getElementsByName("apd_nos");
+	var allCheck = document.getElementById("allCheck");
+	
+	for(let i = 0 ;i<no.length ; i++){
+		no[i].onclick = function(){
+			if(no.length == chksCount(no)){
+				allCheck.checked = true;
+			} else{
+				allCheck.checked = false;
+			}
+		}
+	}
+		
+		
+		
 });//ready 끝
+
+function chksCount(no){
+	let cnt = 0;
+	for(let c of no){
+		if(c.checked){
+		cnt++;
+		}
+	}
+	return cnt;
+}
+
+function allSelect(bool){
+	console.log("this로 입력받은 값: " ,bool);
+	
+	//dom탐색을 통한 check박스 상태값 검색
+	var checkStaus = document.getElementById("allCheck");
+	console.log("checkbox의 value: ", checkStaus.value);
+	console.log("checkbox의 checked: ", checkStaus.checked); //true /false
+	//체크박스는 value값이 항상 on
+	
+	var no = document.getElementsByName("apd_nos");
+	
+	for(let i=0;i<no.length;i++){
+		no[i].checked = bool;
+	}
+	
+}
+
+
+
 
 
 function btnClass(group){
@@ -91,7 +139,7 @@ function makeTr(vo,index,array){
     const tdElement1 = document.createElement('td');
     tdElement1.classList.add('text-center');
     const tdLink1 = document.createElement('a');
-    tdLink1.href = `./detailAppr.do?apd_no=${vo.apd_no}`;
+    tdLink1.href = `./detailAppr.do?apd_no=${vo.apd_no}&variety=appr`;
     tdLink1.textContent = `${vo.apd_con}...`;
     tdElement1.appendChild(tdLink1);
     tr.appendChild(tdElement1);

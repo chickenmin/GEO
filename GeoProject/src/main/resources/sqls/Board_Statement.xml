@@ -18,7 +18,7 @@
 	<select id="nomalBoard" resultType="BoardVo">
 	SELECT BO_NO,EMP_NO,BO_STATUS,
 		BO_TITLE,BO_CONTENT ,
-		BO_REGDATE,BO_LIKE_COUNT,
+		BO_REGDATE,(SELECT COUNT(*) FROM LIKER l WHERE l.BO_NO=b.BO_NO) AS BO_LIKE_COUNT,
 		(SELECT COUNT(*) FROM VIEW_COUNT v WHERE v.BO_NO = b.BO_NO)	AS BO_VIEW_COUNT,
 		BO_DEL_YN ,MOD_ID ,MOD_DATE 
 			FROM BO b
@@ -29,7 +29,7 @@
 	<select id="delBoard" resultType="BoardVo">
 	SELECT BO_NO,EMP_NO,BO_STATUS,
 		BO_TITLE,BO_CONTENT ,
-		BO_REGDATE,(SELECT COUNT(*) FROM LIKER l WHERE l.BO_NO = b.BO_NO)	AS LIKER,
+		BO_REGDATE,(SELECT COUNT(*) FROM LIKER l WHERE l.BO_NO=b.BO_NO) AS BO_LIKE_COUNT,
 		(SELECT COUNT(*) FROM VIEW_COUNT v WHERE v.BO_NO = b.BO_NO)	AS BO_VIEW_COUNT,
 		BO_DEL_YN ,MOD_ID ,MOD_DATE 
 			FROM BO b
@@ -38,7 +38,7 @@
 	</select>
 	
 	<!-- status 분배해야함 -->
-	<insert id="insertAnnoBoard">
+	<insert id="insertBoard">
 	INSERT INTO BO (BO_NO,BO_TITLE,EMP_NO,
 			BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT
 			,BO_CONTENT ,BO_STATUS,BO_DEL_YN,
@@ -51,18 +51,6 @@
 			,SYSDATE)
 	</insert>
 	
-	<insert id="insertNomalBoard">
-	INSERT INTO BO (BO_NO,BO_TITLE,EMP_NO,
-			BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT
-			,BO_CONTENT ,BO_STATUS,BO_DEL_YN,
-			REG_ID,REG_DATE,MOD_ID
-			,MOD_DATE)
-	VALUES('A' || TO_CHAR(BO_NO_SEQ.NEXTVAL,'FM0000'),#{bo_title},#{emp_no},
-			SYSDATE,0,0
-			,#{bo_content},'nomalBoard','N'
-			,#{emp_no},SYSDATE,#{emp_no}
-			,SYSDATE)
-	</insert>
 	
 	<select id="detailBoard" resultType="BoardVo">
 	SELECT BO_NO,EMP_NO,BO_STATUS,BO_TITLE,BO_CONTENT ,BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT,BO_DEL_YN ,MOD_ID ,MOD_DATE 
@@ -151,12 +139,13 @@
 	</select>
 	
 	<!-- 댓글 -->
-	<select id="commList" resultType="CommVo">
+	<select id="commList" parameterType="java.lang.String" resultType="CommVo">
 	SELECT COMM_SEQ ,BO_NO ,EMP_NO ,
 			COMM_CONTENT ,COMM_DATE ,COMM_REF ,
 			COMM_STEP ,COMM_USE_YN ,COMM_DEL_YN ,
 			REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
 	FROM COMM
+	WHERE BO_NO=#{bo_no, jdbcType=VARCHAR}
 	</select>
 	
 	

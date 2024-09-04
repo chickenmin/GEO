@@ -5,9 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.http.HttpRequest;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Year;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +45,7 @@ import com.nike.geo.vo.hr.EmpVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 //일반 컨트롤러
 @Slf4j
@@ -98,20 +103,26 @@ public class ApprovalController {
 	
 	/////////////////////////////////////////////////////////////////////////
 	//결재함으로 이동
-//	@GetMapping("/apprList.do")
 	@RequestMapping(value = "/apprList.do",method = {RequestMethod.GET,RequestMethod.POST})
-	public String apprList(Model model,HttpSession session) {
+	public String apprList(Model model,HttpSession session, String variety) {
 		log.info("결재함으로 이동");
 		String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
-		List<Ap_DocuVo> lists = apprService.selectApproval(emp_no);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("variety", variety);
+		map.put("emp_no", emp_no);
+		
+		List<Ap_DocuVo> lists = apprService.selectLists(map);
+		
 		model.addAttribute("lists",lists);
+		model.addAttribute("variety",variety); 
+		
 		return "appr/apprList";
 	}
 	
 	/////////////////////////////////////////////////////////////////////////
 	//결재문서함 상세보기
 	@GetMapping("/detailAppr.do")
-	public String detailAppr(String apd_no,Model model, HttpServletRequest request,HttpSession session) {
+	public String detailAppr(String apd_no,Model model, HttpServletRequest request,HttpSession session,String variety) {
 		log.info("결재 문서함 상세보기");
 		String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
 		
@@ -123,15 +134,23 @@ public class ApprovalController {
 		List<Ap_LineVo> apprLists = apprService.selectLine(apd_no);	//결재자 조회
 		List<FileVo> file = apprService.selectFile(apd_no);	// 이미 승인한 서명 이미지
 		String apl_msg = apprService.sel_Msg(Integer.parseInt(apd_no));	//반려메시지
-		int order = apprService.checkOrder(map);
+		
+		// 결재함이 아닐 경우, 결재라인 정보 없어서 nullPointException 발생
+		if (variety.equals("appr")) {
+			int order = apprService.checkOrder(map);
+			if (order == 1) {
+				model.addAttribute("order", 1);
+			}else {
+				model.addAttribute("order", 0);
+			}
+		}
 		List<FileVo> mySign = apprService.selMySign(emp_no);	//내 전자서명
-		
-		
+
 		//파일 다운~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		String path="";	//전자서명
 		try {
 			//상대경로
-			path = WebUtils.getRealPath(request.getSession().getServletContext(),"/signature/");	//전자서명 경로
+			path = WebUtils.getRealPath(request.getSession().getServletContext(),"/appr/");	//전자서명 경로
 			log.info("path {}",path);
 			if (file.size()>0) {
 				model.addAttribute("file", file);
@@ -141,22 +160,13 @@ public class ApprovalController {
 		} 
 		
 		
-		
-		if (order == 1) {
-			model.addAttribute("order", 1);
-//			List<String> signs;
-			//전자서명 이미지 가져가기
-			
-			
-		}else {
-			model.addAttribute("order", 0);
-		}
 
 		model.addAttribute("vo", vo);
 		model.addAttribute("apprLists", apprLists);
-		model.addAttribute("apd_no", apd_no);
+//		model.addAttribute("control", "appr");
 		model.addAttribute("apl_msg", apl_msg);
 		model.addAttribute("mySign", mySign);
+		model.addAttribute("variety", variety);
 		
 		return "appr/formView";
 	}
@@ -178,7 +188,7 @@ public class ApprovalController {
 		}else {
 			log.info("반려처리 실패");
 			model.addAttribute("apd_no", apd_no);
-			return "redirect:/detailAppr.do";
+			return "redirect:/detailAppr.do?variety=submit";
 		}
 	}
 
@@ -187,7 +197,8 @@ public class ApprovalController {
 	//다운로드
 	@PostMapping(value = "/apprFile.do")
 	public void fileDownload(String file_no,
-							HttpServletResponse response) throws IOException {
+							HttpServletResponse response
+							,HttpServletRequest request) throws IOException {
 		log.info("결재 첨부파일 다운로드");
 		log.info(file_no);
 		FileVo file = apprService.findFile(file_no);
@@ -198,7 +209,9 @@ public class ApprovalController {
 		
 		
 		// C 로컬 폴더
-		String dir = "C:/GeoProject/storage/appr/";
+		String dir ;
+				/*"C:/GeoProject/storage/appr/"; */
+		dir = WebUtils.getRealPath(request.getSession().getServletContext(),"/appr/");	//전자서명 경로
 		
 		//프로젝트 안의 폴더
 //		String dir = "C:/Users/kkjm1/git/GEO/GeoProject/src/main/webapp/upload/";		//노트북 경로
@@ -226,22 +239,17 @@ public class ApprovalController {
 	//상신하기
 		@PostMapping("/submitForm2.do")
 		public String submitForm(@RequestParam Map<String, Object> map
-								,@RequestParam(required = false)String ccLine,
-								@RequestParam(required = false) List<MultipartFile> file,HttpSession session) throws IOException {
+								,@RequestParam(required = false, value = "ccLine")String ccLine,
+								@RequestParam(required = false) List<MultipartFile> file,HttpSession session,
+								@RequestParam(required = false) String temp, HttpServletRequest request) throws IOException {
 				System.out.println("--------------"+ map);
-
+				String variety = (String)map.get("variety");
 				String appr_Origin = (String)map.get("apprLine");	//결재라인
 				String[] appLine = appr_Origin.split(",");
 				String[] cc = ccLine.split(",");
 				map.put("apd_step", appLine.length);
-//				
-//				
-//				// form 내용으로 docu vo 생성
-//				Ap_DocuVo docuVo = new Ap_DocuVo(emp_no, content, appLine.length, date, apd_form);
-//				int submit = apprService.submit2(docuVo);
 				int submit = apprService.submit2(map);
-				
-				
+
 				//만들어진 문서 번호 가져오기
 				int apd_no = apprService.selctAPD();
 				//결재수
@@ -276,6 +284,7 @@ public class ApprovalController {
 							
 							//수정
 							FileVo vo = new FileVo();
+							vo.setFile_type(1+"");
 							
 							String originName = f.getOriginalFilename();
 							vo.setFile_oname(originName);
@@ -295,13 +304,8 @@ public class ApprovalController {
 							log.info("전자결재 - 받아온 파일의 크기 : {}", fileSize);
 							
 							//C 로컬에 저장
-							String path = "C:/GeoProject/storage/appr/";
-//							File dir = new File(path);
-//							if (!dir.exists()) {
-//								dir.mkdirs();
-//							}try {
-//							f.transferTo(new File(path+fileName)); 
-							
+							String path = WebUtils.getRealPath(request.getSession().getServletContext(),"/appr/");
+									//  "C:/GeoProject/storage/appr/";
 						   
 //							// 현재 클래스의 클래스 로더를 사용하여 프로젝트 루트 경로 얻기
 							
@@ -331,14 +335,176 @@ public class ApprovalController {
 					}	// file 의 foreach 끝
 				}
 				
+				//임시저장이었던 문서를 상신한 경우, 문서 새로 INSERT 하고 , 임시저장이었던 문서는 삭제
+				if(temp != null) {
+					String no = (String)map.get("apd_no");
+					List<String> list = Collections.singletonList(no);
+					apprService.delTemp(list);
+				}
 		
-			return "redirect:/apprList.do";
+			return "redirect:/apprList.do?variety="+variety;
 		}
 		
 		
+		///////////////////////////////////////////////////////////////////////////////////////////
+		//전자서명 관리
+		@GetMapping("/signHome.do")
+		public String signHome(Model model,HttpSession session ) {
+			String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
+			List<com.nike.geo.vo.comm.FileVo> signs = apprService.selMySign(emp_no);
 		
+			model.addAttribute("signs", signs);
+			return "appr/signHome";
+		}
 		
+		///////////////////////////////////////////////////////////////////////////
+		//전자서명 등록
+		@PostMapping("/enrollSign.do")
+		public String enrollSign(MultipartFile file,HttpServletRequest request, HttpSession session) {
+
+			//등록자
+			String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
+			if (file.isEmpty()) {
+				log.info("파일없음");
+			}else {
+				FileVo vo = new FileVo();
+				vo.setFile_type(4+"");		//문서타입: 전자서명
+				
+				String originName = file.getOriginalFilename();
+				vo.setFile_oname(originName);
+				log.info("전자결재 - 받아온 파일의 원래 이름 : {}", originName);
+				
+				String ext = FilenameUtils.getExtension(originName);
+				log.info("전자결재 - 받아온 파일의 확장자 : {}", ext);
+				
+				UUID uuid = UUID.randomUUID(); 
+				String fileName = uuid + "." + ext;
+				vo.setFile_sname(fileName);
+				log.info("전자결재 - 받아온 파일의 DB 저장명 : {}", fileName);
+				
+				
+				long fileSize = file.getSize();
+				vo.setFile_size(fileSize);
+				log.info("전자결재 - 받아온 파일의 크기 : {}", fileSize);
+				
+				
+//				/현재 클래스의 클래스 로더를 사용하여 프로젝트 루트 경로 얻기
+				String path="";	
+				
+				try {
+					path = WebUtils.getRealPath(request.getSession().getServletContext(),"/signature/");
+					log.info("path : {}",path);
+					File dir = new File(path);
+					if (!dir.exists()) {
+						dir.mkdirs();
+					} //폴더 생성
+					
+					try {
+						file.transferTo(new File(path + originName));
+					} catch (IOException e) {
+						log.error("파일 저장 중 오류 발생", e);
+					}
+					
+					//문서번호
+					vo.setOrigin_no(4);
+					//첨부자 이름
+					vo.setReg_id(emp_no);
+					int n = apprService.putFile(vo);
+					if (n ==1 ) {
+						log.info("파일저장 성공");
+					}
+				} catch (FileNotFoundException e1) {
+					log.info("경로 생성 중 오류 발생");
+					e1.printStackTrace();
+				}
+				
+			} //else 끝
+			return "redirect:/signHome.do";
+		}//컨틀로러 끝
+			
+			
+		//전자서명 삭제
+		@PostMapping("/deleteSign.do")
+			public String deleteSign(@RequestParam("signName") String[] signs,HttpSession session) {
+				String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
+				log.info("사인 삭제 {}",Arrays.toString(signs));
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("reg_id", emp_no);
+				map.put("list",Arrays.asList(signs) );
+				apprService.delSign(map);
+				return  "redirect:/signHome.do";
+			}
+		
+		//서명하기
+		@PostMapping("/approve.do")
+		public String approve(@RequestParam Map<String, Object>map,HttpSession session,Model model) {
+			log.info("결재 승인~");
+			log.info("Map : {}",map);
+			String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
+			map.put("emp_no", emp_no);
+			
+			
+			
+			Integer last = apprService.checkLast(map);
+			if (last != null && last == 1) {		//내가 최종 승인자일때
+				if (map.get("apd_form").toString().equals("AP002")) {		//연차신청서인 경우
+					log.info("연차신청서 등록");
+					String [] date = map.get("apd_days").toString().split(",");	//일정 넘기기
+					for (String d : date) {		//날짜별로 일정, 연차히스토리 추가
+						map.put("cal_start", d);
+						map.put("cal_stop", d);
+						map.put("days", d);
+						apprService.insertVacHistory(map);
+						map.remove("cal_start");
+						map.remove("cal_stop");
+						map.remove("days");
+					}	//foreach
+					int year = Year.now().getValue();	//올해년도
+					map.put("year", year);
+					double minus = (map.get("apd_half_yn").toString().equals("N")? 1 : 0.5);	//
+					map.put("minus", minus*date.length);	//반차,연차 * 일수
+					apprService.updateVaCheck(map);
+					
+				}	//연차
+			} //최종승인
+			
+			apprService.approve(map); //승인
+			model.addAttribute("apd_no",(String)map.get("apd_no"));
+			return "redirect:/detailAppr.do?variety=appr";
+		}
 	
+		@PostMapping("/deleteTemp.do")
+		public String deleteTemp(String[] apd_nos) {
+			
+			apprService.delTemp(Arrays.asList(apd_nos));
+			return "redirect:/apprList.do?variety=temp";
+		}
+	
+		@GetMapping("/tempDetail.do")
+		public String tempDetail(String apd_no,Model model,HttpSession session,HttpServletRequest request) {
+			log.info("임시 문서함 상세보기");
+			String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("apd_no", apd_no);
+			map.put("emp_no", emp_no);
+			
+			Ap_DocuVo vo = apprService.selectDeatil(apd_no);	//문서 상세조회
+			List<Ap_LineVo> apprLists = apprService.selectLine(apd_no);	//결재자 조회
+
+			
+			model.addAttribute("vo", vo);
+			model.addAttribute("apprLists", apprLists);
+			log.info("vo 값 :{}",vo);
+			return "appr/formTemp";
+		}
+		
+		@GetMapping("/cancel.do")
+		public String cancel(String apd_no) {
+			apprService.cancelDocu(apd_no);
+			return "redirect:/apprList.do?variety=temp";
+		}
+		
 	
 	
 	
@@ -347,4 +513,6 @@ public class ApprovalController {
 	
 	
 
-}
+
+} //클래스 끝
+		

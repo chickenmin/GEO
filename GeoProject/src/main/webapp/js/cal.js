@@ -225,6 +225,141 @@ function updateDragAjax(cal_start, cal_stop, cal_no) {
 
 }
 
+// 캘린더 삭제
+function deleteCal(no){
+//	console.log(no);
+	location.href="./delflagCal.do?cal_no="+no;
+	
+}
+
+// 수정 모달을 열고 데이터 로드하기 위한 함수
+function updateCal(eventNo){
+	
+
+	$.ajax({
+        url: './selectOneCal.do?eventNo='+eventNo,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+			console.log(data);
+            $('#update_cal_no').val(data.cal_no);
+            $('#update_cal_title').val(data.cal_title);  
+            $('#update_cal_content').val(data.cal_content);
+            $('#update_datetimepicker1').val(data.cal_start);
+            $('#update_datetimepicker2').val(data.cal_stop);
+            $('#update_cal_type').val(data.cal_type);
+            $('#update_cal_open_yn').val(data.cal_open_yn);
+            $('#updateEventModal').modal('show');
+            
+            // 내용칸이 비었을 경우
+			if ($("#content").val() == "") {
+				alert("내용을 입력해주세요")
+				$("#content").focus();
+				return false;
+			}
+			
+			// 시작일, 종료일이 비엇을경우
+			if ($("#datetimepicker1").val() == "" || $("#datetimepicker2").val() == "") {
+				alert("시간을 입력해 주세요")
+				return false;
+			}
+		
+			// 시작일이 종료일보다 클 시 아작스 강제 종료
+			 dateVal() //시작일 값과 종료일 값을 밀리세컨드로 바꿔 크기를 비교해주는 function
+			if (dateVal('datetimepicker1', 'datetimepicker2') == false) {
+				return false;
+			}         
+            // 일정명 칸이 비었을 경우
+			if ($("#title").val() == "") {
+				alert("일정명을 입력해주세요")
+				$("#title").focus();
+				return false;
+			}
+			
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            console.log('Status:', status);s
+            console.log('XHR:', xhr);
+        }
+    });
+}
+
+
+
+
+// 일정 수정 Ajax
+function updateAjax() {
+
+	
+//	console.log(document.getElementById('update_cal_no').value);
+//	console.log(document.getElementById('update_cal_title').value);
+//	console.log(document.getElementById('update_cal_content').value);
+//	console.log(document.getElementById('update_cal_type').value);
+//	console.log(document.getElementById('update_cal_open_yn').value);
+//	console.log(document.getElementById('update_datetimepicker1').value);
+//	console.log(document.getElementById('update_datetimepicker2').value);
+
+	// datetimepicker 인스턴스를 가져오고 값 설정
+	var startDate = moment(data.cal_start); // moment.js를 사용하여 날짜와 시간 포맷 변환
+	if (startDate.isValid()) { // 날짜가 유효한지 확인
+	    $('#update_datetimepicker1').data('datetimepicker').date(startDate);
+	}
+	var selectedDate = $('#update_datetimepicker1').data('datetimepicker').date();
+	$(function() {
+    // datetimepicker 초기화
+    $('#update_datetimepicker1').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss', // 날짜 및 시간 포맷
+        useCurrent: false // 현재 시간을 기본값으로 설정하지 않도록
+    });
+
+    $('#update_datetimepicker2').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss', // 날짜 및 시간 포맷
+        useCurrent: false // 현재 시간을 기본값으로 설정하지 않도록
+    	});
+	});
+        // datetimepicker 인스턴스를 가져오고 값 설정
+    var startDate = moment(data.cal_start);
+    var endDate = moment(data.cal_stop);
+
+    if (startDate.isValid()) {
+        $('#update_datetimepicker1').data('datetimepicker').date(startDate);
+    }
+
+    if (endDate.isValid()) {
+        $('#update_datetimepicker2').data('datetimepicker').date(endDate);
+    }
+    
+
+    $.ajax({
+        url: '/GeoProject/updateCal.do',
+        type: 'POST',
+        data: {
+            cal_no: $('#update_cal_no').val(),
+            cal_title: $('#update_cal_title').val(),
+            cal_content: $('#update_cal_content').val(),
+            
+            start_date: $('#data.cal_start').val(),
+            end_date: $('#data.cal_stop').val(),
+            cal_type: $('#update_cal_type').val(),
+            cal_open_yn: $('#update_cal_open_yn').val(),
+
+            
+
+            
+        },
+        success: function(response) {
+            alert('일정이 수정되었습니다');
+            location.href = 'calendar.do';
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+}
+
+
+
 
 function dateVal(dtp, dtp2) {
 	let date1 = $("#" + dtp + "")  // start 의 date 값 ex) Wed May 11 2022 11:10:17 GMT+0900 (한국 표준시)
@@ -275,68 +410,44 @@ function zeroPlus(time) {
 //
 //}
 
-// 캘린더 삭제
-function deleteCal(no){
-	console.log(no);
-//	location.href="./delflagCal.do?cal_no="+no;
-	
-}
-
-// 수정 모달을 열고 데이터 로드하기 위한 함수
-function updateCal(eventNo){
-	console.log(eventNo);
-	$.ajax({
-        url: './selectOneCal.do?eventNo='+eventNo,
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-			console.log(data);
-            $('#update_cal_no').val(data.cal_no);
-//            $('#update_cal_title').val(data.sd_title);  <- 위의 내용처럼 벨류에 내용이 담기게 수정하면 된다
-//            $('#update_cal_content').val(data.sd_content);
-//            $('#update_datetimepicker1').val(info.event.start);
-//            $('#update_datetimepicker2').val(info.event.end);
-//            $('#update_cal_type').val(data.sd_type);
-//            $('#update_cal_open_yn').val(data.sd_open_yn);
-// 위쪽에 클로즈 모달창(해놓고 자연스럽게 이동하도록)
-            $('#updateEventModal').modal('show');
-        },
-        error: function(xhr, status, error) {
-            console.error('Error:', error);
-            console.log('Status:', status);
-            console.log('XHR:', xhr);
-        }
-    });
-}
 
 
+        document.addEventListener('DOMContentLoaded', function () {
+            const allCheckBox = document.getElementById('allCheckBox');
+            const departmentCheckBox = document.getElementById('departmentCheckBox');
+            const employeeCheckBox = document.getElementById('employeeCheckBox');
+            const calendarDisplay = document.getElementById('calendarDisplay');
 
-// 일정 수정 Ajax
-function updateAjax() {
-    $.ajax({
-        url: '/GeoProject/updateCal.do',
-        type: 'POST',
-        data: {
-            cal_no: $('#update_cal_no').val(),
-            cal_title: $('#update_cal_title').val(),
-            cal_content: $('#update_cal_content').val(),
-            cal_type: $('#update_cal_type').val(),
-            cal_open_yn: $('#update_cal_open_yn').val(),
-            start_date: $('#update_datetimepicker1').val(),
-            end_date: $('#update_datetimepicker2').val()
-        },
-        success: function(response) {
-            alert('일정이 수정되었습니다');
-            location.href = 'calendar.do';
-        },
-        error: function(xhr, status, error) {
-            console.error('Error:', error);
-        }
-    });
-}
+            function updateCalendar() {
+                let type = -1;
+                if (allCheckBox.checked) {
+                    type = 0;
+                } else if (departmentCheckBox.checked) {
+                    type = 1;
+                } else if (employeeCheckBox.checked) {
+                    type = 2;
+                }
 
+                if (type !== -1) {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('GET', `/calendar?type=${type}`, true);
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            calendarDisplay.innerText = xhr.responseText;
+                        } else {
+                            calendarDisplay.innerText = '데이터를 가져오는 데 실패했습니다.';
+                        }
+                    };
+                    xhr.send();
+                } else {
+                    calendarDisplay.innerText = '';
+                }
+            }
 
-
+            allCheckBox.addEventListener('change', updateCalendar);
+            departmentCheckBox.addEventListener('change', updateCalendar);
+            employeeCheckBox.addEventListener('change', updateCalendar);
+        });
 
 
 

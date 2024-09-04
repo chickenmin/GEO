@@ -1,6 +1,5 @@
 package com.nike.geo.ctrl;
 
-import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,20 +45,20 @@ public class MsgRestController {
 			// 세션에 loginVo 추가
 			session.setAttribute("loginVo", loginVo);
 			
-			if(loginVo.getEmp_status().equals("W")) {
+			if(loginVo.getEmp_status().equals("ST003")) {
 				log.info("MESSAGE controller - 비밀번호 변경 대상");
 				response.put("status", "update-Password-Needed");
 				response.put("message", "비밀번호 변경 대상입니다.");
 				return response;
 			} else {
 				log.info("MESSAGE controller - 비밀번호 변경 대상 아님");
-				response.put("status", "success");
+				response.put("status", "login-Success");
 				response.put("message", "로그인에 성공하였습니다.");
 				return response;
 			}
 		}else {
 			log.info("MESSAGE controller - 로그인 실패");
-			response.put("status", "fail");
+			response.put("status", "login-Fail");
 			response.put("message", "사원번호 또는 비밀번호를 확인해주세요.");
 			return response;
 		}
@@ -129,6 +128,7 @@ public class MsgRestController {
 			return response;
 		}
 	}
+
 	
 	@GetMapping(value = "/cntUnreadMsg.do")
 	public int cntUnreadMsg(HttpSession session) {
@@ -155,5 +155,6 @@ public class MsgRestController {
 		}
 		return latestMsg;
 	}
+	
 	
 }

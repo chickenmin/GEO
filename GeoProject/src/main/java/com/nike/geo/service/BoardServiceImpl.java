@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nike.geo.model.IBoardDao;
 import com.nike.geo.vo.bo.BoardVo;
@@ -39,13 +40,8 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	
 	@Override
-	public boolean insertAnnoBoard(BoardVo Vo) {
-		return dao.insertAnnoBoard(Vo);
-	}
-	
-	@Override
-	public boolean insertNomalBoard(BoardVo Vo) {
-		return dao.insertNomalBoard(Vo);
+	public boolean insertBoard(BoardVo Vo) {
+		return dao.insertBoard(Vo);
 	}
 	
 	@Override
@@ -60,7 +56,6 @@ public class BoardServiceImpl implements IBoardService {
 	
 	@Override
 	public boolean multiDeleteBoard(List<String> list) {
-		
 		return dao.multiDeleteBoard(list);
 	}
 	
@@ -107,9 +102,8 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	
 	@Override
-	public List<CommVo> commList() {
-		// TODO Auto-generated method stub
-		return dao.commList();
+	public List<CommVo> commList(@RequestParam("bo_no") String bo_no) {
+		return dao.commList(bo_no);
 	}
 }
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.nike.geo.model.ICommDao;
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.CommonVo;
 import com.nike.geo.vo.hr.EmpVo;
 
@@ -77,13 +78,6 @@ public class CommServiceImpl implements ICommService {
 	public void sendMail(String to, String subject, String content) throws MessagingException {
 		log.info("COMMON service - 메일로 임시 비밀번호 전송 sendMail");
 		
-//		SimpleMailMessage mail = new SimpleMailMessage();
-//		mail.setTo(to);
-//		mail.setSubject(subject);
-//		mail.setText(content);
-//		mail.setFrom("geo.project.notify@gmail.com");
-//		mailSender.send(mail);
-		
 		MimeMessage message = mailSender.createMimeMessage();
 		
 		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -107,6 +101,13 @@ public class CommServiceImpl implements ICommService {
 		log.info("COMMON service - 메인화면 공지게시판 조회 selectMainBoard");
 		log.info("COMMON service - 받아온 값 : {}", status);
 		return dao.selectMainBoard(status);
+	}
+	
+	@Override
+	public List<CalVo> selectMainCal(String no) {
+		log.info("COMMON service - 메인화면 일정 조회 selectMainCal");
+		log.info("COMMON service - 받아온 값 : {}", no);
+		return dao.selectMainCal(no);
 	}
 	
 }

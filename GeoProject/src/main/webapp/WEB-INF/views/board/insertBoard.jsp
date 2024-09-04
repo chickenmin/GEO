@@ -24,9 +24,9 @@
 			<tr>
 				<td scope="row">게시판</td>
 				<td>
-					<select name="cate">
-						<option id="anno" value="announcements">공지사항</option>
-						<option id="nomal" value="nomalBoard">게시판</option>
+					<select name="bo_status">
+						<option value="announcements">공지사항</option>
+						<option value="nomalBoard">게시판</option>
 					</select>
 				</td>
 				<td>부서</td>
@@ -51,11 +51,11 @@
 		<input type="file" name="file">
 		<c:choose>
 		<c:when test="${mode=='insert'}">
-		<button name="submitButton" type="submit">게시</button>
+		<button type="submit">게시</button>
 		</c:when>
 		<c:when test="${mode=='modify'}">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}" />
-		<button name="submitButton" type="submit">수정</button>
+		<button type="submit">수정</button>
 		</c:when>
 		</c:choose>
 		<button onclick="history.back(-1)">취소</button>

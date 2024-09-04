@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.nike.geo.service.IBoardService;
 import com.nike.geo.service.ICommService;
 import com.nike.geo.service.IMsgService;
 import com.nike.geo.vo.bo.BoardVo;
+import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.hr.EmpVo;
 import com.nike.geo.vo.msg.MsgVo;
@@ -88,6 +90,9 @@ public class MsgController {
 		// 근태 현황
 		
 		// 일정
+		List<CalVo> calList = commService.selectMainCal(loginVo.getEmp_no());
+		log.info("MESSAGE controller - index에 띄울 일정 정보 {}", calList);
+		model.addAttribute("calList", calList);
 		
 		return "comm/index";
 	}

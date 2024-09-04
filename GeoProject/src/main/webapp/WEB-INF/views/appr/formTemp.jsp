@@ -43,14 +43,24 @@
 
 <body>
 	<%@ include file="../comm/sidebar.jsp" %>
- 	<main id="main" class="main d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+ 	<main id="main" class="main  d-flex justify-content-center align-items-center" style="min-height: 100vh;">
 		<div style="width: 800px; ">
+		
 		<!-- FORM -->
-			<form  action="./submitForm2.do"  method="post" name="submitForm"  enctype="multipart/form-data" >
+			<form  action="./submitForm2.do"  method="post" name="submitForm"  enctype="multipart/form-data" 
+				onsubmit="return check()" >
 			
 				<!-- 화면에 노출없이, 폼으로 넘겨야 하는 값 -->
-				<input type="hidden" name="apd_form" value="${apd_form}">
-				<c:if test="${apd_form ne 'AP002'}">
+				<input type="hidden" name="apd_no" value="${vo.apd_no}">
+				<input type="hidden" name="apd_form" value="${vo.apd_form}">
+				<input type="hidden" id="beforeDates" value="${vo.apd_days }">
+				<input type="hidden" id="beforeHalf" value="${vo.apd_half_yn }">
+				<input type="hidden" id="apprLine" value="${apprLine }">
+				<input type="hidden" name="temp" value="temp">
+				<input type="hidden" name="variety" id="variety" value="submit">
+				<input type="hidden" name="type" id="dataType" value="상신하기">
+				
+				<c:if test="${vo.apd_form ne 'AP002'}">
 					<input type="hidden" name="apd_half_yn" value="N">
 				</c:if>
 				
@@ -63,16 +73,16 @@
 				        <tr>
 				            <td style="width: 100%; padding: 10px; border: 1px solid black; font-size: 22px; font-weight: bold; text-align: center; vertical-align: middle;" colspan="3">
 				                <c:choose>
-				                	<c:when test="${apd_form eq 'AP001'}">
+				                	<c:when test="${vo.apd_form eq 'AP001'}">
 				                		일일 업무 일지
 				                	</c:when>
-				                	<c:when test="${apd_form eq 'AP002'}">
+				                	<c:when test="${vo.apd_form eq 'AP002'}">
 				                		연차 신청서
 				                	</c:when>
-				                	<c:when test="${apd_form eq 'AP003'}">
+				                	<c:when test="${vo.apd_form eq 'AP003'}">
 				                		지출결의서
 				                	</c:when>
-				                	<c:when test="${apd_form eq 'AP004'}">
+				                	<c:when test="${vo.apd_form eq 'AP004'}">
 				                		사유서
 				                	</c:when>
 				                	<c:otherwise>
@@ -101,16 +111,16 @@
 				            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
 				            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
 				                 <c:choose>
-				                	<c:when test="${apd_form eq 'AP001'}">
+				                	<c:when test="${vo.apd_form eq 'AP001'}">
 				                		업무일자
 				                	</c:when>
-				                	<c:when test="${apd_form eq 'AP002'}">
+				                	<c:when test="${vo.apd_form eq 'AP002'}">
 				                		연차일자
 				                	</c:when>
-				                	<c:when test="${apd_form eq 'AP003'}">
+				                	<c:when test="${vo.apd_form eq 'AP003'}">
 				                		발의일자
 				                	</c:when>
-				                	<c:when test="${apd_form eq 'AP004'}">
+				                	<c:when test="${vo.apd_form eq 'AP004'}">
 				                		사유일자
 				                	</c:when>
 				                	<c:otherwise>
@@ -121,17 +131,17 @@
 				            <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 				            	colspan="2">
 				            	<c:choose>
-					            	<c:when test="${apd_form eq 'AP002' or apd_form eq 'AP005'}">
+					            	<c:when test="${vo.apd_form eq 'AP002' or vo.apd_form eq 'AP005'}">
 					            		<input name="apd_days" type="text" id="mdp-demo"  class="must" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
 					                	<button onclick="resetDay(event)" style="margin-left: 10px;">초기화</button>
 					            	</c:when>
 					            	<c:otherwise>
-					                	<input id="dates"  class="must"  name="apd_days" type="date" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
+					                	<input id="dates"  class="must" value="${vo.apd_days}" name="apd_days" type="date" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;" />
 					                </c:otherwise>
 				           		 </c:choose>
 				            </td>
 				        </tr>
-				        <c:if test="${apd_form eq 'AP002'}">
+				        <c:if test="${vo.apd_form eq 'AP002'}">
 					        <tr>
 					        	<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; 
 					            	color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" >
@@ -139,7 +149,7 @@
 					            </td>
 					             <td style="padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px;"
 					            	colspan="2">
-					            	<select name="apd_half_yn" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;">
+					            	<select id="half" name="apd_half_yn" style="width: calc(100% - 110px); border: 1px solid black; padding: 5px;">
 					            		<option value="N" >---미사용---</option>
 					            		<option value="A" >오전반차</option>
 					            		<option value="P" >오후반차</option>
@@ -153,16 +163,16 @@
 				            <td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold;" colspan="3">
 				                <b style="color: rgb(255, 0, 0);">*</b>&nbsp;
 				                 <c:choose>
-				                	<c:when test="${apd_form eq 'AP001'}">
+				                	<c:when test="${vo.apd_form eq 'AP001'}">
 				                		업무내용
 				                	</c:when>
-				                	<c:when test="${apd_form eq 'AP002'}">
+				                	<c:when test="${vo.apd_form eq 'AP002'}">
 				                		연차사유
 				                	</c:when>
-				                	<c:when test="${apd_form eq 'AP003'}">
+				                	<c:when test="${vo.apd_form eq 'AP003'}">
 				                		지출내용
 				                	</c:when>
-				                	<c:when test="${apd_form eq 'AP004'}">
+				                	<c:when test="${vo.apd_form eq 'AP004'}">
 				                		사유
 				                	</c:when>
 				                	<c:otherwise>
@@ -173,16 +183,16 @@
 				        </tr>
 				        <tr>
 				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				                <textarea id="con" rows="15"  class="must" name="apd_con" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
+				                <textarea id="con" rows="15"  class="must" name="apd_con" style="width: 100%; border: 1px solid black; padding: 5px;">${vo.apd_con }</textarea>
 				            </td>
 				        </tr> 
 				        
-						<c:if test="${apd_form eq 'AP003' or apd_form eq 'AP004' or apd_form eq 'AP005'}">
+						<c:if test="${vo.apd_form eq 'AP003' or vo.apd_form eq 'AP004' or vo.apd_form eq 'AP005'}">
 						 <!-- 파일 -->
 				        <tr>
 				        	<td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); 
 				        		font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				        		<input type="file" name="file" multiple="multiple" id="reviewImgFileInput">	
+				        		<input type="file" name="file" multiple="multiple" id="reviewImgFileInput" >	
 				        	</td>
 				        </tr>
 						</c:if>				        
@@ -194,7 +204,6 @@
 				<div style="display: flex; justify-content: flex-end;" >
 					<input type="hidden" name="type" id="dataType">
 					<input type="hidden" name="variety" id="variety">
-					<button class="btn btn-outline-primary frmbtn"  style="height: auto; margin: 5px 10px 0 0;" >임시저장</button>
 					<button class="btn btn-primary frmbtn"  style="height: auto; margin: 5px 10px 0 0;" >상신하기</button>
 				</div>
 				<jsp:include page="./apprLine.jsp"></jsp:include>
@@ -205,7 +214,6 @@
 
 </body>
   <%@ include file="../comm/footer.jsp" %>
-  
 
 
 

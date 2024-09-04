@@ -40,15 +40,11 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 	
 	@Override
-	public boolean insertAnnoBoard(BoardVo Vo) {
-		int n = sessionTemplate.insert(NS+"insertAnnoBoard",Vo);
+	public boolean insertBoard(BoardVo Vo) {
+		int n = sessionTemplate.insert(NS+"insertBoard",Vo);
 		return (n==1)?true:false;
 	}
-	@Override
-	public boolean insertNomalBoard(BoardVo Vo) {
-		int n = sessionTemplate.insert(NS+"insertNomalBoard",Vo);
-		return (n==1)?true:false;
-	}
+	
 	
 	
 	
@@ -118,9 +114,9 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 	
 	@Override
-	public List<CommVo> commList() {
+	public List<CommVo> commList(String bo_no) {
 		
-		return sessionTemplate.selectList(NS+"commList");
+		return sessionTemplate.selectList(NS+"commList",bo_no);
 	}
 		
 	

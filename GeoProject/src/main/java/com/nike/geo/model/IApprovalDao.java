@@ -52,7 +52,7 @@ public interface IApprovalDao {
 	public String sel_Msg(int apd_no);
 	
 	//결재 순서 조회
-	public int selMinOrder(Map<String, Object> map);
+	public Integer selMinOrder(Map<String, Object> map);
 	
 	//내 결재 순서 조회
 	public int selMyOrder(Map<String, Object> map);
@@ -78,13 +78,45 @@ public interface IApprovalDao {
 	//서류 상태 수정 (철회, 진행중,완료 )
 	public int update_aStatus(Map<String, Object> map);
 	
+	//사인 다중삭제
+	public int delSign(Map<String, Object> map);
 	
 	
+	//결재라인 수정- 결재
+	public int updateApprLine(Map<String, Object> map);
 	
+	//문서 상태 수정 - 결재해서
+	public int updateDocu(Map<String, Object> map);
 	
+	//문서 결재라인 수 조회
+	public int selStep(Map<String, Object> map);
 	
+	//결재한 사람 수 조회
+	public int selComplete(Map<String, Object> map);
 	
+	//상신함 , 임시저장
+	public List<Ap_DocuVo> selectSubmit_Docu(Map<String, Object> map);
 	
+	//참조함
+	public List<Ap_DocuVo> selRef_Docu(String emp_no);
+	
+	//임시저장 삭제
+	public int delTemp(List<String> apd_no);
+	
+	//철회하기
+	public int cancelDocu(String apd_no);
+	
+	//연차 일정 추가
+	public int insertVac(Map<String, Object> map);
+	
+	//마지막 결재자인지 확인
+	public Integer checkLast(Map<String, Object> map);
+	
+	//연차 히스토리 추가
+	public int insertHistory (Map<String, Object> map);
+	
+	//연차 갯수 삭감
+	public int updateVaCheck (Map<String, Object> map);
 	
 	
 	

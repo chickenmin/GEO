@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nike.geo.service.IBoardService;
 import com.nike.geo.vo.bo.BoardVo;
@@ -59,10 +60,9 @@ public class BoardController {
 	//글작성 bo_status 로 값을 보내줘야 쿼리가 동작 가능
 	@GetMapping(value = "/writeBoard.do")
 	public String writePostForm(Model model) {
-		model.addAttribute("type", "announcements");
 		model.addAttribute("mode", "insert");
 		
-		return "board/insertAnnoBoard";
+		return "board/insertBoard";
 	}
 	
 	@PostMapping(value = "/writeBoard.do")
@@ -74,13 +74,21 @@ public class BoardController {
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		String writeId = Evo.getEmp_no();
 		Vo.setEmp_no(writeId);
-	    boolean isc = service.insertAnnoBoard(Vo);
+		Vo.setBo_title(bo_title);  // 제목 설정
+	    Vo.setBo_content(bo_content);  // 내용 설정
+	    Vo.setBo_status(bo_status);  // 상태 설정
+	    boolean isc = service.insertBoard(Vo);
 	    
 	    if (isc) {
-	        return "redirect:/announcements.do";	//소스 실행 후 리턴을 어디로 잡아야 정상적으로 화면이 나올것인가
-	    } else {
-	        return "redirect:/writeBoard.do";
-	    }
+	        if ("announcements".equals(bo_status)) {
+	            return "redirect:/announcements.do";  // 공지사항 페이지로 리다이렉트
+	        } else if ("nomalBoard".equals(bo_status)) {
+	            return "redirect:/nomalBoard.do";  // 일반게시판 페이지로 리다이렉트
+	        }
+	    } 
+	    // 실패 시 원래 페이지로 리다이렉트
+	    return "redirect:/writeBoard.do";
+	    
 	}
 
 	//글상세
@@ -105,7 +113,7 @@ public class BoardController {
 		BoardVo Vo=service.detailBoard(bo_no);
 		model.addAttribute("Vo",Vo);
 		model.addAttribute("mode","modify");
-		return "board/insertAnnoBoard";	//출력화면 변경해야함
+		return "board/insertBoard";	//출력화면 변경해야함
 	}
 	
 	@PostMapping(value = "/modifyBoard.do")
@@ -157,10 +165,10 @@ public class BoardController {
 
 	//댓글
 	@GetMapping("/commList.do")
-	public String commList(Model model) {
-		System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
-		List<CommVo> Cvo= service.commList();
-		model.addAttribute("Cvo", Cvo);
-		return "detailBoard";
-	}
+	@ResponseBody
+	public List<CommVo> commList(@RequestParam("bo_no") String bo_no) {
+        // 댓글 리스트를 가져옵니다
+        List<CommVo> comments = service.commList(bo_no);
+        return comments; // JSON으로 자동 변환되어 클라이언트에 반환됩니다
+    }
 }

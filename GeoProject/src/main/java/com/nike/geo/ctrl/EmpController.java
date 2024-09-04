@@ -165,7 +165,9 @@ public class EmpController {
 //	}
 
 	@GetMapping(value = "/myPage.do")
+
 	public String myPage(HttpSession session, HttpServletRequest request, String saveFileName, Model model) {
+
 		log.info("마이 페이지");
 
 		EmpVo loginVo = (EmpVo) session.getAttribute("loginVo");
