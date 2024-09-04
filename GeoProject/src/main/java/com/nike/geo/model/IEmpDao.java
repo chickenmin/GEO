@@ -38,6 +38,9 @@ public interface IEmpDao {
 	
 	// 비밀번호 변경
 	public int modPw(String emp_no);
+	
+	// 퇴사 처리
+	public int entireEmp(EmpVo vo);
 
 
 	public void batchRow();

@@ -8,6 +8,45 @@
 <%@ include file="./header.jsp" %>
 
 <body>
+<script>
+        $(document).ready(function() {
+            $('#arriveWorkBtn').click(function() {
+                sendRequest('arriveWork.do');
+            });
+
+            $('#leftWorkBtn').click(function() {
+                sendRequest('leftWork.do');
+            });
+
+            function sendRequest(url) {
+                var emp_no = $('#emp_no').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: { emp_no: emp_no },
+                    success: function(msg) {
+                    	if(msg.status == 'success'){
+                    		 $('#arriveWorkBtn').css('display', 'none');
+                    	}else{
+                    		 $('#message').css('color', 'red');
+                    	}
+                    	
+                    	
+//                         $('#message').text(response.message);
+//                         if (response.status === 'success') {
+//                             $('#message').css('color', 'green');
+//                         } else {
+//                             $('#message').css('color', 'red');
+//                         }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#message').text('서버와의 통신 중 오류가 발생했습니다: ' + error).css('color', 'red');
+                    }
+                });
+            }
+        });
+    </script>
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
 		<div class="pagetitle">

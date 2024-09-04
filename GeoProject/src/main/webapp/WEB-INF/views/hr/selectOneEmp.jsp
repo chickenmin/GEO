@@ -156,12 +156,21 @@
 						data-bs-target="#profile-edit" aria-selected="false" tabindex="-1"
 						role="tab">정보 수정</button>
 				</li>
-
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" data-bs-toggle="tab"
-						data-bs-target="#profile-change-password" aria-selected="false"
-						tabindex="-1" role="tab">비밀번호 초기화</button>
-				</li>
+				
+				<c:if test="${loginVo.emp_auth eq 'AU002'}">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" data-bs-toggle="tab"
+							data-bs-target="#profile-change-password" aria-selected="false"
+							tabindex="-1" role="tab">비밀번호 초기화</button>
+					</li>
+				</c:if>
+				<c:if test="${loginVo.emp_auth eq 'AU002'}">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" data-bs-toggle="tab"
+							data-bs-target="#profile-entire" aria-selected="false"
+							tabindex="-1" role="tab">퇴사 처리</button>
+					</li>
+				</c:if>
 
 			</ul>
 
@@ -276,57 +285,57 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-      google.charts.load("current", {packages:["calendar"]});
-      google.charts.setOnLoadCallback(drawChart);
-   function drawChart() {
-       var dataTable = new google.visualization.DataTable();
-       dataTable.addColumn({ type: 'date', id: 'Date' });
-       dataTable.addColumn({ type: 'number', id: 'Won/Loss' });
-       dataTable.addColumn({ type: 'string', role: 'style'});
-       var currentDate = new Date();
-       var currentYear = new Date().getFullYear();
-       var currentMonth = new Date().getMonth();
-//     var currentDate = new Date().getDate();
-       console.log(currentMonth);
-       console.log(currentYear);
-       console.log(currentDate);
-       dataTable.addRows([
-          [ new Date(currentYear, currentMonth, currentDate.getDate()), 38830, 'fill="color: #FF0000"' ]
-        ]);
-       var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
-       var options = {
-         title: "근태기록부",
-         height: 350
-       };
-       chart.draw(dataTable, options);
-   }
-   var intervalId = setInterval(function() {
-       var svg = document.querySelector('#calendar_basic svg');
-       if (svg) {
-           var pathToRemove1 = svg.querySelector('path[fill*="url(http://localhost:8080/GeoProject/#_ABSTRACT_RENDERER_ID_2)"]');
-           if (pathToRemove1) {
-               pathToRemove1.remove();
-           }
-           var pathToRemove2 = svg.querySelector('path[stroke="#EEEEEE"][fill-opacity="1"][fill="none"]');
-           if (pathToRemove2) {
-               pathToRemove2.remove();
-           }
-           var textToRemove1 = svg.querySelector('text[fill="#888888"][x="762"]');
-           if (textToRemove1) {
-               textToRemove1.remove();
-           }
-           var textToRemove2 = svg.querySelector('text[fill="#888888"][x="912"]');
-           if (textToRemove2) {
-               textToRemove2.remove();
-           }
-           if (pathToRemove1 || pathToRemove2 || textToRemove1 || textToRemove2) {
-               clearInterval(intervalId);
-           }
-       }
-   }, 0);
+//       google.charts.load("current", {packages:["calendar"]});
+//       google.charts.setOnLoadCallback(drawChart);
+//    function drawChart() {
+//        var dataTable = new google.visualization.DataTable();
+//        dataTable.addColumn({ type: 'date', id: 'Date' });
+//        dataTable.addColumn({ type: 'number', id: 'Won/Loss' });
+//        dataTable.addColumn({ type: 'string', role: 'style'});
+//        var currentDate = new Date();
+//        var currentYear = new Date().getFullYear();
+//        var currentMonth = new Date().getMonth();
+//     	var currentDate = new Date().getDate();
+//        console.log(currentMonth);
+//        console.log(currentYear);
+//        console.log(currentDate);
+//        dataTable.addRows([
+//           [ new Date(currentYear, currentMonth, currentDate.getDate()), 38830, 'fill="color: #FF0000"' ]
+//         ]);
+//        var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
+//        var options = {
+//          title: "근태기록부",
+//          height: 350
+//        };
+//        chart.draw(dataTable, options);
+//    }
+//    var intervalId = setInterval(function() {
+//        var svg = document.querySelector('#calendar_basic svg');
+//        if (svg) {
+//            var pathToRemove1 = svg.querySelector('path[fill*="url(http://localhost:8080/GeoProject/#_ABSTRACT_RENDERER_ID_2)"]');
+//            if (pathToRemove1) {
+//                pathToRemove1.remove();
+//            }
+//            var pathToRemove2 = svg.querySelector('path[stroke="#EEEEEE"][fill-opacity="1"][fill="none"]');
+//            if (pathToRemove2) {
+//                pathToRemove2.remove();
+//            }
+//            var textToRemove1 = svg.querySelector('text[fill="#888888"][x="762"]');
+//            if (textToRemove1) {
+//                textToRemove1.remove();
+//            }
+//            var textToRemove2 = svg.querySelector('text[fill="#888888"][x="912"]');
+//            if (textToRemove2) {
+//                textToRemove2.remove();
+//            }
+//            if (pathToRemove1 || pathToRemove2 || textToRemove1 || textToRemove2) {
+//                clearInterval(intervalId);
+//            }
+//        }
+//    }, 0);
     </script>
 
-    <div id="calendar_basic" style="width: 1000px; height: 350px;"></div>
+<!--     <div id="calendar_basic" style="width: 1000px; height: 350px;"></div> -->
 
 
 
@@ -338,8 +347,8 @@
 						<input type="hidden" name="emp_no" value="${vo.emp_no}">
 						<div class="row mb-3">
 							<label for="profileImage"
-								class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-							<div class="col-md-8 col-lg-9">
+								class="col-md-4 col-lg-3 col-form-label"></label>
+							<div class="col-md-8 col-lg-9" style="display: none;">
 								<img src="assets/img/profile-img.jpg" alt="Profile">
 								<div class="pt-2">
 									<a href="#" class="btn btn-primary btn-sm"
@@ -483,45 +492,17 @@
 						<div class="text-center">
 							<input type="hidden" name="emp_no" value="${vo.emp_no}">
 							<button type="submit" class="btn btn-primary">비밀번호 초기화</button>
-
-							<!-- 						<div class="row mb-3"> -->
-							<!-- 							<label for="currentPassword" -->
-							<!-- 								class="col-md-4 col-lg-3 col-form-label">현재 비밀번호</label> -->
-							<!-- 							<div class="col-md-8 col-lg-9"> -->
-							<!-- 								<input name="emp_pw" type="password" class="form-control" -->
-							<!-- 									id="currentPassword"> -->
-							<!-- 							</div> -->
-							<!-- 						</div> -->
-
-							<!-- 						<div class="row mb-3"> -->
-							<!-- 							<label for="newPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호</label> -->
-							<!-- 							<div class="col-md-8 col-lg-9"> -->
-							<!-- 								<input name="newpassword" type="password" class="form-control" -->
-							<!-- 									id="newPassword"> -->
-							<!-- 							</div> -->
-							<!-- 						</div> -->
-
-							<!-- 						<div class="row mb-3"> -->
-							<!-- 							<label for="renewPassword" -->
-							<!-- 								class="col-md-4 col-lg-3 col-form-label">새 비밀번호 확인</label> -->
-							<!-- 							<div class="col-md-8 col-lg-9"> -->
-							<!-- 								<input name="renewpassword" type="password" class="form-control" -->
-							<!-- 									id="renewPassword"> -->
-							<!-- 							</div> -->
-							<!-- 						</div> -->
-
-							<!-- 						<div class="text-center"> -->
-							<!-- 							<button type="submit" class="btn btn-primary">비밀번호 변경</button> -->
-							<!-- 						</div> -->
-							<!-- 					</form> -->
-							<!-- 					End Change Password Form -->
-
-							<!-- 				</div> -->
-
 						</div>
 					</form>
-					<!-- End Bordered Tabs -->
-
+				</div>
+				<div class="tab-pane fade pt-3" id="profile-entire"
+					role="tabpanel">
+					<form action="./entireEmp.do" method="post">
+						<div class="text-center">
+							<input type="hidden" name="emp_no" value="${vo.emp_no}">
+							<button type="submit" class="btn btn-primary">퇴사 처리</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

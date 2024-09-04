@@ -12,7 +12,9 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -151,7 +153,7 @@ public class EmpController {
 //	@GetMapping(value = "/arriveWork.do")
 //	public String arriveWork(Model model, AttVo vo, HttpSession session) {
 //		log.info("출근 했습니다");
-//		service.arriveWork(vo);
+////		service.arriveWork(vo);
 //		model.addAttribute("vo", vo);
 //		return "comm/index";
 //	}
@@ -159,7 +161,7 @@ public class EmpController {
 //	@GetMapping(value = "/leftWork.do")
 //	public String leftWork(Model model, AttVo vo, HttpSession session) {
 //		log.info("퇴근 완료");
-//		service.leftWork(vo);
+////		service.leftWork(vo);
 //		model.addAttribute("vo", vo);
 //		return "comm/index";
 //	}
@@ -208,24 +210,36 @@ public class EmpController {
 		return "hr/org";
 	}
 	
-
-
-	@Scheduled(cron = "*/10 * * * * *")
-	@GetMapping(value = "/batchRow.do")
-	public String batchRow(Model model, HttpServletRequest request) {
-		log.info("batchRow");
-		List<EmpVo> vo = null;
-		
-		// 공휴일조회 API 값을 아래 if문에 넣는다.
-		if (true) { // 공휴일이 아니면
-			service.batchRow();
-			System.out.println("배치");
-		} else { // 공휴일이면
-			System.out.println("배치 x");
-//			service.batchRow();
-		}
-		model.addAttribute("vo", vo);
+	@PostMapping(value = "/entireEmp.do")
+	public String entireEmp(EmpVo vo) {
+		log.info("사원 퇴사 처리");
+		service.entireEmp(vo);
 		return "hr/selectAll";
 	}
+//	@PostMapping(value = "/entireEmp.do")
+//	public String entireEmp(@RequestParam("emp_no") String emp_no) {
+//		log.info("비밀번호 초기화");
+//		EmpVo vo = new EmpVo();
+//		vo.setEmp_no(emp_no);
+//		service.entire(vo);
+//		return "redirect:selectOneEmp.do?emp_no=" + vo.getEmp_no();
+//	}
+
+
+//	@Scheduled(cron = "0/10 * * * * *")
+//	@GetMapping(value = "/batchRow.do")
+//	public String batchRow(Model model, HttpServletRequest request) {
+//		log.info("batchRow");
+//		List<EmpVo> vo = null;
+//		
+////		 공휴일조회 API 값을 아래 if문에 넣는다.
+//		if (true) { // 공휴일이 아니면
+//			service.batchRow();
+//		} else { // 공휴일이면
+//			
+//		}
+//		model.addAttribute("vo", vo);
+//		return "hr/selectAll";
+//	}
 
 }

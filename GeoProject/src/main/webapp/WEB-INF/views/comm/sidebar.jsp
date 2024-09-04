@@ -81,7 +81,7 @@
 						</a>
 					</li>
 					<li>
-						<c:if test="${loginVo.emp_auth eq 'A'}">
+						<c:if test="${loginVo.emp_auth eq 'AU002'}">
 							<a href="./insertEmp.do"> <i class="bi bi-circle"></i>
 								<span>사원 추가(관리자만 보이게)</span>
 							</a>
