@@ -57,16 +57,16 @@ public class EmpServiceImpl implements IEmpService {
 
 	// 출근
 	@Override
-	public int arriveWork(AttVo vo) {
+	public int arriveWork(String emp_no) {
 		log.info("출근 완료");
-		return dao.arriveWork(vo);
+		return dao.arriveWork(emp_no);
 	}
 
 	// 퇴근
 	@Override
-	public int leftWork(AttVo vo) {
+	public int leftWork(String emp_no) {
 		log.info("퇴근 완료");
-		return dao.leftWork(vo);
+		return dao.leftWork(emp_no);
 	}
 
 	// 마이 페이지
@@ -90,7 +90,6 @@ public class EmpServiceImpl implements IEmpService {
 		log.info("비밀번호 변경");
 		return dao.modPw(emp_no);
 	}
-
 
 	@Override
 	public void batchRow() {

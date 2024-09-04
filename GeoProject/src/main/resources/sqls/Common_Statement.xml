@@ -13,7 +13,7 @@
 
 	<!-- 로그인 selectEmp -->
 	<select id="selectEmp" resultType="EmpVo">
-		SELECT EMP_NO, EMP_POS, EMP_DEPT,
+		SELECT EMP_IMG, EMP_NO, EMP_POS, EMP_DEPT,
 				EMP_PW, EMP_NAME, EMP_GENDER,
 				EMP_HIREDATE, EMP_EMAIL, EMP_PHONE,
 				EMP_BIRTH, EMP_AUTH, EMP_STATUS,
