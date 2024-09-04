@@ -7,96 +7,9 @@
 
 <%@ include file="./header.jsp" %>
 
-<head>
-<script>
-	$(document).ready(function() {
-		$("#arriveWorkBtn").click(function(e) {
-			e.preventDefault(); // 기본 폼 제출 방지
-			$.ajax({
-				type : 'POST',
-				url : './arriveWork.do',
-				data : {
-					emp_no : $('#emp_no').val()
-				},
-				success : function(response) {
-					if (response.status === 'success') {
-						alert(response.message);
-						// 페이지 리프레시 또는 추가 처리
-						location.reload(); // 페이지 리프레시 예시
-					} else {
-						alert(response.message);
-					}
-				},
-				error : function() {
-					alert('서버 통신 중 오류가 발생했습니다.');
-				}
-			});
-		});
-
-		$("#leftWorkBtn").click(function(e) {
-			e.preventDefault(); // 기본 폼 제출 방지
-			$.ajax({
-				type : 'POST',
-				url : '/GeoProject/leftWork.do',
-				data : {
-					emp_no : $('#emp_no').val()
-				},
-				success : function(response) {
-					if (response.status === 'success') {
-						alert(response.message);
-						// 페이지 리프레시 또는 추가 처리
-						location.reload(); // 페이지 리프레시 예시
-					} else {
-						alert(response.message);
-					}
-				},
-				error : function() {
-					alert('서버 통신 중 오류가 발생했습니다.');
-				}
-			});
-		});
-	});
-</script>
-</head>
-
-<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales/ko.js"></script>
-<script>
-
-	document.addEventListener('DOMContentLoaded', function() {
-	    var calendarEl = document.getElementById('calendar');
-	    var calendar = new FullCalendar.Calendar(calendarEl, {
-			eventSources: [
-				{
-					events: [
-						{
-							// 종일 일정
-							title : '최이사 병가',
-							start : '2024-09-02'
-						},
-						{
-							// 시간 일정
-							title : '최부장 연차',
-							start : '2024-09-06T12:30:00',
-							allDay : false
-						}
-					],
-					color: 'black',
-					textColor: 'white'
-				}
-			],
-			initialView: 'dayGridWeek',
-			height: 300
-	    });
-	    calendar.render();
-	});
-
-</script>
 <body>
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
-	
 		<div class="pagetitle">
 	      <h1>Dashboard</h1>
 	      <nav>
