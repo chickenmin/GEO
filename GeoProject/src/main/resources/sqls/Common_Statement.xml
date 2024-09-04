@@ -73,10 +73,12 @@
 	
 	<!-- 메인화면 게시판 조회 selectMainBoard  -->
 	<select id="selectMainBoard" resultType="BoardVo">
-		SELECT BO_NO , EMP_NO , BO_TITLE ,
+		SELECT BO_NO , EMP_NAME , BO_TITLE ,
 				BO_CONTENT , BO_VIEW_COUNT , BO_REGDATE
-			FROM (SELECT *
-					FROM BO
+			FROM (SELECT BO_NO , EMP.EMP_NAME , BO_TITLE ,
+						BO_CONTENT , BO_VIEW_COUNT , BO_REGDATE
+					FROM BO INNER JOIN EMP
+						ON BO.EMP_NO = EMP.EMP_NO 
 					WHERE BO_STATUS = #{bo_status}
 						AND BO_DEL_YN = 'N'
 					ORDER BY BO_REGDATE DESC)
