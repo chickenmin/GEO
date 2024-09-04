@@ -158,7 +158,7 @@
 
 			</div>
 		</div>
-
+		<button onclick="empList()" >사원 전체 리스트</button>
 	</main>
 	<!-- End #main -->
 

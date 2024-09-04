@@ -159,5 +159,20 @@
         }
     }
    
-	
-	
+   
+   function empList(){
+		fetch("./poi.do",{
+			method:"post",
+			headers : {
+				"Content-Type":"application/x-www-form-urlencoded"
+			}
+			}).then(response => response.text())
+			  .then(data => {
+				console.log(typeof data);
+			    console.log('Success:', data);
+			    alert('파일을 저장하였습니다');
+			  })
+			  .catch(error => {
+			    console.error('Error:', error);
+			  });
+	}

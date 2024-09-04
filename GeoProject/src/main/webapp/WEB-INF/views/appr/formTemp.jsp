@@ -38,7 +38,7 @@
     }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-<script type="text/javascript" src="./js/apLine.js"></script>
+<script type="text/javascript" src="./js/apLineTemp.js"></script>
 </head>
 
 <body>
@@ -52,7 +52,7 @@
 			
 				<!-- 화면에 노출없이, 폼으로 넘겨야 하는 값 -->
 				<input type="hidden" name="apd_no" value="${vo.apd_no}">
-				<input type="hidden" name="apd_form" value="${vo.apd_form}">
+				<input type="hidden" id="apd_form" name="apd_form" value="${vo.apd_form}">
 				<input type="hidden" id="beforeDates" value="${vo.apd_days }">
 				<input type="hidden" id="beforeHalf" value="${vo.apd_half_yn }">
 				<input type="hidden" id="apprLine" value="${apprLine }">
@@ -182,8 +182,8 @@
 				            </td>
 				        </tr>
 				        <tr>
-				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				                <textarea id="con" rows="15"  class="must" name="apd_con" style="width: 100%; border: 1px solid black; padding: 5px;">${vo.apd_con }</textarea>
+				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 500px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
+				                <textarea id="con" rows="15"  class="must" name="apd_con" style="width: 100%; height:100%; border: 1px solid black; padding: 5px;">${vo.apd_con }</textarea>
 				            </td>
 				        </tr> 
 				        

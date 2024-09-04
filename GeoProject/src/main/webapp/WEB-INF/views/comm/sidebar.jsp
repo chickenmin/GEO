@@ -20,11 +20,7 @@
           <i class="bi bi-journal-text"></i><span>전자 결재</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>전자 결재 홈</span>
-            </a>
-          </li>
+        
 
           
           <li>

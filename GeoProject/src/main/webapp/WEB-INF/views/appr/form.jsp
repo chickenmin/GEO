@@ -172,8 +172,8 @@
 				            </td>
 				        </tr>
 				        <tr>
-				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				                <textarea id="con" rows="15"  class="must" name="apd_con" style="width: 100%; border: 1px solid black; padding: 5px;"></textarea>
+				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 500px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
+				                <textarea id="con" rows="15"  class="must" name="apd_con" style="width: 100%; height:100%; border: 1px solid black; padding: 5px;"></textarea>
 				            </td>
 				        </tr> 
 				        

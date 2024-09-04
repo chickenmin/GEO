@@ -1,6 +1,7 @@
 package com.nike.geo.ctrl;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.WebUtils;
 
+import com.nike.geo.comm.PoiClass;
 import com.nike.geo.service.IApprovalService;
 import com.nike.geo.service.ICommService;
 import com.nike.geo.service.IEmpService;
@@ -148,6 +152,25 @@ public class ApprovalRestController {
 	        public void setImage(String image) {
 	            this.image = image;
 	        }
+	    }
+	    
+	    @PostMapping("/poi.do")
+	    public String poi(HttpServletRequest request) {
+	    	List<EmpVo> vo = empService.selectAll();
+	    	
+	    	//전자서명 경로
+	    	String path="C:/empList";
+	    	
+	    	boolean check = PoiClass.Poi(vo, path);
+	    	
+	    	if (vo.size() >0) {
+				log.info("직원 잘 가져옴");
+				if (check) {
+					return "true";
+				}
+			}
+				return "false";
+			
 	    }
 	
 	

@@ -224,7 +224,7 @@
 	
 	<!-- 결재완료 한 사람 수 -->
 	<select id="selComplete" resultType="java.lang.Integer">
-		SELECT COUNT(APL_STATUS)
+		SELECT NVL(COUNT(APL_STATUS),0) 
 		 FROM AP_LINE al 
 		 WHERE al.APL_STATUS =1
 		 AND APD_NO =#{apd_no}
