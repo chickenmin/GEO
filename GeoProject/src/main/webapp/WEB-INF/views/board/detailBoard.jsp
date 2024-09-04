@@ -62,10 +62,8 @@ function del(event) {
 		<input type="hidden" name="emp_no" value="${detailId.emp_no}">
 		<input class="btn btn-info" type="submit" value="추천">
 		</form>	
-		<c:if test="${loginVo.emp_no == Vo.emp_no}">
-		<button class="btn btn-success" onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>
-		</c:if>		
 		<c:if test="${loginVo.emp_no == Vo.emp_no || loginVo.emp_name == '관리자'}">
+		<button class="btn btn-success" onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>
 		<button class="btn btn-danger" type="button" name="del" onclick="del(event)">삭제</button>
 		</c:if>		
 		<button class="btn btn-primary" id="descBtn">댓글</button>	
