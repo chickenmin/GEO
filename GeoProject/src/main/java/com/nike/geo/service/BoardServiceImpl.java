@@ -42,6 +42,10 @@ public class BoardServiceImpl implements IBoardService {
 	public boolean delflagY(String bo_no) {
 		return dao.delflagY(bo_no);
 	}
+	@Override
+	public boolean delflagN(String bo_no) {
+		return dao.delflagN(bo_no);
+	}
 	
 	@Override
 	public boolean insertBoard(BoardVo Vo) {

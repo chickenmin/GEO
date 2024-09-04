@@ -1,9 +1,16 @@
 package com.nike.geo.ctrl;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.WebUtils;
 
 import com.nike.geo.service.IBoardService;
 import com.nike.geo.vo.bo.BoardVo;
@@ -57,14 +66,23 @@ public class BoardController {
 	}
 	
 	//비공개여부
-	@PostMapping("/delflagY.do")
+	@PostMapping("/updateDelflag.do")
 	@ResponseBody
-	public Map<String, Object> delflagY(@RequestParam("bo_no") String bo_no) {
-	    boolean delflag = service.delflagY(bo_no);
+	public Map<String, Object> updateDelflag(@RequestParam("bo_no") String bo_no, @RequestParam("delflag") String delflag) {
+	    boolean success;
+	    if ("delflagY".equals(delflag)) {
+	        success = service.delflagY(bo_no);
+	    } else if ("delflagN".equals(delflag)) {
+	        success = service.delflagN(bo_no);
+	    } else {
+	        success = false;
+	    }
+	    
 	    Map<String, Object> response = new HashMap<>();
-	    response.put("success", delflag);
+	    response.put("success", success);
 	    return response;
 	}
+
 
 	
 	
@@ -121,7 +139,7 @@ public class BoardController {
 		BoardVo Vo=service.detailBoard(bo_no);
 		model.addAttribute("Vo",Vo);
 		model.addAttribute("mode","modify");
-		return "board/insertBoard";	//출력화면 변경해야함
+		return "board/insertBoard";
 	}
 	
 	@PostMapping(value = "/modifyBoard.do")
@@ -142,7 +160,7 @@ public class BoardController {
 		 if (isc) {
 		        return "redirect:/detailBoard.do?bo_no=" + bo_no;
 		    } else {
-		        return "redirect:/modifyBoard.do?bo_no=" + bo_no; // 오류 발생 시 원래 수정 페이지로 돌아감
+		        return "redirect:/modifyBoard.do?bo_no=" + bo_no; 
 		    }
 	}
 	
@@ -151,7 +169,7 @@ public class BoardController {
 	@PostMapping(value = "/multiDeleteBoard.do")
 	public String multiDeleteBoard(@RequestParam List<String> ch) {
 	    service.multiDeleteBoard(ch);
-	    return "redirect:/announcements.do"; // 삭제 후 게시판 목록으로 리다이렉트
+	    return "redirect:/delBoard.do"; // 삭제 후 게시판 목록으로 리다이렉트
 	}
 	
 	//글복구
@@ -197,5 +215,81 @@ public class BoardController {
 		service.commentInsert(vo);
 		return "redirect:/detailBoard.do?bo_no=" + bo_no;
 	}
+	
+	
+	//파일업로드
+	@PostMapping(value = "/uploadAjax.do")
+	@ResponseBody
+	public Map<String, String> fileUploadAjax(HttpServletRequest request,
+												Model model,
+												List<MultipartFile>file,
+												String desc
+												){
+		log.info("FileuploadController uploadAjax.do 파일 업로드");
+		
+		for(MultipartFile f : file) {
+			log.info("파일의 이름 : {}",f.getOriginalFilename());
+			String originFileName = f.getOriginalFilename();
+			String saveFileName=UUID.randomUUID().toString().concat(originFileName.substring(originFileName.indexOf(".")));
+			log.info("기존파일명 : {}",originFileName);
+			log.info("저장파일명 : {}",saveFileName);
+			
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		String path = "";
+		
+		try {
+			//1)파일을 읽는다
+			inputStream = f.getInputStream();
+			
+			//2)저장위치를 만든다
+			path = WebUtils.getRealPath(request.getSession().getServletContext(), "/storage");//상대경로
+			String path02 = request.getSession().getServletContext().getRealPath("storage");
+			log.info("저장경로 : {} \n path02 : {}",path,path02);
+			
+			//3)파일 저장 위치
+			File storage = new File(path);
+			if(!storage.exists()) {
+				storage.mkdir();
+			}
+			
+			//4)저장 파일 저장할 파일이 없다면 생성하면 있다면 오버라이드 함
+			File newFile=new File(path+"/"+saveFileName);
+			if(!newFile.exists()) {
+				newFile.createNewFile();
+			}
+			
+			//5)읽은 파일을 써주기(저장)
+			outputStream = new FileOutputStream(newFile);
+			
+			//5)파일 읽어서 대상파일에 써줌
+			int read = 0;
+			byte[] b = new byte[(int)f.getSize()];
+			while((read=inputStream.read(b))!= -1) {
+				outputStream.write(b,0,read);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				inputStream.close();
+				outputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		model.addAttribute("originFileName",originFileName);
+		model.addAttribute("saveFileName",saveFileName);
+		model.addAttribute("path",path);
+		}
+		
+		Map<String, String>map =new HashMap<String, String>();
+		map.put("isc", "true");
+		
+		return map; 
+	}
+	
 	
 }
