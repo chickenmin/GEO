@@ -231,7 +231,7 @@ public class ApprovalServiceImpl implements IApprovalService {
 	@Override
 	public List<Ap_DocuVo> selectLists(Map<String, Object> map) {
 		String v = (String)map.get("variety");
-		String apd_temp_yn = (v.equals("submit"))?"N":"Y";
+		String apd_temp_yn = ("submit".equals(v))?"N":"Y";
 		String emp_no = (String)map.get("emp_no");
 		map.put("apd_temp_yn", apd_temp_yn);
 		List<Ap_DocuVo> lists = null;

@@ -35,24 +35,20 @@
 		            <div class="modal-body">
 		                <form id="eventForm" action="./insertCal.do" method="post">
 		                    <div class="mb-3">
-		                        <span>일정번호</span>
-		                        <input type="text" class="form-control" id="cal_no" required>
-		                    </div>
-		                    <div class="mb-3">
 		                        <span>일정명</span>
-		                        <input type="text" class="form-control" id="cal_title" required>
+		                        <input type="text" class="form-control" id="cal_title" required/>
 		                    </div>
        		                    <div class="mb-3">
 		                        <span>일정내용</span>
-		                        <input type="text" class="form-control" id="cal_content" required>
+		                        <input type="text" class="form-control" id="cal_content" required/>
 		                    </div>
 		                    <div class="mb-3">
 		                        <span>시작일자</span>
-		                        <input type="text" class="form-control" id="datetimepicker1" required>
+		                        <input type="text" class="form-control" id="datetimepicker1" required/>
 		                    </div>
 		                    <div class="mb-3">
 		                        <span>종료일자</span>
-		                        <input type="text" class="form-control" id="datetimepicker2" required>
+		                        <input type="text" class="form-control" id="datetimepicker2" required/>
 		                    </div>
 							<span>일정종류</span>
 							<br>
@@ -85,9 +81,9 @@
   	
   	 <div class="container">		
  		<div class="checkboxes">
-            <label><input type="checkbox" id="allCheckBox"> 전사일정</label><br>
-            <label><input type="checkbox" id="departmentCheckBox"> 부서일정</label><br>
-            <label><input type="checkbox" id="employeeCheckBox"> 사원일정</label>
+            <label><input type="checkbox" name="chk_box" id="allCheckBox" checked="checked" onclick="selectAjax();" value="0"> 전사일정</label><br>
+            <label><input type="checkbox" name="chk_box" id="departmentCheckBox" checked="checked" onclick="selectAjax();" value="1"> 부서일정</label><br>
+            <label><input type="checkbox" name="chk_box" id="employeeCheckBox" checked="checked" onclick="selectAjax();" value="2"> 사원일정</label>
         </div>
         
         <div id="calendarDisplay"></div>
@@ -127,24 +123,20 @@
       <div class="modal-body">
          <form id="updateEventForm">
             <div class="mb-3">
-                <span>일정번호</span>
-                <input type="text" class="form-control" id="update_cal_no" readonly>
-            </div>
-            <div class="mb-3">
                 <span>일정명</span>
-                <input type="text" class="form-control" id="update_cal_title" required>
+                <input type="text" class="form-control" id="update_cal_title" required/>
             </div>
             <div class="mb-3">
                 <span>일정내용</span>
-                <input type="text" class="form-control" id="update_cal_content" required>
+                <input type="text" class="form-control" id="update_cal_content" required/>
             </div>
             <div class="mb-3">
                 <span>시작일자</span>
-                <input type="text" class="form-control" id="update_datetimepicker1" required>
+                <input type="text" class="form-control" id="update_datetimepicker1" required/>
             </div>
             <div class="mb-3">
                 <span>종료일자</span>
-                <input type="text" class="form-control" id="update_datetimepicker2" required>
+                <input type="text" class="form-control" id="update_datetimepicker2" required/>
             </div>
             <span>일정종류</span>
             <br>

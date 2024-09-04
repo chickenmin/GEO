@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.nike.geo.model.ICalDao;
 import com.nike.geo.vo.co.CalVo;
@@ -20,9 +19,9 @@ public class CalServiceImpl implements ICalService {
 	private final ICalDao dao;
 
 	@Override
-	public List<CalVo> calList() {
+	public List<CalVo> calList(String[] chkArray) {
 		log.info("CalServiceImpl {}", "");
-		return dao.calList();
+		return dao.calList(chkArray);
 	}
 	
 	@Override
