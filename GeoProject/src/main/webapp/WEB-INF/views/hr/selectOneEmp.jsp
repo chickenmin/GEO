@@ -87,7 +87,7 @@
 		<div
 			class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 			<img src="<c:url value='/storage/${vo.emp_img}'/>" alt="Profile"
-				class="rounded-circle">
+				class="rounded-circle" style="width: 200px; height: 200px;">
 <%-- 				<input type="text" name="saveFileName" value="${saveFileName}" readonly="readonly"> --%>
 				<input type="hidden" name="emp_no">
 			<h2>${vo.emp_name}</h2>

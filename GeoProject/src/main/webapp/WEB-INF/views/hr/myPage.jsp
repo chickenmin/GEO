@@ -89,7 +89,7 @@
 
 			
 			<img src="<c:url value='/storage/${loginVo.emp_img}'/>" alt="Profile"
-				class="rounded-circle"> <input type="hidden" name="emp_no">
+				class="rounded-circle" style="width: 200px; height: 200px;"> <input type="hidden" name="emp_no">
 			<h2>${loginVo.emp_name}</h2>
 			<h3>
 				<c:choose>

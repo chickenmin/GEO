@@ -25,10 +25,10 @@ public interface IEmpDao {
 	public int clearPw(EmpVo vo);
 		
 	// 출근
-	public int arriveWork(AttVo vo);
+	public int arriveWork(String emp_no);
 		
 	// 퇴근
-	public int leftWork(AttVo vo);
+	public int leftWork(String emp_no);
 		
 	// 마이 페이지
 	public EmpVo myPage(String emp_no);

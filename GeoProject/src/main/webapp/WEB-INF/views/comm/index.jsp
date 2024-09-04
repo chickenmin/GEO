@@ -6,6 +6,57 @@
 <html>
 
 <%@ include file="./header.jsp" %>
+<head>
+<script>
+	$(document).ready(function() {
+		$("#arriveWorkBtn").click(function(e) {
+			e.preventDefault(); // 기본 폼 제출 방지
+			$.ajax({
+				type : 'POST',
+				url : './arriveWork.do',
+				data : {
+					emp_no : $('#emp_no').val()
+				},
+				success : function(response) {
+					if (response.status === 'success') {
+						alert(response.message);
+						// 페이지 리프레시 또는 추가 처리
+						location.reload(); // 페이지 리프레시 예시
+					} else {
+						alert(response.message);
+					}
+				},
+				error : function() {
+					alert('서버 통신 중 오류가 발생했습니다.');
+				}
+			});
+		});
+
+		$("#leftWorkBtn").click(function(e) {
+			e.preventDefault(); // 기본 폼 제출 방지
+			$.ajax({
+				type : 'POST',
+				url : '/GeoProject/leftWork.do',
+				data : {
+					emp_no : $('#emp_no').val()
+				},
+				success : function(response) {
+					if (response.status === 'success') {
+						alert(response.message);
+						// 페이지 리프레시 또는 추가 처리
+						location.reload(); // 페이지 리프레시 예시
+					} else {
+						alert(response.message);
+					}
+				},
+				error : function() {
+					alert('서버 통신 중 오류가 발생했습니다.');
+				}
+			});
+		});
+	});
+</script>
+</head>
 
 <body>
 	<%@ include file="./sidebar.jsp" %>
@@ -33,38 +84,22 @@
 	            <div class="card-body" style="text-align: center;">
 	              <h5 class="card-title" style="display: inline-block">${mainVo.emp_name}</h5>
 	              <p class="card-text">${mainVo.emp_dept}팀 ${mainVo.emp_pos}</p>
-	              <form action="./arriveWork.do" method="post">
-				<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
-				<button class="btn btn-primary" type="submit">출근</button>
-			</form>
-				  <form action="./leftWork.do" method="post">
-				<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
-				<button class="btn btn-danger" type="submit">퇴근</button>
-			</form>
+<!-- 	              <form action="./arriveWork.do" method="post"> -->
+<%-- 				<input type="hidden" name="emp_no" value="${loginVo.emp_no}"> --%>
+<!-- 				<button class="btn btn-primary" type="submit">출근</button> -->
+<!-- 			</form> -->
+<!-- 				  <form action="./leftWork.do" method="post"> -->
+<%-- 				<input type="hidden" name="emp_no" value="${loginVo.emp_no}"> --%>
+<!-- 				<button class="btn btn-danger" type="submit">퇴근</button> -->
+<!-- 			</form> -->
+<input type="hidden" id="emp_no" value="${loginVo.emp_no}">
+    <button id="arriveWorkBtn" class="btn btn-primary">출근</button>
+    <button id="leftWorkBtn" class="btn btn-danger">퇴근</button>
 	            </div>
 	          </div>
 	          <!-- End Card with an image on top -->
 	          
-<!-- 	          	<div class="card" style="height: 400px; display: flex; flex-direction: column; align-items: center;"> -->
-<!-- 				    <div style="height: 200px; display: flex; justify-content: center; align-items: center;"> -->
-<!-- 				        <img src="img/profile.png" class="card-img-top" style="width: 60%; margin: 0 auto; display: block;" alt="..."> -->
-<!-- 				    </div> -->
-<!-- 				    <div class="card-body" style="height: 200px; text-align: center; display: flex; flex-direction: column; justify-content: center;"> -->
-<%-- 				        <h5 class="card-title" style="display: inline-block;">${mainVo.emp_name}</h5> --%>
-<%-- 				        <p class="card-text">${mainVo.emp_dept}팀 ${mainVo.emp_pos}</p> --%>
-				        
-<!-- 				        <button class="btn btn-primary">출근</button> -->
-<!-- 				        <button class="btn btn-danger">퇴근</button> -->
-<!-- 				        <form action="./arriveWork.do" method="post"> -->
-<!-- 							<input type="hidden" name="emp_no" value="aa001"> -->
-<!-- 							<button type="submit">출근</button> -->
-<!-- 						</form> -->
-<!-- 						<form action="./leftWork.do" method="post"> -->
-<!-- 							<input type="hidden" name="emp_no" value="aa001"> -->
-<!-- 							<button type="submit">퇴근</button> -->
-<!-- 						</form> -->
-<!-- 				    </div> -->
-<!-- 				</div> -->
+	          	
 
 	          
 	            
@@ -176,16 +211,16 @@
 		});
 		</script>
 		
-		<div>
-			<form action="./arriveWork.do" method="post">
-				<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
-				<button type="submit">출근</button>
-			</form>
-			<form action="./leftWork.do" method="post">
-				<input type="hidden" name="emp_no" value="aa001">
-				<button type="submit">퇴근</button>
-			</form>
-		</div>
+<!-- 		<div> -->
+<!-- 			<form action="./arriveWork.do" method="post"> -->
+<%-- 				<input type="hidden" name="emp_no" value="${loginVo.emp_no}"> --%>
+<!-- 				<button type="submit">출근</button> -->
+<!-- 			</form> -->
+<!-- 			<form action="./leftWork.do" method="post"> -->
+<!-- 				<input type="hidden" name="emp_no" value="aa001"> -->
+<!-- 				<button type="submit">퇴근</button> -->
+<!-- 			</form> -->
+<!-- 		</div> -->
 
 
   	</main><!-- End #main -->

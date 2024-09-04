@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -147,23 +148,21 @@ public class EmpController {
 		return "redirect:selectOneEmp.do?emp_no=" + vo.getEmp_no();
 	}
 
-	@PostMapping(value = "/arriveWork.do")
-	public String arriveWork(Model model, AttVo vo, HttpSession session) {
-		log.info("출근 했습니다");
-		session.getAttribute("loginVo");
-		service.arriveWork(vo);
-		model.addAttribute("vo", vo);
-		return "redirect:/comm/index";
-	}
-
-	@PostMapping(value = "/leftWork.do")
-	public String leftWork(Model model, AttVo vo, HttpSession session) {
-		log.info("퇴근 완료");
-		session.getAttribute("loginVo");
-		service.leftWork(vo);
-		model.addAttribute("vo", vo);
-		return "comm/index";
-	}
+//	@GetMapping(value = "/arriveWork.do")
+//	public String arriveWork(Model model, AttVo vo, HttpSession session) {
+//		log.info("출근 했습니다");
+//		service.arriveWork(vo);
+//		model.addAttribute("vo", vo);
+//		return "comm/index";
+//	}
+//
+//	@GetMapping(value = "/leftWork.do")
+//	public String leftWork(Model model, AttVo vo, HttpSession session) {
+//		log.info("퇴근 완료");
+//		service.leftWork(vo);
+//		model.addAttribute("vo", vo);
+//		return "comm/index";
+//	}
 
 	@GetMapping(value = "/myPage.do")
 	public String myPage(HttpSession session, HttpServletRequest request, String saveFileName, Model model) {
@@ -194,18 +193,34 @@ public class EmpController {
 		return "hr/empAtt";
 	}
 	
+	@GetMapping(value = "/org.do")
+	public String org(Model model, String saveFileName, String emp_no, HttpServletRequest request) {
+		log.info("조직도");
+		List<EmpVo> vo = service.selectAll();
+		// 모델에 데이터를 추가 (속성 이름을 'vo'로 지정)
+		model.addAttribute("vo", vo);
+		model.addAttribute("saveFileName", saveFileName);
+//		String fileUrl = "/storage/" + saveFileName;
+//	    model.addAttribute("fileUrl", fileUrl);
+//		model.addAttribute("vo2", saveFileName);
+		return "hr/org";
+	}
+	
 
 
-	@Scheduled(cron = "0 0 4 * * *")
+	@Scheduled(cron = "*/10 * * * * *")
 	@GetMapping(value = "/batchRow.do")
 	public String batchRow(Model model, HttpServletRequest request) {
 		log.info("batchRow");
 		List<EmpVo> vo = null;
+		
 		// 공휴일조회 API 값을 아래 if문에 넣는다.
 		if (true) { // 공휴일이 아니면
 			service.batchRow();
+			System.out.println("배치");
 		} else { // 공휴일이면
-
+			System.out.println("배치 x");
+//			service.batchRow();
 		}
 		model.addAttribute("vo", vo);
 		return "hr/selectAll";
