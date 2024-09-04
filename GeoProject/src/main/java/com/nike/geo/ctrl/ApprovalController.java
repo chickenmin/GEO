@@ -505,6 +505,8 @@ public class ApprovalController {
 			return "redirect:/apprList.do?variety=temp";
 		}
 		
+		
+		
 	
 	
 	

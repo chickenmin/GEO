@@ -16,6 +16,44 @@
     background-color: white; /* 배경을 흰색으로 설정 */
     padding: 10mm; /* 여백 추가 */
 }
+
+
+#signIn {
+    width: 100%; /* 테이블과 동일한 너비로 설정 */
+    text-align: right; /* 서명 영역을 오른쪽 정렬 */
+}
+
+table.__se_tbl {
+    width: 100%; /* 테이블도 100% 너비로 설정 */
+    margin: 0 auto; /* 테이블 가운데 정렬 */
+    border-collapse: collapse !important; /* 테이블 선을 맞추기 */
+    color: black;
+    background: white;
+    border: 1px solid black;
+    font-size: 12px;
+    font-family: 'Malgun Gothic', Dotum, Arial, Tahoma;
+}
+
+.sign {
+    display: inline-block;
+    text-align: right;
+    margin-right: 10px; /* 서명 영역의 여백 */
+}
+
+.sign-signature img {
+    width: 100px;
+    height: 100px;
+}
+
+td {
+    padding: 5px;
+    border: 1px solid black;
+}
+
+td[colspan="3"] {
+    text-align: center;
+}
+
 </style>
 <script type="text/javascript" src="./js/formView.js"></script>
 <script  type="text/javascript"  src="./js/html2canvas.js"></script>
@@ -30,11 +68,11 @@
 		
 		<input type="hidden" id="con" value="${vo.apd_con }"> 
 		
-		<div style="width: 800px;" class="middle" >
+		<div class="middle" >
 			<div id="pdfDiv">
 				<!-- 시작 -->
 				<!-- 결재칸 -->
-				<div style="text-align: right;">
+				<div id="signIn" style="text-align: right; ">
 					<c:forEach var="signer" items="${apprLists}">
 						<div class="sign">
 							<div class="sign-name">${signer.emp_name }</div>
@@ -64,14 +102,14 @@
 				<!-- right끝 -->
 				<c:if test="${variety eq 'submit' && vo.apd_status eq 'W'}">
 					<button type="button" class="btn btn-outline-danger category" 
-					  style="margin: 10px; float: right;"	onclick="location.href=./cancel.do?apd_no=${vo.apd_no}">철회</button>
+					  style="margin: 10px; float: right;"	onclick="location.href='./cancel.do?apd_no=${vo.apd_no}'">철회</button>
 				</c:if>
 	
 				<br>
 	
 	
-				<table class="__se_tbl"
-					style="width: 700px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
+				<table class="__se_tbl" 
+					style="width: 700px; margin:auto; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
 					<thead>
 						<tr>
 							<td
@@ -221,13 +259,13 @@
 			<!--승인하기  -->
 			<jsp:include page="./signModal.jsp"></jsp:include>
 	
-			<c:if test="${variety eq 'appr'}">
-				<c:choose>
-					<c:when test="${order == 1}">
-						<!-- 문서 하단 버튼 -->
+			<c:if test="${variety eq 'appr' || variety eq 'ref'  }">
 						<div style="display: flex; justify-content: flex-end;">
 							<button type="button" id="savePdf" class="btn btn-outline-success" 
 							style="height: auto; margin: 5px 10px 0 0;">PDF 저장</button>
+				<c:choose>
+					<c:when test="${order == 1}">
+						<!-- 문서 하단 버튼 -->
 							<button type="button" class="btn btn-outline-primary "
 								data-bs-toggle="modal"
 								style="height: auto; margin: 5px 10px 0 0;"
@@ -236,9 +274,9 @@
 							<button class="btn btn-primary frmbtn"
 								style="height: auto; margin: 5px 10px 0 0;"
 								data-bs-target="#sign" data-bs-toggle="modal">결재하기</button>
-						</div>
 					</c:when>
 				</c:choose>
+						</div>
 			</c:if>
 			
 		</div>

@@ -208,7 +208,7 @@ public class ApprovalServiceImpl implements IApprovalService {
 		int total = dao.selStep(map);
 		int com = dao.selComplete(map);
 		
-		String apd_status = (total>com)?"P":"C";
+		String apd_status = (total-com == 1)?"C":"P";
 		
 		map.put("apd_status", apd_status);
 		

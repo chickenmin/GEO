@@ -3,25 +3,37 @@
  */
  $(document).ready(function(){ // 브라우저 로드시
 		
+		/////////////////////////임시저장일 경우///////////////
 		//반차여부 기본 설정
-		var half = $('#beforeHalf').val();
-		console.log(half);
-		 $('#half').val(half);
-		 
+		if ($('#beforeHalf').length) {
+			var half = $('#beforeHalf').val();
+			console.log("half ",half);
+			 $('#half').val(half);
+		}
 		
-		//데이트피커 설정
-		//임시저장했던 날짜로 지정
-		var apd_days = document.getElementById("beforeDates").value;
-		var dateArray = apd_days.split(",").map(function(date) {
-	            return date.trim(); // 날짜 앞뒤 공백 제거
-	        });
+		// 데이트피커 설정
+		// 임시 저장했던 날짜로 지정
+		var dateArray = [];  // dateArray를 먼저 선언하여 스코프 문제 해결
+		
+		var apd_form = document.getElementById("apd_form").value;
+		console.log("apd",apd_form);
+		
+		if(apd_form == 'AP002' || apd_form == 'AP005'){
+			 var apd_days = document.getElementById("beforeDates").value;
+		    console.log(apd_days);
+		
+		        dateArray = apd_days.split(",").map(function(date) {
+		            return date.trim();  // 날짜 앞뒤 공백 제거
+		        });
+		        console.log(dateArray);
+		}
 		
 		
 		$('#mdp-demo').multiDatesPicker({
-			dateFormat : "yy/mm/dd",
-			addDates: dateArray
+		    dateFormat: "yy/mm/dd",
+		    addDates: dateArray  // dateArray를 multiDatesPicker에 전달
+		});
 
-		}); // mdp 실행 // mdp 실행
 		
 		//파일첨부가 있는 양식인지
 		if (document.getElementById('reviewImgFileInput')) {
@@ -208,12 +220,7 @@
 	
 	
 	
-	//데이트피커 초기화
-	function resetDay(event) {
-		event.preventDefault();
-		$('#mdp-demo').multiDatesPicker('resetDates');
-		console.log("리셋")
-	}
+
 	
 	
 	
