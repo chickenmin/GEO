@@ -65,56 +65,35 @@
           
         </ul>
       </li><!-- End Approval Nav -->
-	
-	  <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-person"></i><span>근태 관리</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="hr-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>근태 관리</span>
-            </a>
-            <ul>
-            	<li>
-            		<a href="#">
-		              <i class="bi bi-circle"></i><span>사유서 제출</span>
-		            </a>
-            	</li>
-            	
-            	<li>
-            		<a href="./empAtt.do">
-		              <i class="bi bi-circle"></i><span>사유서 관리</span>
-		            </a>
-            	</li>
-            </ul>
-          </li>
-          
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>인사 관리</span>
-            </a>
-            <ul>
-            	<li>
-            		<a href="./selectAll.do">
-		              	<i class="bi bi-circle"></i><span>사원 조회</span>
-					</a>
-            	</li>
-            	
-            	<li>
-            		<c:if test="${loginVo.emp_auth eq 'A'}">
-            		<a href="./insertEmp.do">
-		              	<i class="bi bi-circle"></i><span>사원 추가(관리자만 보이게)</span>
-					</a>
-					</c:if>
-            	</li>
-            </ul>
-          </li>
-        </ul>
-      </li><!-- End HR Nav -->
+
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-person"></i>
+						<span>인사 관리</span>
+							<i class="bi bi-chevron-down ms-auto">
+						</i>
+				</a>
+				<ul id="hr-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+					<li>
+						<a href="./selectAll.do"> 
+							<i class="bi bi-circle"></i>
+							<span>사원 조회</span>
+						</a>
+					</li>
+					<li>
+						<c:if test="${loginVo.emp_auth eq 'A'}">
+							<a href="./insertEmp.do"> <i class="bi bi-circle"></i>
+								<span>사원 추가(관리자만 보이게)</span>
+							</a>
+						</c:if>
+					</li>
+				</ul>
+			</li>
+			<!-- End HR Nav -->
       
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#orgChart-nav" data-bs-toggle="collapse" href="./org.do">
+        <a class="nav-link collapsed" data-bs-target="#orgChart-nav" href="./org.do"> 
+        <!-- // data-bs-toggle="collapse" 지웠음 --> 
           <i class="bi bi-diagram-3"></i><span>조직도</span>
         </a>
       </li><!-- End orgChart Nav -->

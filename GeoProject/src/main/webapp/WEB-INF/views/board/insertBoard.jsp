@@ -40,35 +40,62 @@
 			</tr>
 			<tr>
 				<td scope="row">위젯에 표시</td>
-				<td colspan="3">**위젯에 표시입력</td>
+				<td colspan="3">
+				<i id="changeTiele" class="bi bi-check2-square" onclick="changeTitle()"></i><!-- ★★★★★★★★★★★★★★★★★★★ -->
+				</td>
 			</tr>
 			<tr>
 				<td colspan="4" rowspan="8">
-				 <textarea name="bo_content" style="width: 1000px; height: 200px; box-sizing: border-box;" placeholder="내용 입력">${Vo.bo_content}</textarea>
+				 <textarea id=txtArea name="bo_content" style="width: 1000px; height: 200px; box-sizing: border-box;" placeholder="내용 입력">${Vo.bo_content}</textarea>
 				</td>
 			</tr>
 		</table>
 		<input type="file" name="file">
 		<c:choose>
 		<c:when test="${mode=='insert'}">
-		<button type="submit">게시</button>
+		<button class="btn btn-primary" type="submit">게시</button>
 		</c:when>
 		<c:when test="${mode=='modify'}">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}" />
-		<button type="submit">수정</button>
+		<button class="btn btn-warning" type="submit">수정</button>
 		</c:when>
 		</c:choose>
-		<button onclick="history.back(-1)">취소</button>
+		<button class="btn btn-danger" onclick="history.back(-1)">취소</button>
 	</form>
 	
 	
 	</main>
 	<!-- End #main -->
-
-
+<div id="contentDisplay"></div>
 </body>
 <%@ include file="../comm/footer.jsp"%>
-<script type="text/javascript">
 
+<style>
+ .bi-check2-square {
+            font-size: 24px; /* 아이콘 크기 조정 */
+            cursor: pointer; /* 클릭 가능한 커서 */
+        }
+</style>
+
+<script type="text/javascript">
+function sendData() {
+    var content = $('#txtArea').val();
+    
+    $.ajax({
+        url: './writeBoard.do',  // 서버의 엔드포인트
+        method: 'POST',
+        data: { bo_content: content },
+        success: function(response) {
+            // 서버로부터 받은 데이터에서 줄바꿈을 <br> 태그로 변환
+            var formattedContent = response.replace(/\n/g, '<br>');
+            $('#contentDisplay').html(formattedContent);
+        }
+    });
+}
+
+function changeTitle() {
+	document.getElementById('changeTitle').innerHTML='비공개입니다';
+}
 </script>
+
 </html>

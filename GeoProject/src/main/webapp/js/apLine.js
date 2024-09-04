@@ -3,7 +3,7 @@
  */
  $(document).ready(function(){ // 브라우저 로드시
 		
-				// 상신,임시저장
+
 		var frm = document.submitForm;
 		var submitBtns = document.querySelectorAll(".frmbtn");
 
@@ -12,25 +12,22 @@
 				event.preventDefault(); 
 				console.log(this.textContent);
 				var temp = this.textContent;
-				var variety;
-				if (temp == "임시저장") {
-					variety = 'temp';
-				}else{
-					variety='submit';
-				}
+				var variety = (temp =="임시저장")?'temp':'submit' 
+
 				var result = check();
 				if (!result) {
 					return;					
 				}
-				document.getElementById("dataType").value = this.textContent;
+				document.getElementById("dataType").value = temp;
 				document.getElementById("variety").value = variety;
 				
-				validate();
+				console.log("이동할 리스트 종류",variety);
 				
+				validation();
 				frm.submit(); // 폼 제출
 								
-			}
-		}
+			}	//submitBtns[i].onclick 
+		}	//for 
 
 		
 		
@@ -140,10 +137,30 @@
 	    });
 		
 		
-	}); //브라우저 로드
+		/////////////////////////임시저장일 경우///////////////
+		//반차여부 기본 설정
+		if ($('#beforeHalf').length) {
+			var half = $('#beforeHalf').val();
+			console.log(half);
+			 $('#half').val(half);
+		}
+		
+		//데이트피커 설정
+		//임시저장했던 날짜로 지정
+		if ($('#beforeHalf').length) {
+		var apd_days = document.getElementById("beforeDates").value;
+		var dateArray = apd_days.split(",").map(function(date) {
+	            return date.trim(); // 날짜 앞뒤 공백 제거
+	        });
+		}
+		
+
+		
+		
+	}); //브라우저 로드 끝
 	 
 	 //체크박스 선택된 명수
-		var selectedNodes = $('#tree').jstree("get_selected","true");
+	var selectedNodes = $('#tree').jstree("get_selected","true");
 	
 	//jstree 검색
 	function fSch() {
@@ -153,7 +170,7 @@
 	
 	function choice(event){
 		//클릭한 버튼의 id
-		const clickedButtonId = event.target.id;
+		var clickedButtonId = event.target.id;
 		 if (clickedButtonId === "apC") {
 			put("appr");
 		} else if(clickedButtonId === "apR"){
@@ -181,10 +198,13 @@
 	   		 //체크박스 해제
 	   		 $('#tree').jstree("deselect_all");
 	   		 
+	   		 //선택한 노드는 선택 못하게
+	   		 $('#tree').jstree('disable_node', item);
+	   		 
 	   		 //선택된 id input value 값으로 넣기
 	   		 document.getElementById(id+"Cho").value += item.id+",";
 	   		 console.log(document.getElementById(id+"Cho"));
-		});
+		}); //foreach문
 	}
 	
 	//선택자 리셋
@@ -202,32 +222,32 @@
 	
 	
 	
-		function check() {
-			    // must 클래스를 가진 모든 요소를 선택
-			    var mustFields = document.querySelectorAll('.must');
-			    var isEmpty = false;
-			
-			    // 각 요소를 순회하면서 비어있는지 확인
-			    mustFields.forEach(function(field) {
-			        if (field.tagName.toLowerCase() === 'input' || field.tagName.toLowerCase() === 'textarea') {
-			            // input이나 textarea의 값이 비어있는지 확인
-			            if (field.value.trim() === '') {
-			                isEmpty = true;
-			            }
-			        } else if (field.innerText.trim() === '') {
-			            // 그 외의 요소들(예: div 등)의 innerText가 비어있는지 확인
-			            isEmpty = true;
-			        }
-			    });
-			
-			    if (isEmpty) {
-			        alert('모든 필수 입력 필드를 작성해 주세요.');
-			        return false;
-			    } else{
-					return true;
-			}
-			  
+	function check() {
+		    // must 클래스를 가진 모든 요소를 선택
+		    var mustFields = document.querySelectorAll('.must');
+		    var isEmpty = false;
+		
+		    // 각 요소를 순회하면서 비어있는지 확인
+		    mustFields.forEach(function(field) {
+		        if (field.tagName.toLowerCase() === 'input' || field.tagName.toLowerCase() === 'textarea') {
+		            // input이나 textarea의 값이 비어있는지 확인
+		            if (field.value.trim() === '') {
+		                isEmpty = true;
+		            }
+		        } else if (field.innerText.trim() === '') {
+		            // 그 외의 요소들(예: div 등)의 innerText가 비어있는지 확인
+		            isEmpty = true;
+		        }
+		    });
+		
+		    if (isEmpty) {
+		        alert('모든 필수 입력 필드를 작성해 주세요.');
+		        return false;
+		    } else{
+				return true;
 		}
+		  
+	}
 	
 	
 	
@@ -238,14 +258,18 @@
 		console.log("리셋")
 	}
 	
-	function validate(){
-		var str = document.getElementById("con").value;
-		str = str.replace(/\r\n|\r|\n|\n\r/gim,"<br>");
-		str = str.replace(/</gim,"&lt;");
-		str = str.replace(/>/gim,"&gt;");
-		str = str.replace(/\'/gim,"&#39;");
-		
-		document.getElementById("con").value = str;
+
+	function validation(){
+		  var str = document.getElementById("con").value;
+
+	    str = str.replace(/\r\n|\r|\n|\n\r/gim, "<br>");
+	    str = str.replace(/ /g, "&nbsp;");
+	    str = str.replace(/</gim, "&lt;");
+	    str = str.replace(/>/gim, "&gt;");
+	    str = str.replace(/\'/gim, "&#39;");
+	    str = str.replace(/\"/gim, "&quot;"); // 추가: 쌍따옴표 처리
+	
+	    document.getElementById("con").value = str;
 	}
 	
 	

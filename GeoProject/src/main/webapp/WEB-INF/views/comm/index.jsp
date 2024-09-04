@@ -6,44 +6,10 @@
 <html>
 
 <%@ include file="./header.jsp" %>
-<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales/ko.js"></script>
-<script>
 
-	document.addEventListener('DOMContentLoaded', function() {
-	    var calendarEl = document.getElementById('calendar');
-	    var calendar = new FullCalendar.Calendar(calendarEl, {
-			eventSources: [
-				{
-					events: [
-						{
-							// 종일 일정
-							title : '최이사 병가',
-							start : '2024-09-02'
-						},
-						{
-							// 시간 일정
-							title : '최부장 연차',
-							start : '2024-09-06T12:30:00',
-							allDay : false
-						}
-					],
-					color: 'black',
-					textColor: 'white'
-				}
-			],
-			initialView: 'dayGridWeek',
-			height: 300
-	    });
-	    calendar.render();
-	});
-
-</script>
 <body>
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
-	
 		<div class="pagetitle">
 	      <h1>Dashboard</h1>
 	      <nav>
@@ -66,18 +32,15 @@
 	            <div class="card-body" style="text-align: center;">
 	              <h5 class="card-title" style="display: inline-block">${mainVo.emp_name}</h5>
 	              <p class="card-text">${mainVo.emp_dept}팀 ${mainVo.emp_pos}</p>
-	              <button class="btn btn-primary">출근</button>
-				  <button class="btn btn-danger">퇴근</button>
-<!-- 				  <form action="./arriveWork.do" method="post"> -->
-<!-- 					<input type="hidden" name="emp_no" value="aa001"> -->
-<!-- 					<button type="submit" class="btn btn-primary">출근</button> -->
-<!-- 				  </form> -->
-<!-- 				  <form action="./leftWork.do" method="post"> -->
-<!-- 					<input type="hidden" name="emp_no" value="aa001"> -->
-<!-- 					<button type="submit" class="btn btn-danger">퇴근</button> -->
-<!-- 				  </form> -->
+
+<input type="hidden" id="emp_no" value="${loginVo.emp_no}">
+    <button id="arriveWorkBtn" class="btn btn-primary">출근</button>
+    <button id="leftWorkBtn" class="btn btn-danger">퇴근</button>
 	            </div>
 	          </div>
+	          <!-- End Card with an image on top -->
+	          
+	  
 	          <!-- End Card with an image on top -->
 
 
@@ -142,6 +105,7 @@
 	              <!-- End Pie CHart -->
 	            </div>
 	          </div>
+
 
 	          
 	            
@@ -263,16 +227,16 @@
 	    </section>
 
 		
-		<div>
-			<form action="./arriveWork.do" method="post">
-				<input type="hidden" name="emp_no" value="aa001">
-				<button type="submit">출근</button>
-			</form>
-			<form action="./leftWork.do" method="post">
-				<input type="hidden" name="emp_no" value="aa001">
-				<button type="submit">퇴근</button>
-			</form>
-		</div>
+<!-- 		<div> -->
+<!-- 			<form action="./arriveWork.do" method="post"> -->
+<%-- 				<input type="hidden" name="emp_no" value="${loginVo.emp_no}"> --%>
+<!-- 				<button type="submit">출근</button> -->
+<!-- 			</form> -->
+<!-- 			<form action="./leftWork.do" method="post"> -->
+<!-- 				<input type="hidden" name="emp_no" value="aa001"> -->
+<!-- 				<button type="submit">퇴근</button> -->
+<!-- 			</form> -->
+<!-- 		</div> -->
 
 
   	</main><!-- End #main -->

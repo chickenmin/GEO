@@ -118,7 +118,7 @@
 		INSERT INTO AP_RF
 				(APR_NO, APD_NO, APR_REF, 
 				REG_ID, REG_DATE, MOD_ID, MOD_DATE)
-			VALUES(APREF_SEQ.NEXTVAL, #{apd_no}, #{emp_no}, 
+			VALUES(APREF_SEQ.NEXTVAL, #{apd_no}, #{apr_ref}, 
 					#{emp_no}, SYSDATE, #{emp_no}, SYSDATE)
 	</insert>
 	
@@ -178,7 +178,6 @@
 		 AND ad.APD_NO IN (SELECT APD_NO 
 		 FROM AP_RF ar 
 		 WHERE APR_REF = #{emp_no})
-		 ORDER BY APD_NO 
 	</select>
 	
 	

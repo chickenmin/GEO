@@ -49,6 +49,7 @@ th[data-dt-column="4"]::after {
 					<div class="card">
 						<div class="card-body">
 							<h5 class="card-title">사원 조회</h5>
+							
 
 							<!-- Default Table -->
 							<table class="table display" id="allEmpTable">

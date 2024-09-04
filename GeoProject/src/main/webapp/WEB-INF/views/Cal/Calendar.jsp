@@ -174,7 +174,7 @@
     </div>
   </div>
 </div>
-<a class="btn btn-primary" data-bs-toggle="modal" href="#eventModal" role="button">상세보기 창 돌아가기</a>
+<!-- <a class="btn btn-primary" data-bs-toggle="modal" href="#eventModal" role="button">상세보기 창 돌아가기</a> -->
   
   
   

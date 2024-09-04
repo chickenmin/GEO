@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -99,8 +100,8 @@ public class EmpController {
 		}
 		
 		model.addAttribute("saveFileName", saveFileName);
-//		String fileUrl = "/storage/" + saveFileName;
-//	    model.addAttribute("fileUrl", fileUrl);
+		String fileUrl = "/storage/" + saveFileName;
+	    model.addAttribute("fileUrl", fileUrl);
 		
 		return "redirect:selectOneEmp.do?emp_no=" + vo.getEmp_no();
 		
@@ -147,42 +148,42 @@ public class EmpController {
 		return "redirect:selectOneEmp.do?emp_no=" + vo.getEmp_no();
 	}
 
-	@PostMapping(value = "/arriveWork.do")
-	public String arriveWork(Model model, String emp_no) {
-		AttVo vo = new AttVo();
-		vo.setEmp_no(emp_no);
-		log.info("출근 했습니다");
-		service.arriveWork(vo);
-		model.addAttribute("vo", vo);
-		return "comm/index";
-	}
-
-	@PostMapping(value = "/leftWork.do")
-	public String leftWork(Model model, AttVo vo) {
-		log.info("퇴근 완료");
-		service.leftWork(vo);
-		model.addAttribute("vo", vo);
-		return "comm/index";
-	}
+//	@GetMapping(value = "/arriveWork.do")
+//	public String arriveWork(Model model, AttVo vo, HttpSession session) {
+//		log.info("출근 했습니다");
+//		service.arriveWork(vo);
+//		model.addAttribute("vo", vo);
+//		return "comm/index";
+//	}
+//
+//	@GetMapping(value = "/leftWork.do")
+//	public String leftWork(Model model, AttVo vo, HttpSession session) {
+//		log.info("퇴근 완료");
+//		service.leftWork(vo);
+//		model.addAttribute("vo", vo);
+//		return "comm/index";
+//	}
 
 	@GetMapping(value = "/myPage.do")
-	public String myPage(HttpSession session, Model model,
-						@RequestParam(value = "tab", required = false) String tab) {
+
+	public String myPage(HttpSession session, HttpServletRequest request, String saveFileName, Model model) {
+
 		log.info("마이 페이지");
 
 		EmpVo loginVo = (EmpVo) session.getAttribute("loginVo");
 		if (loginVo != null) {
 			String emp_no = loginVo.getEmp_no();
+			request.setAttribute("loginVo", loginVo);
 			EmpVo vo = service.myPage(emp_no);
-
 			model.addAttribute("vo", vo);
-			model.addAttribute("tab", tab);
+
 		} else {
 			return "redirect:/login.do";
 		}
 
 		return "hr/myPage";
 	}
+	
 
 	@GetMapping(value = "/empAtt.do")
 	public String empAtt(String emp_no, Model model) {
@@ -193,17 +194,35 @@ public class EmpController {
 		System.out.println("emp_no 파라미터 값: " + emp_no);
 		return "hr/empAtt";
 	}
+	
+	@GetMapping(value = "/org.do")
+	public String org(Model model, String saveFileName, String emp_no, HttpServletRequest request) {
+		log.info("조직도");
+		List<EmpVo> vo = service.selectAll();
+		// 모델에 데이터를 추가 (속성 이름을 'vo'로 지정)
+		model.addAttribute("vo", vo);
+		model.addAttribute("saveFileName", saveFileName);
+//		String fileUrl = "/storage/" + saveFileName;
+//	    model.addAttribute("fileUrl", fileUrl);
+//		model.addAttribute("vo2", saveFileName);
+		return "hr/org";
+	}
+	
 
-	@Scheduled(cron = "0 0 4 * * *")
+
+	@Scheduled(cron = "*/10 * * * * *")
 	@GetMapping(value = "/batchRow.do")
 	public String batchRow(Model model, HttpServletRequest request) {
 		log.info("batchRow");
 		List<EmpVo> vo = null;
+		
 		// 공휴일조회 API 값을 아래 if문에 넣는다.
 		if (true) { // 공휴일이 아니면
 			service.batchRow();
+			System.out.println("배치");
 		} else { // 공휴일이면
-
+			System.out.println("배치 x");
+//			service.batchRow();
 		}
 		model.addAttribute("vo", vo);
 		return "hr/selectAll";

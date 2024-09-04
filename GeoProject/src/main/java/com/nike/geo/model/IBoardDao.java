@@ -23,6 +23,8 @@ public interface IBoardDao {
 	
 	public boolean multiDeleteBoard(List<String>list);
 	
+	public boolean recoveryBoard(List<String>list);
+	
 	public boolean realDelete(List<String> list);
 	
 	//조회수
@@ -42,4 +44,9 @@ public interface IBoardDao {
 	public LikeVo likeSelectOne(String bo_no,String emp_no);
 	
 	public List<CommVo> commList(String bo_no);
+	//댓글
+	public boolean commentInsert(CommVo vo);
+	
+	public boolean delflagY(String bo_no);
+	
 }
