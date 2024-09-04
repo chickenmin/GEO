@@ -186,7 +186,7 @@ public class ApprovalController {
 		int returnSubmit = apprService.returnSubmit(map);
 		if (returnSubmit ==1) {
 			log.info("반려처리 완료");
-			return "redirect:/apprList.do";
+			return "redirect:/apprList.do?variety=submit";
 		}else {
 			log.info("반려처리 실패");
 			model.addAttribute("apd_no", apd_no);

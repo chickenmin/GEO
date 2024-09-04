@@ -250,7 +250,7 @@ td[colspan="3"] {
 					<br>
 					<div class="container">
 						<div>반려메시지</div>
-						<textarea class="form-control" style="width: 800px;">${apl_msg }</textarea>
+						<textarea class="form-control" style="width: 700px;">${apl_msg }</textarea>
 					</div>
 				</c:if>
 			</div>	<!-- pdf -->
