@@ -17,6 +17,43 @@
 		<script
 			src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
+			document.addEventListener("DOMContentLoaded", function(){
+				var activeTab = getParameterByName('tab');
+				console.log(activeTab);
+				
+				if (activeTab === "overview"){
+					// 정보조회 탭 활성화
+					document.querySelector('button[data-bs-target="#profile-overview"]').classList.add("active");
+					document.querySelector('button[data-bs-target="#profile-edit"]').classList.remove("active");
+					document.querySelector('button[data-bs-target="#profile-change-password"]').classList.remove("active");
+					
+					// 정보조회 컨텐츠 표시
+					document.querySelector("#profile-overview").classList.add('show','active');
+					document.querySelector("#profile-edit").classList.remove('show','active');
+					document.querySelector("#profile-change-password").classList.remove('show','active');
+				} else if (activeTab === "edit"){
+					// 정보수정 탭 활성화
+					document.querySelector('button[data-bs-target="#profile-overview"]').classList.remove("active");
+					document.querySelector('button[data-bs-target="#profile-edit"]').classList.add("active");
+					document.querySelector('button[data-bs-target="#profile-change-password"]').classList.remove("active");
+					
+					// 정보수정 컨텐츠 표시
+					document.querySelector("#profile-overview").classList.remove('show','active');
+					document.querySelector("#profile-edit").classList.add('show','active');
+					document.querySelector("#profile-change-password").classList.remove('show','active');
+				} else if (activeTab === "password"){
+					// 비밀번호변경 탭 활성화
+					document.querySelector('button[data-bs-target="#profile-overview"]').classList.remove("active");
+					document.querySelector('button[data-bs-target="#profile-edit"]').classList.remove("active");
+					document.querySelector('button[data-bs-target="#profile-change-password"]').classList.add("active");
+					
+					// 비밀번호변경 컨텐츠 표시
+					document.querySelector("#profile-overview").classList.remove('show','active');
+					document.querySelector("#profile-edit").classList.remove('show','active');
+					document.querySelector("#profile-change-password").classList.add('show','active');
+				}
+			});
+			
 			function openPostcode() {
 				new daum.Postcode(
 						{
@@ -82,13 +119,26 @@
 				// 		return false;
 
 // 			}
+
+			function getParameterByName(name){
+				var url = window.location.href;
+				name = name.replace(/[\[\]]/g, "\\$&");
+				var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+				var results = regex.exec(url); // 파라미터 분리
+				if (!results) return null; // 파라미터 없으면 null
+				if (!results[2]) return ''; // 파라미터 있어도 값이 없으면 '''
+				return decodeURIComponent(results[2].replace(/\+/g, " ")) // 추출한 파라미터 반환
+			}
+			
 		</script>
 
-		<div
-			class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+		<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-			<img src="./storage/${saveFileName}" alt="Profile"
-				class="rounded-circle"> <input type="hidden" name="emp_no">
+
+			
+			<img src="<c:url value='/storage/${loginVo.emp_img}'/>" alt="Profile"
+				class="rounded-circle" style="width: 200px; height: 200px;"> <input type="hidden" name="emp_no">
+
 			<h2>${loginVo.emp_name}</h2>
 			<h3>
 				<c:choose>
@@ -280,14 +330,14 @@
 						<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
 						<div class="row mb-3">
 							<label for="profileImage"
-								class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+								class="col-md-4 col-lg-3 col-form-label" style="display: none;">Profile Image</label>
 							<div class="col-md-8 col-lg-9">
-								<img src="assets/img/profile-img.jpg" alt="Profile">
+								<img src="<c:url value='/storage/${loginVo.emp_img}'/>" alt="Profile" style="display: none;">
 								<div class="pt-2">
 									<a href="#" class="btn btn-primary btn-sm"
-										title="Upload new profile image"><i class="bi bi-upload"></i></a>
+										title="Upload new profile image" style="display: none;"><i class="bi bi-upload"></i></a>
 									<a href="#" class="btn btn-danger btn-sm"
-										title="Remove my profile image"><i class="bi bi-trash"></i></a>
+										title="Remove my profile image" style="display: none;"><i class="bi bi-trash"></i></a>
 								</div>
 							</div>
 						</div>

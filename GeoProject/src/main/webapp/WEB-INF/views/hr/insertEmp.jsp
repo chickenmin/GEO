@@ -192,7 +192,7 @@
 				<div class="row mb-3">
 					<label for="inputNumber" class="col-sm-2 col-form-label">프로필 사진</label>
 					<div class="col-sm-10" style="width: 50%;">
-						<input class="form-control" type="file" id="formFile" name="saveFileName">
+						<input class="form-control" type="file" id="formFile" name="file">
 					</div>
 				</div>
 				<div class="row mb-3">

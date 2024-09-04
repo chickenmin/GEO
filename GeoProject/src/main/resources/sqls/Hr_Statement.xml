@@ -7,13 +7,13 @@
 <!-- 사원 추가 -->
 <insert id="insertEmp">
 INSERT INTO GEO.EMP
-	(EMP_NO, EMP_POS, EMP_DEPT, EMP_PW, 
+	(EMP_IMG, EMP_NO, EMP_POS, EMP_DEPT, EMP_PW, 
 	EMP_NAME, EMP_GENDER, EMP_HIREDATE, EMP_EMAIL, 
 	EMP_PHONE, EMP_BIRTH, EMP_POSTCODE , EMP_ADDRESS1 , 
 	EMP_ADDRESS2 , EMP_ADDRESS3, EMP_AUTH, EMP_STATUS, 
 	EMP_RETIREDATE, REG_ID, REG_DATE, MOD_ID, 
 	MOD_DATE)
-VALUES(#{emp_no}, #{emp_pos}, #{emp_dept}, #{emp_pw}, 
+VALUES(#{emp_img, jdbcType=VARCHAR}, #{emp_no}, #{emp_pos}, #{emp_dept}, #{emp_pw}, 
 	#{emp_name}, #{emp_gender}, TO_CHAR(SYSDATE, 'yyyy-MM-dd'), #{emp_email}, 
 	#{emp_phone}, #{emp_birth, jdbcType=DATE}, #{emp_postcode}, #{emp_address1},
 	#{emp_address2}, #{emp_address3}, 'AU003', 
@@ -23,7 +23,7 @@ VALUES(#{emp_no}, #{emp_pos}, #{emp_dept}, #{emp_pw},
 
 <!-- 사원 전체 조회 -->
 <select id="selectAll" resultType="EmpVo">
-SELECT EMP_NO , <!-- (SELECT CODE_NAME FROM COM WHERE DIVISION = '직급')  , (SELECT CODE_NAME FROM COM WHERE DIVISION = '부서') , -->
+SELECT EMP_IMG, EMP_NO , <!-- (SELECT CODE_NAME FROM COM WHERE DIVISION = '직급')  , (SELECT CODE_NAME FROM COM WHERE DIVISION = '부서') , -->
 	EMP_POS , EMP_DEPT ,
 	EMP_NAME , EMP_GENDER , EMP_HIREDATE , 
 	EMP_EMAIL , EMP_PHONE , EMP_BIRTH , 
@@ -33,7 +33,7 @@ FROM EMP e
 
 <!-- 사원 상세 조회 -->
 <select id="selectOneEmp" resultType="EmpVo">
-SELECT EMP_NO , EMP_NAME , EMP_DEPT , EMP_POS , 
+SELECT EMP_IMG, EMP_NO , EMP_NAME , EMP_DEPT , EMP_POS , 
 EMP_GENDER , EMP_BIRTH , EMP_PHONE , 
 EMP_EMAIL , EMP_POSTCODE , EMP_ADDRESS1 , 
 EMP_ADDRESS2 , EMP_ADDRESS3 , EMP_HIREDATE 
@@ -47,7 +47,8 @@ EMP_ADDRESS2 , EMP_ADDRESS3 , EMP_HIREDATE
 <!-- 사원 정보 변경 -->
 <update id="updateEmp" parameterType="EmpVo">
 UPDATE GEO.EMP
-SET emp_pos = #{emp_pos}, 
+SET emp_img = #{emp_img},
+	emp_pos = #{emp_pos}, 
 	emp_dept = #{emp_dept}, 
 	emp_email = #{emp_email}, 
 	emp_phone = #{emp_phone}, 
@@ -62,19 +63,18 @@ WHERE emp_no = #{emp_no}
 <update id="clearPw" parameterType="EmpVo">
 UPDATE GEO.EMP
 SET emp_pw = '1234',
-	emp_status = 'W'
+	emp_status = 'ST001'
 WHERE emp_no = #{emp_no}
 </update>
 
 <!-- 출근 -->
 <insert id="arriveWork">
-INSERT INTO GEO.ATT
-(EMP_NO, ATT_ARRIVE_TIME, ATT_LEFT_TIME, REG_ID, REG_DATE, MOD_ID, MOD_DATE)
-SELECT e.EMP_NO, SYSDATE, '', e.EMP_NO, TO_CHAR(SYSDATE, 'yyyy-MM-dd'),
-e.EMP_NO, TO_CHAR(SYSDATE, 'yyyy-MM-dd')
-FROM EMP e
-LEFT JOIN ATT a ON e.EMP_NO = a.EMP_NO
-WHERE e.EMP_NO = #{emp_no, jdbcType=VARCHAR}
+UPDATE GEO.ATT
+SET ATT_ARRIVE_TIME = SYSDATE,
+    REG_ID = EMP_NO,
+    REG_DATE = SYSDATE
+WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
+AND ATT_ARRIVE_TIME IS NULL
 </insert>
 
 <!-- 퇴근 -->
@@ -90,7 +90,7 @@ AND TO_CHAR(ATT_ARRIVE_TIME, 'yyyy-MM-dd') = TO_CHAR(SYSDATE, 'yyyy-MM-dd')
 
 <!-- 마이페이지 -->
 <select id="myPage" parameterType="java.lang.String" resultType="EmpVo">
-SELECT EMP_NO , EMP_POS , EMP_DEPT , EMP_NAME ,
+SELECT EMP_IMG, EMP_NO , EMP_POS , EMP_DEPT , EMP_NAME ,
 EMP_GENDER , EMP_HIREDATE , EMP_EMAIL , EMP_PHONE ,
 EMP_BIRTH , EMP_POSTCODE, EMP_ADDRESS1 ,
 EMP_ADDRESS2, EMP_ADDRESS3
@@ -108,9 +108,10 @@ SELECT EMP_NO , ATT_ARRIVE_TIME , ATT_LEFT_TIME
 <!-- 비밀번호 변경 -->
 <select id="modPw" parameterType="java.lang.String" resultType="EmpVo">
 UPDATE GEO.EMP
-SET EMP_PW='1234'
+SET emp_pw = #{emp_pw}
 WHERE EMP_NO = #{emp_no}
 </select>
+
 
 <insert id="batchRow">
 	INSERT INTO GEO.ATT

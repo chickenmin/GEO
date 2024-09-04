@@ -44,6 +44,7 @@
 <body>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			// 사원번호 저장
 			var key = getCookie("idChk"); //user1
 			
 			if(key != "") {
@@ -96,6 +97,7 @@
 			return unescape(cookieValue);
 		}
 		
+		// 로그인
 		function loginFn(){
 			var formData = new FormData(document.getElementById("loginForm"));
 			
@@ -105,10 +107,14 @@
 			})
 			.then(response => response.json())
 			.then(data => {
-				if (data.status === "error") {
+				if (data.status === "login-Fail") {
 					alert(data.message);
-				} else {
-					window.location.href = "./index.do"
+					window.location.href = "./login.do";
+				} else if (data.status === "login-Success") {
+					window.location.href = "./index.do";
+				} else if (data.status === "update-Password-Needed") {
+					alert(data.message);
+					window.location.href = "./myPage.do?tab=password";
 				}
 			})
 			.catch(error => console.error("Error:", error));
@@ -123,8 +129,8 @@
 		            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 		
 		              <div class="d-flex justify-content-center py-4">
-		                <a href="index.html" class="logo d-flex align-items-center w-auto">
-		                  <img src="assets/img/logo.png" alt="">
+		                <a href="#" class="logo d-flex align-items-center w-auto">
+		                  <img src="assets/img/logo.png">
 		                  <span class="d-none d-lg-block">GEO</span>
 		                </a>
 		              </div><!-- End Logo -->
@@ -140,7 +146,7 @@
 		                  </div>
 		
 		                  <!-- form -->
-		                  <form class="row g-3 needs-validation" id="loginForm" action="./login.do" method="POST">
+		                  <form class="row g-3 needs-validation" id="loginForm">
 		
 		                    <div class="col-12">
 		                      <label for="yourUsername" class="form-label">사원번호</label>
@@ -164,7 +170,7 @@
 		                      </div>
 		                    </div>
 		                    <div class="col-12">
-		                      <button class="btn btn-primary w-100" type="button" onclick="login()">로그인</button>
+		                      <button class="btn btn-primary w-100" type="button" onclick="loginFn()">로그인</button>
 		                    </div>
 		                    <div class="col-12">
 		                      <p class="small mb-0">비밀번호를 잊어버리셨나요?&nbsp&nbsp<a href="./tempPw.do">임시 비밀번호 발급</a></p>

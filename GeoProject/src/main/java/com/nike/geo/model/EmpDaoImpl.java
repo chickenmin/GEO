@@ -49,15 +49,15 @@ public class EmpDaoImpl implements IEmpDao {
 	}
 	
 	@Override
-	public int arriveWork(AttVo vo) {
+	public int arriveWork(String emp_no) {
 		log.info(NS + "arriveWork");
-		return session.insert(NS + "arriveWork", vo);
+		return session.update(NS + "arriveWork");
 	}
 	
 	@Override
-	public int leftWork(AttVo vo) {
+	public int leftWork(String emp_no) {
 		log.info(NS + "leftWork");
-		return session.update(NS + "leftWork", vo);
+		return session.update(NS + "leftWork");
 	}
 	
 	@Override
@@ -77,6 +77,7 @@ public class EmpDaoImpl implements IEmpDao {
 		log.info(NS + "modPw");
 		return session.update(NS + "modPw");
 	}
+
 	
 	@Override
 	public void batchRow() {

@@ -6,6 +6,7 @@
 <html>
 
 <%@ include file="./header.jsp" %>
+
 <body>
 	<%@ include file="./sidebar.jsp" %>
  	<main id="main" class="main">
@@ -31,32 +32,80 @@
 	            <div class="card-body" style="text-align: center;">
 	              <h5 class="card-title" style="display: inline-block">${mainVo.emp_name}</h5>
 	              <p class="card-text">${mainVo.emp_dept}팀 ${mainVo.emp_pos}</p>
-	              <button class="btn btn-primary">출근</button>
-				  <button class="btn btn-danger">퇴근</button>
+
+<input type="hidden" id="emp_no" value="${loginVo.emp_no}">
+    <button id="arriveWorkBtn" class="btn btn-primary">출근</button>
+    <button id="leftWorkBtn" class="btn btn-danger">퇴근</button>
 	            </div>
 	          </div>
 	          <!-- End Card with an image on top -->
 	          
-<!-- 	          	<div class="card" style="height: 400px; display: flex; flex-direction: column; align-items: center;"> -->
-<!-- 				    <div style="height: 200px; display: flex; justify-content: center; align-items: center;"> -->
-<!-- 				        <img src="img/profile.png" class="card-img-top" style="width: 60%; margin: 0 auto; display: block;" alt="..."> -->
-<!-- 				    </div> -->
-<!-- 				    <div class="card-body" style="height: 200px; text-align: center; display: flex; flex-direction: column; justify-content: center;"> -->
-<%-- 				        <h5 class="card-title" style="display: inline-block;">${mainVo.emp_name}</h5> --%>
-<%-- 				        <p class="card-text">${mainVo.emp_dept}팀 ${mainVo.emp_pos}</p> --%>
-				        
-<!-- 				        <button class="btn btn-primary">출근</button> -->
-<!-- 				        <button class="btn btn-danger">퇴근</button> -->
-<!-- 				        <form action="./arriveWork.do" method="post"> -->
-<!-- 							<input type="hidden" name="emp_no" value="aa001"> -->
-<!-- 							<button type="submit">출근</button> -->
-<!-- 						</form> -->
-<!-- 						<form action="./leftWork.do" method="post"> -->
-<!-- 							<input type="hidden" name="emp_no" value="aa001"> -->
-<!-- 							<button type="submit">퇴근</button> -->
-<!-- 						</form> -->
-<!-- 				    </div> -->
-<!-- 				</div> -->
+	  
+	          <!-- End Card with an image on top -->
+
+
+			  <div class="card">
+	            <div class="card-body" style="text-align: center;">
+	              <h5 class="card-title" style="display: inline-block">
+	              	9월 결재 현황
+	              </h5>
+	              <div class="row mb-3"></div>
+	              <table class="table">
+	              	<thead>
+		              	<tr>
+		              		<td scope="col">총합</td>
+		              		<td scope="col">승인</td>
+		              		<td scope="col">반려</td>
+		              		<td scope="col">대기</td>
+		              	</tr>
+	              	</thead>
+	              	<tbody>
+		              	<tr>
+		              		<th scope="col">10</th>
+		              		<th scope="col">2</th>
+		              		<th scope="col">7</th>
+		              		<th scope="col">1</th>
+		              	</tr>
+	              	</tbody>
+	              </table>
+	            </div>
+	          </div>
+			
+			  <div class="card">
+	            <div class="card-body" style="text-align: center;">
+	              <h5 class="card-title" style="display: inline-block">
+	              	9월 근태 현황
+	              </h5>
+	              <!-- Pie Chart -->
+	              <canvas id="pieChart" style="max-height: 400px;"></canvas>
+	              <script>
+	                document.addEventListener("DOMContentLoaded", () => {
+	                  new Chart(document.querySelector('#pieChart'), {
+	                    type: 'pie',
+	                    data: {
+	                      labels: [
+	                        '출근',
+	                        '조퇴',
+	                        '지각'
+	                      ],
+	                      datasets: [{
+	                        label: 'My First Dataset',
+	                        data: [355, 35, 60],
+	                        backgroundColor: [
+	                          'rgb(255, 99, 132)',
+	                          'rgb(54, 162, 235)',
+	                          'rgb(255, 205, 86)'
+	                        ],
+	                        hoverOffset: 4
+	                      }]
+	                    }
+	                  });
+	                });
+	              </script>
+	              <!-- End Pie CHart -->
+	            </div>
+	          </div>
+
 
 	          
 	            
@@ -153,31 +202,41 @@
 	              </div>
 	            </div><!-- 결재 문서함 End -->
 	
+				<!-- 달력 -->
+				<div class="col-12">
+	              <div class="card recent-sales overflow-auto">
+	
+	                <div class="card-body">
+	                  <h5 class="card-title">이번 주 일정</h5>
+	
+					  <!-- 달력 그려지는 부분 -->
+	                  <div id='calendar-container' style="height: 300px;">
+						  <div id='calendar'></div>
+					  </div>
+	                </div>
+	                <!-- End card-body -->
+	
+	              </div>
+	            </div>
+	            <!-- End 달력 -->
+				
 	
 	        </div><!-- End Right side columns -->
 	
 	      </div>
 	    </section>
 
-
-		<div id="mdp-demo"></div>
 		
-		<script type="text/javascript">
-		var date = new Date();
-		$('#mdp-demo').multiDatesPicker({
-		});
-		</script>
-		
-		<div>
-			<form action="./arriveWork.do" method="post">
-				<input type="hidden" name="emp_no" value="aa001">
-				<button type="submit">출근</button>
-			</form>
-			<form action="./leftWork.do" method="post">
-				<input type="hidden" name="emp_no" value="aa001">
-				<button type="submit">퇴근</button>
-			</form>
-		</div>
+<!-- 		<div> -->
+<!-- 			<form action="./arriveWork.do" method="post"> -->
+<%-- 				<input type="hidden" name="emp_no" value="${loginVo.emp_no}"> --%>
+<!-- 				<button type="submit">출근</button> -->
+<!-- 			</form> -->
+<!-- 			<form action="./leftWork.do" method="post"> -->
+<!-- 				<input type="hidden" name="emp_no" value="aa001"> -->
+<!-- 				<button type="submit">퇴근</button> -->
+<!-- 			</form> -->
+<!-- 		</div> -->
 
 
   	</main><!-- End #main -->
@@ -186,15 +245,8 @@
 </body>
   <%@ include file="./footer.jsp" %>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#notiTable").DataTable({
-			"lengthChange": false,
-			"paging": false,
-			"searching": false,
-			"info": false,
-			"order": [[4, "desc"]]
-		});
-	});
+
+
 </script>
 
 </html>

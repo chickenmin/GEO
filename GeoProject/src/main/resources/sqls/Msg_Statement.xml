@@ -8,11 +8,12 @@
 	
 	<!--  받은 쪽지 목록 조회 selectMsgListRecv  -->
 	<select id="selectMsgListRecv" resultType="MsgVo">
-		SELECT MSG_NO , MSG_SEND_ID , MSG_RECV_ID ,
+		SELECT MSG_NO , EMP.EMP_NAME AS MSG_SEND_ID, MSG_RECV_ID ,
 				MSG_CONTENT , MSG_SEND_DATE , MSG_RECV_READ_YN ,
-				MSG_SEND_DEL_YN , MSG_RECV_DEL_YN , REG_ID ,
-				REG_DATE , MOD_ID , MOD_DATE 
-			FROM MSG
+				MSG_SEND_DEL_YN , MSG_RECV_DEL_YN , MSG.REG_ID ,
+				MSG.REG_DATE , MSG.MOD_ID , MSG.MOD_DATE 
+			FROM MSG INNER JOIN EMP
+				ON MSG.MSG_SEND_ID = EMP.EMP_NO
 			WHERE MSG_RECV_ID = #{msg_recv_id}
 				AND MSG_RECV_DEL_YN = 'N'
 			ORDER BY MSG_SEND_DATE DESC
@@ -20,14 +21,15 @@
 	
 	<!-- 보낸 쪽지 목록 조회 selectMsgListSend -->
 	<select id="selectMsgListSend" resultType="MsgVo">
-		SELECT MSG_NO , MSG_SEND_ID , MSG_RECV_ID ,
-                MSG_CONTENT , MSG_SEND_DATE , MSG_RECV_READ_YN ,
-                MSG_SEND_DEL_YN , MSG_RECV_DEL_YN , REG_ID ,
-                REG_DATE , MOD_ID , MOD_DATE 
-        	FROM MSG
-        	WHERE MSG_SEND_ID = #{msg_send_id}
-        		AND MSG_SEND_DEL_YN = 'N'
-        	ORDER BY MSG_SEND_DATE DESC
+		SELECT MSG_NO , MSG_SEND_ID , EMP.EMP_NAME AS MSG_RECV_ID, 
+				MSG_CONTENT , MSG_SEND_DATE , MSG_RECV_READ_YN ,
+				MSG_SEND_DEL_YN , MSG_RECV_DEL_YN , MSG.REG_ID ,
+				MSG.REG_DATE , MSG.MOD_ID , MSG.MOD_DATE 
+			FROM MSG INNER JOIN EMP
+				ON MSG.MSG_RECV_ID = EMP.EMP_NO
+			WHERE MSG_SEND_ID = #{msg_send_id}
+				AND MSG_SEND_DEL_YN = 'N'
+			ORDER BY MSG_SEND_DATE DESC
 	</select>
 	
 	<!-- 쪽지 상세 조회 selectMsgOne -->
