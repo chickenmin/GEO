@@ -1,6 +1,4 @@
-/**
- * 
- */
+
  $(document).ready(function(){ // 브라우저 로드시
 		
 		/////////////////////////임시저장일 경우///////////////
@@ -25,7 +23,7 @@
 		        dateArray = apd_days.split(",").map(function(date) {
 		            return date.trim();  // 날짜 앞뒤 공백 제거
 		        });
-		        console.log(dateArray);
+		        console.log("dateArray : ",dateArray);
 		}
 		
 		
@@ -191,33 +189,46 @@
 	
 	
 	
-			function check() {
-				    // must 클래스를 가진 모든 요소를 선택
-				    var mustFields = document.querySelectorAll('.must');
-				    var isEmpty = false;
-				
-				    // 각 요소를 순회하면서 비어있는지 확인
-				    mustFields.forEach(function(field) {
-				        if (field.tagName.toLowerCase() === 'input' || field.tagName.toLowerCase() === 'textarea') {
-				            // input이나 textarea의 값이 비어있는지 확인
-				            if (field.value.trim() === '') {
-				                isEmpty = true;
-				            }
-				        } else if (field.innerText.trim() === '') {
-				            // 그 외의 요소들(예: div 등)의 innerText가 비어있는지 확인
-				            isEmpty = true;
-				        }
-				    });
-				
-				    if (isEmpty) {
-				        alert('모든 필수 입력 필드를 작성해 주세요.');
-				        return false;
-				    } else{
-						return true;
-				}
-				  
-			}
+function check() {
+	    // must 클래스를 가진 모든 요소를 선택
+	    var mustFields = document.querySelectorAll('.must');
+	    var isEmpty = false;
 	
+	    // 각 요소를 순회하면서 비어있는지 확인
+	    mustFields.forEach(function(field) {
+	        if (field.tagName.toLowerCase() === 'input' || field.tagName.toLowerCase() === 'textarea') {
+	            // input이나 textarea의 값이 비어있는지 확인
+	            if (field.value.trim() === '') {
+	                isEmpty = true;
+	            }
+	        } else if (field.innerText.trim() === '') {
+	            // 그 외의 요소들(예: div 등)의 innerText가 비어있는지 확인
+	            isEmpty = true;
+	        }
+	    });
+	
+	    if (isEmpty) {
+	        alert('모든 필수 입력 필드를 작성해 주세요.');
+	        return false;
+	    } else{
+			validation();
+			return true;
+	}
+	  
+}
+	
+	function validation(){
+		  var str = document.getElementById("con").value;
+
+	    str = str.replace(/\r\n|\r|\n|\n\r/gim, "<br>");
+	    str = str.replace(/ /g, "&nbsp;");
+	    str = str.replace(/</gim, "&lt;");
+	    str = str.replace(/>/gim, "&gt;");
+	    str = str.replace(/\'/gim, "&#39;");
+	    str = str.replace(/\"/gim, "&quot;"); // 추가: 쌍따옴표 처리
+	
+	    document.getElementById("realCon").value = str;
+	}
 	
 	
 
