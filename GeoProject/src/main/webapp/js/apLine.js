@@ -258,6 +258,7 @@
 		console.log("리셋")
 	}
 	
+
 	function validation(){
 		  var str = document.getElementById("con").value;
 
@@ -267,10 +268,8 @@
 	    str = str.replace(/>/gim, "&gt;");
 	    str = str.replace(/\'/gim, "&#39;");
 	    str = str.replace(/\"/gim, "&quot;"); // 추가: 쌍따옴표 처리
-	   
 	
 	    document.getElementById("con").value = str;
-	    
 	}
 	
 	

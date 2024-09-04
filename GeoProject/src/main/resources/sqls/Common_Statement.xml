@@ -83,6 +83,20 @@
 			<![CDATA[WHERE ROWNUM <= 5]]>
 	</select>
 	
+	<!-- 메인화면 결재문서함 조회 selectMainDocu -->
+	<select id="selectMainDocu" resultType="Ap_DocuVo">
+		SELECT APD_NO,EMP_NO , SUBSTR(APD_CON, 1, 10) AS APD_CON,
+				APD_STEP ,APD_STATUS ,APD_DAYS ,
+				APD_HALF_YN ,APD_FORM ,APD_CLEAR_DATE ,APD_TEMP_YN ,
+				REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
+	 		FROM AP_DOCU ad 
+	 		WHERE APD_NO IN (SELECT APD_NO 
+						 FROM AP_LINE al 
+						 WHERE EMP_NO = #{emp_no})
+	 		AND APD_TEMP_YN = 'N'
+	 		ORDER BY REG_DATE DESC
+	</select>
+	
 	<!-- 메인화면 일정 조회 selectMainCal -->
 	<select id="selectMainCal" resultType="CalVo">
 		SELECT CAL_NO , EMP_NO , CAL_TITLE ,

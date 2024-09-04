@@ -163,7 +163,7 @@
 	              <div class="card recent-sales overflow-auto">
 	
 	                <div class="card-body">
-	                  <h5 class="card-title">결재 문서함</h5>
+	                  <h5 class="card-title">상신 문서함</h5>
 	
 	                  <!-- Default Table -->
 		              <table class="table display" id="notiTable">
