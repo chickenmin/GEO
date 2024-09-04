@@ -127,7 +127,7 @@
 			chs[i].checked = bool;
 		}
 	}
-
+	
 	$(document).ready(function() {
 		$("#recvMsgTable").DataTable({
 			"info": false,

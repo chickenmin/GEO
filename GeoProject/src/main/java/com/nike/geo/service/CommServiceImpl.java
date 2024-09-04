@@ -1,6 +1,7 @@
 package com.nike.geo.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.MessagingException;
@@ -13,6 +14,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.nike.geo.model.ICommDao;
+import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.CommonVo;
@@ -101,6 +103,20 @@ public class CommServiceImpl implements ICommService {
 		log.info("COMMON service - 메인화면 공지게시판 조회 selectMainBoard");
 		log.info("COMMON service - 받아온 값 : {}", status);
 		return dao.selectMainBoard(status);
+	}
+	
+	@Override
+	public List<Ap_DocuVo> selectMainDocu(String no) {
+		log.info("COMMON service - 메인화면 결재문서함 조회 selectMainDocu");
+		log.info("COMMON service - 받아온 값 : {}", no);
+		return dao.selectMainDocu(no);
+	}
+	
+	@Override
+	public int selectMainAppr(Map<String, Object> map) {
+		log.info("COMMON service - 메인화면 결재현황 selectMainAppr");
+		log.info("COMMON service - 받아온 값 : {}", map);
+		return dao.selectMainAppr(map);
 	}
 	
 	@Override

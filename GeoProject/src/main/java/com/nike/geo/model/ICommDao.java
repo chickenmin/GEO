@@ -1,7 +1,9 @@
 package com.nike.geo.model;
 
 import java.util.List;
+import java.util.Map;
 
+import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.CommonVo;
@@ -25,6 +27,12 @@ public interface ICommDao {
 	
 	// 메인화면 공지게시판 조회 selectMainBoard
 	public List<BoardVo> selectMainBoard(String status);
+	
+	// 메인화면 결재문서함 조회 selectMainDocu
+	public List<Ap_DocuVo> selectMainDocu(String no);
+	
+	// 메인화면 결재현황 selectMainAppr
+	public int selectMainAppr(Map<String, Object> map);
 	
 	// 메인화면 일정 조회 selectMainCal
 	public List<CalVo> selectMainCal(String no);

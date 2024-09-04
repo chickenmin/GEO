@@ -73,9 +73,9 @@
 	
 	<!-- 메인화면 게시판 조회 selectMainBoard  -->
 	<select id="selectMainBoard" resultType="BoardVo">
-		SELECT BO_NO , EMP_NAME , BO_TITLE ,
+		SELECT BO_NO , EMP_NO , BO_TITLE ,
 				BO_CONTENT , BO_VIEW_COUNT , BO_REGDATE
-			FROM (SELECT BO_NO , EMP.EMP_NAME , BO_TITLE ,
+			FROM (SELECT BO_NO , EMP.EMP_NAME AS EMP_NO , BO_TITLE ,
 						BO_CONTENT , BO_VIEW_COUNT , BO_REGDATE
 					FROM BO INNER JOIN EMP
 						ON BO.EMP_NO = EMP.EMP_NO 
@@ -87,16 +87,35 @@
 	
 	<!-- 메인화면 결재문서함 조회 selectMainDocu -->
 	<select id="selectMainDocu" resultType="Ap_DocuVo">
-		SELECT APD_NO,EMP_NO , SUBSTR(APD_CON, 1, 10) AS APD_CON,
+		SELECT APD_NO, EMP_NO , APD_CON,
 				APD_STEP ,APD_STATUS ,APD_DAYS ,
-				APD_HALF_YN ,APD_FORM ,APD_CLEAR_DATE ,APD_TEMP_YN ,
-				REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
-	 		FROM AP_DOCU ad 
-	 		WHERE APD_NO IN (SELECT APD_NO 
-						 FROM AP_LINE al 
-						 WHERE EMP_NO = #{emp_no})
-	 		AND APD_TEMP_YN = 'N'
-	 		ORDER BY REG_DATE DESC
+				APD_HALF_YN , APD_FORM , APD_CLEAR_DATE ,APD_TEMP_YN ,
+				REG_ID , REG_DATE , MOD_ID , MOD_DATE
+			FROM (SELECT APD_NO, EMP.EMP_NAME AS EMP_NO , APD_CON,
+						APD_STEP ,APD_STATUS ,APD_DAYS ,
+						APD_HALF_YN ,c.CODE_NAME AS APD_FORM , APD_CLEAR_DATE ,APD_TEMP_YN ,
+						ad.REG_ID, ad.REG_DATE , ad.MOD_ID , ad.MOD_DATE 
+ 					FROM AP_DOCU ad INNER JOIN EMP
+						ON ad.EMP_NO = EMP.EMP_NO
+									INNER JOIN COM c
+						ON ad.APD_FORM = c.COMMON_CODE  
+ 					WHERE APD_NO IN (SELECT APD_NO 
+										FROM AP_LINE al 
+					 					WHERE EMP_NO = #{emp_no})
+						AND APD_TEMP_YN = 'N'
+					ORDER BY REG_DATE DESC)
+			<![CDATA[WHERE ROWNUM <= 5]]>
+	</select>
+	
+	<!-- 메인화면 결재현황 selectMainAppr -->
+	<select id="selectMainAppr" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(*) 
+			FROM AP_DOCU 
+			WHERE APD_NO IN (SELECT APD_NO 
+								FROM AP_LINE al 
+					 			WHERE EMP_NO = #{emp_no})
+				AND APD_TEMP_YN = 'N'
+				AND APD_STATUS = #{apd_status}
 	</select>
 	
 	<!-- 메인화면 일정 조회 selectMainCal -->

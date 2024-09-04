@@ -1,9 +1,11 @@
 package com.nike.geo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 
+import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.CommonVo;
@@ -61,6 +63,20 @@ public interface ICommService {
 	 * @return 임시비밀번호 값
 	 */
 	public String generateTempPw();
+	
+	/**
+	 * 메인화면 결재문서함 조회 
+	 * @param no
+	 * @return List<Ap_DocuVo>
+	 */
+	public List<Ap_DocuVo> selectMainDocu(String no);
+	
+	/**
+	 * 메인화면 결재현황 selectMainAppr
+	 * @param map
+	 * @return int
+	 */
+	public int selectMainAppr(Map<String, Object> map);
 	
 	/**
 	 * 메인화면 일정 조회 
