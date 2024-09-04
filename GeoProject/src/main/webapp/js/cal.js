@@ -252,30 +252,30 @@ function updateCal(eventNo){
             $('#updateEventModal').modal('show');
             
             
-            // 내용칸이 비었을 경우
-			if ($("#update_cal_content").val() == "") {
-				alert("내용을 입력해주세요")
-				$("#content").focus();
-				return false;
-			}
-			
-			// 시작일, 종료일이 비엇을경우
-			if ($("#update_datetimepicker1").val() == "" || $("#datetimepicker2").val() == "") {
-				alert("시간을 입력해 주세요")
-				return false;
-			}
-		
-			// 시작일이 종료일보다 클 시 아작스 강제 종료
-			 dateVal() //시작일 값과 종료일 값을 밀리세컨드로 바꿔 크기를 비교해주는 function
-			if (dateVal('update_datetimepicker1', 'update_datetimepicker2') == false) {
-				return false;
-			}         
-            // 일정명 칸이 비었을 경우
-			if ($("#update_cal_title").val() == "") {
-				alert("일정명을 입력해주세요")
-				$("#update_cal_title").focus();
-				return false;
-			}
+//            // 내용칸이 비었을 경우
+//			if ($("#update_cal_content").val() == "") {
+//				alert("내용을 입력해주세요")
+//				$("#content").focus();
+//				return false;
+//			}
+//			
+//			// 시작일, 종료일이 비엇을경우
+//			if ($("#update_datetimepicker1").val() == "" || $("#datetimepicker2").val() == "") {
+//				alert("시간을 입력해 주세요")
+//				return false;
+//			}
+//		
+//			// 시작일이 종료일보다 클 시 아작스 강제 종료
+//			 dateVal() //시작일 값과 종료일 값을 밀리세컨드로 바꿔 크기를 비교해주는 function
+//			if (dateVal('update_datetimepicker1', 'update_datetimepicker2') == false) {
+//				return false;
+//			}         
+//            // 일정명 칸이 비었을 경우
+//			if ($("#update_cal_title").val() == "") {
+//				alert("일정명을 입력해주세요")
+//				$("#update_cal_title").focus();
+//				return false;
+//			}
 			
         },
         error: function(xhr, status, error) {
@@ -304,8 +304,6 @@ function updateAjax() {
            
            	cal_start : $('#update_datetimepicker1').val(),
 			cal_stop : $('#update_datetimepicker2').val(),
-//            start_date:  $( "#update_datepicker1" ).datepicker( "cal_start" ),
-//            end_date:  $( "#update_datepicker2" ).datepicker( "cal_stop" ),
             cal_type: $('#update_cal_type').val(),
             cal_open_yn: $('#update_cal_open_yn').val(),
 

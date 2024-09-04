@@ -111,7 +111,7 @@
       <div class="modal-footer">
         <button class="btn btn-primary" id="updateBtn" data-bs-target="#updateEventModal" data-bs-toggle="modal" data-bs-dismiss="modal">수정창 이동</button>
      	<button type="button" class="btn btn-danger" id="deleteBtn" onclick="deleteCal()" style="display: inline-block">일정 삭제</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
   </div>
