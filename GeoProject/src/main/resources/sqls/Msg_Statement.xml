@@ -126,7 +126,7 @@
 	<!-- 안읽은 쪽지 최신순 3개 조회 selectLatestMsg -->
 	<select id="selectLatestMsg" resultType="MsgVo">
 		SELECT MSG.MSG_NO, EMP.EMP_NAME AS MSG_SEND_ID, MSG.MSG_CONTENT,
-				 MSG.MSG_SEND_DATE
+				 MSG.MSG_SEND_DATE, EMP.EMP_IMG AS REG_DATE
 			FROM (SELECT MSG.MSG_NO, MSG_SEND_ID, MSG_CONTENT,
 						MSG_SEND_DATE, MSG_RECV_ID
 				    FROM MSG

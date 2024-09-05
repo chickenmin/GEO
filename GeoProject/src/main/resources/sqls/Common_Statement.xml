@@ -127,4 +127,17 @@
 				AND CAL_OPEN_YN = 'Y'
 				AND EMP_NO = #{emp_no}
 	</select>
+	
+	<!-- 알림 생성 -->
+	<insert id="insertNoti" parameterType="map">
+		<selectKey keyProperty="noti_no" resultType="int" order="BEFORE">
+			SELECT NOTI_SEQ.NEXTVAL AS SEQ FROM DUAL
+		</selectKey>
+		INSERT INTO NOTI(NOTI_NO, EMP_NO, NOTI_STATUS,
+						NOTI_CONTENT, NOTI_DATE, REG_ID,
+						REG_DATE, MOD_ID, MOD_DATE)
+			VALUES(#{noti_no}, #{emp_no}, #{noti_status},
+					#{noti_content}, SYSDATE, 'SYSTEM',
+					SYSDATE, 'SYSTEM', SYSDATE)
+	</insert>
 </mapper>

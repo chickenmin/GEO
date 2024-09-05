@@ -63,10 +63,10 @@
 	              <h5 class="card-title">쪽지 작성</h5>
 	
 	              <!-- General Form Elements -->
-	              <form action="./insertMsg.do" method="post" enctype="multipart/form-data" onsubmit="sendDivContent()">
+	              <form action="./insertMsg.do" id="insertMsgForm" method="post" enctype="multipart/form-data" onsubmit="return sendDivContent();">
 	                
 	                <div class="row mb-4" style="display: none;">
-	                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
+	                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람(hidden)</label>
 	                  <div class="col-sm-10">
 	                    <input type="text" id="msg_recv_id" name="msg_recv_id" class="form-control">
 	                  </div>
@@ -162,6 +162,12 @@
 // 	              		 var plainText = quill.root.innerHTML.substr(3).slice(0,-4);
 	              		 var plainText = quill.root.innerHTML; // HTML만 가져옴
 	              		 document.getElementById("hiddenContent").value = plainText;
+	              		 
+	              		 if(plainText === "<p><br></p>") {
+	              			 alert("내용을 입력해주세요.");
+	              			 return false;
+	              		 }
+	              		 return true;
 	              	 }
 	              </script>
 	            </div>

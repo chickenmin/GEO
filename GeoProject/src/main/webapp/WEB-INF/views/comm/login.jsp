@@ -96,7 +96,7 @@
 			}
 			return unescape(cookieValue);
 		}
-		
+
 		// 로그인
 		function loginFn(){
 			var formData = new FormData(document.getElementById("loginForm"));

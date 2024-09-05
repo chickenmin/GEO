@@ -126,4 +126,11 @@ public class CommServiceImpl implements ICommService {
 		return dao.selectMainCal(no);
 	}
 	
+	@Override
+	public int insertNoti(Map<String, Object> map) {
+		log.info("COMMON service - 알림 추가 insertNoti");
+		log.info("COMMON service - 받아온 값 : {}", map);
+		return dao.insertNoti(map);
+	}
+	
 }

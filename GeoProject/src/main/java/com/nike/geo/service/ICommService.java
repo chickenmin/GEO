@@ -85,4 +85,11 @@ public interface ICommService {
 	 */
 	public List<CalVo> selectMainCal(String no);
 	
+	/**
+	 * 알림 추가 insertNoti
+	 * @param map
+	 * @return 0 혹은 1
+	 */
+	public int insertNoti(Map<String, Object> map);
+	
 }

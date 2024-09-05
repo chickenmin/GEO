@@ -24,16 +24,19 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.nike.geo.service.IBoardService;
 import com.nike.geo.service.ICommService;
+import com.nike.geo.service.IEmpService;
 import com.nike.geo.service.IMsgService;
 import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.FileVo;
+import com.nike.geo.vo.hr.AttVo;
 import com.nike.geo.vo.hr.EmpVo;
 import com.nike.geo.vo.msg.MsgVo;
 
@@ -51,6 +54,9 @@ public class MsgController {
 	
 	@Autowired
 	private IBoardService boardService;
+	
+	@Autowired
+	private IEmpService empService;
 	
 	@GetMapping(value = "/login.do")
 	public String loginFrom() {
@@ -124,6 +130,8 @@ public class MsgController {
 		model.addAttribute("docu", docu);
 		
 		// 근태 현황
+//		AttVo attVo = empService.empAtt(empNo);
+//		model.addAttribute("attVo", attVo);
 		
 		// 일정
 		List<CalVo> calList = commService.selectMainCal(loginVo.getEmp_no());
@@ -221,8 +229,10 @@ public class MsgController {
 	}
 	
 	@GetMapping(value = "/insertMsg.do")
-	public String insertMsgForm() {
+	public String insertMsgForm(@RequestParam(value = "id", required = false) String id,
+								Model model) {
 		log.info("MESSAGE controller - 쪽지 작성 페이지로 이동");
+		model.addAttribute("id", id);
 		return "msg/insertMsg";
 	}
 	

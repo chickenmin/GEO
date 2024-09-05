@@ -52,7 +52,9 @@ $(document).ready(function() {
 						}
 						
 						msgUl.append('<li class="message-item"><a class="dropdown-item" href="/GeoProject/detailMsgRecv.do?no='
-									+ msg.msg_no + '"><img src="assets/img/messages-1.jpg" alt="이미지" class="rounded-circle"><div><h4>'
+									+ msg.msg_no + '"><img src="storage/' + msg.reg_id
+									+ '" onerror="this.style.backgroundColor = white;"'
+									+ 'class="rounded-circle"><div><h4>'
 									+ msg.msg_send_id + '</h4><p>' + msg.msg_content
 									+ '</p><p>'+ timeDiff +'</p></div></a></li>');
 					});
