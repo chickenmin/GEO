@@ -59,6 +59,7 @@
 				<input type="hidden" name="temp" value="temp">
 				<input type="hidden" name="variety" id="variety" value="submit">
 				<input type="hidden" name="type" id="dataType" value="상신하기">
+				<input type="hidden" name="apd_con" id="realCon">
 				
 				<c:if test="${vo.apd_form ne 'AP002'}">
 					<input type="hidden" name="apd_half_yn" value="N">
@@ -183,7 +184,7 @@
 				        </tr>
 				        <tr>
 				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 500px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				                <textarea id="con" rows="15"  class="must" name="apd_con" style="width: 100%; height:100%; border: 1px solid black; padding: 5px;">${vo.apd_con }</textarea>
+				                <textarea id="con" rows="15"  class="must" style="width: 100%; height:100%; border: 1px solid black; padding: 5px;">${vo.apd_con }</textarea>
 				            </td>
 				        </tr> 
 				        

@@ -138,12 +138,8 @@
 			 console.log("사원 이름과 id:", text ,id);
 			}
 	    });
-		
-		
-	
-		
-		
-	}); //브라우저 로드 끝
+	}); //////////////////////////////////////////////////////
+	//브라우저 로드 끝
 	 
 	 //체크박스 선택된 명수
 	var selectedNodes = $('#tree').jstree("get_selected","true");
@@ -255,12 +251,10 @@
 	    str = str.replace(/\'/gim, "&#39;");
 	    str = str.replace(/\"/gim, "&quot;"); // 추가: 쌍따옴표 처리
 	
-	    document.getElementById("con").value = str;
+	    document.getElementById("realCon").value = str;
 	}
 	
-	
-	
-	
+
 	
 	
 	

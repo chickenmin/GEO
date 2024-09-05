@@ -50,6 +50,7 @@
 			
 				<!-- 화면에 노출없이, 폼으로 넘겨야 하는 값 -->
 				<input type="hidden" name="apd_form" value="${apd_form}">
+				<input type="hidden" id="realCon" name="apd_con">
 				<c:if test="${apd_form ne 'AP002'}">
 					<input type="hidden" name="apd_half_yn" value="N">
 				</c:if>
@@ -173,7 +174,7 @@
 				        </tr>
 				        <tr>
 				            <td colspan="3" style="padding: 5px; border: 1px solid black; height: 500px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top; background: rgb(255, 255, 255);">
-				                <textarea id="con" rows="15"  class="must" name="apd_con" style="width: 100%; height:100%; border: 1px solid black; padding: 5px;"></textarea>
+				                <textarea id="con" rows="15"  class="must" style="width: 100%; height:100%; border: 1px solid black; padding: 5px;"></textarea>
 				            </td>
 				        </tr> 
 				        
