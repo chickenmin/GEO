@@ -160,7 +160,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-target="#eventModal" data-bs-toggle="modal" data-bs-dismiss="modal">상세보기로 이동</button>
-        <button type="button" class="btn btn-primary" onclick="updateAjax();">수정</button> 
+        <button type="button" class="btn btn-primary" onclick="updateAjax(); alert('일정을 수정하시겠습니까?');">수정</button> 
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" style="cursor:pointer;">취소</button>
       </div>
     </div>
