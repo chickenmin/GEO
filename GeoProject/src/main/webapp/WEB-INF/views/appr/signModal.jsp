@@ -45,7 +45,7 @@
 				      	<c:otherwise>
 				      		<div class="card">
 				      			<div class="card-body" style="text-align: center;"><br><h4>등록된 서명이 없습니다.</h4></div>
-				      			<button onclick="location.href='/signHome.do'">서명 만들기</button>
+				      			<button type="button" onclick="location.href='./signHome.do'">서명 만들기</button>
 							</div>
 				      	</c:otherwise>
 				      </c:choose>

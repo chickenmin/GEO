@@ -53,6 +53,8 @@ import oracle.jdbc.proxy.annotation.Post;
 @RequiredArgsConstructor
 public class ApprovalController {
 	
+	//추가가
+	
 	private final IApprovalService apprService; 
 	private final ServletContext servletContext;
 	
@@ -184,7 +186,7 @@ public class ApprovalController {
 		int returnSubmit = apprService.returnSubmit(map);
 		if (returnSubmit ==1) {
 			log.info("반려처리 완료");
-			return "redirect:/apprList.do";
+			return "redirect:/apprList.do?variety=submit";
 		}else {
 			log.info("반려처리 실패");
 			model.addAttribute("apd_no", apd_no);
@@ -252,15 +254,13 @@ public class ApprovalController {
 
 				//만들어진 문서 번호 가져오기
 				int apd_no = apprService.selctAPD();
-				//결재수
-				int approval =0;
 				
 				//결재라인 생성
 				for (String app : appLine) {
 					//직급 순차
 					int apl_order = apprService.selectPos(app);
 					Ap_LineVo LineVo= new Ap_LineVo(apd_no, app, apl_order);
-					approval += apprService.putLine(LineVo);
+					apprService.putLine(LineVo);
 				}
 				
 				//참조라인 생성
@@ -504,6 +504,8 @@ public class ApprovalController {
 			apprService.cancelDocu(apd_no);
 			return "redirect:/apprList.do?variety=temp";
 		}
+		
+		
 		
 	
 	

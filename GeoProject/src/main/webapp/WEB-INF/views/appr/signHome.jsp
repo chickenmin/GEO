@@ -32,8 +32,9 @@
 		      <div class="row">
 		     	 <div class="formDiv" >
 		      	<form action="./deleteSign.do" method="post"> <!-- 삭제 -->
-		      		<button class="btn btn-primary ">삭제</button>
-		      		<button type="button" class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#enroll">생성</button>
+		      		<button class="btn btn-primary " 	style="margin: 10px;">삭제</button>
+		      		<button type="button" class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#enroll"
+		      			style="margin: 10px;">생성</button>
 			      <c:choose>
 			      	<c:when test="${fn:length(signs) != 0}">
 			      		<div style="display: flex; justify-content: space-evenly;">

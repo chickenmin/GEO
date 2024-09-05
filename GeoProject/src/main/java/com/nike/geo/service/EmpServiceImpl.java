@@ -90,11 +90,22 @@ public class EmpServiceImpl implements IEmpService {
 		log.info("비밀번호 변경");
 		return dao.modPw(emp_no);
 	}
+	
+	// 퇴사 처리
+	@Override
+	public int entireEmp(EmpVo vo) {
+		log.info("퇴사");
+		return dao.entireEmp(vo);
+	}
 
+	// 출퇴근 테이블 모든사원 null 값 생성
 	@Override
 	public void batchRow() {
+		System.out.println("Service 실행");
 		dao.batchRow();
 	}
+	
+	
 
 	
 

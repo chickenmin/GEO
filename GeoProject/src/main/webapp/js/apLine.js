@@ -3,6 +3,20 @@
  */
  $(document).ready(function(){ // 브라우저 로드시
 		
+			//데이트피커 설정
+		$('#mdp-demo').multiDatesPicker({
+			dateFormat : "yy/mm/dd",
+			beforeShowDay : $.datepicker.noWeekends,
+			// 날짜가 선택될 때 호출되는 함수
+			onSelect : function(dateText, inst) {
+				console.log('Selected date:', dateText);
+				console.log('typeOf:', typeof dateText);
+			}
+
+		}); // mdp 실행
+		
+	     
+
 
 		var frm = document.submitForm;
 		var submitBtns = document.querySelectorAll(".frmbtn");
@@ -29,19 +43,8 @@
 			}	//submitBtns[i].onclick 
 		}	//for 
 
-		
-		
-		//데이트피커 설정
-		$('#mdp-demo').multiDatesPicker({
-			dateFormat : "yy/mm/dd",
-			beforeShowDay : $.datepicker.noWeekends,
-			// 날짜가 선택될 때 호출되는 함수
-			onSelect : function(dateText, inst) {
-				console.log('Selected date:', dateText);
-				console.log('typeOf:', typeof dateText);
-			}
 
-		}); // mdp 실행
+		
 		
 		//파일첨부가 있는 양식인지
 		if (document.getElementById('reviewImgFileInput')) {
@@ -85,7 +88,7 @@
 		   	type : "POST",
 		   	url : './jsTree.do',
 		   	dataType:"json",
-		   	success: function(data){
+		   	success: function(data){   
 			        CreateJSTrees(data);
 		    }
 		});	//ajax 끝~
@@ -135,29 +138,8 @@
 			 console.log("사원 이름과 id:", text ,id);
 			}
 	    });
-		
-		
-		/////////////////////////임시저장일 경우///////////////
-		//반차여부 기본 설정
-		if ($('#beforeHalf').length) {
-			var half = $('#beforeHalf').val();
-			console.log(half);
-			 $('#half').val(half);
-		}
-		
-		//데이트피커 설정
-		//임시저장했던 날짜로 지정
-		if ($('#beforeHalf').length) {
-		var apd_days = document.getElementById("beforeDates").value;
-		var dateArray = apd_days.split(",").map(function(date) {
-	            return date.trim(); // 날짜 앞뒤 공백 제거
-	        });
-		}
-		
-
-		
-		
-	}); //브라우저 로드 끝
+	}); //////////////////////////////////////////////////////
+	//브라우저 로드 끝
 	 
 	 //체크박스 선택된 명수
 	var selectedNodes = $('#tree').jstree("get_selected","true");
@@ -258,6 +240,7 @@
 		console.log("리셋")
 	}
 	
+
 	function validation(){
 		  var str = document.getElementById("con").value;
 
@@ -267,15 +250,11 @@
 	    str = str.replace(/>/gim, "&gt;");
 	    str = str.replace(/\'/gim, "&#39;");
 	    str = str.replace(/\"/gim, "&quot;"); // 추가: 쌍따옴표 처리
-	   
 	
-	    document.getElementById("con").value = str;
-	    //
+	    document.getElementById("realCon").value = str;
 	}
 	
-	
-	
-	
+
 	
 	
 	

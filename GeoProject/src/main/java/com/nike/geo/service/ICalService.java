@@ -8,7 +8,7 @@ import com.nike.geo.vo.co.CalVo;
 public interface ICalService {
 	
 //	Calendar 일정 목록
-	public List<CalVo> calList();
+	public List<CalVo> calList(String[] chkArray);
 	
 // Calendar 일정 추가
 	public boolean insertCal(Map<String, Object> map);

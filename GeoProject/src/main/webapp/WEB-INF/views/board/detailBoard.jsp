@@ -3,10 +3,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
-
+<style>
+        /* Flexbox 스타일 추가 */
+        .button-container {
+            display: flex;
+            align-items: center; /* 세로 중앙 정렬 */
+            gap: 10px; /* 버튼 간의 간격 조정 */
+            margin-bottom: 15px;
+        }
+        .button-container form {
+            margin: 0; /* form 기본 여백 제거 */
+        }
+</style>
 <%@ include file="../comm/header.jsp" %>
 <script type="text/javascript">
 function del(event) {
+	var userConfirmed = confirm("삭제하시겠습니까?");
+	if(userConfirmed){
     // 게시글 번호 가져오기
     var bo_no = '${Vo.bo_no}';
 
@@ -28,7 +41,7 @@ function del(event) {
         }
     });
 }
-
+}
 
 </script>
 <body>
@@ -36,31 +49,37 @@ function del(event) {
  	<main id="main" class="main">
 		<br>
 		<h1>${Vo.bo_title}</h1>
-		${Vo.emp_no} · ${Vo.bo_regdate}
-		<button>첨부파일</button>
-		<br><a onclick="history.back(-1)">뒤로가기</a><br>
+		${Vo.emp_no} · ${Vo.bo_regdate}<br>
+		<input type="file" value="첨부파일">
 		<br><br>
 		${Vo.bo_title}
 		<br><br>
 		${Vo.bo_content}
 		<hr>
+		<div class="button-container">
 		<form action="./likeCount.do" method="post">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}">
 		<input type="hidden" name="emp_no" value="${detailId.emp_no}">
-		<input type="submit" value="추천">
+		<input class="btn btn-info" type="submit" value="추천">
 		</form>	
-		<button onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>		
-		<button type="button" name="del" onclick="del(event)">삭제</button>
-		<button id="descBtn">댓글</button>		
+		<c:if test="${loginVo.emp_no == Vo.emp_no || loginVo.emp_name == '관리자'}">
+		<button class="btn btn-success" onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>
+		<button class="btn btn-danger" type="button" name="del" onclick="del(event)">삭제</button>
+		</c:if>		
+		<button class="btn btn-primary" id="descBtn">댓글</button>	
+		</div>	
 		<div id="description">
 		 <div id="commentSection"></div>
 		</div>
 		<form action="./commentInsert.do" method="post">
+		<input type="hidden" name="bo_no" value="${Vo.bo_no}">
 		<div style="text-align: center;">
 			<textarea name="comm_content" style="width: 800px; height: 200px; box-sizing: border-box;" placeholder="내용 입력"></textarea>
-		<input style="text-align: right;" type="submit" value="댓글등록"><!-- 오른쪽으로 이동이 안된다 -->
+			<input style="text-align: right;" type="submit" value="댓글등록">
 		</div>
 		</form>
+		
+		
   	</main><!-- End #main -->
 
 </body>
@@ -89,7 +108,8 @@ window.onload = function () {
                         // 댓글 데이터를 화면에 표시
                         var commentsHtml = '';
                         $.each(response, function (index, comment) {
-                            commentsHtml += '<p>'+comment.reg_id+ '<p>' + comment.comm_content + '</p>'+comment.reg_date+'</p>'; 
+                        	var brContent = comment.comm_content.replace(/\n/g, '<br>');
+                            commentsHtml += '<hr>'+'<p>'+comment.reg_id+ '<p>' + brContent + '</p>'+comment.reg_date+'</p>';
                         });
                         commentSection.html(commentsHtml);
                     }

@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class BoardServiceImpl implements IBoardService {
 
 	@Autowired
@@ -40,6 +39,15 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	
 	@Override
+	public boolean delflagY(String bo_no) {
+		return dao.delflagY(bo_no);
+	}
+	@Override
+	public boolean delflagN(String bo_no) {
+		return dao.delflagN(bo_no);
+	}
+	
+	@Override
 	public boolean insertBoard(BoardVo Vo) {
 		return dao.insertBoard(Vo);
 	}
@@ -57,6 +65,11 @@ public class BoardServiceImpl implements IBoardService {
 	@Override
 	public boolean multiDeleteBoard(List<String> list) {
 		return dao.multiDeleteBoard(list);
+	}
+	
+	@Override
+	public boolean recoveryBoard(List<String> list) {
+		return dao.recoveryBoard(list);
 	}
 	
 	@Override
@@ -105,6 +118,13 @@ public class BoardServiceImpl implements IBoardService {
 	public List<CommVo> commList(@RequestParam("bo_no") String bo_no) {
 		return dao.commList(bo_no);
 	}
+	
+	@Override
+	public boolean commentInsert(CommVo vo) {
+		return dao.commentInsert(vo);
+	}
+	
+	
 }
 
 

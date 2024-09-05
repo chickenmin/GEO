@@ -9,7 +9,7 @@
 		BO_TITLE,BO_CONTENT ,
 		BO_REGDATE,(SELECT COUNT(*) FROM LIKER l WHERE l.BO_NO=b.BO_NO) AS BO_LIKE_COUNT,
 		(SELECT COUNT(*) FROM VIEW_COUNT v WHERE v.BO_NO = b.BO_NO)	AS BO_VIEW_COUNT,
-		BO_DEL_YN ,MOD_ID ,MOD_DATE 
+		BO_DEL_YN ,MOD_ID ,MOD_DATE ,BO_DELFLAG_YN
 			FROM BO b
 			WHERE BO_STATUS ='announcements' AND BO_DEL_YN ='N'
 			ORDER BY BO_REGDATE DESC
@@ -20,9 +20,9 @@
 		BO_TITLE,BO_CONTENT ,
 		BO_REGDATE,(SELECT COUNT(*) FROM LIKER l WHERE l.BO_NO=b.BO_NO) AS BO_LIKE_COUNT,
 		(SELECT COUNT(*) FROM VIEW_COUNT v WHERE v.BO_NO = b.BO_NO)	AS BO_VIEW_COUNT,
-		BO_DEL_YN ,MOD_ID ,MOD_DATE 
+		BO_DEL_YN ,MOD_ID ,MOD_DATE ,BO_DELFLAG_YN
 			FROM BO b
-			WHERE BO_STATUS ='nomalBoard'
+			WHERE BO_STATUS ='nomalBoard' AND BO_DEL_YN ='N'
 			ORDER BY BO_REGDATE DESC
 	</select>
 	
@@ -31,7 +31,7 @@
 		BO_TITLE,BO_CONTENT ,
 		BO_REGDATE,(SELECT COUNT(*) FROM LIKER l WHERE l.BO_NO=b.BO_NO) AS BO_LIKE_COUNT,
 		(SELECT COUNT(*) FROM VIEW_COUNT v WHERE v.BO_NO = b.BO_NO)	AS BO_VIEW_COUNT,
-		BO_DEL_YN ,MOD_ID ,MOD_DATE 
+		BO_DEL_YN ,MOD_ID ,MOD_DATE ,BO_DELFLAG_YN
 			FROM BO b
 			WHERE BO_DEL_YN ='Y'
 			ORDER BY BO_REGDATE DESC
@@ -73,6 +73,14 @@
 		</foreach>
 	</update>
 	
+	<update id="recoveryBoard">
+	UPDATE BO SET BO_DEL_YN ='N'
+		WHERE BO_NO IN 
+		<foreach collection="list" item="bo_no" open="(" separator="," close=")">
+		#{bo_no}
+		</foreach>
+	</update>
+	
 	<delete id="realDelete">
 	DELETE FROM BO WHERE BO_NO IN 
 		<foreach collection="list" item="bo_no" open="(" separator="," close=")">
@@ -83,7 +91,7 @@
 	<!-- 게시글 한개 조회 -->
 	<select id="selectOne" resultType="BoardVo">
 	SELECT BO_NO, EMP_NO, BO_STATUS, BO_TITLE|| '(' ||(SELECT COUNT(*) FROM VIEW_COUNT WHERE BO_NO = #{bo_no}) || ')'
-		  ,  BO_REGDATE, BO_VIEW_COUNT, BO_LIKE_COUNT, BO_DEL_YN, REG_ID, REG_DATE, MOD_ID, MOD_DATE 
+		  ,  BO_REGDATE, BO_VIEW_COUNT, BO_LIKE_COUNT, BO_DEL_YN, REG_ID, REG_DATE, MOD_ID, MOD_DATE ,BO_DELFLAG_YN
 		FROM BO
 		WHERE BO_NO=#{bo_no}
 	</select>
@@ -148,5 +156,41 @@
 	WHERE BO_NO=#{bo_no, jdbcType=VARCHAR}
 	</select>
 	
+	<!-- 댓글쓰기 -->
+	<insert id="commentInsert">
+	INSERT INTO COMM(
+		COMM_SEQ ,BO_NO ,EMP_NO ,
+		COMM_CONTENT ,COMM_DATE ,COMM_REF ,
+		COMM_STEP ,COMM_USE_YN ,COMM_DEL_YN ,
+		REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
+	)
+	VALUES(
+		comm_seq.NEXTVAL,#{bo_no},#{emp_no},
+		#{comm_content},SYSDATE,0,
+		0,'Y','N',
+		#{emp_no},SYSDATE,#{emp_no},SYSDATE
+	)
+	</insert>
 	
+	<!-- 게시글공개여부 -->
+	<update id="updateDelflagY">
+	UPDATE BO SET BO_DELFLAG_YN ='Y'
+	WHERE BO_NO =#{bo_no}
+	</update>
+	<update id="updateDelflagN">
+	UPDATE BO SET BO_DELFLAG_YN ='N'
+	WHERE BO_NO =#{bo_no}
+	</update>
+	
+	<!-- 파일업로드 -->
+	<insert id="putFile">
+		INSERT INTO GEO."FILE" (FILE_NO, ORIGIN_NO, FILE_ONAME,
+								FILE_SNAME, FILE_SIZE, FILE_TYPE,
+								FILE_RANK, FILE_DEL_YN, REG_ID,
+								REG_DATE, MOD_ID, MOD_DATE)
+			VALUES(FILE_SEQ.NEXTVAL, #{origin_no}, #{file_oname},
+					#{file_sname}, #{file_size}, #{file_type},
+					'0', 'N', #{reg_id},
+					SYSDATE, #{reg_id}, SYSDATE)
+	</insert>
 </mapper>

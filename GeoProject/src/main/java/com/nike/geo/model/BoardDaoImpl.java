@@ -40,12 +40,21 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 	
 	@Override
+	public boolean delflagY(String bo_no) {
+		int n=sessionTemplate.update(NS+"delflagY", bo_no);
+		return (n==1)?true:false;
+	}
+	@Override
+	public boolean delflagN(String bo_no) {
+		int n=sessionTemplate.update(NS+"delflagN", bo_no);
+		return (n==1)?true:false;
+	}
+	
+	@Override
 	public boolean insertBoard(BoardVo Vo) {
 		int n = sessionTemplate.insert(NS+"insertBoard",Vo);
 		return (n==1)?true:false;
 	}
-	
-	
 	
 	
 	@Override
@@ -60,9 +69,16 @@ public class BoardDaoImpl implements IBoardDao {
 		return (n==1)?true:false;
 	}
 	
+	
 	@Override
 	public boolean multiDeleteBoard(List<String> list) {
 		int n =sessionTemplate.update(NS+"multiDeleteBoard",list);
+		return (n==1)?true:false;
+	}
+	
+	@Override
+	public boolean recoveryBoard(List<String> list) {
+		int n= sessionTemplate.update(NS+"recoveryBoard", list);
 		return (n==1)?true:false;
 	}
 	
@@ -119,6 +135,10 @@ public class BoardDaoImpl implements IBoardDao {
 		return sessionTemplate.selectList(NS+"commList",bo_no);
 	}
 		
-	
+	@Override
+	public boolean commentInsert(CommVo vo) {
+		int n=sessionTemplate.insert(NS+"commentInsert", vo);
+		return (n==1)?true:false;
+	}
 	
 }

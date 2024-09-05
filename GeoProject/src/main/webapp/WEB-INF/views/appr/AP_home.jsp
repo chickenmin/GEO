@@ -11,7 +11,7 @@
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
 	rel="stylesheet">
 <link href="./css/appr_home.css" rel="stylesheet">
-<script type="text/javascript" src="./js/appr.js"></script>
+<script type="text/javascript" src="./js/apprHome.js"></script>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
 
 			</div>
 		</div>
-
+		<button onclick="empList()" >사원 전체 리스트</button>
 	</main>
 	<!-- End #main -->
 

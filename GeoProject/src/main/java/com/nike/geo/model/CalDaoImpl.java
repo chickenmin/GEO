@@ -1,5 +1,6 @@
 package com.nike.geo.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,8 +19,10 @@ public class CalDaoImpl implements ICalDao {
 	private final String NS = "com.nike.geo.model.CalDaoImpl.";
 	
 	@Override
-	public List<CalVo> calList() {
-		return session.selectList(NS+"calList");
+	public List<CalVo> calList(String[] chkArray) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("chkArray",chkArray);
+		return session.selectList(NS+"calList", map);
 	}
 	
 	@Override

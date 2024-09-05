@@ -17,11 +17,15 @@
 
 
 <!-- Calendar  일정리스트 -->
-<select id="calList" resultType="com.nike.geo.vo.co.CalVo">
+<select id="calList" parameterType="java.util.Map" resultType="com.nike.geo.vo.co.CalVo">
 SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, 
        CAL_START, CAL_STOP, CAL_OPEN_YN
 		FROM CAL
 		WHERE CAL_DEL_YN = 'N'
+		and cal_type IN
+		<foreach item="item" index="index" collection="chkArray" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
 </select>
 
 <!-- Calendar  일정리스트 -->

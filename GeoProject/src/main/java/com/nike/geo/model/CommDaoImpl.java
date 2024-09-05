@@ -1,10 +1,12 @@
 package com.nike.geo.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.CommonVo;
@@ -60,6 +62,20 @@ public class CommDaoImpl implements ICommDao {
 		log.info("COMMON repository - 메인화면 게시판 조회 selectMainBoard");
 		log.info("COMMON repository - 받아온 값 : {}", status);
 		return template.selectList(NS+"selectMainBoard", status);
+	}
+	
+	@Override
+	public List<Ap_DocuVo> selectMainDocu(String no) {
+		log.info("COMMON repository - 메인화면 결재문서함 조회 selectMainDocu");
+		log.info("COMMON repository - 받아온 값 : {}", no);
+		return template.selectList(NS+"selectMainDocu", no);
+	}
+	
+	@Override
+	public int selectMainAppr(Map<String, Object> map) {
+		log.info("COMMON repository - 메인화면 결재현황 selectMainAppr");
+		log.info("COMMON repository - 받아온 값 : {}", map);
+		return template.selectOne(NS+"selectMainAppr", map);
 	}
 	
 	@Override

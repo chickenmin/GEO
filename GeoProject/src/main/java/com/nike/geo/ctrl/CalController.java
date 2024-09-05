@@ -44,9 +44,13 @@ public class CalController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/calendarAjax.do", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONArray date(Model model) {
+	public JSONArray date(Model model,@RequestParam String chk) {
 		log.info("메소드시작");
-		List<CalVo> lists = iService.calList();
+		String[] chkArray = new String[chk.split(",").length];
+		for (int i=0 ; i<chk.split(",").length ; i++) {
+			chkArray[i] = chk.split(",")[i];
+		}
+		List<CalVo> lists = iService.calList(chkArray);
 		System.out.println("datedatedatedatedate" + lists.toString());
 		JSONArray arr = new JSONArray();
 		for (CalVo vo : lists) {

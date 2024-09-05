@@ -41,15 +41,13 @@
 	              </div>
 	              
 	              <div class="row mb-5">
-	              	<div class="col-sm-12">
+	              	<div class="col-sm-12" style="background-color: #E2E2E2; padding: 20px 20px;">
 		                ${msgDetail.msg_content}
+		                <div class="p-4"></div>
+		                <div class="p-4"></div>
 	              	</div>
 	              </div>
 	              
-	              <div class="row mb-5"></div>
-				  <div class="row mb-5"></div>
-				  <div class="row mb-5"></div>
-				  
 				  <!-- 첨부파일 -->
 				  <div class="row mb-2">
 	                  <div class="col-sm-2">첨부파일</div>
