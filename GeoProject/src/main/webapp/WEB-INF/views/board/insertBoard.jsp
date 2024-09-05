@@ -49,24 +49,13 @@
 				<textarea style="width: 100%; height: 30px;" name="bo_title" placeholder="제목 입력">${Vo.bo_title}</textarea>
 				</td>
 			</tr>
-			<c:if test="${loginVo.emp_auth=='AU002'}">
-			<tr>
-				<td scope="row">게시판 공개여부</td>
-				<td colspan="3">
-					<select name="delflag">
-						<option value="delflagN">공개</option>
-						<option value="delflagY">비공개</option>
-					</select>
-				</td>
-			</tr>
-			</c:if>
 			<tr>
 				<td colspan="4" rowspan="8">
 				 <textarea name="bo_content" style="width: 100%; height: 500px; box-sizing: border-box;" placeholder="내용 입력">${Vo.bo_content}</textarea>
 				</td>
 			</tr>
 		</table>
-		<input class="form-control" type="file" id="reviewImageFileInput"><!-- ★★★★★★★★★★★★★★★★★★★★★★★ -->
+		<input class="form-control" type="file" id="reviewImageFileInput"><!-- ★★★★★★★★★★★파일첨부★★★★★★★★★★★★ -->
 		<c:choose>
 		<c:when test="${mode=='insert'}">
 		<button class="btn btn-primary" type="submit" onclick="submitForm()">게시</button>

@@ -65,10 +65,10 @@ function del(event) {
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}">
 		<input class="btn btn-info" type="submit" value="추천(${Vo.bo_like_count})">
 		</form>	
-		<c:if test="${loginVo.emp_no == Vo.emp_no ||loginVo.emp_auth == 'AU002'}">
+		<c:if test="${loginVo.emp_no == Bvo.emp_no ||loginVo.emp_auth == 'AU002'}">
 		<button class="btn btn-success" onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>
 		</c:if>	
-		<c:if test="${loginVo.emp_no == Vo.emp_no && loginVo.emp_auth != 'AU002'}">
+		<c:if test="${loginVo.emp_no == Bvo.emp_no && loginVo.emp_auth != 'AU002'}">
 		<button class="btn btn-danger" type="button" name="del" onclick="del(event)">삭제</button>
 		</c:if>
 		<c:if test="${loginVo.emp_auth == 'AU002'}">

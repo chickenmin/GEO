@@ -67,6 +67,7 @@ public class BoardController {
 
 	
 	
+	//파일업로드중
 	//글작성 bo_status 로 값을 보내줘야 쿼리가 동작 가능
 	@GetMapping(value = "/writeBoard.do")
 	public String writePostForm(Model model) {
@@ -80,7 +81,10 @@ public class BoardController {
 							@RequestParam("bo_title") String bo_title, 
 							@RequestParam("bo_content") String bo_content,
 							@RequestParam("bo_status")String bo_status,
-							HttpSession session) {
+							HttpSession session,
+							@RequestParam List<MultipartFile> file,
+							String desc,HttpServletRequest request,Model model
+							) {
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		String writeId = Evo.getEmp_no();
 		Vo.setEmp_no(writeId);
@@ -100,12 +104,43 @@ public class BoardController {
 	    return "redirect:/writeBoard.do";
 	    
 	}
+//	@PostMapping(value = "/writeBoard.do")
+//	public String writeBoard(BoardVo Vo,
+//			@RequestParam("bo_title") String bo_title, 
+//			@RequestParam("bo_content") String bo_content,
+//			@RequestParam("bo_status")String bo_status,
+//			HttpSession session) {
+//		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
+//		String writeId = Evo.getEmp_no();
+//		Vo.setEmp_no(writeId);
+//		Vo.setBo_title(bo_title);  // 제목 설정
+//		Vo.setBo_content(Vo.getBo_content().replaceAll("\\r\n", "<br>"));
+//		Vo.setBo_status(bo_status);  // 상태 설정
+//		boolean isc = service.insertBoard(Vo);
+//		
+//		if (isc) {
+//			if ("announcements".equals(bo_status)) {
+//				return "redirect:/announcements.do";  // 공지사항 페이지로 리다이렉트
+//			} else if ("nomalBoard".equals(bo_status)) {
+//				return "redirect:/nomalBoard.do";  // 일반게시판 페이지로 리다이렉트
+//			}
+//		} 
+//		// 실패 시 원래 페이지로 리다이렉트
+//		return "redirect:/writeBoard.do";
+//		
+//	}
 
 	//글상세
 	@GetMapping(value = "/detailBoard.do")
 	public String detailBoard(@RequestParam("bo_no")String bo_no, 
-								Model model) {
+								Model model,
+								HttpSession session) {
+		EmpVo Evo = (EmpVo) session.getAttribute("loginVo");
+		String detailId=Evo.getEmp_no();
 		BoardVo Vo=service.detailBoard(bo_no);
+		BoardVo Bvo=service.detailBoard(bo_no);
+		model.addAttribute("Bvo", Bvo);
+		Vo.setEmp_no(detailId);
 		service.view_Count(Vo);
 		model.addAttribute("Vo",Vo);
 		return "board/detailBoard";
@@ -131,7 +166,7 @@ public class BoardController {
 								HttpSession session) {
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		map.put("bo_title", bo_title);
-		 map.put("bo_content", bo_content);
+		 map.put("bo_content", bo_content.replaceAll("\\r\n", "<br>"));
 		 map.put("bo_no", bo_no);
 		 map.put("emp_no", Evo.getEmp_no());
 			
