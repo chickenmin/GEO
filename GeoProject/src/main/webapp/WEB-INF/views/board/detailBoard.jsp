@@ -34,7 +34,11 @@ function del(event) {
         },
         success: function(msg) {
             alert('삭제가 완료되었습니다.');
+            if(${loginVo == 'AU002'}){
             location.href = "./delBoard.do"; // 삭제 후 게시판 목록으로 리다이렉트
+            }else{
+            	location.href="./nomalBoard.do";
+            }
         },
         error: function(error) {
             alert('삭제에 실패했습니다.');
@@ -49,7 +53,7 @@ function del(event) {
  	<main id="main" class="main">
 		<br>
 		<h1>${Vo.bo_title}</h1>
-		${Vo.emp_no} · ${Vo.bo_regdate}<br>
+		${Vo.emp_name} · ${Vo.bo_regdate} · 조회수(${Vo.bo_view_count})<br>
 		<input type="file" value="첨부파일">
 		<br><br>
 		${Vo.bo_title}
@@ -59,19 +63,23 @@ function del(event) {
 		<div class="button-container">
 		<form action="./likeCount.do" method="post">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}">
-		<input type="hidden" name="emp_no" value="${detailId.emp_no}">
-		<input class="btn btn-info" type="submit" value="추천">
+		<input class="btn btn-info" type="submit" value="추천(${Vo.bo_like_count})">
 		</form>	
-		<c:if test="${loginVo.emp_no == Vo.emp_no || loginVo.emp_name == '관리자'}">
+		<c:if test="${loginVo.emp_no == Vo.emp_no ||loginVo.emp_auth == 'AU002'}">
 		<button class="btn btn-success" onclick="location.href='./modifyBoard.do?bo_no=${Vo.bo_no}'">글수정</button>
+		</c:if>	
+		<c:if test="${loginVo.emp_no == Vo.emp_no && loginVo.emp_auth != 'AU002'}">
 		<button class="btn btn-danger" type="button" name="del" onclick="del(event)">삭제</button>
+		</c:if>
+		<c:if test="${loginVo.emp_auth == 'AU002'}">
+		<button class="btn btn-danger" type="button" name="readDel" onclick="realDel(event)">완전삭제</button>
 		</c:if>		
 		<button class="btn btn-primary" id="descBtn">댓글</button>	
 		</div>	
 		<div id="description">
 		 <div id="commentSection"></div>
 		</div>
-		<form action="./commentInsert.do" method="post">
+		<form action="./commentInsert.do" method="post" onsubmit="return showAlert()">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}">
 		<div style="text-align: center;">
 			<textarea name="comm_content" style="width: 800px; height: 200px; box-sizing: border-box;" placeholder="내용 입력"></textarea>
@@ -85,6 +93,11 @@ function del(event) {
 </body>
   <%@ include file="../comm/footer.jsp" %>
 <script type="text/javascript">
+function showAlert(){
+	alert("댓글 작성을 완료하시겠습니까?");
+	return true;
+}
+
 window.onload = function () {
     var desc = document.getElementById("description");
     var descBtn = document.getElementById("descBtn");
@@ -123,6 +136,26 @@ window.onload = function () {
             descBtn.textContent = "댓글열기";
         }
     }
+}
+function realDel(event) {
+var con = confirm("선택된 글이 삭제됩니다. 삭제하시겠습니까?"); 
+if (con) {
+    $.ajax({
+        url: "./realDelete.do", 
+        type: "post", 
+        dataType: "text", // 응답 데이터 형식을 텍스트로 설정합니다.
+        data:'ch=${Vo.bo_no}', // 체크박스의 값을 'ch'라는 이름으로 서버에 전송합니다.
+        success: function(msg) {
+            alert('삭제가 완료되었습니다.'); 
+            location.href="./delBoard.do";
+        },
+        error: function(error) {
+            alert('삭제에 실패했습니다.'); 
+        }
+    });
+} else {
+    alert("삭제가 취소되었습니다"); 
+}
 }
 </script>
 </html>

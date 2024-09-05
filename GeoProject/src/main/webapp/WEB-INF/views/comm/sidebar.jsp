@@ -118,9 +118,11 @@
           </li>
           
           <li>
+          <c:if test="${loginVo.emp_auth eq 'AU002'}">
             <a href="./delBoard.do">
               <i class="bi bi-circle"></i><span>삭제 게시판</span>
             </a>
+            </c:if>
           </li>
         </ul>
       </li><!-- End Board Nav -->

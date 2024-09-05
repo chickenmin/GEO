@@ -25,14 +25,23 @@
 				<td scope="row">게시판</td>
 				<td>
 					<select name="bo_status">
-					<c:if test="${loginVo.emp_name == '관리자'}">
+					<c:if test="${loginVo.emp_auth=='AU002'}">
 						<option value="announcements">공지사항</option>
 					</c:if>
 						<option value="nomalBoard">일반게시판</option>
 					</select>
 				</td>
 				<td>부서</td>
-				<td>${loginVo.emp_dept}</td>
+				<td>
+					<c:choose>
+						<c:when test="${loginVo.emp_dept eq 'DE001'}">개발</c:when>
+						<c:when test="${loginVo.emp_dept eq 'DE002'}">인사</c:when>
+						<c:when test="${loginVo.emp_dept eq 'DE003'}">생산</c:when>
+						<c:when test="${loginVo.emp_dept eq 'DE004'}">총무</c:when>
+						<c:when test="${loginVo.emp_dept eq 'DE005'}">영업</c:when>
+						<c:when test="${loginVo.emp_dept eq 'DE006'}">마케팅</c:when>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td scope="row">제목</td>
@@ -40,7 +49,7 @@
 				<textarea style="width: 100%; height: 30px;" name="bo_title" placeholder="제목 입력">${Vo.bo_title}</textarea>
 				</td>
 			</tr>
-			<c:if test="${loginVo.emp_name == '관리자'}">
+			<c:if test="${loginVo.emp_auth=='AU002'}">
 			<tr>
 				<td scope="row">게시판 공개여부</td>
 				<td colspan="3">

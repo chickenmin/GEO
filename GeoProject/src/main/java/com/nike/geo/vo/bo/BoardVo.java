@@ -29,5 +29,6 @@ public class BoardVo {
 	private String mod_id;
 	private String mod_date;
 	private String bo_delflag_yn;
-
+	private String emp_name;
+	private String common_name;
 }

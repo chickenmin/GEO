@@ -64,25 +64,6 @@ public class BoardController {
 		model.addAttribute("delBoard", delBoard);
 		return "board/delBoard";
 	}
-	
-	//비공개여부
-	@PostMapping("/updateDelflag.do")
-	@ResponseBody
-	public Map<String, Object> updateDelflag(@RequestParam("bo_no") String bo_no, @RequestParam("delflag") String delflag) {
-	    boolean success;
-	    if ("delflagY".equals(delflag)) {
-	        success = service.delflagY(bo_no);
-	    } else if ("delflagN".equals(delflag)) {
-	        success = service.delflagN(bo_no);
-	    } else {
-	        success = false;
-	    }
-	    
-	    Map<String, Object> response = new HashMap<>();
-	    response.put("success", success);
-	    return response;
-	}
-
 
 	
 	
@@ -104,7 +85,7 @@ public class BoardController {
 		String writeId = Evo.getEmp_no();
 		Vo.setEmp_no(writeId);
 		Vo.setBo_title(bo_title);  // 제목 설정
-	    Vo.setBo_content(bo_content);  // 내용 설정
+		Vo.setBo_content(Vo.getBo_content().replaceAll("\\r\n", "<br>"));
 	    Vo.setBo_status(bo_status);  // 상태 설정
 	    boolean isc = service.insertBoard(Vo);
 	    
