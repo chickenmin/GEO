@@ -39,5 +39,35 @@ $(document).ready(function() {
                 console.error("Error generating canvas: ", error);
             });
         }, 1000); // 1초 지연
-    });
-});
+    }); //savePDF
+    
+    	var frm = document.submitForm;
+		var submitBtns = document.querySelectorAll(".frmbtn");
+
+		for (let i = 0; i < submitBtns.length; i++) 	{
+			submitBtns[i].onclick = function(event) {
+				event.preventDefault(); 
+				console.log(this.textContent);
+				var temp = this.textContent;
+				var variety = (temp =="임시저장")?'temp':'submit' 
+
+				var result = check();
+				if (!result) {
+					return;					
+				}
+				document.getElementById("dataType").value = temp;
+				document.getElementById("variety").value = variety;
+				
+				console.log("이동할 리스트 종류",variety);
+				
+				validation();
+				frm.submit(); // 폼 제출
+								
+			}	//submitBtns[i].onclick 
+		}	//for 
+
+    
+    
+    
+    
+}); //ready

@@ -14,12 +14,31 @@ public class Ap_LineVo {
 	private String	mod_id      ;
 	private String	mod_date	;
 	private String emp_name;
+	private String col_type;
+	private String encoding;
 	
 	private String file_oname;
 	
+	
+	
 	//게터세터
+	
+	
+	
 	public int getApl_no() {
 		return apl_no;
+	}
+	public String getCol_type() {
+		return col_type;
+	}
+	public void setCol_type(String col_type) {
+		this.col_type = col_type;
+	}
+	public String getEncoding() {
+		return encoding;
+	}
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
 	}
 	public void setApl_no(int apl_no) {
 		this.apl_no = apl_no;

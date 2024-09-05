@@ -13,27 +13,20 @@
 				<h5 class="modal-title"><b>결재선 선택</b> </h5>
 			</div>
 			
-			<form action="./enrollSign.do" method="post" enctype="multipart/form-data">
+			<form action="./signDraw.do" method="post" enctype="multipart/form-data" id="signForm">
 				<input type="hidden" name="apd_no" value="${vo.apd_no}">
+				<input type="hidden" name="signatureImage" id="signatureImageInput">
 				<!-- 모달 몸체 -->
 				<div class="modal-body" style="height: 300px; width: 600px;">
-					<div >
-<!-- 						<div class="pad"> -->
-<!-- 							<h1>서명 패드</h1> -->
-<%-- 						    <canvas id="signature-pad" width="500" height="200"></canvas> --%>
-<!-- 						    <div id="buttons"> -->
-<!-- 						        <button  type="button" id="save">PNG 저장</button> -->
-<!-- 						        <button type="button" id="clear">초기화</button> -->
-<!-- 						    </div> -->
-<!-- 						</div> -->
-						<div class="signFile">
-							<input type="file" name="file" id="reviewImgFileInput" >
+						<div class="pad">
+							<h1>서명 패드</h1>
+						    <canvas id="signature-pad" width="500" height="200"></canvas>
 						</div>
-					</div>
 				</div> <!-- 모달 몸체 끝 -->
 				<div class="modal-footer">
+			        <button type="button" class="btn btn-outline-danger" id="clear">초기화</button>
 					<button class="btn btn btn-outline-secondary" data-bs-dismiss="modal" type="button">취소</button>
-					<button class="btn btn-outline-info" data-bs-dismiss="modal" >생성</button>
+					<button class="btn btn-outline-info frm" data-bs-dismiss="modal" id="submitSign">생성</button>
 				</div>
 			</form>
 		</div>

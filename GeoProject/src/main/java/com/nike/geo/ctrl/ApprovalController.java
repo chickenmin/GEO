@@ -40,6 +40,7 @@ import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.appr.Ap_FavVo;
 import com.nike.geo.vo.appr.Ap_LineVo;
 import com.nike.geo.vo.appr.Ap_RfVo;
+import com.nike.geo.vo.appr.BaseVo;
 import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.hr.EmpVo;
 
@@ -146,7 +147,9 @@ public class ApprovalController {
 				model.addAttribute("order", 0);
 			}
 		}
-		List<FileVo> mySign = apprService.selMySign(emp_no);	//내 전자서명
+		List<FileVo> mySign = apprService.selMySign(emp_no);	//내 전자서명 : 파일
+		List<BaseVo> signature = apprService.selectSignature(emp_no);
+		
 
 		//파일 다운~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		String path="";	//전자서명
@@ -168,6 +171,7 @@ public class ApprovalController {
 //		model.addAttribute("control", "appr");
 		model.addAttribute("apl_msg", apl_msg);
 		model.addAttribute("mySign", mySign);
+		model.addAttribute("signature", signature);
 		model.addAttribute("variety", variety);
 		
 		return "appr/formView";
@@ -341,6 +345,8 @@ public class ApprovalController {
 					List<String> list = Collections.singletonList(no);
 					apprService.delTemp(list);
 				}
+				
+				//알림
 		
 			return "redirect:/apprList.do?variety="+variety;
 		}
@@ -352,13 +358,15 @@ public class ApprovalController {
 		public String signHome(Model model,HttpSession session ) {
 			String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
 			List<com.nike.geo.vo.comm.FileVo> signs = apprService.selMySign(emp_no);
+			List<BaseVo> signature = apprService.selectSignature(emp_no);
 		
 			model.addAttribute("signs", signs);
+			model.addAttribute("signature", signature);
 			return "appr/signHome";
 		}
 		
 		///////////////////////////////////////////////////////////////////////////
-		//전자서명 등록
+		//전자서명 등록 : 파일
 		@PostMapping("/enrollSign.do")
 		public String enrollSign(MultipartFile file,HttpServletRequest request, HttpSession session) {
 
@@ -425,13 +433,22 @@ public class ApprovalController {
 			
 		//전자서명 삭제
 		@PostMapping("/deleteSign.do")
-			public String deleteSign(@RequestParam("signName") String[] signs,HttpSession session) {
+			public String deleteSign(@RequestParam(value="signName",required = false) String[] signs,
+									@RequestParam(value="signatureName",required = false) String[] signatures,
+																				HttpSession session) {
 				String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
 				log.info("사인 삭제 {}",Arrays.toString(signs));
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("reg_id", emp_no);
-				map.put("list",Arrays.asList(signs) );
-				apprService.delSign(map);
+				List<String> file = null;
+				if(signs != null) {
+					 file = Arrays.asList(signs);
+				}
+				
+				List<String> sign = null;
+				if (signatures != null) {
+					sign = Arrays.asList(signatures);
+				}
+				
+				apprService.delSign(file,sign,emp_no);
 				return  "redirect:/signHome.do";
 			}
 		
@@ -503,6 +520,19 @@ public class ApprovalController {
 		public String cancel(String apd_no) {
 			apprService.cancelDocu(apd_no);
 			return "redirect:/apprList.do?variety=temp";
+		}
+		
+		//전자서명 등록 : 사인
+		@PostMapping("/signDraw.do")
+		public String signDraw(String signatureImage,HttpSession session) {
+			String emp_no = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("encoding", signatureImage);
+			map.put("emp_no", emp_no);
+			apprService.insertBase(map);
+			
+			return "redirect:/signHome.do";
+			
 		}
 		
 		

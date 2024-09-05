@@ -11,6 +11,7 @@ import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.appr.Ap_FavVo;
 import com.nike.geo.vo.appr.Ap_LineVo;
 import com.nike.geo.vo.appr.Ap_RfVo;
+import com.nike.geo.vo.appr.BaseVo;
 import com.nike.geo.vo.comm.FileVo;
 
 import lombok.RequiredArgsConstructor;
@@ -149,14 +150,14 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	}
 	
 	
-	@Override
-	public int delSign(Map<String, Object> map) {
-		return template.update(NS+"delSign", map);
-	}
+	
 	
 	
 	@Override
 	public int updateApprLine(Map<String, Object> map) {
+		String l =(String)map.get("file_oname");
+		char last = l.charAt(l.length() - 1);
+		map.put("last", last);
 		return template.update(NS+"updateApprLine", map);
 	}
 	
@@ -218,8 +219,25 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	}
 	
 	
+	@Override
+	public int insertBase(Map<String, Object> map) {
+		return template.insert(NS+"insertBase", map);
+	}
 	
+	@Override
+	public List<BaseVo> selectSignature(String emp_no) {
+		return template.selectList(NS+"selectSignature", emp_no);
+	}
 	
+	@Override
+	public int deleteSignature(List<String> list2) {
+		return template.update(NS+"deleteSignature", list2);
+	}
+	
+	@Override
+	public int delSign(Map<String, Object> map) {
+		return template.update(NS+"delSign", map);
+	}
 	
 	
 	

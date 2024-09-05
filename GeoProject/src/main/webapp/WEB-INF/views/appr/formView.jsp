@@ -74,29 +74,34 @@ td[colspan="3"] {
 				<!-- 결재칸 -->
 				<div id="signIn" style="text-align: right; ">
 					<c:forEach var="signer" items="${apprLists}">
-						<div class="sign">
-							<div class="sign-name">${signer.emp_name }</div>
-							<div class="sign-signature" style="height: 120px; ">
-								<c:choose>
-									<c:when test="${empty signer.file_oname}">
-										<span style="text-align: center;">-</span>
-									</c:when>
-									<c:otherwise>
-										<img alt="서명이미지" src="./signature/${signer.file_oname}" style="width: 100px; height: 100px;">
-									</c:otherwise>
-								</c:choose>
+						<c:if test="${signer.col_type == 1 }">
+							<div class="sign">
+								<div class="sign-name">${signer.emp_name }</div>
+								<div class="sign-signature" style="height: 120px; ">
+									<c:choose>
+										<c:when test="${signer.encoding != null}">
+											<img alt="서명이미지" src="data:image/png;base64,${signer.encoding }" style="width: 100px; height: 100px;">
+										</c:when>
+										<c:when test="${signer.file_oname != null }">
+											<img alt="서명이미지" src="./signature/${signer.file_oname}" style="width: 100px; height: 100px;">
+										</c:when>
+										<c:otherwise>
+											<span style="text-align: center;">-</span>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="sign-date">
+									<c:choose>
+										<c:when test="${singer.apl_status == 0}">
+											<span style="text-align: center;">-</span>
+										</c:when>
+										<c:otherwise>
+								        	${signer.apl_date}
+						        		</c:otherwise>
+									</c:choose>
+								</div>
 							</div>
-							<div class="sign-date">
-								<c:choose>
-									<c:when test="${empty signer.file_oname}">
-										<span style="text-align: center;">-</span>
-									</c:when>
-									<c:otherwise>
-							        	${signer.apl_date}
-					        		</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
+						</c:if>
 					</c:forEach>
 				</div>
 				<!-- right끝 -->
