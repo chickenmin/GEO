@@ -7,6 +7,7 @@ import java.util.Map;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
+import com.nike.geo.vo.comm.FileVo;
 
 
 public interface IBoardService {
@@ -19,9 +20,9 @@ public interface IBoardService {
 	
 	public boolean insertBoard(BoardVo Vo);
 	
-	public BoardVo detailBoard(String bo_no);
+	public BoardVo detailBoard(int bo_no);
 	
-	public boolean modifyBoard(Map<String, String> map);
+	public boolean modifyBoard(Map<String, Object> map);
 	
 	public boolean multiDeleteBoard(List<String>list);
 	
@@ -33,8 +34,10 @@ public interface IBoardService {
 	//추천
 	public LikeVo likeCount(LikeVo vo);
 	
-	public List<CommVo> commList(String bo_no);
+	public List<CommVo> commList(int bo_no);
 	//댓글
 	public boolean commentInsert(CommVo vo);
+	
+	public int putFile(FileVo vo);
 	
 }

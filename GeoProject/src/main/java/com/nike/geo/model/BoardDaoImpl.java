@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
+import com.nike.geo.vo.comm.FileVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,13 +49,13 @@ public class BoardDaoImpl implements IBoardDao {
 	
 	
 	@Override
-	public BoardVo detailBoard(String bo_no) {
+	public BoardVo detailBoard(int bo_no) {
 		
 		return sessionTemplate.selectOne(NS+"detailBoard", bo_no);
 	}
 	
 	@Override
-	public boolean modifyBoard(Map<String, String> map) {
+	public boolean modifyBoard(Map<String, Object> map) {
 		int n = sessionTemplate.update(NS+"modifyBoard",map);
 		return (n==1)?true:false;
 	}
@@ -79,17 +80,17 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 	//조회수
 	@Override
-	public BoardVo selectOne(String bo_no) {
+	public BoardVo selectOne(int bo_no) {
 		return sessionTemplate.selectOne(NS+"selectOne", bo_no);
 	}
 	
 	@Override
-	public void insertReadOne(Map<String, String>map) {
+	public void insertReadOne(Map<String, Object>map) {
 		sessionTemplate.insert(NS+"insertReadOne", map);
 	}
 	
 	@Override
-	public int searchBoardOne(Map<String, String>map) {
+	public int searchBoardOne(Map<String, Object>map) {
 		int cnt = sessionTemplate.selectOne(NS+"searchBoardOne", map);
 		return cnt;
 	}
@@ -97,30 +98,30 @@ public class BoardDaoImpl implements IBoardDao {
 	
 	//추천
 	@Override
-	public int likeSearchBoardOne(Map<String, String> map) {
+	public int likeSearchBoardOne(Map<String, Object> map) {
 		int cnt = sessionTemplate.selectOne(NS+"likeSearchBoardOne", map);
 		return cnt;
 	}
 	@Override
-	public boolean likeDel(Map<String, String>map) {
+	public boolean likeDel(Map<String, Object>map) {
 		int n = sessionTemplate.delete(NS+"likeDel", map);
 		return (n==1)?true:false;
 	}
 	@Override
-	public LikeVo likeSelectOne(String bo_no,String emp_no) {
-		Map<String, String>param=new HashMap<>();
+	public LikeVo likeSelectOne(int bo_no,String emp_no) {
+		Map<String, Object>param=new HashMap<>();
 		param.put("bo_no", bo_no);
 		param.put("emp_no", emp_no);
 		return sessionTemplate.selectOne(NS+"likeSelectOne", param);
 	}
 	@Override
-	public boolean likeInsert(Map<String, String>map) {
+	public boolean likeInsert(Map<String, Object>map) {
 		int n = sessionTemplate.insert(NS+"likeInsert",map);
 		return (n==1)?true:false;
 	}
 	
 	@Override
-	public List<CommVo> commList(String bo_no) {
+	public List<CommVo> commList(int bo_no) {
 		
 		return sessionTemplate.selectList(NS+"commList",bo_no);
 	}
@@ -131,4 +132,8 @@ public class BoardDaoImpl implements IBoardDao {
 		return (n==1)?true:false;
 	}
 	
+	@Override
+	public int putFile(FileVo vo) {
+		return sessionTemplate.insert(NS+"putFile", vo);
+	}
 }

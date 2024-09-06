@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class BoardVo {
 
-	private String bo_no;
+	private int bo_no;
 	private String emp_no;
 	private String bo_status;
 	private String bo_title;
