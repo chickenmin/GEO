@@ -37,4 +37,10 @@ public interface ICommDao {
 	// 메인화면 일정 조회 selectMainCal
 	public List<CalVo> selectMainCal(String no);
 	
+	// 알림 추가 insertNoti
+	public int insertNoti(Map<String, Object> map);
+	
+	// 재직사원 조회 selectEmpSt
+	public List<String> selectEmpSt();
+	
 }

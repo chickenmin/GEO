@@ -93,8 +93,8 @@ public class MsgRestController {
 			log.info("MESSAGE controller - 임시 비밀번호 발급 전 정보확인 성공");
 			
 			// 임시 비밀번호로 쓸 난수 생성
-//			String tempPw = commService.generateTempPw();
-			String tempPw = "123456";
+			String tempPw = commService.generateTempPw();
+//			String tempPw = "123456";
 	        TempVo.setEmp_pw(tempPw);
 			
 			// 비밀번호 변경

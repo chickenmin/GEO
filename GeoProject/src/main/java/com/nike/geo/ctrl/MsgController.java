@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
@@ -133,6 +134,8 @@ public class MsgController {
 		model.addAttribute("docu", docu);
 		
 		// 근태 현황
+		AttVo attVo = empService.empAtt(empNo);
+		model.addAttribute("attVo", attVo);
 		
 		// 일정
 		List<CalVo> calList = commService.selectMainCal(loginVo.getEmp_no());
@@ -230,8 +233,10 @@ public class MsgController {
 	}
 	
 	@GetMapping(value = "/insertMsg.do")
-	public String insertMsgForm() {
+	public String insertMsgForm(@RequestParam(value = "id", required = false) String id,
+								Model model) {
 		log.info("MESSAGE controller - 쪽지 작성 페이지로 이동");
+		model.addAttribute("id", id);
 		return "msg/insertMsg";
 	}
 	

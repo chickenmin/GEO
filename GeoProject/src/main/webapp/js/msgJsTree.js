@@ -74,6 +74,8 @@ $(document).ready(function() {
     document.getElementById("select").onclick = function(){
 		var recv_jsTree = externalDept + externalName + " (" + externalId + ")";
 		console.log("recv_jsTree",recv_jsTree);
+		document.getElementById("recv_jsTree").readOnly = true;
+		document.getElementById("recv_jsTree").disabled = true;
 		document.getElementById("recv_jsTree").value = recv_jsTree;
 		
 		recv_jsTree = recv_jsTree.match(/\(([^)]+)\)/)[1];

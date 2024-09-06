@@ -61,7 +61,8 @@
 		 SELECT EMP_NO ,
 		 		EMP.EMP_NAME AS EMP_NAME,
 			    POS.CODE_NAME AS EMP_POS,
-			    DEPT.CODE_NAME AS EMP_DEPT
+			    DEPT.CODE_NAME AS EMP_DEPT,
+			    EMP_IMG
 			FROM EMP INNER JOIN COM POS 
 				ON EMP.EMP_POS = POS.COMMON_CODE
 					AND POS.DIVISION = '직급'
@@ -127,4 +128,47 @@
 				AND CAL_OPEN_YN = 'Y'
 				AND EMP_NO = #{emp_no}
 	</select>
+	
+	<!--
+		INSERT INTO NOTI(NOTI_NO, EMP_NO, NOTI_STATUS,
+						NOTI_CONTENT, NOTI_DATE, REG_ID,
+						REG_DATE, MOD_ID, MOD_DATE)
+			VALUES(#{noti_no}, #{emp_no}, #{noti_status},
+					#{noti_content}, SYSDATE, 'SYSTEM',
+					SYSDATE, 'SYSTEM', SYSDATE)
+	-->
+	
+	<!--
+		INSERT INTO NOTI(NOTI_NO, EMP_NO, NOTI_STATUS,
+						NOTI_CONTENT, NOTI_DATE, REG_ID,
+						REG_DATE, MOD_ID, MOD_DATE)
+			SELECT #{noti_no}, #{emp_no}, #{noti_status},
+					#{noti_content}, SYSDATE, 'SYSTEM',
+					SYSDATE, 'SYSTEM', SYSDATE
+				FROM EMP
+	-->
+	
+	<!-- 알림 생성 -->
+	<insert id="insertNoti" parameterType="map">
+		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(NOTI_NO),0) SEQ FROM NOTI
+		</selectKey>
+		INSERT INTO NOTI(NOTI_NO, EMP_NO, NOTI_STATUS,
+						NOTI_CONTENT, NOTI_DATE, REG_ID,
+						REG_DATE, MOD_ID, MOD_DATE)
+			<foreach collection="emp_list" item="emp_no" index="idx" separator=" UNION ALL">
+			SELECT #{seq}+idx , #{emp_no}, #{noti_status},
+					#{noti_content}, SYSDATE, 'SYSTEM',
+					SYSDATE, 'SYSTEM', SYSDATE
+				FROM DUAL
+			</foreach>
+	</insert>
+	
+	<select id="selectEmpSt" resultType="java.lang.String">
+		SELECT EMP_NO
+			FROM EMP
+			WHERE EMP_STATUS = 'ST001'
+	</select>
+	
+	
 </mapper>
