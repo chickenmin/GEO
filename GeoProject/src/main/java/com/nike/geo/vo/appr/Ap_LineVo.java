@@ -25,6 +25,13 @@ public class Ap_LineVo {
 	
 	
 	
+	@Override
+	public String toString() {
+		return "Ap_LineVo [apl_no=" + apl_no + ", apd_no=" + apd_no + ", emp_no=" + emp_no + ", apl_order=" + apl_order
+				+ ", apl_date=" + apl_date + ", apl_status=" + apl_status + ", apl_msg=" + apl_msg + ", reg_id="
+				+ reg_id + ", reg_date=" + reg_date + ", mod_id=" + mod_id + ", mod_date=" + mod_date + ", emp_name="
+				+ emp_name + ", col_type=" + col_type + ", encoding=" + encoding + ", file_oname=" + file_oname + "]";
+	}
 	public int getApl_no() {
 		return apl_no;
 	}

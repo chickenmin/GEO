@@ -216,12 +216,13 @@
 	            </otherwise>
 	        </choose>
 	        <if test='last == "1"'>
-	            FILE_ONAME = #{file_oname}
-	        </if>,
-	        APL_STATUS = 1,
+	            , FILE_ONAME = #{file_oname}
+	        </if>
+	        , APL_STATUS = 1,
 	        MOD_DATE = SYSDATE
 	    WHERE APL_NO = #{apl_no}
 	</update>
+
 
 	
 	<update id="updateDocu">
@@ -262,7 +263,7 @@
 	
 	<!-- 결재자 순서대로 조회 -->
 	<select id="selectLine" resultType="Ap_LineVo">
-		  SELECT al.APL_NO, al.APD_NO, al.EMP_NO,
+		SELECT al.APL_NO, al.APD_NO, al.EMP_NO,
 		       al.APL_ORDER, TO_CHAR(NVL(al.APL_DATE, SYSDATE), 'YY-MM-DD HH24:MI') AS APL_DATE,
 		       al.APL_STATUS, al.APL_MSG,
 		       al.REG_ID, TO_CHAR(al.REG_DATE, 'YY-MM-DD HH24:MI') AS REG_DATE,
@@ -270,9 +271,9 @@
 		       al.FILE_ONAME, e.EMP_NAME, al.COL_TYPE, b.ENCODING
 			FROM AP_LINE al
 			INNER JOIN EMP e ON al.EMP_NO = e.EMP_NO
-			INNER JOIN BASE b ON al.EMP_NO = b.EMP_NO
+			LEFT JOIN BASE b ON al.EMP_NO = b.EMP_NO
 			WHERE al.APD_NO = #{apd_no}
-			AND b.DELFLAG = 'N'
+			AND (b.DELFLAG = 'N' OR b.DELFLAG IS NULL) 
 			ORDER BY al.APL_ORDER
 	</select>
 	

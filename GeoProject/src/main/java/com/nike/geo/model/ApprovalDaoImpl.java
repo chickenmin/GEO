@@ -156,8 +156,14 @@ public class ApprovalDaoImpl implements IApprovalDao{
 	@Override
 	public int updateApprLine(Map<String, Object> map) {
 		String l =(String)map.get("file_oname");
-		char last = l.charAt(l.length() - 1);
+		String last = l.substring(l.length() - 1);  
 		map.put("last", last);
+		String oname = (String)map.get("file_oname");
+		String file_oname = oname.substring(0, oname.length() - 2);
+		map.remove("file_oname");
+		map.put("file_oname", file_oname);
+		log.info("들어가는 file_oname값 : {}",file_oname);
+		log.info("결재라인 수정 last값 : {}",last);
 		return template.update(NS+"updateApprLine", map);
 	}
 	

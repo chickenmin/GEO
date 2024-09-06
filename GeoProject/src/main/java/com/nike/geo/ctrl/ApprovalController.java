@@ -57,7 +57,6 @@ public class ApprovalController {
 	//추가가
 	
 	private final IApprovalService apprService; 
-	private final ServletContext servletContext;
 	
 	// 양식홈 로드시, 즐겨찾기 리스트 전달
 	@GetMapping("/apprHome.do")
@@ -137,6 +136,8 @@ public class ApprovalController {
 		List<Ap_LineVo> apprLists = apprService.selectLine(apd_no);	//결재자 조회
 		List<FileVo> file = apprService.selectFile(apd_no);	// 이미 승인한 서명 이미지
 		String apl_msg = apprService.sel_Msg(Integer.parseInt(apd_no));	//반려메시지
+		
+		log.info("결재자 목록 :{}",apprLists.toString());
 		
 		// 결재함이 아닐 경우, 결재라인 정보 없어서 nullPointException 발생
 		if (variety.equals("appr")) {
