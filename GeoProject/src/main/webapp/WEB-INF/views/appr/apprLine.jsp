@@ -12,6 +12,7 @@
 				<h5 class="modal-title"><b> 결재선 선택</b> </h5>
 			</div>
 			
+			<div>
 			<!-- 모달 몸체 -->
 			<div class="modal-body" style="display: flex; justify-content: space-evenly;">
 				
@@ -36,14 +37,20 @@
 						<input id="ccCho" name="ccLine" type="hidden">
 					</div>
 				</div>
+				
+
 			</div> <!-- 모달 몸체 끝 -->
-			<div class="d-flex gap-2">
-    <button id="apC" type="button" onclick="choice(event)" class="btn btn-outline-info">결재선택</button>
-    <button id="apR" type="button" onclick="choice(event)" class="btn btn-outline-info">결재취소</button>
-    <button id="reC" type="button" onclick="choice(event)" class="btn btn-outline-info">참조선택</button>
-    <button id="reR" type="button" onclick="choice(event)" class="btn btn-outline-info">참조취소</button>
-</div>
-			
+			<div>
+		    <!-- 버튼들 -->
+		    <div class="d-flex justify-content-between mt-3">
+		        <button id="apC" type="button" onclick="choice(event)" class="btn btn-outline-info">결재선택</button>
+		        <button id="apR" type="button" onclick="choice(event)" class="btn btn-outline-info">결재취소</button>
+		        <button id="reC" type="button" onclick="choice(event)" class="btn btn-outline-info">참조선택</button>
+		        <button id="reR" type="button" onclick="choice(event)" class="btn btn-outline-info">참조취소</button>
+		    </div>
+				</div>
+			</div>
+	
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary"
 					data-bs-dismiss="modal" >선택완료
