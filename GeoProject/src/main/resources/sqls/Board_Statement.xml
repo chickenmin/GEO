@@ -44,12 +44,16 @@
 	</select>
 	
 	<insert id="insertBoard">
+	 <selectKey keyProperty="bo_no" resultType="int" order="BEFORE">
+        SELECT BO_NO_SEQ.NEXTVAL
+        FROM DUAL
+     </selectKey>
 	INSERT INTO BO (BO_NO,BO_TITLE,EMP_NO,
 			BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT
 			,BO_CONTENT ,BO_STATUS,BO_DEL_YN,
 			REG_ID,REG_DATE,MOD_ID
 			,MOD_DATE)
-	VALUES(BO_NO_SEQ.NEXTVAL,#{bo_title},#{emp_no},
+	VALUES(#{bo_no},#{bo_title},#{emp_no},
 			SYSDATE,0,0
 			,#{bo_content},#{bo_status},'N'
 			,#{emp_no},SYSDATE,#{emp_no}
@@ -158,13 +162,13 @@
 	</select>
 	
 	<!-- 댓글 -->
-	<select id="commList" parameterType="java.lang.String" resultType="CommVo">
+	<select id="commList" resultType="CommVo">
 	SELECT COMM_SEQ ,BO_NO ,EMP_NO ,
 			COMM_CONTENT ,COMM_DATE ,COMM_REF ,
 			COMM_STEP ,COMM_USE_YN ,COMM_DEL_YN ,
 			REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
 	FROM COMM
-	WHERE BO_NO=#{bo_no, jdbcType=VARCHAR}
+	WHERE BO_NO=#{bo_no}
 	</select>
 	
 	<!-- 댓글쓰기 -->
@@ -183,7 +187,7 @@
 	)
 	</insert>
 	
-	<!-- 파일업로드 -->
+	<!-- 파일업로드 reg_id 나중에 넣어보자 -->
 	<insert id="putFile">
 		INSERT INTO GEO."FILE" (FILE_NO, ORIGIN_NO, FILE_ONAME,
 								FILE_SNAME, FILE_SIZE, FILE_TYPE,
@@ -191,7 +195,19 @@
 								REG_DATE, MOD_ID, MOD_DATE)
 			VALUES(FILE_SEQ.NEXTVAL, #{origin_no}, #{file_oname},
 					#{file_sname}, #{file_size}, #{file_type},
-					'0', 'N', #{reg_id},
+					'0', 'N',#{reg_id},
 					SYSDATE, #{reg_id}, SYSDATE)
 	</insert>
+	
+	<!-- 	첨부파일 조회 -->
+	<select id="selectFile" resultType="FileVo">
+		SELECT FILE_NO, ORIGIN_NO,FILE_ONAME,
+			FILE_SNAME, FILE_SIZE, FILE_TYPE,
+			FILE_RANK,FILE_DEL_YN,
+			REG_ID,REG_DATE,MOD_ID,MOD_DATE
+		 FROM "FILE" f 
+		 WHERE ORIGIN_NO = #{origin_no}
+		 AND FILE_TYPE =2
+	</select>
+	
 </mapper>

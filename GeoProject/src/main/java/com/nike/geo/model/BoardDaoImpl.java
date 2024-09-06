@@ -122,7 +122,6 @@ public class BoardDaoImpl implements IBoardDao {
 	
 	@Override
 	public List<CommVo> commList(int bo_no) {
-		
 		return sessionTemplate.selectList(NS+"commList",bo_no);
 	}
 		
@@ -135,5 +134,15 @@ public class BoardDaoImpl implements IBoardDao {
 	@Override
 	public int putFile(FileVo vo) {
 		return sessionTemplate.insert(NS+"putFile", vo);
+	}
+	
+	@Override
+	public FileVo findFile(String file_no) {
+		return sessionTemplate.selectOne("com.nike.geo.model.CommDaoImpl.findFile", file_no);
+	}
+	
+	@Override
+	public List<FileVo> selectFile(String origin_no) {
+		return sessionTemplate.selectList(NS+"selectFile", origin_no);
 	}
 }
