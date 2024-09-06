@@ -34,12 +34,12 @@ FROM EMP e
 
 <!-- 사원 상세 조회 -->
 <select id="selectOneEmp" resultType="EmpVo">
-SELECT EMP_IMG, EMP_NO , EMP_NAME , EMP_DEPT , EMP_POS , 
-EMP_GENDER , EMP_BIRTH , EMP_PHONE , 
-EMP_EMAIL , EMP_POSTCODE , EMP_ADDRESS1 , 
-EMP_ADDRESS2 , EMP_ADDRESS3 , EMP_HIREDATE 
-	FROM EMP e 
-	WHERE EMP_NO = #{emp_no}
+SELECT e.EMP_IMG, e.EMP_NO, e.EMP_NAME, e.EMP_DEPT, e.EMP_POS, 
+		e.EMP_GENDER, e.EMP_BIRTH, e.EMP_PHONE, e.EMP_EMAIL, 
+		e.EMP_POSTCODE, e.EMP_ADDRESS1, e.EMP_ADDRESS2, 
+		e.EMP_ADDRESS3, e.EMP_HIREDATE
+FROM EMP e
+WHERE e.EMP_NO = #{emp_no}
 </select>
 
 
@@ -76,17 +76,18 @@ SET ATT_ARRIVE_TIME = SYSDATE,
     REG_DATE = SYSDATE
 WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
 AND ATT_ARRIVE_TIME IS NULL
+AND TO_CHAR(SYSDATE, 'yyyy-MM-dd') = TO_CHAR(REG_DATE, 'yyyy-MM-dd')
 </update>
 
 <!-- 퇴근 -->
-<update id="leftWork">
+<update id="leftWork" parameterType="String">
 UPDATE GEO.ATT
 SET ATT_LEFT_TIME = SYSDATE,
 	MOD_ID = #{emp_no},
 	MOD_DATE = SYSDATE
 WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
-AND ATT_LEFT_TIME IS NULL
 AND TO_CHAR(ATT_ARRIVE_TIME, 'yyyy-MM-dd') = TO_CHAR(SYSDATE, 'yyyy-MM-dd')
+AND ATT_ARRIVE_TIME IS NOT NULL
 </update>
 
 <!-- 마이페이지 -->
@@ -101,27 +102,66 @@ EMP_ADDRESS2, EMP_ADDRESS3
 
 <!-- 사원 근태 조회 -->
 <select id="empAtt" parameterType="java.lang.String" resultType="AttVo">
-SELECT EMP_NO , ATT_ARRIVE_TIME , ATT_LEFT_TIME
-	FROM ATT a 
-	WHERE EMP_NO = #{emp_no, jdbcType=VARCHAR}
+<![CDATA[
+SELECT 
+	COUNT(CASE 
+		WHEN ATT_ARRIVE_TIME > TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD') || ' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') THEN 1 
+		ELSE NULL 
+		END) AS late_count,
+	COUNT(CASE 
+		WHEN ATT_ARRIVE_TIME <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD') || ' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') THEN 1 
+		ELSE NULL 
+		END) AS right_count,
+	COUNT(CASE
+		WHEN ATT_LEFT_TIME IS NOT NULL 
+		AND ATT_ARRIVE_TIME IS NOT NULL
+		AND ATT_LEFT_TIME < TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD') || ' 18:00:00', 'YYYY-MM-DD HH24:MI:SS')
+		THEN 1
+		ELSE NULL
+		END) AS early_count,
+	SUM(CASE
+		WHEN ATT_ARRIVE_TIME IS NULL
+		AND ATT_LEFT_TIME IS NULL
+		THEN 1
+		ELSE 0
+		END) AS empty_count
+	FROM ATT a
+	WHERE EMP_NO = #{emp_no}
+]]>
 </select>
 
-<!-- 비밀번호 변경 -->
-<select id="modPw" parameterType="java.lang.String" resultType="EmpVo">
-UPDATE GEO.EMP
-SET emp_pw = #{emp_pw}
-WHERE EMP_NO = #{emp_no}
+<!-- 사원 월간 근태 조회 -->
+<select id="empAttMonth" resultType="AttVo">
+<![CDATA[
+SELECT 
+	COUNT(CASE 
+		WHEN ATT_ARRIVE_TIME > TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD') || ' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') THEN 1 
+		ELSE NULL 
+		END) AS late_count,
+	COUNT(CASE 
+		WHEN ATT_ARRIVE_TIME <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD') || ' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') THEN 1 
+		ELSE NULL 
+		END) AS right_count,
+	COUNT(CASE
+		WHEN ATT_LEFT_TIME IS NOT NULL 
+		AND ATT_ARRIVE_TIME IS NOT NULL
+		AND ATT_LEFT_TIME < TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD') || ' 18:00:00', 'YYYY-MM-DD HH24:MI:SS')
+		THEN 1
+		ELSE NULL
+		END) AS early_count,
+	SUM(CASE
+		WHEN ATT_ARRIVE_TIME IS NULL
+		AND ATT_LEFT_TIME IS NULL
+		THEN 1
+		ELSE 0
+		END) AS empty_count
+	FROM ATT a
+	WHERE EMP_NO = #{emp_no}
+	AND TO_CHAR(ATT_ARRIVE_TIME, 'MM') = TO_CHAR(SYSDATE, 'MM')
+]]>
 </select>
 
-<!-- 퇴사 처리 -->
-<!-- <update id="entireEmp" parameterType="EmpVo"> -->
-<!-- UPDATE GEO.EMP -->
-<!-- SET EMP_STATUS='ST002',  -->
-<!-- EMP_RETIREDATE = SYSDATE -->
-<!-- WHERE EMP_NO=#{emp_no} -->
-<!-- </update> -->
-
-
+<!-- 근태 null 값 생성 -->
 <insert id="batchRow">
 	INSERT INTO GEO.ATT
 	(EMP_NO, ATT_ARRIVE_TIME, ATT_LEFT_TIME, REG_ID, REG_DATE, MOD_ID, MOD_DATE)
@@ -130,5 +170,78 @@ WHERE EMP_NO = #{emp_no}
 	FROM EMP e
 	where e.EMP_STATUS = 'ST001'
 </insert>
+
+<!-- 전 사원 연차 부여 -->
+<insert id="insertVa">
+INSERT INTO GEO.VA_CHECK
+(EMP_NO, VA_YEAR, VA_CHECK_NUM, REG_ID, REG_DATE, MOD_ID, MOD_DATE)
+SELECT 
+    e.EMP_NO,
+    TRUNC(SYSDATE, 'YYYY'),
+    CASE 
+        WHEN TRUNC(SYSDATE) = TRUNC(e.EMP_HIREDATE) THEN 15
+        ELSE FLOOR(MONTHS_BETWEEN(SYSDATE, e.EMP_HIREDATE) / 12) + 15
+    END,
+    '관리자',
+    SYSDATE,
+    '관리자',
+    SYSDATE
+FROM EMP e
+</insert>
+
+<!-- 연차 조회 -->
+<select id="vaCheck" parameterType="java.lang.String" resultType="VacaVo">
+SELECT EMP_NO, VA_YEAR, 
+		(VA_CHECK_NUM - 
+			(SELECT COUNT(*)
+			FROM VA v 
+			WHERE v.EMP_NO = #{emp_no}
+			AND v.VA_USE_NUM = 1)
+			- ((SELECT COUNT(*)
+			FROM VA V
+			WHERE v.EMP_NO = #{emp_no}
+			AND v.VA_USE_NUM = 0.5) / 2)
+		) AS VA_CHECK
+FROM VA_CHECK vc
+WHERE vc.EMP_NO = #{emp_no}
+AND TO_CHAR(SYSDATE, 'YYYY') = TO_CHAR(VA_YEAR, 'YYYY')
+</select>
+
+
+
+<!-- 연차 사용 날짜 -->
+<select id="usedDate" resultType="VacaVo">
+SELECT EMP_NO, TO_CHAR(VA_USE_DATE, 'YYYY-MM-DD') AS VA_USE_DATE
+	FROM VA v 
+	WHERE EMP_NO = #{emp_no}
+	AND VA_USE_NUM = 1
+</select>
+
+<!-- 반차 사용 날짜 -->
+<select id="usedHalf" resultType="VacaVo">
+SELECT EMP_NO, TO_CHAR(VA_USE_DATE, 'YYYY-MM-DD') AS VA_USE_DATE
+	FROM VA v 
+	WHERE EMP_NO = #{emp_no}
+	AND VA_USE_NUM = 0.5
+</select>
+
+
+<!-- 올해 연차 사용 횟수 -->
+<select id="usedNum" resultType="VacaVo">
+SELECT COUNT(*) AS VA_USE_DAY
+	FROM VA v 
+	WHERE VA_USE_NUM = 1
+	AND TO_CHAR(VA_USE_DATE, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
+	AND v.EMP_NO = #{emp_no}
+</select>
+
+<!-- 올해 반차 사용 횟수 -->
+<select id="usedHalfNum" resultType="VacaVo">
+SELECT COUNT(*) AS VA_USE_HALF
+	FROM VA v 
+	WHERE VA_USE_NUM = 0.5
+	AND TO_CHAR(VA_USE_DATE, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
+	AND v.EMP_NO = #{emp_no}
+</select>
 
 </mapper>

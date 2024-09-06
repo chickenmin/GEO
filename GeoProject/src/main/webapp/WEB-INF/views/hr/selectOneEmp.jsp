@@ -167,6 +167,13 @@
 				<c:if test="${loginVo.emp_auth eq 'AU002'}">
 					<li class="nav-item" role="presentation">
 						<button class="nav-link" data-bs-toggle="tab"
+							data-bs-target="#profile-att" aria-selected="false"
+							tabindex="-1" role="tab">근태 조회</button>
+					</li>
+				</c:if>
+				<c:if test="${loginVo.emp_auth eq 'AU002'}">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" data-bs-toggle="tab"
 							data-bs-target="#profile-entire" aria-selected="false"
 							tabindex="-1" role="tab">퇴사 처리</button>
 					</li>
@@ -281,63 +288,6 @@
 					</div>
 
 				</div>
-
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-//       google.charts.load("current", {packages:["calendar"]});
-//       google.charts.setOnLoadCallback(drawChart);
-//    function drawChart() {
-//        var dataTable = new google.visualization.DataTable();
-//        dataTable.addColumn({ type: 'date', id: 'Date' });
-//        dataTable.addColumn({ type: 'number', id: 'Won/Loss' });
-//        dataTable.addColumn({ type: 'string', role: 'style'});
-//        var currentDate = new Date();
-//        var currentYear = new Date().getFullYear();
-//        var currentMonth = new Date().getMonth();
-//     	var currentDate = new Date().getDate();
-//        console.log(currentMonth);
-//        console.log(currentYear);
-//        console.log(currentDate);
-//        dataTable.addRows([
-//           [ new Date(currentYear, currentMonth, currentDate.getDate()), 38830, 'fill="color: #FF0000"' ]
-//         ]);
-//        var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
-//        var options = {
-//          title: "근태기록부",
-//          height: 350
-//        };
-//        chart.draw(dataTable, options);
-//    }
-//    var intervalId = setInterval(function() {
-//        var svg = document.querySelector('#calendar_basic svg');
-//        if (svg) {
-//            var pathToRemove1 = svg.querySelector('path[fill*="url(http://localhost:8080/GeoProject/#_ABSTRACT_RENDERER_ID_2)"]');
-//            if (pathToRemove1) {
-//                pathToRemove1.remove();
-//            }
-//            var pathToRemove2 = svg.querySelector('path[stroke="#EEEEEE"][fill-opacity="1"][fill="none"]');
-//            if (pathToRemove2) {
-//                pathToRemove2.remove();
-//            }
-//            var textToRemove1 = svg.querySelector('text[fill="#888888"][x="762"]');
-//            if (textToRemove1) {
-//                textToRemove1.remove();
-//            }
-//            var textToRemove2 = svg.querySelector('text[fill="#888888"][x="912"]');
-//            if (textToRemove2) {
-//                textToRemove2.remove();
-//            }
-//            if (pathToRemove1 || pathToRemove2 || textToRemove1 || textToRemove2) {
-//                clearInterval(intervalId);
-//            }
-//        }
-//    }, 0);
-    </script>
-
-<!--     <div id="calendar_basic" style="width: 1000px; height: 350px;"></div> -->
-
-
 
 				<div class="tab-pane fade profile-edit pt-3" id="profile-edit"
 					role="tabpanel">
@@ -495,9 +445,39 @@
 						</div>
 					</form>
 				</div>
+				<div class="tab-pane fade pt-3" id="profile-att"
+					role="tabpanel">
+					<div>
+					<h3 class="card-title">사원 근태</h3>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">출근</div>
+						<div class="col-lg-9 col-md-8" id="right_count">
+							<c:out value="${attVo.right_count}" />
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">조퇴</div>
+						<div class="col-lg-9 col-md-8" id="early_count">
+							<c:out value="${attVo.early_count}" />
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">지각</div>
+						<div class="col-lg-9 col-md-8" id="late_count">
+							<c:out value="${attVo.late_count}" />
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">결근</div>
+						<div class="col-lg-9 col-md-8" id="empty_count">
+							<c:out value="${attVo.empty_count}" />
+						</div>
+					</div>
+				</div>
 				<div class="tab-pane fade pt-3" id="profile-entire"
 					role="tabpanel">
-					<form action="./entireEmp.do" method="post">
+					<form action="" method="post">
 						<div class="text-center">
 							<input type="hidden" name="emp_no" value="${vo.emp_no}">
 							<button type="submit" class="btn btn-primary">퇴사 처리</button>

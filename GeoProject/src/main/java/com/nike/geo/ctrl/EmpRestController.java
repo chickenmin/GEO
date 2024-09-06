@@ -45,8 +45,7 @@ public class EmpRestController {
 			response1.put("status", "success");
 			response1.put("message", "출근 처리가 완료되었습니다.");
 		} else {
-			response1.put("status", "error");
-			response1.put("message", "출근 처리 중 오류가 발생했습니다.");
+			response1.put("status", "alreadyArrived");
 		}
 
 		return response1;
@@ -54,18 +53,19 @@ public class EmpRestController {
 
 	@PostMapping(value = "/leftWork.do")
 	public Map<String, String> leftWork(String emp_no, HttpSession session) {
+		log.info("퇴근");
+		log.info("Received emp_no: {}", emp_no);
 		Map<String, String> response1 = new HashMap<>();
-
-		try {
-			// 퇴근 처리 로직
-			// 예: service.leftWork(empNo);
-
-			empService.leftWork(emp_no);
-			session.setAttribute("emp_no", emp_no);
+		int n = empService.leftWork(emp_no);
+		session.setAttribute("emp_no", emp_no);
+		if (n >0) {
+			// 출근 처리 로직
+			// 예: service.arriveWork(empNo);
+			
 
 			response1.put("status", "success");
 			response1.put("message", "퇴근 처리가 완료되었습니다.");
-		} catch (Exception e) {
+		} else {
 			response1.put("status", "error");
 			response1.put("message", "퇴근 처리 중 오류가 발생했습니다.");
 		}

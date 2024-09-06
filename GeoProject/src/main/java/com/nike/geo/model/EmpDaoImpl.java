@@ -3,12 +3,11 @@ package com.nike.geo.model;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
 import com.nike.geo.vo.hr.AttVo;
 import com.nike.geo.vo.hr.EmpVo;
+import com.nike.geo.vo.hr.VacaVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,8 +56,8 @@ public class EmpDaoImpl implements IEmpDao {
 	
 	@Override
 	public int leftWork(String emp_no) {
-		log.info(NS + "leftWork");
-		return session.update(NS + "leftWork");
+		log.info(NS + "leftWork", emp_no);
+		return session.update(NS + "leftWork",emp_no);
 	}
 	
 	@Override
@@ -68,21 +67,15 @@ public class EmpDaoImpl implements IEmpDao {
 	}
 	
 	@Override
-	public List<AttVo> empAtt(String emp_no) {
-		log.info(NS + "empAtt");
-		return session.selectList(NS + "empAtt");
+	public AttVo empAtt(String emp_no) {
+		log.info(NS + "empAtt", emp_no);
+		return session.selectOne(NS + "empAtt", emp_no);
 	}
 	
 	@Override
-	public int modPw(String emp_no) {
-		log.info(NS + "modPw");
-		return session.update(NS + "modPw");
-	}
-	
-	@Override
-	public int entireEmp(EmpVo vo) {
-		log.info(NS + "entireEmp");
-		return session.update(NS + "entireEmp");
+	public AttVo empAttMonth(String emp_no) {
+		log.info(NS + "empAttMonth", emp_no);
+		return session.selectOne(NS + "empAttMonth", emp_no);
 	}
 
 	
@@ -90,6 +83,42 @@ public class EmpDaoImpl implements IEmpDao {
 	public void batchRow() {
 		int row = session.insert(NS + "batchRow");
 		System.out.println("DB호출 :" + row);
+	}
+	
+	@Override
+	public void insertVa() {
+		int row = session.insert(NS + "insertVa");
+		System.out.println("DB호출" + row);
+	}
+
+	@Override
+	public VacaVo vaCheck(String emp_no) {
+		log.info(NS + "vaCheck", emp_no);
+		return session.selectOne(NS + "vaCheck", emp_no);
+	}
+
+	@Override
+	public List<VacaVo> usedDate(String emp_no) {
+		log.info(NS + "usedDate");
+		return session.selectList(NS + "usedDate", emp_no);
+	}
+	
+	@Override
+	public List<VacaVo> usedHalf(String emp_no) {
+		log.info(NS + "usedHalf");
+		return session.selectList(NS + "usedHalf", emp_no);
+	}
+	
+	@Override
+	public VacaVo usedNum(String emp_no) {
+		log.info(NS + "usedNum");
+		return session.selectOne(NS + "usedNum", emp_no);
+	}
+	
+	@Override
+	public VacaVo usedHalfNum(String emp_no) {
+		log.info(NS + "usedHalfNum");
+		return session.selectOne(NS + "usedHalfNum", emp_no);
 	}
 
 }
