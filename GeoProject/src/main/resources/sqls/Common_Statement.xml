@@ -74,14 +74,18 @@
 	
 	<!-- 메인화면 게시판 조회 selectMainBoard  -->
 	<select id="selectMainBoard" resultType="BoardVo">
-		SELECT BO_NO , EMP_NO , BO_TITLE ,
-				BO_CONTENT , BO_VIEW_COUNT , BO_REGDATE
-			FROM (SELECT BO_NO , EMP.EMP_NAME AS EMP_NO , BO_TITLE ,
-						BO_CONTENT , BO_VIEW_COUNT , BO_REGDATE
-					FROM BO INNER JOIN EMP
-						ON BO.EMP_NO = EMP.EMP_NO 
-					WHERE BO_STATUS = #{bo_status}
-						AND BO_DEL_YN = 'N'
+		SELECT BO_NO, EMP_NO , BO_STATUS,
+				BO_TITLE, BO_CONTENT, BO_REGDATE,
+				BO_LIKE_COUNT, BO_VIEW_COUNT
+		FROM (SELECT BO_NO,b.EMP_NO,BO_STATUS,
+				BO_TITLE,BO_CONTENT ,
+				BO_REGDATE,(SELECT COUNT(*) FROM LIKER l WHERE l.BO_NO=b.BO_NO) AS BO_LIKE_COUNT,
+				(SELECT COUNT(*) FROM VIEW_COUNT v WHERE v.BO_NO = b.BO_NO)	AS BO_VIEW_COUNT,
+				BO_DEL_YN ,b.MOD_ID ,b.MOD_DATE ,e.EMP_NAME AS EMP_NAME
+					FROM BO b
+					INNER JOIN EMP e
+					ON b.EMP_NO = e.EMP_NO
+					WHERE BO_STATUS ='announcements' AND BO_DEL_YN ='N'
 					ORDER BY BO_REGDATE DESC)
 			<![CDATA[WHERE ROWNUM <= 5]]>
 	</select>
@@ -147,28 +151,75 @@
 					SYSDATE, 'SYSTEM', SYSDATE
 				FROM EMP
 	-->
-	
-	<!-- 알림 생성 -->
-	<insert id="insertNoti" parameterType="map">
-		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
-			SELECT NVL(MAX(NOTI_NO),0) SEQ FROM NOTI
+
+	<!-- 
+		<selectKey keyProperty="noti_no" resultType="java.lang.Integer" order="BEFORE">
+			SELECT NOTI_SEQ.NEXTVAL AS SEQ FROM DUAL
 		</selectKey>
 		INSERT INTO NOTI(NOTI_NO, EMP_NO, NOTI_STATUS,
 						NOTI_CONTENT, NOTI_DATE, REG_ID,
 						REG_DATE, MOD_ID, MOD_DATE)
 			<foreach collection="emp_list" item="emp_no" index="idx" separator=" UNION ALL">
-			SELECT #{seq}+idx , #{emp_no}, #{noti_status},
-					#{noti_content}, SYSDATE, 'SYSTEM',
-					SYSDATE, 'SYSTEM', SYSDATE
-				FROM DUAL
-			</foreach>
+				SELECT #{seq}+idx, #{emp_no}, #{noti_status},
+						#{noti_content}, SYSDATE, 'SYSTEM',
+						SYSDATE, 'SYSTEM', SYSDATE
+					FROM DUAL
+		</foreach>
+	 -->
+	
+	<!-- 알림 생성 insertNoti -->
+	<insert id="insertNoti" parameterType="map">
+	    <selectKey keyProperty="noti_no" resultType="java.lang.Integer" order="BEFORE">
+	        SELECT NOTI_SEQ.NEXTVAL AS SEQ FROM DUAL
+	    </selectKey>
+	    INSERT INTO NOTI(NOTI_NO, EMP_NO, ORIGIN_NO,
+	    				NOTI_STATUS, NOTI_CONTENT, NOTI_DATE,
+	    				
+	    				REG_ID, REG_DATE, MOD_ID, MOD_DATE)
+	    <foreach collection="emp_list" item="emp_no" index="idx" separator=" UNION ALL">
+	        SELECT #{parent_no}+#{idx}, #{emp_no}, #{origin_no},
+	        		#{noti_status}, #{noti_content}, SYSDATE,
+	        		'SYSTEM', SYSDATE, 'SYSTEM', SYSDATE
+	            FROM DUAL
+	    </foreach>
 	</insert>
 	
+	<!-- 알림 시퀀스값 조회 selectNotiSeq -->
+	<select id="selectNotiSeq" resultType="int">
+		SELECT NOTI_SEQ.NEXTVAL
+			FROM DUAL
+	</select>
+
+	
+	<!-- 재직사원 조회 selectEmpSt -->
 	<select id="selectEmpSt" resultType="java.lang.String">
 		SELECT EMP_NO
 			FROM EMP
 			WHERE EMP_STATUS = 'ST001'
 	</select>
 	
+	<!-- 안읽은 알림 최신순 3개 조회 selectLatestNoti -->
+	<select id="selectLatestNoti" resultType="NotiVo">
+		SELECT NOTI_NO , EMP.EMP_NAME AS EMP_NO , NOTI_STATUS ,
+				NOTI_CONTENT , NOTI_DATE , NOTI_READ_YN,
+				ORIGIN_NO
+			FROM (SELECT NOTI_NO , EMP_NO , NOTI_STATUS , 
+						NOTI_CONTENT , NOTI_DATE , NOTI_READ_YN,
+						ORIGIN_NO 
+					FROM NOTI
+					WHERE EMP_NO = #{emp_no}
+						AND NOTI_READ_YN = 'N'
+					ORDER BY NOTI_DATE DESC) NOTI
+			JOIN EMP ON NOTI.EMP_NO = EMP.EMP_NO 
+			<![CDATA[WHERE ROWNUM <= 3]]>
+	</select>
+	
+	<!-- 안읽은 알림 갯수 확인 cntUnreadNoti -->
+	<select id="cntUnreadNoti" resultType="int">
+		SELECT COUNT(*)
+			FROM NOTI
+			WHERE EMP_NO = #{emp_no}
+				AND NOTI_READ_YN = 'N'
+	</select>
 	
 </mapper>

@@ -18,6 +18,7 @@ import com.nike.geo.service.ICommService;
 import com.nike.geo.service.IMsgService;
 import com.nike.geo.vo.hr.EmpVo;
 import com.nike.geo.vo.msg.MsgVo;
+import com.nike.geo.vo.msg.NotiVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -128,7 +129,6 @@ public class MsgRestController {
 			return response;
 		}
 	}
-
 	
 	@GetMapping(value = "/cntUnreadMsg.do")
 	public int cntUnreadMsg(HttpSession session) {
@@ -156,5 +156,20 @@ public class MsgRestController {
 		return latestMsg;
 	}
 	
+	@GetMapping(value = "/selectLatestNoti.do")
+	public List<NotiVo> selectLatestNoti(HttpSession session){
+		log.info("MESSAGE controller - 안읽은 알림 최신순 3개 조회");
+		EmpVo loginVo = (EmpVo)session.getAttribute("loginVo");
+		List<NotiVo> latestNoti = commService.selectLatestNoti(loginVo.getEmp_no());
+		return latestNoti;
+	}
+	
+	@GetMapping(value = "/cntUnreadNoti.do")
+	public int cntUnreadNoti(HttpSession session) {
+		log.info("MESSAGE controller - 안 읽은 알림 갯수 세기");
+		EmpVo loginVo = (EmpVo)session.getAttribute("loginVo");
+		int cnt = commService.cntUnreadNoti(loginVo.getEmp_no());
+		return cnt;
+	}
 	
 }

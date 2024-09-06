@@ -132,11 +132,7 @@ public class MsgController {
 			d.setApd_con(content);
 		}
 		model.addAttribute("docu", docu);
-		
-		// 근태 현황
-		AttVo attVo = empService.empAtt(empNo);
-		model.addAttribute("attVo", attVo);
-		
+
 		// 일정
 		List<CalVo> calList = commService.selectMainCal(loginVo.getEmp_no());
 		log.info("MESSAGE controller - index에 띄울 일정 정보 {}", calList);

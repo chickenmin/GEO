@@ -19,6 +19,7 @@ import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.CommonVo;
 import com.nike.geo.vo.hr.EmpVo;
+import com.nike.geo.vo.msg.NotiVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -139,4 +140,23 @@ public class CommServiceImpl implements ICommService {
 		return dao.selectEmpSt();
 	}
 	
+	@Override
+	public List<NotiVo> selectLatestNoti(String empNo) {
+		log.info("COMMON service - 안읽은 알림 최신순 3개 조회 selectLatestNoti");
+		log.info("COMMON service - 받아온 값 : {}", empNo);
+		return dao.selectLatestNoti(empNo);
+	}
+	
+	@Override
+	public int selectNotiSeq() {
+		log.info("COMMON service - 알림 시퀀스값 조회 selectNotiSeq");
+		return dao.selectNotiSeq();
+	}
+	
+	@Override
+	public int cntUnreadNoti(String no) {
+		log.info("COMMON service - 안읽은 알림 최신순 3개 조회 cntUnreadNoti");
+		log.info("COMMON service - 받아온 값 : {}", no);
+		return dao.cntUnreadNoti(no);
+	}
 }

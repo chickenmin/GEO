@@ -13,6 +13,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.nike.geo.model.IMsgDao;
 import com.nike.geo.service.IBoardService;
@@ -109,7 +110,5 @@ public class Cha_Test {
 	    	log.info("안됨");
 	    }
 	}
-
-	
 	
 }

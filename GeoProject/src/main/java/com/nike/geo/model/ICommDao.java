@@ -8,6 +8,7 @@ import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.CommonVo;
 import com.nike.geo.vo.hr.EmpVo;
+import com.nike.geo.vo.msg.NotiVo;
 
 public interface ICommDao {
 	
@@ -43,4 +44,12 @@ public interface ICommDao {
 	// 재직사원 조회 selectEmpSt
 	public List<String> selectEmpSt();
 	
+	// 안읽은 알림 최신순 3개 조회 selectLatestNoti
+	public List<NotiVo> selectLatestNoti(String empNo);
+	
+	// 알림 시퀀스값 조회 selectNotiSeq
+	public int selectNotiSeq();
+	
+	// 안읽은 알림 갯수 확인 cntUnreadNoti
+	public int cntUnreadNoti(String no);
 }

@@ -74,92 +74,18 @@
   <nav class="header-nav ms-auto">
     <ul class="d-flex align-items-center">
 
-    <!--   <li class="nav-item d-block d-lg-none">
-        <a class="nav-link nav-icon search-bar-toggle " href="#">
-          <i class="bi bi-search"></i>
-        </a>
-      </li> --><!-- End Search Icon-->
-
       <li class="nav-item dropdown">
-        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+        <a class="nav-link nav-icon" href="#" id="notiIcon" data-bs-toggle="dropdown">
           <i class="bi bi-bell"></i>
           
-          <!-- 확인안한 알림 갯수 -->
-          <span class="badge bg-primary badge-number">
-          		10
+          <span class="badge bg-primary badge-number" id="cntUnreadNoti">
+	          <!-- 확인안한 알림 갯수 -->
           </span>
           
         </a><!-- End Notification Icon -->
 
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-          <li class="dropdown-header">
-             읽지않은 알림 4개 / 여기가 길어야 dropdown이 길어짐
-            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-          </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-exclamation-circle text-warning"></i>
-            <div>
-              <h4>사내 공지사항</h4>
-              <p>사내 공지사항 - '안전교육 안내' 게시글이 등록되었습니다.</p>
-              <p>30분 전</p>
-            </div>
-          </li>
-
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-x-circle text-danger"></i>
-            <div>
-              <h4>결재 문서 반려</h4>
-              <p>결재 문서 반려 - '강정민 대표님'께 상신한 '기안서2'가 반려되었습니다.</p>
-              <p>1시간 전</p>
-            </div>
-          </li>
-
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-check-circle text-success"></i>
-            <div>
-              <h4>결재 문서 승인</h4>
-              <p>결재 문서 승인 - '강정민 대표님'께 상신한 '기안서1'가 승인되었습니다.</p>
-              <p>2시간 전</p>
-            </div>
-          </li>
-
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-
-          <li class="notification-item">
-            <i class="bi bi-info-circle text-primary"></i>
-            <div>
-              <h4>Dicta reprehenderit</h4>
-              <p>Quae dolorem earum veritatis oditseno</p>
-              <p>4 hrs. ago</p>
-            </div>
-          </li>
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li class="dropdown-footer">
-            <a href="#">모든 알림 보기</a>
-          </li>
-
-
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" id="notiUl" style="width: 400px;">
+   
         </ul><!-- End Notification Dropdown Items -->
 
       </li><!-- End Notification Nav -->
@@ -178,7 +104,7 @@
           
         </a><!-- End Messages Icon -->
 
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" id="msgUl" style="width: 350px;">
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" id="msgUl" style="width: 400px;">
           <li class="dropdown-header" id="cntDropdown">
             <a href="#">
 	            <span class="badge rounded-pill bg-primary p-2 ms-2">

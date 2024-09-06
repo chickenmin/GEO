@@ -44,17 +44,20 @@
 	</select>
 	
 	<insert id="insertBoard">
-	INSERT INTO BO (BO_NO,BO_TITLE,EMP_NO,
-			BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT
-			,BO_CONTENT ,BO_STATUS,BO_DEL_YN,
-			REG_ID,REG_DATE,MOD_ID
-			,MOD_DATE)
-	VALUES(BO_NO_SEQ.NEXTVAL,#{bo_title},#{emp_no},
-			SYSDATE,0,0
-			,#{bo_content},#{bo_status},'N'
-			,#{emp_no},SYSDATE,#{emp_no}
-			,SYSDATE)
-	</insert>
+		<selectKey keyProperty="bo_no" resultType="java.lang.Integer" order="BEFORE">
+	        SELECT BO_SEQ.NEXTVAL AS SEQ FROM DUAL
+	    </selectKey>
+		INSERT INTO BO (BO_NO,BO_TITLE,EMP_NO,
+				BO_REGDATE,BO_LIKE_COUNT,BO_VIEW_COUNT
+				,BO_CONTENT ,BO_STATUS,BO_DEL_YN,
+				REG_ID,REG_DATE,MOD_ID
+				,MOD_DATE)
+		VALUES(#{bo_no},#{bo_title},#{emp_no},
+				SYSDATE,0,0
+				,#{bo_content},#{bo_status},'N'
+				,#{emp_no},SYSDATE,#{emp_no}
+				,SYSDATE)
+		</insert>
 	
 	
 	<select id="detailBoard" resultType="BoardVo">
