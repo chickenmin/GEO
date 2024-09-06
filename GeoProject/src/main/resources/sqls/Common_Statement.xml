@@ -22,6 +22,7 @@
 				REG_ID, REG_DATE, MOD_ID, MOD_DATE
 			FROM GEO.EMP
 			WHERE EMP_NO = #{emp_no} AND EMP_PW = #{emp_pw}
+			AND EMP_STATUS = 'ST001'
 	</select>
 	
 	<!-- 임시비밀번호 발급 전 정보 확인 selectEmpTemp -->

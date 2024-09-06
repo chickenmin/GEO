@@ -484,7 +484,7 @@
 									<div class="input-group mb-3" style="width: 25%;">
 										<input type="text" class="form-control" id="sample6_postcode"
 											value="${loginVo.emp_postcode}" placeholder="우편번호"
-											readonly="readonly">
+											readonly="readonly" name="emp_postcode">
 
 									</div>
 									<div>
@@ -532,7 +532,7 @@
 
 				<div class="tab-pane fade pt-3" id="profile-change-password"
 					role="tabpanel">
-					<form action="" method="post">
+					<form action="./modPw.do" method="post" onsubmit="validateForm()">
 						<div class="text-center">
 							<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
 
@@ -540,8 +540,9 @@
 								<label for="currentPassword"
 									class="col-md-4 col-lg-3 col-form-label">현재 비밀번호</label>
 								<div class="col-md-8 col-lg-9">
-									<input name="emp_pw" type="password" class="form-control"
-										id="currentPassword">
+									<input name="currentPw" type="password" class="form-control"
+										id="currentPw">
+										${loginVo.emp_pw}
 								</div>
 							</div>
 
@@ -549,8 +550,8 @@
 								<label for="newPassword"
 									class="col-md-4 col-lg-3 col-form-label">새 비밀번호</label>
 								<div class="col-md-8 col-lg-9">
-									<input name="newpassword" type="password" class="form-control"
-										id="newPassword">
+									<input name="newPw" type="password" class="form-control"
+										id="newPw">
 								</div>
 							</div>
 
@@ -558,8 +559,8 @@
 								<label for="renewPassword"
 									class="col-md-4 col-lg-3 col-form-label">새 비밀번호 확인</label>
 								<div class="col-md-8 col-lg-9">
-									<input name="renewpassword" type="password"
-										class="form-control" id="renewPassword">
+									<input name="renewPw" type="password"
+										class="form-control" id="renewPw">
 								</div>
 							</div>
 
@@ -574,6 +575,20 @@
 					<!-- End Bordered Tabs -->
 
 				</div>
+				<script>
+					function validateForm() {
+						const newPassword = document.getElementById('newPw').value;
+						const renewPassword = document
+								.getElementById('renewPw').value;
+
+						if (newPassword !== renewPassword) {
+							alert('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
+							return false; // 폼 제출 방지
+						}
+
+						return true; // 폼 제출 허용
+					}
+				</script>
 
 				<div class="tab-pane fade pt-3" id="profile-att" role="tabpanel">
 					<div class="row" style="margin-bottom: 10px;">

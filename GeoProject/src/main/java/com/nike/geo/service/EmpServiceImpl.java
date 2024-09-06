@@ -141,6 +141,20 @@ public class EmpServiceImpl implements IEmpService {
 		return dao.usedHalfNum(emp_no);
 	}
 	
+	// 퇴사 처리
+	@Override
+	public int retireEmp(String emp_no) {
+		log.info("사원 퇴사");
+		return dao.retireEmp(emp_no);
+	}
+	
+	// 비밀번호 변경
+	@Override
+	public int modPw(EmpVo vo) {
+		log.info("비밀번호 변경");
+		return dao.modPw(vo);
+	}
+	
 
 	
 

@@ -7,7 +7,35 @@
 <html>
 
 <%@ include file="../comm/header.jsp"%>
-
+<head>
+<style>
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+    }
+    .card {
+        box-sizing: border-box;
+        width: 100%;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .card-body {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+    .card-img-top {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+</style>
+</head>
 
 <body>
 	<%@ include file="../comm/sidebar.jsp"%>
@@ -49,533 +77,601 @@
 							aria-controls="de006" aria-selected="false" tabindex="-1">마케팅</button>
 					</li>
 				</ul>
+			</div>
+		</div>
 				<div class="tab-content pt-2" id="myTabContent">
 					<div class="tab-pane fade show active" id="de001" role="tabpanel"
 						aria-labelledby="home-tab">
 						<p>부장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO006'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO006'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>			
 						<p>차장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO005'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO005'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>과장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO004'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO004'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>대리</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO003'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO003'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>주임</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO002'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO002'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>사원</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO001'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE001' && vo.emp_pos eq 'PO001'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="de002" role="tabpanel"
 						aria-labelledby="profile-tab">
 						<p>부장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO006'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO006'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>차장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO005'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO005'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>과장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO004'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO004'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>대리</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO003'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO003'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>주임</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO002'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO002'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>사원</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO001'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
-					</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE002' && vo.emp_pos eq 'PO001'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 					<div class="tab-pane fade" id="de003" role="tabpanel">
 						<p>부장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO006'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO006'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>차장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO005'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO005'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>과장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO004'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO004'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>대리</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO003'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO003'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>주임</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO002'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO002'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>사원</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO001'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE003' && vo.emp_pos eq 'PO001'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						</div>
-					</div>
 					<div class="tab-pane fade" id="de004" role="tabpanel"
 						aria-labelledby="contact-tab">
 						<p>부장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO006'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO006'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>차장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO005'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO005'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>과장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO004'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO004'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>대리</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO003'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO003'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>주임</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO002'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO002'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>사원</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO001'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
-					</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE004' && vo.emp_pos eq 'PO001'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 					<div class="tab-pane fade" id="de005" role="tabpanel"
 						aria-labelledby="contact-tab">
 						<p>부장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO006'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO006'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>차장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO005'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO005'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>과장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO004'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO004'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>대리</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO003'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO003'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>주임</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO002'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO002'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>사원</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO001'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
-					</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE005' && vo.emp_pos eq 'PO001'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 					<div class="tab-pane fade" id="de006" role="tabpanel"
 						aria-labelledby="contact-tab">
 						<p>부장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE006' && vo.emp_pos eq 'PO006'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE006' && vo.emp_pos eq 'PO006'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>차장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE006' && vo.emp_pos eq 'PO005'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE006' && vo.emp_pos eq 'PO005'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>과장</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE006' && vo.emp_pos eq 'PO004'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE006' && vo.emp_pos eq 'PO004'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>대리</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE006' && vo.emp_pos eq 'PO003'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE006' && vo.emp_pos eq 'PO003'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						<p>주임</p>
 						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
 							<c:forEach var="vo" items="${vo}">
@@ -592,21 +688,23 @@
 							</c:forEach>
 						</div>
 						<p>사원</p>
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							<c:forEach var="vo" items="${vo}">
-								<c:if test="${vo.emp_dept eq 'DE006' && vo.emp_pos eq 'PO001'}">
-									<div class="card"
-										style="flex: 0 1 calc(25% - 10px); box-sizing: border-box; width: 200px; height: 200px;">
-										<div class="card-body" style="text-align: center;">
-											<img src="<c:url value='/storage/${vo.emp_img}'/>"
-												class="card-img-top" alt="...">
-											<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
+							<div class="card-grid">
+								<div>
+									<c:forEach var="vo" items="${vo}">
+										<c:if test="${vo.emp_dept eq 'DE006' && vo.emp_pos eq 'PO001'}">
+											<div class="card"
+												style="box-sizing: border-box; width: 200px; height: 200px;">
+												<div class="card-body" style="text-align: center;">
+													<img src="<c:url value='/storage/${vo.emp_img}'/>"
+														class="card-img-top" alt="...">
+													<h5 class="card-title" style="display: inline-block">${vo.emp_name}</h5>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
 						</div>
-					</div>
 				</div>
 				<!-- End Default Tabs -->
 
