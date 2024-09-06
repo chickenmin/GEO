@@ -1,3 +1,4 @@
+<%@page import="com.nike.geo.vo.hr.AttVo"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.nike.geo.vo.hr.EmpVo"%>
@@ -17,43 +18,76 @@
 		<script
 			src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
-			document.addEventListener("DOMContentLoaded", function(){
-				var activeTab = getParameterByName('tab');
-				console.log(activeTab);
-				
-				if (activeTab === "overview"){
-					// 정보조회 탭 활성화
-					document.querySelector('button[data-bs-target="#profile-overview"]').classList.add("active");
-					document.querySelector('button[data-bs-target="#profile-edit"]').classList.remove("active");
-					document.querySelector('button[data-bs-target="#profile-change-password"]').classList.remove("active");
-					
-					// 정보조회 컨텐츠 표시
-					document.querySelector("#profile-overview").classList.add('show','active');
-					document.querySelector("#profile-edit").classList.remove('show','active');
-					document.querySelector("#profile-change-password").classList.remove('show','active');
-				} else if (activeTab === "edit"){
-					// 정보수정 탭 활성화
-					document.querySelector('button[data-bs-target="#profile-overview"]').classList.remove("active");
-					document.querySelector('button[data-bs-target="#profile-edit"]').classList.add("active");
-					document.querySelector('button[data-bs-target="#profile-change-password"]').classList.remove("active");
-					
-					// 정보수정 컨텐츠 표시
-					document.querySelector("#profile-overview").classList.remove('show','active');
-					document.querySelector("#profile-edit").classList.add('show','active');
-					document.querySelector("#profile-change-password").classList.remove('show','active');
-				} else if (activeTab === "password"){
-					// 비밀번호변경 탭 활성화
-					document.querySelector('button[data-bs-target="#profile-overview"]').classList.remove("active");
-					document.querySelector('button[data-bs-target="#profile-edit"]').classList.remove("active");
-					document.querySelector('button[data-bs-target="#profile-change-password"]').classList.add("active");
-					
-					// 비밀번호변경 컨텐츠 표시
-					document.querySelector("#profile-overview").classList.remove('show','active');
-					document.querySelector("#profile-edit").classList.remove('show','active');
-					document.querySelector("#profile-change-password").classList.add('show','active');
-				}
-			});
-			
+			document
+					.addEventListener(
+							"DOMContentLoaded",
+							function() {
+								var activeTab = getParameterByName('tab');
+								console.log(activeTab);
+
+								if (activeTab === "overview") {
+									// 정보조회 탭 활성화
+									document
+											.querySelector('button[data-bs-target="#profile-overview"]').classList
+											.add("active");
+									document
+											.querySelector('button[data-bs-target="#profile-edit"]').classList
+											.remove("active");
+									document
+											.querySelector('button[data-bs-target="#profile-change-password"]').classList
+											.remove("active");
+
+									// 정보조회 컨텐츠 표시
+									document.querySelector("#profile-overview").classList
+											.add('show', 'active');
+									document.querySelector("#profile-edit").classList
+											.remove('show', 'active');
+									document
+											.querySelector("#profile-change-password").classList
+											.remove('show', 'active');
+								} else if (activeTab === "edit") {
+									// 정보수정 탭 활성화
+									document
+											.querySelector('button[data-bs-target="#profile-overview"]').classList
+											.remove("active");
+									document
+											.querySelector('button[data-bs-target="#profile-edit"]').classList
+											.add("active");
+									document
+											.querySelector('button[data-bs-target="#profile-change-password"]').classList
+											.remove("active");
+
+									// 정보수정 컨텐츠 표시
+									document.querySelector("#profile-overview").classList
+											.remove('show', 'active');
+									document.querySelector("#profile-edit").classList
+											.add('show', 'active');
+									document
+											.querySelector("#profile-change-password").classList
+											.remove('show', 'active');
+								} else if (activeTab === "password") {
+									// 비밀번호변경 탭 활성화
+									document
+											.querySelector('button[data-bs-target="#profile-overview"]').classList
+											.remove("active");
+									document
+											.querySelector('button[data-bs-target="#profile-edit"]').classList
+											.remove("active");
+									document
+											.querySelector('button[data-bs-target="#profile-change-password"]').classList
+											.add("active");
+
+									// 비밀번호변경 컨텐츠 표시
+									document.querySelector("#profile-overview").classList
+											.remove('show', 'active');
+									document.querySelector("#profile-edit").classList
+											.remove('show', 'active');
+									document
+											.querySelector("#profile-change-password").classList
+											.add('show', 'active');
+								}
+							});
+
 			function openPostcode() {
 				new daum.Postcode(
 						{
@@ -107,37 +141,40 @@
 							}
 
 						}).open();
-// 				fullAddress();
+				// 				fullAddress();
 
 			}
-// 			function fullAddress() {
-// 				let addr01 = document.getElementById("sample6_address").value;
-// 				let addr02 = document.getElementById("sample6_detailAddress").value;
-// 				let addr03 = document.getElementById("sample6_extraAddress").value;
-// 				document.getElementById("emp_address").value = addr01 + addr02
-// 						+ addr03;
-				// 		return false;
+			// 			function fullAddress() {
+			// 				let addr01 = document.getElementById("sample6_address").value;
+			// 				let addr02 = document.getElementById("sample6_detailAddress").value;
+			// 				let addr03 = document.getElementById("sample6_extraAddress").value;
+			// 				document.getElementById("emp_address").value = addr01 + addr02
+			// 						+ addr03;
+			// 		return false;
 
-// 			}
+			// 			}
 
-			function getParameterByName(name){
+			function getParameterByName(name) {
 				var url = window.location.href;
 				name = name.replace(/[\[\]]/g, "\\$&");
 				var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
 				var results = regex.exec(url); // 파라미터 분리
-				if (!results) return null; // 파라미터 없으면 null
-				if (!results[2]) return ''; // 파라미터 있어도 값이 없으면 '''
+				if (!results)
+					return null; // 파라미터 없으면 null
+				if (!results[2])
+					return ''; // 파라미터 있어도 값이 없으면 '''
 				return decodeURIComponent(results[2].replace(/\+/g, " ")) // 추출한 파라미터 반환
 			}
-			
 		</script>
 
-		<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+		<div
+			class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
 
-			
+
 			<img src="<c:url value='/storage/${loginVo.emp_img}'/>" alt="Profile"
-				class="rounded-circle" style="width: 200px; height: 200px;"> <input type="hidden" name="emp_no">
+				class="rounded-circle" style="width: 200px; height: 200px;"> <input
+				type="hidden" name="emp_no">
 
 			<h2>${loginVo.emp_name}</h2>
 			<h3>
@@ -210,6 +247,18 @@
 					<button class="nav-link" data-bs-toggle="tab"
 						data-bs-target="#profile-change-password" aria-selected="false"
 						tabindex="-1" role="tab">비밀번호 변경</button>
+				</li>
+
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" data-bs-toggle="tab"
+						data-bs-target="#profile-att" aria-selected="false" tabindex="-1"
+						role="tab">근태 조회</button>
+				</li>
+
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" data-bs-toggle="tab"
+						data-bs-target="#profile-Vaca" aria-selected="false" tabindex="-1"
+						role="tab">연차 정보 조회</button>
 				</li>
 
 			</ul>
@@ -287,8 +336,8 @@
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label">생년월일</div>
 						<div class="col-lg-9 col-md-8">
-							<fmt:parseDate var="cDate01" value="${loginVo.emp_birth}" type="date"
-								pattern="yyyy-MM-dd" />
+							<fmt:parseDate var="cDate01" value="${loginVo.emp_birth}"
+								type="date" pattern="yyyy-MM-dd" />
 							<fmt:formatDate var="emp_birth02" value="${cDate01}" />
 							${emp_birth02}
 						</div>
@@ -306,7 +355,8 @@
 
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-lg-3 col-md-4 label">주소</div>
-						<div class="col-lg-9 col-md-8">${loginVo.emp_address1} ${loginVo.emp_address2} ${loginVo.emp_address3}</div>
+						<div class="col-lg-9 col-md-8">${loginVo.emp_address1}
+							${loginVo.emp_address2} ${loginVo.emp_address3}</div>
 					</div>
 
 					<div class="row" style="margin-bottom: 10px;">
@@ -319,6 +369,8 @@
 						</div>
 					</div>
 
+
+
 				</div>
 
 
@@ -330,14 +382,17 @@
 						<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
 						<div class="row mb-3">
 							<label for="profileImage"
-								class="col-md-4 col-lg-3 col-form-label" style="display: none;">Profile Image</label>
+								class="col-md-4 col-lg-3 col-form-label" style="display: none;">Profile
+								Image</label>
 							<div class="col-md-8 col-lg-9">
-								<img src="<c:url value='/storage/${loginVo.emp_img}'/>" alt="Profile" style="display: none;">
+								<img src="<c:url value='/storage/${loginVo.emp_img}'/>"
+									alt="Profile" style="display: none;">
 								<div class="pt-2">
 									<a href="#" class="btn btn-primary btn-sm"
-										title="Upload new profile image" style="display: none;"><i class="bi bi-upload"></i></a>
-									<a href="#" class="btn btn-danger btn-sm"
-										title="Remove my profile image" style="display: none;"><i class="bi bi-trash"></i></a>
+										title="Upload new profile image" style="display: none;"><i
+										class="bi bi-upload"></i></a> <a href="#"
+										class="btn btn-danger btn-sm" title="Remove my profile image"
+										style="display: none;"><i class="bi bi-trash"></i></a>
 								</div>
 							</div>
 						</div>
@@ -423,12 +478,13 @@
 						<div class="row mb-3">
 							<label for="address" class="col-md-4 col-lg-3 col-form-label">주소</label>
 							<div class="col-md-8 col-lg-9">
-<!-- 																<input name="emp_address" type="text" class="form-control" id="address" -->
-<%-- 																	value="${loginVo.emp_address}"> --%>
+								<!-- 																<input name="emp_address" type="text" class="form-control" id="address" -->
+								<%-- 																	value="${loginVo.emp_address}"> --%>
 								<div class="col-sm-10">
 									<div class="input-group mb-3" style="width: 25%;">
 										<input type="text" class="form-control" id="sample6_postcode"
-											value="${loginVo.emp_postcode}" placeholder="우편번호" readonly="readonly">
+											value="${loginVo.emp_postcode}" placeholder="우편번호"
+											readonly="readonly">
 
 									</div>
 									<div>
@@ -438,11 +494,11 @@
 									<br> <input type="text" class="form-control"
 										id="sample6_address" placeholder="주소" readonly="readonly"
 										style="width: 50%; margin-bottom: 10px;"
-										value="${loginVo.emp_address1}" name="emp_address1"> <input type="text"
-										class="form-control" id="sample6_detailAddress"
+										value="${loginVo.emp_address1}" name="emp_address1"> <input
+										type="text" class="form-control" id="sample6_detailAddress"
 										placeholder="상세주소" style="margin-bottom: 10px;"
-										value="${loginVo.emp_address2}" name="emp_address2"> <input type="text"
-										class="form-control" id="sample6_extraAddress"
+										value="${loginVo.emp_address2}" name="emp_address2"> <input
+										type="text" class="form-control" id="sample6_extraAddress"
 										placeholder="참고항목" readonly="readonly" style="width: 50%;"
 										value="${loginVo.emp_address3}" name="emp_address3">
 								</div>
@@ -463,6 +519,8 @@
 
 
 
+
+
 						<div class="text-center">
 							<button type="submit" class="btn btn-primary">정보 수정</button>
 						</div>
@@ -474,7 +532,7 @@
 
 				<div class="tab-pane fade pt-3" id="profile-change-password"
 					role="tabpanel">
-					<form action="./clearPw.do" method="post">
+					<form action="" method="post">
 						<div class="text-center">
 							<input type="hidden" name="emp_no" value="${loginVo.emp_no}">
 
@@ -510,11 +568,86 @@
 							</div>
 						</div>
 					</form>
-<!-- 					End Change Password Form -->
+					<!-- 					End Change Password Form -->
 
 
 					<!-- End Bordered Tabs -->
 
+				</div>
+
+				<div class="tab-pane fade pt-3" id="profile-att" role="tabpanel">
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">출근</div>
+						<div class="col-lg-9 col-md-8" id="right_count">
+							<c:out value="${empAtt.right_count}" />
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">조퇴</div>
+						<div class="col-lg-9 col-md-8" id="early_count">
+							<c:out value="${empAtt.early_count}" />
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">지각</div>
+						<div class="col-lg-9 col-md-8" id="late_count">
+							<c:out value="${empAtt.late_count}" />
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">결근</div>
+						<div class="col-lg-9 col-md-8" id="empty_count">
+							<c:out value="${empAtt.empty_count}" />
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-4 label" id="yearLabel"></div>
+				<div class="tab-pane fade pt-3" id="profile-Vaca" role="tabpanel">
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">올해 남은 연차</div>
+						<div class="col-lg-9 col-md-8" id="va_check">
+							<c:out value="${vacaVo.va_check}"/>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">연차 사용 날짜</div>
+						<div class="col-lg-9 col-md-8" id="va_check">
+							<c:forEach var="item" items="${usedDate}" varStatus="status">
+								<c:if test="${item.va_use_date != null}">
+									<c:out value="${item.va_use_date}" />
+									<c:if test="${!status.last}">
+           								 ,
+        							</c:if>
+								</c:if>
+							</c:forEach>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">반차 사용 날짜</div>
+						<div class="col-lg-9 col-md-8" id="va_check">
+							<c:forEach var="item" items="${usedHalf}" varStatus="status">
+								<c:if test="${item.va_use_date != null}">
+									<c:out value="${item.va_use_date}" />
+									<c:if test="${!status.last}">
+           								 ,
+        							</c:if>
+								</c:if>
+							</c:forEach>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">올해 연차 사용 횟수</div>
+						<div class="col-lg-9 col-md-8" id="va_check">
+							${usedNum.va_use_day}
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">올해 반차 사용 횟수</div>
+						<div class="col-lg-9 col-md-8" id="va_check">
+							${usedHalfNum.va_use_half}
+						</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>

@@ -58,8 +58,9 @@
 	
 	
 <task:scheduled-tasks>
-<!-- 	<task:scheduled ref="EmpDaoImpl" method="batchRow" cron="0/10 * * * * *"/> -->
+<!-- 	<task:scheduled ref="EmpDaoImpl" method="batchRow" cron="0/10 * * * * *"/> 0 0 6 * * * -->
 	<task:scheduled ref="empServiceImpl" method="batchRow" cron="0 0 6 * * *"/>
+	<task:scheduled ref="empServiceImpl" method="insertVa" cron="0 0 0 1 1 *"/>
 </task:scheduled-tasks>
 
 

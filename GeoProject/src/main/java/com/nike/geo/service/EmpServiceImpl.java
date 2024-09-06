@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.nike.geo.model.IEmpDao;
 import com.nike.geo.vo.hr.AttVo;
 import com.nike.geo.vo.hr.EmpVo;
+import com.nike.geo.vo.hr.VacaVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,28 +76,7 @@ public class EmpServiceImpl implements IEmpService {
 		log.info("마이 페이지");
 		return dao.myPage(emp_no);
 	}
-	
-	
-	// 사원 근무 조회
-	@Override
-	public List<AttVo> empAtt(String emp_no) {
-		log.info("사원 근무 조회");
-		return dao.empAtt(emp_no);
-	}
-	
-	// 비밀번호 변경
-	@Override
-	public int modPw(String emp_no) {
-		log.info("비밀번호 변경");
-		return dao.modPw(emp_no);
-	}
-	
-	// 퇴사 처리
-	@Override
-	public int entireEmp(EmpVo vo) {
-		log.info("퇴사");
-		return dao.entireEmp(vo);
-	}
+
 
 	// 출퇴근 테이블 모든사원 null 값 생성
 	@Override
@@ -105,6 +85,61 @@ public class EmpServiceImpl implements IEmpService {
 		dao.batchRow();
 	}
 	
+	// 연차 부여
+	@Override
+	public void insertVa() {
+		System.out.println("매년 연차 부여");
+		dao.insertVa();
+	}
+	
+	// 근태 조회
+	@Override
+	public AttVo empAtt(String emp_no) {
+		log.info("사원 근태 조회");
+		return dao.empAtt(emp_no);
+	}
+	
+	// 사원 월간 근태 조회
+	@Override
+	public AttVo empAttMonth(String emp_no) {
+		log.info("사원 월간 근태 조회");
+		return dao.empAttMonth(emp_no);
+	}
+	
+	// 남은 연차 조회
+	@Override
+	public VacaVo vaCheck(String emp_no) {
+		log.info("남은 연차 조회");
+		return dao.vaCheck(emp_no);
+	}
+	
+	// 연차 사용 날짜
+	@Override
+	public List<VacaVo> usedDate(String emp_no) {
+		log.info("연차 사용 날짜");
+		return dao.usedDate(emp_no);
+	}
+	
+	// 반차 사용 날짜
+	@Override
+	public List<VacaVo> usedHalf(String emp_no) {
+		log.info("반차 사용 날짜");
+		return dao.usedHalf(emp_no);
+	}
+	
+	// 연차 사용 횟수
+	@Override
+	public VacaVo usedNum(String emp_no) {
+		log.info("연차 사용 횟수");
+		return dao.usedNum(emp_no);
+	}
+	
+	// 반차 사용 횟수
+	@Override
+	public VacaVo usedHalfNum(String emp_no) {
+		log.info("반차 사용 횟수");
+		return dao.usedHalfNum(emp_no);
+	}
 	
 
 	

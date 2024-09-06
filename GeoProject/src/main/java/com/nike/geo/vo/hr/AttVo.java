@@ -18,5 +18,9 @@ public class AttVo {
 	private String reg_date;
 	private String mod_id;
 	private String mod_date;
+	private Integer late_count;
+	private Integer right_count;
+	private Integer early_count;
+	private Integer empty_count;
 	
 }

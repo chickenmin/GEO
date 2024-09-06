@@ -58,37 +58,45 @@
 
 </script>
 <body>
-<script>
+	<script>
         $(document).ready(function() {
             $('#arriveWorkBtn').click(function() {
                 sendRequest('arriveWork.do');
             });
 
             $('#leftWorkBtn').click(function() {
-                sendRequest('leftWork.do');
+                sendRequest('leftWork.do', true);
             });
-
-            function sendRequest(url) {
+            
+            function sendRequest(url, isLeaving) {
                 var emp_no = $('#emp_no').val();
 
                 $.ajax({
                     type: 'POST',
                     url: url,
                     data: { emp_no: emp_no },
-                    success: function(msg) {
-                    	if(msg.status == 'success'){
-                    		 $('#arriveWorkBtn').css('display', 'none');
-                    	}else{
-                    		 $('#message').css('color', 'red');
-                    	}
-                    	
-                    	
-//                         $('#message').text(response.message);
-//                         if (response.status === 'success') {
-//                             $('#message').css('color', 'green');
-//                         } else {
-//                             $('#message').css('color', 'red');
-//                         }
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            $('#message').css('display', 'none');
+                            // 현재 시각 구하기
+                            var now = new Date();
+                            var hours = now.getHours().toString().padStart(2, '0');
+                            var minutes = now.getMinutes().toString().padStart(2, '0');
+                            var seconds = now.getSeconds().toString().padStart(2, '0');
+                            var currentTime = hours + ':' + minutes + ':' + seconds;
+                            
+                            // 출근 완료 메시지와 현재 시각 알림
+                            if (url === 'arriveWork.do') {
+                                alert('현재 시각 : ' + currentTime + '\n출근 완료');
+                            } else if (url === 'leftWork.do' && isLeaving) {
+                                alert('현재 시각 : ' + currentTime + '\n퇴근 완료');
+                            }
+                        } else if (response.status === 'alreadyArrived') {
+                            // 출근 처리 실패: 이미 출근한 경우
+                            alert('이미 출근하셨습니다.');
+                        } else {
+                            $('#message').css('color', 'red').text(response.message);
+                        }
                     },
                     error: function(xhr, status, error) {
                         $('#message').text('서버와의 통신 중 오류가 발생했습니다: ' + error).css('color', 'red');
@@ -127,18 +135,9 @@
 	            <div class="card-body" style="text-align: center;">
 					<h5 class="card-title" style="display: inline-block">${mainVo.emp_name}</h5>
 					<p class="card-text">${mainVo.emp_dept}팀 ${mainVo.emp_pos}</p>
-<!-- 	              <button class="btn btn-primary">출근</button> -->
-<!-- 				  <button class="btn btn-danger">퇴근</button> -->
-					<div class="form-container" style="display: flex; justify-content: center; gap: 10px;">
-						<form action="./arriveWork.do" method="post">
-							<input type="hidden" name="emp_no" value="aa001">
-							<button type="submit" class="btn btn-outline-primary">출근</button>
-						</form>
-						<form action="./leftWork.do" method="post">
-							<input type="hidden" name="emp_no" value="aa001">
-							<button type="submit" class="btn btn-outline-danger">퇴근</button>
-						</form>
-					</div>
+					<input type="hidden" id="emp_no" value="${loginVo.emp_no}">
+	              <button id="arriveWorkBtn" class="btn btn-primary">출근</button>
+				  <button id="leftWorkBtn" class="btn btn-danger">퇴근</button>
 	            </div>
 	          </div>
 	          <!-- End Card with an image on top -->
@@ -196,15 +195,20 @@
 	                      labels: [
 	                        '출근',
 	                        '조퇴',
-	                        '지각'
+	                        '지각',
+	                        '결근'
 	                      ],
 	                      datasets: [{
 	                        label: 'My First Dataset',
-	                        data: [355, 35, 60],
+	                        data: ['${attVo.right_count}', 
+	                        	'${attVo.early_count}', 
+	                        	'${attVo.late_count}',
+	                        	'${attVo.empty_count}'],
 	                        backgroundColor: [
 	                          'rgb(255, 99, 132)',
 	                          'rgb(54, 162, 235)',
-	                          'rgb(255, 205, 86)'
+	                          'rgb(255, 205, 86)',
+	                          'rgb(0, 0, 0)'
 	                        ],
 	                        hoverOffset: 4
 	                      }]
