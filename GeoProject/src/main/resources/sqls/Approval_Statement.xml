@@ -205,9 +205,25 @@
 	<!-- //////////////////결재하기 -->
 	<!-- 결재라인 수정 -->
 	<update id="updateApprLine">
-		UPDATE AP_LINE SET FILE_ONAME=#{file_oname},APL_STATUS=1,MOD_DATE=SYSDATE
-			WHERE APL_NO=#{apl_no}
+	    UPDATE AP_LINE 
+	    SET COL_TYPE =
+	        <choose>
+	            <when test='last == "1"'>
+	                1
+	            </when>
+	            <otherwise>
+	                2
+	            </otherwise>
+	        </choose>
+	        <if test='last == "1"'>
+	            , FILE_ONAME = #{file_oname}
+	        </if>
+	        , APL_STATUS = 1,
+	        MOD_DATE = SYSDATE
+	    WHERE APL_NO = #{apl_no}
 	</update>
+
+
 	
 	<update id="updateDocu">
 		UPDATE AP_DOCU SET APD_STATUS=#{apd_status}, APD_CLEAR_DATE=SYSDATE,
@@ -247,18 +263,22 @@
 	
 	<!-- 결재자 순서대로 조회 -->
 	<select id="selectLine" resultType="Ap_LineVo">
-		  	SELECT al.APL_NO,al.APD_NO,EMP_NO,
-				al.APL_ORDER,TO_CHAR(NVL(al.APL_DATE, SYSDATE), 'YY-MM-DD HH24:MI') AS APL_DATE,
-				al.APL_STATUS,al.APL_MSG,
-				al.REG_ID,TO_CHAR(al.REG_DATE, 'YY-MM-DD HH24:MI') AS REG_DATE,
-				al.MOD_ID,TO_CHAR(al.MOD_DATE, 'YY-MM-DD HH24:MI') AS MOD_DATE,
-				al.FILE_ONAME,e.EMP_NAME 
-		  FROM AP_LINE al
-		  INNER JOIN EMP e 
-		  USING (EMP_NO)
-		  WHERE APD_NO = #{apd_no}
-		  ORDER BY APL_ORDER
+		SELECT al.APL_NO, al.APD_NO, al.EMP_NO,
+		       al.APL_ORDER, TO_CHAR(NVL(al.APL_DATE, SYSDATE), 'YY-MM-DD HH24:MI') AS APL_DATE,
+		       al.APL_STATUS, al.APL_MSG,
+		       al.REG_ID, TO_CHAR(al.REG_DATE, 'YY-MM-DD HH24:MI') AS REG_DATE,
+		       al.MOD_ID, TO_CHAR(al.MOD_DATE, 'YY-MM-DD HH24:MI') AS MOD_DATE,
+		       al.FILE_ONAME, e.EMP_NAME, al.COL_TYPE, b.ENCODING
+			FROM AP_LINE al
+			INNER JOIN EMP e ON al.EMP_NO = e.EMP_NO
+			LEFT JOIN BASE b ON al.EMP_NO = b.EMP_NO
+			WHERE al.APD_NO = #{apd_no}
+			AND (b.DELFLAG = 'N' OR b.DELFLAG IS NULL) 
+			ORDER BY al.APL_ORDER
 	</select>
+	
+
+	
 	
 	<!-- 반려메시지 조회 -->
 	<select id="sel_Msg" resultType="java.lang.String">
@@ -294,7 +314,7 @@
 		 AND EMP_NO =#{emp_no}
 	</select>
 	
-	<!-- 본인 서명 찾기 -->
+	<!-- 본인 서명 찾기 : 파일 -->
 	<select id="selMySign" resultType="FileVo">
 		SELECT FILE_NO, ORIGIN_NO,FILE_ONAME,
 			FILE_SNAME, FILE_SIZE, FILE_TYPE,
@@ -304,6 +324,13 @@
 		 WHERE REG_ID = #{emp_no}
 		 AND FILE_DEL_YN = 'N'
 		 AND FILE_TYPE=4
+	</select>
+	
+	<select id="selectSignature" resultType="BaseVo">
+		SELECT EMP_NO, DELFLAG, ENCODING
+		 FROM BASE
+		 WHERE EMP_NO = #{emp_no}
+		 AND DELFLAG = 'N'
 	</select>
 	
 	<!-- 반려하기 -->
@@ -337,7 +364,7 @@
 	<!-- 서명 다중 삭제 -->
 	<update id="delSign">
 		UPDATE "FILE" f SET FILE_DEL_YN ='Y'
-		 WHERE REG_ID =#{reg_id}
+		 WHERE REG_ID =#{emp_no}
 		 AND FILE_ONAME IN
 		  <foreach collection="list" item="file_oname" open="(" separator="," close=")">
          #{file_oname}
@@ -396,7 +423,22 @@
 		 WHERE APD_NO = #{apd_no}
 		 AND APL_STATUS =0
 	</select>
-
+	
+	<insert id="insertBase">
+		INSERT INTO GEO.BASE
+			(EMP_NO, REG_DATE, ENCODING)
+			VALUES(#{emp_no}, SYSDATE, #{encoding})
+	</insert>
+	
+	<update id="deleteSignature">
+		UPDATE BASE SET DELFLAG = 'Y'
+		WHERE
+		<foreach collection="list" item="encoding" open="(" separator=" OR " close=")">
+        	DBMS_LOB.COMPARE(ENCODING, #{encoding}) = 0
+    	</foreach>
+	</update>
+	
+	
 </mapper>
 
 

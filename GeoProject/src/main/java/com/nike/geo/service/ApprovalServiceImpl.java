@@ -1,5 +1,6 @@
 package com.nike.geo.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.appr.Ap_FavVo;
 import com.nike.geo.vo.appr.Ap_LineVo;
 import com.nike.geo.vo.appr.Ap_RfVo;
+import com.nike.geo.vo.appr.BaseVo;
 import com.nike.geo.vo.comm.FileVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -187,9 +189,23 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return (n>0 && m>0 && o>0)?1:0;
 	}
 	
+	@Transactional(readOnly = false)
 	@Override
-	public int delSign(Map<String, Object> map) {
-		return dao.delSign(map);
+	public int delSign(List<String> list1, List<String> list2, String emp_no) {
+		int n=0,m =0;
+		if (list1 != null) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list1);
+			map.put("emp_no", emp_no);
+			
+			n = dao.delSign(map);
+		}
+		
+		if (list2 != null) {
+			m =dao.deleteSignature(list2);
+		}
+		
+		return (n>0 || m>0)? 1:0;
 	}
 	
 	
@@ -274,6 +290,17 @@ public class ApprovalServiceImpl implements IApprovalService {
 		int n = dao.insertHistory(map);
 		int m = dao.insertVac(map);
 		return (n>0 && m>0)?1:0;
+	}
+	
+	
+	@Override
+	public int insertBase(Map<String, Object> map) {
+		return dao.insertBase(map);
+	}
+	
+	@Override
+	public List<BaseVo> selectSignature(String emp_no) {
+		return dao.selectSignature(emp_no);
 	}
 	
 

@@ -49,6 +49,7 @@ th[data-dt-column="4"]::after {
 					<div class="card">
 						<div class="card-body">
 							<h5 class="card-title">사원 조회</h5>
+							<button onclick="empList()" class="btn btn-outline-info" >사원 전체 리스트</button>
 							
 
 							<!-- Default Table -->
@@ -155,6 +156,23 @@ th[data-dt-column="4"]::after {
 			spanElement.remove();
 		}
 	});
+	
+	 function empList(){
+			fetch("./poi.do",{
+				method:"post",
+				headers : {
+					"Content-Type":"application/x-www-form-urlencoded"
+				}
+				}).then(response => response.text())
+				  .then(data => {
+					console.log(typeof data);
+				    console.log('Success:', data);
+				    alert('파일을 저장하였습니다');
+				  })
+				  .catch(error => {
+				    console.error('Error:', error);
+				  });
+			}
 	
 	
 	

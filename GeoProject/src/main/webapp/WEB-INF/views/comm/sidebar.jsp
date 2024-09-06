@@ -37,7 +37,7 @@
           
           <li>
             <a href="./apprList.do?variety=submit">
-              <i class="bi bi-circle"></i><span>상신 문서함</span>
+              <i class="bi bi-circle"></i><span>기안 문서함</span>
             </a>
           </li>
           

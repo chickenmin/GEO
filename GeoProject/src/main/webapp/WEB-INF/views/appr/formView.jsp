@@ -67,43 +67,49 @@ td[colspan="3"] {
 	<main id="main" class="main d-flex justify-content-center align-items-center" style="min-height: 100vh;" >
 		
 		<input type="hidden" id="con" value="${vo.apd_con }"> 
-		
+				
 		<div class="middle" >
 			<div id="pdfDiv">
+
 				<!-- 시작 -->
+				
 				<!-- 결재칸 -->
 				<div id="signIn" style="text-align: right; ">
 					<c:forEach var="signer" items="${apprLists}">
-						<div class="sign">
-							<div class="sign-name">${signer.emp_name }</div>
-							<div class="sign-signature" style="height: 120px; ">
-								<c:choose>
-									<c:when test="${empty signer.file_oname}">
-										<span style="text-align: center;">-</span>
-									</c:when>
-									<c:otherwise>
-										<img alt="서명이미지" src="./signature/${signer.file_oname}" style="width: 100px; height: 100px;">
-									</c:otherwise>
-								</c:choose>
+							<div class="sign">
+								<div class="sign-name">${signer.emp_name }</div>
+								<div class="sign-signature" style="height: 120px; ">
+									<c:choose>
+										<c:when test="${signer.apl_status == 0}">
+											<span style="text-align: center;">-</span>
+										</c:when>
+										<c:when test="${signer.file_oname != null }">
+											<img alt="서명이미지" src="./signature/${signer.file_oname}" style="width: 100px; height: 100px;">
+										</c:when>
+										<c:otherwise>
+											<img alt="서명이미지" src="data:image/png;base64,${signer.encoding }" style="width: 100px; height: 100px;">
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="sign-date">
+									<c:choose>
+										<c:when test="${signer.apl_status == 0}">
+											<span style="text-align: center;">-</span>
+										</c:when>
+										<c:otherwise>
+								        	${signer.apl_date}
+						        		</c:otherwise>
+									</c:choose>
+								</div>
 							</div>
-							<div class="sign-date">
-								<c:choose>
-									<c:when test="${empty signer.file_oname}">
-										<span style="text-align: center;">-</span>
-									</c:when>
-									<c:otherwise>
-							        	${signer.apl_date}
-					        		</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
 					</c:forEach>
 				</div>
-				<!-- right끝 -->
+							<!-- right끝 -->
 				<c:if test="${variety eq 'submit' && vo.apd_status eq 'W'}">
 					<button type="button" class="btn btn-outline-danger category" 
 					  style="margin: 10px; float: right;"	onclick="location.href='./cancel.do?apd_no=${vo.apd_no}'">철회</button>
 				</c:if>
+				
 	
 				<br>
 	
@@ -260,27 +266,27 @@ td[colspan="3"] {
 			<jsp:include page="./signModal.jsp"></jsp:include>
 	
 			<c:if test="${variety eq 'appr' || variety eq 'ref'  }">
-						<div style="display: flex; justify-content: flex-end;">
-							<button type="button" id="savePdf" class="btn btn-outline-success" 
-							style="height: auto; margin: 5px 10px 0 0;">PDF 저장</button>
-				<c:choose>
-					<c:when test="${order == 1}">
-						<!-- 문서 하단 버튼 -->
-							<button type="button" class="btn btn-outline-primary "
-								data-bs-toggle="modal"
-								style="height: auto; margin: 5px 10px 0 0;"
-								data-bs-target="#basicModal">반려하기</button>
-	
-							<button class="btn btn-primary frmbtn"
-								style="height: auto; margin: 5px 10px 0 0;"
-								data-bs-target="#sign" data-bs-toggle="modal">결재하기</button>
-					</c:when>
-				</c:choose>
-						</div>
+				<div style="display: flex; justify-content: flex-end;">
+					<button type="button" id="savePdf" class="btn btn-outline-success" 
+					style="height: auto; margin: 5px 10px 0 0;">PDF 저장</button>
+					<c:choose>
+						<c:when test="${order == 1}">
+							<!-- 문서 하단 버튼 -->
+								<button type="button" class="btn btn-outline-primary "
+									data-bs-toggle="modal"
+									style="height: auto; margin: 5px 10px 0 0;"
+									data-bs-target="#basicModal">반려하기</button>
+		
+								<button class="btn btn-primary frmbtn"
+									style="height: auto; margin: 5px 10px 0 0;"
+									data-bs-target="#sign" data-bs-toggle="modal">결재하기</button>
+						</c:when>
+					</c:choose>
+				</div>
 			</c:if>
 			
 		</div>
-		
+			
 		<!-- 끝 -->
 	</main>
 	<!-- End #main -->
