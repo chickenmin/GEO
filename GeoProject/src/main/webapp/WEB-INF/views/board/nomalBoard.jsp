@@ -25,7 +25,7 @@
 				<h1>일반 게시판</h1>
 				<thead>
 					<tr>
-						<c:if test="${loginVo.emp_name=='관리자'}">
+						<c:if test="${loginVo.emp_auth=='AU002'}">
 							<th class="text-center" scope="col"><input type="checkBox" id="chkbox" name="allCheckBox" class="allCheckBox" onclick="checkAll(this.checked)"></th>
 						</c:if>
 						<th scope="col" class="text-center">No.</th>
@@ -39,19 +39,12 @@
 				<tbody>
 					<c:forEach var="nomal" items="${nomalBoard}" varStatus="vs">
 						<tr>
-							<c:if test="${loginVo.emp_name=='관리자'}">
+							<c:if test="${loginVo.emp_auth=='AU002'}">
 								<th class="text-center" scope="row"><input type="checkbox" name="ch" class="ch" value="${nomal.bo_no}"></th>
 							</c:if>
 							<td class="text-center">${nomalBoard.size()-vs.index}</td>
-							<c:choose>
-								<c:when test="${nomal.bo_delflag_yn == 'N'}">
-									<td class="text-center" onclick="location.href='./detailBoard.do?bo_no=${nomal.bo_no}'">${nomal.bo_title}</td>
-								</c:when>
-								<c:otherwise>
-									<td>관리자에 의해 비공개처리 되었습니다.</td>
-								</c:otherwise>
-							</c:choose>
-							<td class="text-center">${nomal.emp_no}</td>
+							<td style="cursor: pointer;" class="text-center" onclick="location.href='./detailBoard.do?bo_no=${nomal.bo_no}'">${nomal.bo_title}</td>
+							<td class="text-center">${nomal.emp_name}</td>
 							<td class="text-center">${nomal.bo_regdate}</td>
 							<td class="text-center">${nomal.bo_like_count}</td>
 							<td class="text-center">${nomal.bo_view_count}</td>

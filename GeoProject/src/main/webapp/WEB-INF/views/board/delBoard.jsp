@@ -38,8 +38,8 @@
 									<tr>
 										<th  class="text-center" scope="row"><input type="checkbox" name="ch" class="ch" value="${del.bo_no}"></th>
 										<td  class="text-center">${delBoard.size()-vs.index}</td>
-										<td  class="text-center" onclick="location.href='./detailBoard.do?bo_no=${del.bo_no}'">${del.bo_title}</td>
-										<td  class="text-center">${del.emp_no}${nomal.emp_no}</td>
+										<td style="cursor: pointer;"  class="text-center" onclick="location.href='./detailBoard.do?bo_no=${del.bo_no}'">${del.bo_title}</td>
+										<td  class="text-center">${del.emp_name}${nomal.emp_name}</td>
 										<td  class="text-center">${del.bo_regdate}</td>
 										<td  class="text-center">${del.bo_like_count}</td>
 										<td  class="text-center">${del.bo_view_count}</td>

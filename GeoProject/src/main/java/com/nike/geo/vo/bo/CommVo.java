@@ -16,7 +16,7 @@ import lombok.ToString;
 public class CommVo {
 
 	private int comm_seq;
-	private String bo_no;
+	private int bo_no;
 	private String emp_no;
 	private String comm_content;
 	private String comm_date;
