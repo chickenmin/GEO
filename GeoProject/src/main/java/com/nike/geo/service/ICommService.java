@@ -92,4 +92,10 @@ public interface ICommService {
 	 */
 	public int insertNoti(Map<String, Object> map);
 	
+	/**
+	 * 재직사원 조회 selectEmpSt
+	 * @return List<String>
+	 */
+	public List<String> selectEmpSt();
+	
 }

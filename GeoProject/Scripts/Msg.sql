@@ -1,3 +1,32 @@
+INSERT INTO NOTI(NOTI_NO, EMP_NO, NOTI_STATUS,
+			NOTI_CONTENT, NOTI_DATE, NOTI_READ_YN,
+			REG_ID, REG_DATE, MOD_ID,
+			MOD_DATE)
+	SELECT NOTI_SEQ.NEXTVAL, EMP.EMP_NO, '2',
+			'새 공지가 등록되었습니다.', SYSDATE, 'N',
+			'SYSTEM', SYSDATE, 'SYSTEM',
+			SYSDATE
+		FROM EMP;
+		
+-- 시퀀스 생성
+CREATE SEQUENCE NOTI_SEQ START WITH 1 INCREMENT BY 1;
+
+-- 시퀀스 확인(1 추가됨 주의)
+SELECT BO_SEQ.NEXTVAL
+	FROM DUAL;
+	
+-- 시퀀스 삭제
+DROP SEQUENCE NOTI_SEQ;
+
+SELECT EMP_NO
+	FROM EMP
+	WHERE EMP_STATUS = 'ST001';
+	
+CREATE SEQUENCE BO_SEQ START WITH 1 INCREMENT BY 1;
+
+---------------------------------------------------------------------------------
+
+
 -- 쪽지 테이블 생성
 CREATE TABLE "MSG" (
 	"MSG_NO"	NUMBER		NOT NULL,

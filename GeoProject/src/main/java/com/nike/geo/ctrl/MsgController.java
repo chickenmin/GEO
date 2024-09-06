@@ -130,8 +130,8 @@ public class MsgController {
 		model.addAttribute("docu", docu);
 		
 		// 근태 현황
-//		AttVo attVo = empService.empAtt(empNo);
-//		model.addAttribute("attVo", attVo);
+		AttVo attVo = empService.empAtt(empNo);
+		model.addAttribute("attVo", attVo);
 		
 		// 일정
 		List<CalVo> calList = commService.selectMainCal(loginVo.getEmp_no());

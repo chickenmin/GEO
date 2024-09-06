@@ -121,7 +121,7 @@
 	            <div class="card-img-top" style="background-color: #E2E2E2; width: 100%; height: 200px; position: relative;">
 	            <!-- 일단 이미지를 띄움 : img src="assets/img/product-5.jpg" --> 
 	            <!-- DB에서 가져옴 : img src="storage/${mainVo.emp_img} -->
-	            	<img src="assets/img/product-5.jpg" style="width: 150px; height: 150px;
+	            	<img src="storage/${mainVo.emp_img}" style="width: 150px; height: 150px;
 	            		border-radius: 50%; position: absolute; top: 50%; left: 50%;
 	            		transform: translate(-50%, -50%); background-color: white;"
         onerror="this.style.display='none'; this.parentElement.style.backgroundColor = 'white';">

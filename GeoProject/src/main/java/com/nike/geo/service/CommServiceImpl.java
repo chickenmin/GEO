@@ -133,4 +133,10 @@ public class CommServiceImpl implements ICommService {
 		return dao.insertNoti(map);
 	}
 	
+	@Override
+	public List<String> selectEmpSt() {
+		log.info("COMMON service - 재직사원 조회 selectEmpSt");
+		return dao.selectEmpSt();
+	}
+	
 }

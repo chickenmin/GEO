@@ -91,4 +91,10 @@ public class CommDaoImpl implements ICommDao {
 		log.info("COMMON repository - 받아온 값 : {}", map);
 		return template.insert(NS+"insertNoti", map);
 	}
+	
+	@Override
+	public List<String> selectEmpSt() {
+		log.info("COMMON repository - 재직사원 조회 selectEmpSt");
+		return template.selectList(NS+"selectEmpSt");
+	}
 }

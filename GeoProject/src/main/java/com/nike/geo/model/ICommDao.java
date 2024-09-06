@@ -39,4 +39,8 @@ public interface ICommDao {
 	
 	// 알림 추가 insertNoti
 	public int insertNoti(Map<String, Object> map);
+	
+	// 재직사원 조회 selectEmpSt
+	public List<String> selectEmpSt();
+	
 }
