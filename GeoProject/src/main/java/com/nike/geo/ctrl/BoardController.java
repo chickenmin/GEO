@@ -13,6 +13,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import com.nike.geo.service.IBoardService;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
+import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.hr.EmpVo;
 
 import lombok.RequiredArgsConstructor;
@@ -64,28 +66,10 @@ public class BoardController {
 		model.addAttribute("delBoard", delBoard);
 		return "board/delBoard";
 	}
-	
-	//비공개여부
-	@PostMapping("/updateDelflag.do")
-	@ResponseBody
-	public Map<String, Object> updateDelflag(@RequestParam("bo_no") String bo_no, @RequestParam("delflag") String delflag) {
-	    boolean success;
-	    if ("delflagY".equals(delflag)) {
-	        success = service.delflagY(bo_no);
-	    } else if ("delflagN".equals(delflag)) {
-	        success = service.delflagN(bo_no);
-	    } else {
-	        success = false;
-	    }
-	    
-	    Map<String, Object> response = new HashMap<>();
-	    response.put("success", success);
-	    return response;
-	}
-
 
 	
 	
+	//파일업로드중
 	//글작성 bo_status 로 값을 보내줘야 쿼리가 동작 가능
 	@GetMapping(value = "/writeBoard.do")
 	public String writePostForm(Model model) {
@@ -96,35 +80,137 @@ public class BoardController {
 	
 	@PostMapping(value = "/writeBoard.do")
 	public String writeBoard(BoardVo Vo,
+							@RequestParam Map<String, Object> map,
 							@RequestParam("bo_title") String bo_title, 
 							@RequestParam("bo_content") String bo_content,
 							@RequestParam("bo_status")String bo_status,
-							HttpSession session) {
+							HttpSession session,
+							@RequestParam List<MultipartFile> file,
+ 							HttpServletRequest request,Model model,
+ 							 @RequestParam(value = "bo_no", required = false) Integer bo_no)
+ 							throws IOException {
+		//파일이 있다면 저장
+		if (file != null) {
+
+			//파일 가져가기
+			for (MultipartFile f : file) {
+				if (f.isEmpty()) {
+					log.info("파일없음");
+				}else {
+					
+					//수정
+					FileVo Fvo = new FileVo();
+					Fvo.setFile_type(1+"");
+					
+					String originName = f.getOriginalFilename();
+					Fvo.setFile_oname(originName);
+					log.info("게시판 - 받아온 파일의 원래 이름 : {}", originName);
+					
+					String ext = FilenameUtils.getExtension(originName);
+					log.info("게시판- 받아온 파일의 확장자 : {}", ext);
+					
+					UUID uuid = UUID.randomUUID(); 
+					String fileName = uuid + "." + ext;
+					Fvo.setFile_sname(fileName);
+					log.info("게시판 - 받아온 파일의 DB 저장명 : {}", fileName);
+					
+					
+					long fileSize = f.getSize();
+					Fvo.setFile_size(fileSize);
+					log.info("게시판 - 받아온 파일의 크기 : {}", fileSize);
+					
+					//C 로컬에 저장
+					String path = WebUtils.getRealPath(request.getSession().getServletContext(),"/board/");
+							//  "C:/GeoProject/storage/appr/";
+				   
+//					// 현재 클래스의 클래스 로더를 사용하여 프로젝트 루트 경로 얻기
+					
+//					String path ="C:/Users/GDJ/git/GEO/GeoProject/src/main/webapp/upload/"; 	//학원 모니터 경로
+			        log.info("path : {}",path);
+			        File dir = new File(path);
+			        if (!dir.exists()) {
+			            dir.mkdirs();
+			        }
+			        try {
+			            f.transferTo(new File(path + fileName));
+			        } catch (IOException e) {
+			            log.error("파일 저장 중 오류 발생", e);
+			        }
+					
+					//문서번호
+			        System.out.println("☆☆☆☆☆☆☆"+bo_no);
+					Fvo.setOrigin_no(bo_no);
+					//첨부자 이름
+					Fvo.setReg_id((String)map.get("emp_no"));
+					int n = service.putFile(Fvo);
+					if (n ==1 ) {
+						log.info("파일저장 성공");
+					}
+					
+				}
+			}	// file 의 foreach 끝
+		}
+		
+		
+		
+		
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		String writeId = Evo.getEmp_no();
 		Vo.setEmp_no(writeId);
 		Vo.setBo_title(bo_title);  // 제목 설정
-	    Vo.setBo_content(bo_content);  // 내용 설정
-	    Vo.setBo_status(bo_status);  // 상태 설정
-	    boolean isc = service.insertBoard(Vo);
-	    
-	    if (isc) {
-	        if ("announcements".equals(bo_status)) {
-	            return "redirect:/announcements.do";  // 공지사항 페이지로 리다이렉트
-	        } else if ("nomalBoard".equals(bo_status)) {
-	            return "redirect:/nomalBoard.do";  // 일반게시판 페이지로 리다이렉트
-	        }
-	    } 
+		Vo.setBo_content(Vo.getBo_content().replaceAll("\\r\n", "<br>"));
+		Vo.setBo_status(bo_status);  // 상태 설정
+		boolean isc = service.insertBoard(Vo);
+		
+		if (isc) {
+			if ("announcements".equals(bo_status)) {
+				return "redirect:/announcements.do";  // 공지사항 페이지로 리다이렉트
+			} else if ("nomalBoard".equals(bo_status)) {
+				return "redirect:/nomalBoard.do";  // 일반게시판 페이지로 리다이렉트
+			}
+		} 
+		
 	    // 실패 시 원래 페이지로 리다이렉트
 	    return "redirect:/writeBoard.do";
 	    
 	}
+//	@PostMapping(value = "/writeBoard.do")
+//	public String writeBoard(BoardVo Vo,
+//			@RequestParam("bo_title") String bo_title, 
+//			@RequestParam("bo_content") String bo_content,
+//			@RequestParam("bo_status")String bo_status,
+//			HttpSession session) {
+//		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
+//		String writeId = Evo.getEmp_no();
+//		Vo.setEmp_no(writeId);
+//		Vo.setBo_title(bo_title);  // 제목 설정
+//		Vo.setBo_content(Vo.getBo_content().replaceAll("\\r\n", "<br>"));
+//		Vo.setBo_status(bo_status);  // 상태 설정
+//		boolean isc = service.insertBoard(Vo);
+//		
+//		if (isc) {
+//			if ("announcements".equals(bo_status)) {
+//				return "redirect:/announcements.do";  // 공지사항 페이지로 리다이렉트
+//			} else if ("nomalBoard".equals(bo_status)) {
+//				return "redirect:/nomalBoard.do";  // 일반게시판 페이지로 리다이렉트
+//			}
+//		} 
+//		// 실패 시 원래 페이지로 리다이렉트
+//		return "redirect:/writeBoard.do";
+//		
+//	}
 
 	//글상세
 	@GetMapping(value = "/detailBoard.do")
-	public String detailBoard(@RequestParam("bo_no")String bo_no, 
-								Model model) {
+	public String detailBoard(@RequestParam("bo_no")int bo_no, 
+								Model model,
+								HttpSession session) {
+		EmpVo Evo = (EmpVo) session.getAttribute("loginVo");
+		String detailId=Evo.getEmp_no();
 		BoardVo Vo=service.detailBoard(bo_no);
+		BoardVo Bvo=service.detailBoard(bo_no);
+		model.addAttribute("Bvo", Bvo);
+		Vo.setEmp_no(detailId);
 		service.view_Count(Vo);
 		model.addAttribute("Vo",Vo);
 		return "board/detailBoard";
@@ -133,7 +219,7 @@ public class BoardController {
 	
 	//글수정
 	@GetMapping(value = "/modifyBoard.do")
-	public String modifyBoard(@RequestParam("bo_no") String bo_no,
+	public String modifyBoard(@RequestParam("bo_no") int bo_no,
 								Model model
 								) {
 		BoardVo Vo=service.detailBoard(bo_no);
@@ -145,12 +231,12 @@ public class BoardController {
 	@PostMapping(value = "/modifyBoard.do")
 	public String modifyBoard(@RequestParam("bo_title")String bo_title,
 								@RequestParam("bo_content")String bo_content,
-								@RequestParam("bo_no")String bo_no,
-								@RequestParam Map<String, String> map,
+								@RequestParam("bo_no")int bo_no,
+								@RequestParam Map<String, Object> map,
 								HttpSession session) {
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		map.put("bo_title", bo_title);
-		 map.put("bo_content", bo_content);
+		 map.put("bo_content", bo_content.replaceAll("\\r\n", "<br>"));
 		 map.put("bo_no", bo_no);
 		 map.put("emp_no", Evo.getEmp_no());
 			
@@ -199,7 +285,7 @@ public class BoardController {
 	//댓글
 	@GetMapping("/commList.do")
 	@ResponseBody
-	public List<CommVo> commList(@RequestParam("bo_no") String bo_no) {
+	public List<CommVo> commList(@RequestParam("bo_no") int bo_no) {
         // 댓글 리스트를 가져옵니다
         List<CommVo> comments = service.commList(bo_no);
         return comments; // JSON으로 자동 변환되어 클라이언트에 반환됩니다
@@ -207,7 +293,7 @@ public class BoardController {
 	
 	//댓글쓰기
 	@PostMapping("/commentInsert.do")
-	public String commentInsert(CommVo vo,@RequestParam("bo_no")String bo_no,@RequestParam("comm_content")String comm_content,HttpSession session) {
+	public String commentInsert(CommVo vo,@RequestParam("bo_no")int bo_no,@RequestParam("comm_content")String comm_content,HttpSession session) {
 		EmpVo Evo=(EmpVo) session.getAttribute("loginVo");
 		vo.setBo_no(bo_no);
 		vo.setEmp_no(Evo.getEmp_no());

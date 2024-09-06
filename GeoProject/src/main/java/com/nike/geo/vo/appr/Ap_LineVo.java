@@ -14,12 +14,38 @@ public class Ap_LineVo {
 	private String	mod_id      ;
 	private String	mod_date	;
 	private String emp_name;
+	private String col_type;
+	private String encoding;
 	
 	private String file_oname;
 	
+	
+	
 	//게터세터
+	
+	
+	
+	@Override
+	public String toString() {
+		return "Ap_LineVo [apl_no=" + apl_no + ", apd_no=" + apd_no + ", emp_no=" + emp_no + ", apl_order=" + apl_order
+				+ ", apl_date=" + apl_date + ", apl_status=" + apl_status + ", apl_msg=" + apl_msg + ", reg_id="
+				+ reg_id + ", reg_date=" + reg_date + ", mod_id=" + mod_id + ", mod_date=" + mod_date + ", emp_name="
+				+ emp_name + ", col_type=" + col_type + ", encoding=" + encoding + ", file_oname=" + file_oname + "]";
+	}
 	public int getApl_no() {
 		return apl_no;
+	}
+	public String getCol_type() {
+		return col_type;
+	}
+	public void setCol_type(String col_type) {
+		this.col_type = col_type;
+	}
+	public String getEncoding() {
+		return encoding;
+	}
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
 	}
 	public void setApl_no(int apl_no) {
 		this.apl_no = apl_no;

@@ -37,7 +37,7 @@
           
           <li>
             <a href="./apprList.do?variety=submit">
-              <i class="bi bi-circle"></i><span>상신 문서함</span>
+              <i class="bi bi-circle"></i><span>기안 문서함</span>
             </a>
           </li>
           
@@ -118,9 +118,11 @@
           </li>
           
           <li>
+          <c:if test="${loginVo.emp_auth eq 'AU002'}">
             <a href="./delBoard.do">
               <i class="bi bi-circle"></i><span>삭제 게시판</span>
             </a>
+            </c:if>
           </li>
         </ul>
       </li><!-- End Board Nav -->

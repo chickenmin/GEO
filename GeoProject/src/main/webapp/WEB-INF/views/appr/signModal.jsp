@@ -25,20 +25,31 @@
 					<!-- 모달 몸체 -->
 					<div class="modal-body" style="height: 300px;">
 						<c:choose>
-				      	<c:when test="${fn:length(mySign) != 0}">
+				      	<c:when test="${fn:length(mySign) != 0 || fn:length(signature) != 0}">
 				      		<div style="display: flex; justify-content: space-evenly;">
 					      		<c:forEach var="sign" items="${mySign}" varStatus="vs"> 
 							       <div class="card info-card revenue-card" style="margin: 5px;">
-									    <h5 class="card-title">전자서명 ${vs.index+1 }</h5>
+									    <h5 class="card-title">전자서명</h5>
 									    <div class="position-relative">
 									        <!-- 이미지 -->
 									        <img alt="전자서명" src="./signature/${sign.file_oname }" style="height: 200px; width: 200px;">
 									        <!-- 체크박스 -->
-									        <input type="radio" name="file_oname" value="${sign.file_oname}" 
+									        <input type="radio" name="file_oname" value="${sign.file_oname},1" 
 									               class="position-absolute" style="top: 10px; left: 10px;">
 									    </div>
 									</div>
-							       
+					      		</c:forEach>
+					      		<c:forEach var="sign" items="${signature}" varStatus="vs"> 
+							       <div class="card info-card revenue-card" style="margin: 5px;">
+									    <h5 class="card-title">전자서명</h5>
+									    <div class="position-relative">
+									        <!-- 이미지 -->
+									        <img alt="전자서명" src="data:image/png;base64,${sign.encoding }" style="height: 200px; width: 200px;">
+									        <!-- 체크박스 -->
+									        <input type="radio" name="file_oname" value="${sign.encoding},2" 
+									               class="position-absolute" style="top: 10px; left: 10px;">
+									    </div>
+									</div>
 					      		</c:forEach>
 					      	</div>
 				      	</c:when>

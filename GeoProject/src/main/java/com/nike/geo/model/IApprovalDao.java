@@ -8,6 +8,7 @@ import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.appr.Ap_FavVo;
 import com.nike.geo.vo.appr.Ap_LineVo;
 import com.nike.geo.vo.appr.Ap_RfVo;
+import com.nike.geo.vo.appr.BaseVo;
 import com.nike.geo.vo.comm.FileVo;
 
 public interface IApprovalDao {
@@ -57,8 +58,11 @@ public interface IApprovalDao {
 	//내 결재 순서 조회
 	public int selMyOrder(Map<String, Object> map);
 	
-	//내 서명 조회
+	//내 서명 조회 : 파일
 	public List<FileVo> selMySign(String emp_no);
+	
+	//내 서명 조회 : 시그내처
+	public List<BaseVo> selectSignature(String emp_no);
 	
 	//문서 결재자 조회
 	public List<Ap_LineVo> selectLine(String apd_no);
@@ -78,8 +82,11 @@ public interface IApprovalDao {
 	//서류 상태 수정 (철회, 진행중,완료 )
 	public int update_aStatus(Map<String, Object> map);
 	
-	//사인 다중삭제
+	//사인 다중삭제  : 파일
 	public int delSign(Map<String, Object> map);
+	
+	//사인 다중삭제  : 파일
+	public int deleteSignature(List<String> list2);
 	
 	
 	//결재라인 수정- 결재
@@ -117,6 +124,9 @@ public interface IApprovalDao {
 	
 	//연차 갯수 삭감
 	public int updateVaCheck (Map<String, Object> map);
+	
+	//시그니처 패드 서명 추가
+	public int insertBase (Map<String, Object> map);
 	
 	
 	

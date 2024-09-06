@@ -12,6 +12,7 @@ import com.nike.geo.model.IBoardDao;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
+import com.nike.geo.vo.comm.FileVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,14 +39,6 @@ public class BoardServiceImpl implements IBoardService {
 		return dao.delBoard();
 	}
 	
-	@Override
-	public boolean delflagY(String bo_no) {
-		return dao.delflagY(bo_no);
-	}
-	@Override
-	public boolean delflagN(String bo_no) {
-		return dao.delflagN(bo_no);
-	}
 	
 	@Override
 	public boolean insertBoard(BoardVo Vo) {
@@ -53,12 +46,12 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	
 	@Override
-	public BoardVo detailBoard(String bo_no) {
+	public BoardVo detailBoard(int bo_no) {
 		return dao.detailBoard(bo_no);
 	}
 	
 	@Override
-	public boolean modifyBoard(Map<String, String> map) {
+	public boolean modifyBoard(Map<String, Object> map) {
 		return dao.modifyBoard(map);
 	}
 	
@@ -79,7 +72,7 @@ public class BoardServiceImpl implements IBoardService {
 
 	@Override
 	public BoardVo view_Count(BoardVo bVo) {
-		Map<String, String> map = new HashMap<String, String>(){{
+		Map<String, Object> map = new HashMap<String, Object>(){{
 			put("bo_no", bVo.getBo_no()); 
 			put("emp_no", bVo.getEmp_no());
 			}};
@@ -98,7 +91,7 @@ public class BoardServiceImpl implements IBoardService {
 	//추천
 	@Override
 	public LikeVo likeCount(LikeVo vo) {
-		Map<String, String>map = new HashMap<String, String>(){{
+		Map<String, Object>map = new HashMap<String, Object>(){{
 			put("bo_no", vo.getBo_no());
 			put("emp_no",vo.getEmp_no());
 		}};
@@ -115,7 +108,7 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	
 	@Override
-	public List<CommVo> commList(@RequestParam("bo_no") String bo_no) {
+	public List<CommVo> commList(@RequestParam("bo_no") int bo_no) {
 		return dao.commList(bo_no);
 	}
 	
@@ -124,7 +117,10 @@ public class BoardServiceImpl implements IBoardService {
 		return dao.commentInsert(vo);
 	}
 	
-	
+	@Override
+	public int putFile(FileVo vo) {
+		return dao.putFile(vo);
+	}
 }
 
 

@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class LikeVo {
 
-	private String bo_no;
+	private int bo_no;
 	private String emp_no;
 	private String like_yn;
 

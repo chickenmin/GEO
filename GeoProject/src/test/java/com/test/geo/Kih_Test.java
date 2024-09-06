@@ -38,8 +38,6 @@ public class Kih_Test {
 	vo.setBo_content("내용6");
 	vo.setBo_del_yn("N");
 	vo.setBo_like_count(0);
-	vo.setBo_no("A0006");
-	vo.setBo_regdate("2024-08-19");
 	vo.setBo_status("announcements");
 	vo.setBo_title("내용6");
 	vo.setBo_view_count(0);

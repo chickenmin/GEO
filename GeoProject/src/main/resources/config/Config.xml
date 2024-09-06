@@ -11,6 +11,7 @@
 		<typeAlias type="com.nike.geo.vo.appr.Ap_DocuVo" alias="Ap_DocuVo"/>
 		<typeAlias type="com.nike.geo.vo.appr.Ap_FavVo" alias="Ap_FavVo"/>
 		<typeAlias type="com.nike.geo.vo.appr.Ap_LineVo" alias="Ap_LineVo"/>
+		<typeAlias type="com.nike.geo.vo.appr.BaseVo" alias="BaseVo"/>
 
 		<!-- 쪽지 및 로그인 -->
 		<typeAlias type="com.nike.geo.vo.msg.MsgVo" alias="MsgVo"/>

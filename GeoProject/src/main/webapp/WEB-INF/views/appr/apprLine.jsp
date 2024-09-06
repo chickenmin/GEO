@@ -13,8 +13,7 @@
 			</div>
 			
 			<!-- 모달 몸체 -->
-			<div class="modal-body"
-				style="display: flex; justify-content: space-evenly;">
+			<div class="modal-body" style="display: flex; justify-content: space-evenly;">
 				
 				<!-- jstree / 선택칸 -->
 				<div class="card info-card revenue-card main-card">
@@ -36,16 +35,14 @@
 						<div id="cc" style="flex: 1; margin-top: 10px;"></div>
 						<input id="ccCho" name="ccLine" type="hidden">
 					</div>
-					
-					    <button id="apC" type="button" onclick="choice(event)">결재선택</button>
-					    <button id="apR" type="button" onclick="choice(event)">결재취소</button>
-					    <button id="reC"  type="button" onclick="choice(event)">참조선택</button>
-					    <button  id="reR" type="button" onclick="choice(event)">참조취소</button>
-					
 				</div>
-			
 			</div> <!-- 모달 몸체 끝 -->
-			
+			<div class="d-flex gap-2">
+    <button id="apC" type="button" onclick="choice(event)" class="btn btn-outline-info">결재선택</button>
+    <button id="apR" type="button" onclick="choice(event)" class="btn btn-outline-info">결재취소</button>
+    <button id="reC" type="button" onclick="choice(event)" class="btn btn-outline-info">참조선택</button>
+    <button id="reR" type="button" onclick="choice(event)" class="btn btn-outline-info">참조취소</button>
+</div>
 			
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary"

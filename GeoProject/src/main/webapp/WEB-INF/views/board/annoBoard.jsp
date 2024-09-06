@@ -43,8 +43,8 @@
 									<tr>
 										<th class="text-center" scope="row"><input type="checkbox" name="ch" class="ch" value="${anno.bo_no}"></th>
 										<td class="text-center">${announcements.size()-vs.index}</td>
-										<td class="text-center" onclick="location.href='./detailBoard.do?bo_no=${anno.bo_no}'">${anno.bo_title}</td>
-										<td class="text-center">${anno.emp_no}</td>
+										<td style="cursor: pointer;" class="text-center" onclick="location.href='./detailBoard.do?bo_no=${anno.bo_no}'">${anno.bo_title}</td>
+										<td class="text-center">${anno.emp_name}</td>
 										<td class="text-center">${anno.bo_regdate}</td>
 										<td class="text-center">${anno.bo_like_count}</td>
 										<td class="text-center">${anno.bo_view_count}</td>
@@ -54,10 +54,11 @@
 
 				</table>
 <!-- </table> -->
-			<c:if test="${loginVo.emp_name=='관리자'}">
+			<c:if test="${loginVo.emp_auth=='AU002'}">
 			<input class="btn btn-danger" type="submit" value="삭제">
-			</c:if>
 			<input class="btn btn-primary" type="button" onclick="location.href='./writeBoard.do'" value="새글쓰기">
+			</c:if>
+			
 			</form>
 	<br>
 
