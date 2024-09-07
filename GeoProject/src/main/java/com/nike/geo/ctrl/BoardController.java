@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
 import com.nike.geo.service.IBoardService;
+import com.nike.geo.service.ICommService;
 import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
@@ -45,6 +46,8 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 
 	private final IBoardService service;
+	
+	private final ICommService commService;
 	
 	//공지게시판
 	@GetMapping(value = "/announcements.do")
@@ -83,6 +86,8 @@ public class BoardController {
 		
 		return "board/insertBoard";
 	}
+  
+  
 	
 	@PostMapping(value = "/writeBoard.do")
 	public String writeBoard(BoardVo Vo,
@@ -96,6 +101,7 @@ public class BoardController {
  							 @RequestParam(value = "bo_no", required = false) Integer bo_no)
  							throws IOException {
 		
+
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		String writeId = Evo.getEmp_no();
 		Vo.setEmp_no(writeId);
@@ -103,7 +109,20 @@ public class BoardController {
 		Vo.setBo_content(Vo.getBo_content().replaceAll("\\r\n", "<br>"));
 		Vo.setBo_status(bo_status);  // 상태 설정
 		boolean isc = service.insertBoard(Vo);
+    
+		if(bo_status.equals("announcements")) {
+			List<String> empStList = commService.selectEmpSt();
+			Map<String, Object> notiMap = new HashMap<String, Object>();
+//			map.put("emp_no", Vo.getEmp_no());
+			notiMap.put("emp_list", empStList);
+			notiMap.put("noti_status", "1");
+			notiMap.put("noti_content", "사내 공지사항 - '" + Vo.getBo_title() + "' 게시글이 등록되었습니다.");
+			notiMap.put("parent_no",Vo.getBo_no());
+			notiMap.put("origin_no","B"+Vo.getBo_no());
+			commService.insertNoti(notiMap);
+		}
 		
+    
 		//파일이 있다면 저장
 		if (file != null) {
 

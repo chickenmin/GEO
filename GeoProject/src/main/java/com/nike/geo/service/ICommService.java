@@ -10,6 +10,7 @@ import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.CommonVo;
 import com.nike.geo.vo.hr.EmpVo;
+import com.nike.geo.vo.msg.NotiVo;
 
 public interface ICommService {
 	
@@ -86,16 +87,35 @@ public interface ICommService {
 	public List<CalVo> selectMainCal(String no);
 	
 	/**
-	 * 알림 추가 insertNoti
+	 * 알림 추가 
 	 * @param map
 	 * @return 0 혹은 1
 	 */
 	public int insertNoti(Map<String, Object> map);
 	
 	/**
-	 * 재직사원 조회 selectEmpSt
+	 * 재직사원 조회 
 	 * @return List<String>
 	 */
 	public List<String> selectEmpSt();
 	
+	/**
+	 * 안읽은 알림 최신순 3개 조회 
+	 * @param empNo
+	 * @return 안읽은 쪽지 최신순 3개
+	 */
+	public List<NotiVo> selectLatestNoti(String empNo);
+	
+	/**
+	 * 알림 시퀀스값 조회 selectNotiSeq
+	 * @return 알림 시퀀스값
+	 */
+	public int selectNotiSeq();
+	
+	/**
+	 * 안읽은 알림 갯수 확인 
+	 * @param no
+	 * @return 안읽은 알림 갯수
+	 */
+	public int cntUnreadNoti(String no);
 }

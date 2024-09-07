@@ -38,6 +38,4 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
-	<task:annotation-driven/>
-
 </beans>

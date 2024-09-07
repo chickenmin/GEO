@@ -15,6 +15,7 @@
 
 		<!-- 쪽지 및 로그인 -->
 		<typeAlias type="com.nike.geo.vo.msg.MsgVo" alias="MsgVo"/>
+		<typeAlias type="com.nike.geo.vo.msg.NotiVo" alias="NotiVo"/>
 		
 		<!-- 캘린더 -->
 		<typeAlias type="com.nike.geo.vo.bo.BoardVo" alias="BoardVo"/>

@@ -11,6 +11,7 @@ import com.nike.geo.vo.bo.BoardVo;
 import com.nike.geo.vo.co.CalVo;
 import com.nike.geo.vo.comm.CommonVo;
 import com.nike.geo.vo.hr.EmpVo;
+import com.nike.geo.vo.msg.NotiVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -96,5 +97,25 @@ public class CommDaoImpl implements ICommDao {
 	public List<String> selectEmpSt() {
 		log.info("COMMON repository - 재직사원 조회 selectEmpSt");
 		return template.selectList(NS+"selectEmpSt");
+	}
+	
+	@Override
+	public List<NotiVo> selectLatestNoti(String empNo) {
+		log.info("COMMON repository - 안읽은 쪽지 최신순 3개 조회 selectLatestMsg");
+		log.info("COMMON repository - 받아온 값 : {}", empNo);
+		return template.selectList(NS+"selectLatestNoti", empNo);
+	}
+	
+	@Override
+	public int selectNotiSeq() {
+		log.info("COMMON repository - 알림 시퀀스값 조회 selectNotiSeq");
+		return template.selectOne(NS+"selectNotiSeq");
+	}
+	
+	@Override
+	public int cntUnreadNoti(String no) {
+		log.info("COMMON repository - 안읽은 알림 최신순 3개 조회 cntUnreadNoti");
+		log.info("COMMON repository - 받아온 값 : {}", no);
+		return template.selectOne(NS+"cntUnreadNoti", no);
 	}
 }

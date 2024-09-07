@@ -36,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
 import com.nike.geo.service.IApprovalService;
+import com.nike.geo.service.ICommService;
 import com.nike.geo.vo.appr.Ap_DocuVo;
 import com.nike.geo.vo.appr.Ap_FavVo;
 import com.nike.geo.vo.appr.Ap_LineVo;
@@ -57,6 +58,8 @@ public class ApprovalController {
 	//추가가
 	
 	private final IApprovalService apprService; 
+	
+	private final ICommService commService;
 	
 	// 양식홈 로드시, 즐겨찾기 리스트 전달
 	@GetMapping("/apprHome.do")
@@ -191,6 +194,13 @@ public class ApprovalController {
 		int returnSubmit = apprService.returnSubmit(map);
 		if (returnSubmit ==1) {
 			log.info("반려처리 완료");
+			Map<String, Object> notiMap = new HashMap<String, Object>();
+			notiMap.put("emp_list", null);
+			notiMap.put("noti_status", "3");
+			notiMap.put("noti_content", "게시글이 반려되었습니다.");
+			notiMap.put("parent_no", "3");
+			notiMap.put("origin_no", "R"+apd_no);
+			commService.insertNoti(null);
 			return "redirect:/apprList.do?variety=submit";
 		}else {
 			log.info("반려처리 실패");
@@ -484,6 +494,7 @@ public class ApprovalController {
 					apprService.updateVaCheck(map);
 					
 				}	//연차
+				
 			} //최종승인
 			
 			apprService.approve(map); //승인

@@ -44,6 +44,7 @@
 	</select>
 	
 	<insert id="insertBoard">
+
 	 <selectKey keyProperty="bo_no" resultType="int" order="BEFORE">
         SELECT BO_NO_SEQ.NEXTVAL
         FROM DUAL
@@ -59,7 +60,6 @@
 			,#{emp_no},SYSDATE,#{emp_no}
 			,SYSDATE)
 	</insert>
-	
 	
 	<select id="detailBoard" resultType="BoardVo">
 	SELECT BO_NO,B.EMP_NO,E.EMP_NAME AS EMP_NAME,BO_STATUS,
