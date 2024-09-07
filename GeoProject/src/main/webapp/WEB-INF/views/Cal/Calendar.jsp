@@ -173,7 +173,7 @@
         <button class="btn btn-secondary" data-bs-target="#eventModal" data-bs-toggle="modal" data-bs-dismiss="modal">상세보기로 이동</button>
       <c:if test="${EmpVo.emp_no eq 'AA001' or EmpVo.emp_no eq emp_no}">
         <button type="button" class="btn btn-primary" onclick="updateAjax(); alert('일정을 수정하시겠습니까?');">수정</button> 
-<%--       </c:if> --%>
+      </c:if>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" style="cursor:pointer;">취소</button>
       </div>
     </div>
