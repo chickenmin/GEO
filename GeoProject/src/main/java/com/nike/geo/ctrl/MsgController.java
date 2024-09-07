@@ -133,8 +133,6 @@ public class MsgController {
 		}
 		model.addAttribute("docu", docu);
 		
-
-		
 		// 일정
 		List<CalVo> calList = commService.selectMainCal(loginVo.getEmp_no());
 		log.info("MESSAGE controller - index에 띄울 일정 정보 {}", calList);

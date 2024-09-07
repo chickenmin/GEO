@@ -11,6 +11,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -131,6 +133,20 @@ public class EmpController {
 		model.addAttribute("saveFileName", saveFileName);
 		model.addAttribute("attVo", attVo);
 		model.addAttribute("vacaVo", vacaVo);
+		
+		List<VacaVo> usedDate = service.usedDate(emp_no);
+        model.addAttribute("usedDate", usedDate);
+        
+        List<VacaVo> usedHalf = service.usedHalf(emp_no);
+        model.addAttribute("usedHalf", usedHalf);
+        
+        VacaVo usedNum = service.usedNum(emp_no);
+        model.addAttribute("usedNum", usedNum);
+        
+        VacaVo usedHalfNum = service.usedHalfNum(emp_no);
+        model.addAttribute("usedHalfNum", usedHalfNum);
+		
+		
 		return "hr/selectOneEmp";
 	}
 
@@ -197,6 +213,41 @@ public class EmpController {
 		return "hr/org";
 	}
 	
+	@PostMapping(value = "/retireEmp.do")
+	public String entireEmp(String emp_no) {
+		log.info("퇴사 처리");
+		EmpVo vo = new EmpVo();
+		vo.setEmp_no(emp_no);
+		service.retireEmp(emp_no);
+		return "redirect:selectOneEmp.do?emp_no=" + vo.getEmp_no();
+	}
+	
+	
+	@PostMapping(value = "/modPw.do")
+	public String modPw(Model model, HttpSession session, String emp_no, String newPw, String currentPw, String renewPw) {
+		log.info("비밀번호 변경 컨트롤러");
+		
+		EmpVo loginVo = (EmpVo) session.getAttribute("loginVo");
+
+		// 현재 비밀번호 검증
+		if (!loginVo.getEmp_pw().equals(currentPw)) {
+			model.addAttribute("loginVo", loginVo);
+			return "hr/myPage"; // 비밀번호 변경 페이지로 리다이렉트
+		}
+
+		// 새 비밀번호와 비밀번호 확인 일치 여부 검증
+		if (!newPw.equals(renewPw)) {
+			return "hr/myPage"; // 비밀번호 변경 페이지로 리다이렉트
+		}
+
+		emp_no = loginVo.getEmp_no();
+		loginVo.setEmp_pw(newPw);
+		
+		service.modPw(loginVo);
+
+
+		return "hr/myPage";
+	}
 	
 	
 

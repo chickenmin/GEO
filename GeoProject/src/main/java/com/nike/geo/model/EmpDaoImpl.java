@@ -120,5 +120,17 @@ public class EmpDaoImpl implements IEmpDao {
 		log.info(NS + "usedHalfNum");
 		return session.selectOne(NS + "usedHalfNum", emp_no);
 	}
+	
+	@Override
+	public int retireEmp(String emp_no) {
+		log.info(NS + "retireEmp");
+		return session.update(NS + "retireEmp", emp_no);
+	}
+	
+	@Override
+	public int modPw(EmpVo vo) {
+		log.info(NS + "modPw");
+		return session.update(NS + "modPw", vo);
+	}
 
 }

@@ -59,6 +59,12 @@ public interface IEmpService {
 	
 	// 연차 사용 횟수
 	public VacaVo usedHalfNum(String emp_no);
+	
+	// 퇴사 처리
+	public int retireEmp(String emp_no);
+	
+	// 비밀번호 변경
+	public int modPw(EmpVo vo);
 
 	
 
