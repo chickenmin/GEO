@@ -54,7 +54,24 @@ function del(event) {
 		<br>
 		<h1>${Vo.bo_title}</h1>
 		${Vo.emp_name} · ${Vo.bo_regdate} · 조회수(${Vo.bo_view_count})<br>
-		<input type="file" value="첨부파일">
+
+		<c:choose>
+			<c:when test="${file == null}">
+		  				첨부파일 없음
+		  			</c:when>
+			<c:otherwise>
+				<c:forEach var="f" items="${file}">
+					<form action="./boardFile.do" method="post">
+						${f.file_oname} &nbsp&nbsp 
+						<input type="hidden" name="file_no" value="${f.file_no}">
+						<button type="submit">다운로드</button>
+					</form>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+
+
+
 		<br><br>
 		${Vo.bo_title}
 		<br><br>

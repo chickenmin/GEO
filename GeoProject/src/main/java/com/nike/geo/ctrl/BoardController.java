@@ -1,21 +1,27 @@
 package com.nike.geo.ctrl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -89,6 +95,15 @@ public class BoardController {
  							HttpServletRequest request,Model model,
  							 @RequestParam(value = "bo_no", required = false) Integer bo_no)
  							throws IOException {
+		
+		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
+		String writeId = Evo.getEmp_no();
+		Vo.setEmp_no(writeId);
+		Vo.setBo_title(bo_title);  // 제목 설정
+		Vo.setBo_content(Vo.getBo_content().replaceAll("\\r\n", "<br>"));
+		Vo.setBo_status(bo_status);  // 상태 설정
+		boolean isc = service.insertBoard(Vo);
+		
 		//파일이 있다면 저장
 		if (file != null) {
 
@@ -100,7 +115,7 @@ public class BoardController {
 					
 					//수정
 					FileVo Fvo = new FileVo();
-					Fvo.setFile_type(1+"");
+					Fvo.setFile_type(2+"");
 					
 					String originName = f.getOriginalFilename();
 					Fvo.setFile_oname(originName);
@@ -138,10 +153,13 @@ public class BoardController {
 			        }
 					
 					//문서번호
-			        System.out.println("☆☆☆☆☆☆☆"+bo_no);
-					Fvo.setOrigin_no(bo_no);
+					Fvo.setOrigin_no(Vo.getBo_no());	
 					//첨부자 이름
-					Fvo.setReg_id((String)map.get("emp_no"));
+//					Fvo.setReg_id((String)map.get("emp_no"));
+					EmpVo evo= (EmpVo)session.getAttribute("loginVo");
+					
+					Fvo.setReg_id(evo.getEmp_no());
+					log.info("regId{}",evo.getEmp_no());
 					int n = service.putFile(Fvo);
 					if (n ==1 ) {
 						log.info("파일저장 성공");
@@ -150,17 +168,6 @@ public class BoardController {
 				}
 			}	// file 의 foreach 끝
 		}
-		
-		
-		
-		
-		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
-		String writeId = Evo.getEmp_no();
-		Vo.setEmp_no(writeId);
-		Vo.setBo_title(bo_title);  // 제목 설정
-		Vo.setBo_content(Vo.getBo_content().replaceAll("\\r\n", "<br>"));
-		Vo.setBo_status(bo_status);  // 상태 설정
-		boolean isc = service.insertBoard(Vo);
 		
 		if (isc) {
 			if ("announcements".equals(bo_status)) {
@@ -174,37 +181,61 @@ public class BoardController {
 	    return "redirect:/writeBoard.do";
 	    
 	}
-//	@PostMapping(value = "/writeBoard.do")
-//	public String writeBoard(BoardVo Vo,
-//			@RequestParam("bo_title") String bo_title, 
-//			@RequestParam("bo_content") String bo_content,
-//			@RequestParam("bo_status")String bo_status,
-//			HttpSession session) {
-//		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
-//		String writeId = Evo.getEmp_no();
-//		Vo.setEmp_no(writeId);
-//		Vo.setBo_title(bo_title);  // 제목 설정
-//		Vo.setBo_content(Vo.getBo_content().replaceAll("\\r\n", "<br>"));
-//		Vo.setBo_status(bo_status);  // 상태 설정
-//		boolean isc = service.insertBoard(Vo);
-//		
-//		if (isc) {
-//			if ("announcements".equals(bo_status)) {
-//				return "redirect:/announcements.do";  // 공지사항 페이지로 리다이렉트
-//			} else if ("nomalBoard".equals(bo_status)) {
-//				return "redirect:/nomalBoard.do";  // 일반게시판 페이지로 리다이렉트
-//			}
-//		} 
-//		// 실패 시 원래 페이지로 리다이렉트
-//		return "redirect:/writeBoard.do";
-//		
-//	}
 
+	
+	
+	//다운로드
+		@PostMapping(value = "/boardFile.do")
+		public void fileDownload(String file_no,
+								HttpServletResponse response
+								,HttpServletRequest request) throws IOException {
+			log.info("결재 첨부파일 다운로드");
+			log.info(file_no);
+			FileVo file = service.findFile(file_no);
+			String fileOriginName = file.getFile_oname();
+			String fileStoredName = file.getFile_sname();
+			log.info("o:{}",fileOriginName);
+			log.info("s:{}",fileStoredName);
+			
+			
+			// C 로컬 폴더
+			String dir ;
+					/*"C:/GeoProject/storage/appr/"; */
+			dir = WebUtils.getRealPath(request.getSession().getServletContext(),"/board/");	//전자서명 경로
+			
+			//프로젝트 안의 폴더
+//			String dir = "C:/Users/GDJ/git/GEO/GeoProject/src/main/webapp/upload/";			// 학원 모니터 경로
+			Path path = Paths.get(dir);
+			File f = new File(dir, fileStoredName);
+			fileOriginName = new String(fileOriginName.getBytes("UTF-8"), "8859_1");
+			String mimeType = Files.probeContentType(path);
+			
+			response.setContentType(mimeType);
+			response.setContentLength((int)f.length());
+			response.setHeader("Content-Disposition", "attachment;filename=\""+ fileOriginName + "\"");
+			
+			OutputStream os = response.getOutputStream();
+			FileInputStream fis = new FileInputStream(f);
+			FileCopyUtils.copy(fis, os);
+			fis.close();
+			os.close();
+		}
+	
+	
+	
+	
+	
+	
 	//글상세
 	@GetMapping(value = "/detailBoard.do")
 	public String detailBoard(@RequestParam("bo_no")int bo_no, 
 								Model model,
 								HttpSession session) {
+		
+		List<FileVo> file = service.selectFile(bo_no+"");
+		model.addAttribute("file", file);
+		
+		
 		EmpVo Evo = (EmpVo) session.getAttribute("loginVo");
 		String detailId=Evo.getEmp_no();
 		BoardVo Vo=service.detailBoard(bo_no);
@@ -229,19 +260,89 @@ public class BoardController {
 	}
 	
 	@PostMapping(value = "/modifyBoard.do")
-	public String modifyBoard(@RequestParam("bo_title")String bo_title,
-								@RequestParam("bo_content")String bo_content,
-								@RequestParam("bo_no")int bo_no,
-								@RequestParam Map<String, Object> map,
-								HttpSession session) {
+	public String modifyBoard(BoardVo Vo,
+							@RequestParam Map<String, Object> map,
+							@RequestParam("bo_title") String bo_title, 
+							@RequestParam("bo_content") String bo_content,
+							@RequestParam("bo_status")String bo_status,
+							HttpSession session,
+							@RequestParam List<MultipartFile> file,
+								HttpServletRequest request,Model model,
+								 @RequestParam(value = "bo_no", required = false) Integer bo_no)
+								throws IOException {
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		map.put("bo_title", bo_title);
 		 map.put("bo_content", bo_content.replaceAll("\\r\n", "<br>"));
 		 map.put("bo_no", bo_no);
 		 map.put("emp_no", Evo.getEmp_no());
 			
-			
 		boolean isc = service.modifyBoard(map);
+		
+		//파일이 있다면 저장
+				if (file != null) {
+
+					//파일 가져가기
+					for (MultipartFile f : file) {
+						if (f.isEmpty()) {
+							log.info("파일없음");
+						}else {
+							
+							//수정
+							FileVo Fvo = new FileVo();
+							Fvo.setFile_type(2+"");
+							
+							String originName = f.getOriginalFilename();
+							Fvo.setFile_oname(originName);
+							log.info("게시판 - 받아온 파일의 원래 이름 : {}", originName);
+							
+							String ext = FilenameUtils.getExtension(originName);
+							log.info("게시판- 받아온 파일의 확장자 : {}", ext);
+							
+							UUID uuid = UUID.randomUUID(); 
+							String fileName = uuid + "." + ext;
+							Fvo.setFile_sname(fileName);
+							log.info("게시판 - 받아온 파일의 DB 저장명 : {}", fileName);
+							
+							
+							long fileSize = f.getSize();
+							Fvo.setFile_size(fileSize);
+							log.info("게시판 - 받아온 파일의 크기 : {}", fileSize);
+							
+							//C 로컬에 저장
+							String path = WebUtils.getRealPath(request.getSession().getServletContext(),"/board/");
+									//  "C:/GeoProject/storage/appr/";
+						   
+//							// 현재 클래스의 클래스 로더를 사용하여 프로젝트 루트 경로 얻기
+							
+//							String path ="C:/Users/GDJ/git/GEO/GeoProject/src/main/webapp/upload/"; 	//학원 모니터 경로
+					        log.info("path : {}",path);
+					        File dir = new File(path);
+					        if (!dir.exists()) {
+					            dir.mkdirs();
+					        }
+					        try {
+					            f.transferTo(new File(path + fileName));
+					        } catch (IOException e) {
+					            log.error("파일 저장 중 오류 발생", e);
+					        }
+							
+							//문서번호
+							Fvo.setOrigin_no(bo_no);
+							//첨부자 이름
+							Fvo.setReg_id((String)map.get("emp_no"));
+							int n = service.putFile(Fvo);
+							if (n ==1 ) {
+								log.info("파일저장 성공");
+							}
+							
+						}
+					}	// file 의 foreach 끝
+				}
+		
+		
+		
+		
+		
 		
 		 if (isc) {
 		        return "redirect:/detailBoard.do?bo_no=" + bo_no;
@@ -303,79 +404,7 @@ public class BoardController {
 	}
 	
 	
-	//파일업로드
-	@PostMapping(value = "/uploadAjax.do")
-	@ResponseBody
-	public Map<String, String> fileUploadAjax(HttpServletRequest request,
-												Model model,
-												List<MultipartFile>file,
-												String desc
-												){
-		log.info("FileuploadController uploadAjax.do 파일 업로드");
-		
-		for(MultipartFile f : file) {
-			log.info("파일의 이름 : {}",f.getOriginalFilename());
-			String originFileName = f.getOriginalFilename();
-			String saveFileName=UUID.randomUUID().toString().concat(originFileName.substring(originFileName.indexOf(".")));
-			log.info("기존파일명 : {}",originFileName);
-			log.info("저장파일명 : {}",saveFileName);
-			
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
-		String path = "";
-		
-		try {
-			//1)파일을 읽는다
-			inputStream = f.getInputStream();
-			
-			//2)저장위치를 만든다
-			path = WebUtils.getRealPath(request.getSession().getServletContext(), "/storage");//상대경로
-			String path02 = request.getSession().getServletContext().getRealPath("storage");
-			log.info("저장경로 : {} \n path02 : {}",path,path02);
-			
-			//3)파일 저장 위치
-			File storage = new File(path);
-			if(!storage.exists()) {
-				storage.mkdir();
-			}
-			
-			//4)저장 파일 저장할 파일이 없다면 생성하면 있다면 오버라이드 함
-			File newFile=new File(path+"/"+saveFileName);
-			if(!newFile.exists()) {
-				newFile.createNewFile();
-			}
-			
-			//5)읽은 파일을 써주기(저장)
-			outputStream = new FileOutputStream(newFile);
-			
-			//5)파일 읽어서 대상파일에 써줌
-			int read = 0;
-			byte[] b = new byte[(int)f.getSize()];
-			while((read=inputStream.read(b))!= -1) {
-				outputStream.write(b,0,read);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				inputStream.close();
-				outputStream.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		model.addAttribute("originFileName",originFileName);
-		model.addAttribute("saveFileName",saveFileName);
-		model.addAttribute("path",path);
-		}
-		
-		Map<String, String>map =new HashMap<String, String>();
-		map.put("isc", "true");
-		
-		return map; 
-	}
+	
 	
 	
 }
