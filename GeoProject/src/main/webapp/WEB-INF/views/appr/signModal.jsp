@@ -21,6 +21,7 @@
 					<input type="hidden" name="apd_form" value="${vo.apd_form}">	<!-- 연차/일정 -->
 					<input type="hidden" name="variety" value="${variety}">	<!-- 문서함 종류 -->
 					<input type="hidden" name="submit_id" value="${vo.emp_no}">	<!-- 기안자 ID -->
+					<input type="hidden" name="submit_name" value="${vo.emp_name}">	<!-- 기안자 ID -->
 					
 					<!-- 모달 몸체 -->
 					<div class="modal-body" style="height: 300px;">

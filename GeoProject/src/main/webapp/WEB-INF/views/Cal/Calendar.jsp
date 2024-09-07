@@ -7,6 +7,7 @@
 <link href="./css/calendar.css" rel="stylesheet">
 </head>
 <%@ include file="../comm/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.15/index.global.min.js'></script>
@@ -20,6 +21,13 @@
 
 <body>
 	<%@ include file="../comm/sidebar.jsp" %>
+	
+	<%
+    // 로그인한 사용자의 ID를 설정합니다.
+    String emp_no = (String) pageContext.getAttribute("emp_no"); // 예시로 설정, 실제 로그인 ID로 설정해야 합니다.
+    pageContext.setAttribute("emp_no", emp_no);
+	%>
+	
  	<main id="main" class="main">
  		
 
@@ -105,8 +113,10 @@
 	        <p id="eventEnd"></p>
       </div>
       <div class="modal-footer">
+<%--       <c:if test="${EmpVo.auth eq 'AU003'}"> --%>
         <button class="btn btn-primary" id="updateBtn" data-bs-target="#updateEventModal" data-bs-toggle="modal" data-bs-dismiss="modal">수정창 이동</button>
      	<button type="button" class="btn btn-danger" id="deleteBtn" onclick="deleteCal()" style="display: inline-block">일정 삭제</button>
+<%--       </c:if> --%>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
@@ -159,8 +169,11 @@
         </form>
       </div>
       <div class="modal-footer">
+
         <button class="btn btn-secondary" data-bs-target="#eventModal" data-bs-toggle="modal" data-bs-dismiss="modal">상세보기로 이동</button>
-        <button type="button" class="btn btn-primary" onclick="updateAjax();">수정</button> 
+      <c:if test="${EmpVo.emp_no eq 'AA001' or EmpVo.emp_no eq emp_no}">
+        <button type="button" class="btn btn-primary" onclick="updateAjax(); alert('일정을 수정하시겠습니까?');">수정</button> 
+<%--       </c:if> --%>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" style="cursor:pointer;">취소</button>
       </div>
     </div>

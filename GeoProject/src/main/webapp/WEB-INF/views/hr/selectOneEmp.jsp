@@ -174,6 +174,13 @@
 				<c:if test="${loginVo.emp_auth eq 'AU002'}">
 					<li class="nav-item" role="presentation">
 						<button class="nav-link" data-bs-toggle="tab"
+							data-bs-target="#profile-vaca" aria-selected="false"
+							tabindex="-1" role="tab">사원 연차 조회</button>
+					</li>
+				</c:if>
+				<c:if test="${loginVo.emp_auth eq 'AU002'}">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" data-bs-toggle="tab"
 							data-bs-target="#profile-entire" aria-selected="false"
 							tabindex="-1" role="tab">퇴사 처리</button>
 					</li>
@@ -475,9 +482,54 @@
 						</div>
 					</div>
 				</div>
+				<div class="tab-pane fade pt-3" id="profile-vaca"
+					role="tabpanel">
+						<div>
+					<h3 class="card-title">사원 연차 정보</h3>
+					</div>
+							<input type="hidden" name="emp_no" value="${vo.emp_no}">
+							<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">올해 남은 연차</div>
+						<div class="col-lg-9 col-md-8" id="right_count">
+							<c:forEach var="item" items="${usedDate}" varStatus="status">
+								<c:if test="${item.va_use_date != null}">
+									<c:out value="${item.va_use_date}" />
+									<c:if test="${!status.last}">
+           								 ,
+        							</c:if>
+								</c:if>
+							</c:forEach>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">반차 사용 날짜</div>
+						<div class="col-lg-9 col-md-8" id="early_count">
+							<c:forEach var="item" items="${usedHalf}" varStatus="status">
+								<c:if test="${item.va_use_date != null}">
+									<c:out value="${item.va_use_date}" />
+									<c:if test="${!status.last}">
+           								 ,
+        							</c:if>
+								</c:if>
+							</c:forEach>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">올해 연차 사용 횟수</div>
+						<div class="col-lg-9 col-md-8" id="late_count">
+							${usedNum.va_use_day}
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-lg-3 col-md-4 label">올해 반차 사용 횟수</div>
+						<div class="col-lg-9 col-md-8" id="empty_count">
+							${usedHalfNum.va_use_half}
+						</div>
+						</div>
+				</div>
 				<div class="tab-pane fade pt-3" id="profile-entire"
 					role="tabpanel">
-					<form action="" method="post">
+					<form action="./retireEmp.do" method="post">
 						<div class="text-center">
 							<input type="hidden" name="emp_no" value="${vo.emp_no}">
 							<button type="submit" class="btn btn-primary">퇴사 처리</button>

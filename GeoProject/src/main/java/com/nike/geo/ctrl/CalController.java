@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CalController {
 
 	private static final Logger log = LoggerFactory.getLogger(CalController.class);
-	
+    
 	@Autowired
 	private ICalService iService;
 	
@@ -60,9 +60,36 @@ public class CalController {
 			obj.put("content", vo.getCal_content());
 			obj.put("start", vo.getCal_start());
 			obj.put("end", vo.getCal_stop());
-			obj.put("open", vo.getCal_type()); //추가부분
+			obj.put("type", vo.getCal_type()); 
 			obj.put("open", vo.getCal_open_yn());
+			String color;
+	        //그룹 id 별로 컬러 설정 변경해주기
+			if(vo.getCal_type() == null) {
+				color="#123C38";
+			}else {
+	        switch (vo.getCal_type()) {
+			case "0" :
+				color = "#CB6F18";
+				break;
+			case "1" :
+				color = "#8EA499";
+				break;
+			case "2" :
+				color = "#FCB31E";
+				break;
+				
+			default:
+				color = "#123C38" ;
+	        	}
+			}
+	        
+	        obj.put("color", color);
+	        
+	        System.out.println(obj);
+	        
 			arr.add(obj);
+			
+
 		}
 		log.info("JSONArray 파싱한 값 : {}", arr);
 		// return 형태
@@ -70,6 +97,7 @@ public class CalController {
 		return arr;
 	
 }
+
 	
 	/**
 	 * 일정 등록

@@ -71,13 +71,13 @@
 				VALUES(CAL_SEQ.NEXTVAL,#{submit_id},
 						 <choose>
 								<when test='apd_half_yn =="A"'>
-								 	'오전반차'
+								 	CONCAT(#{submit_name}, ' 오전반차')
 								</when>
 								<when test='apd_half_yn =="P"'>
-									'오후반차'
+									CONCAT(#{submit_name}, ' 오후반차')
 								</when>
 								<otherwise>
-									'연차'
+									CONCAT(#{submit_name}, ' 연차')
 								</otherwise>
 							</choose>
 				 		, '휴가',
