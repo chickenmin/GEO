@@ -19,7 +19,7 @@
 <!-- Calendar  일정리스트 -->
 <select id="calList" parameterType="java.util.Map" resultType="com.nike.geo.vo.co.CalVo">
 SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, 
-       CAL_START, CAL_STOP, CAL_OPEN_YN
+       CAL_START, CAL_STOP, CAL_TYPE, CAL_OPEN_YN
 		FROM CAL
 		WHERE CAL_DEL_YN = 'N'
 		and cal_type IN
@@ -31,7 +31,7 @@ SELECT CAL_NO, CAL_TITLE, CAL_CONTENT,
 <!-- Calendar  일정리스트 -->
 <select id="getOneCal" resultType="com.nike.geo.vo.co.CalVo">
 SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, 
-       CAL_START, CAL_STOP, CAL_OPEN_YN
+       CAL_START, CAL_STOP, CAL_TYPE, CAL_OPEN_YN
 		FROM CAL
 		WHERE CAL_DEL_YN = 'N'
 			AND CAL_NO = #{cal_no}

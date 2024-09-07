@@ -27,6 +27,7 @@ function selectAjax(){
 		if (i != 0) chk += ",";
 		chk += $('input[type="checkbox"]:checked').eq(i).val();
 	}
+	
 	$.ajax({
 		type: "get",
 		url: "./calendarAjax.do",
@@ -50,7 +51,20 @@ function selectAjax(){
 			        slotMinTime: "09:00:00",
 			        slotMaxTime: "18:00:00",
 			        navLinks: true,
-			        local:'ko',
+			        locale:'ko', //캘린더 한글로 출력
+			     	dayCellContent: function (info) { //캘린더 한글로 출력시 일 을 없애줌 ex) 2일
+					    var number = document.createElement("a");
+					    number.classList.add("fc-daygrid-day-number");
+					    number.innerHTML = info.dayNumberText.replace("일", '').replace("日","");
+					    if (info.view.type === "dayGridMonth") {
+					      return {
+					        html: number.outerHTML
+					      };
+					    }
+					    return {
+					      domNodes: []
+					    };
+					},
 			        select: function(info) {	
 			            $('#addEventModal').modal('show'); // 달력 셀을 클릭할 때 모달 열기
 			            $('#cal_start').val(info.cal_start); 
@@ -79,6 +93,7 @@ function selectAjax(){
 						updateDragAjax(dateFormat(info.event.cal_start), dateFormat(info.event.cal_stop), info.event.extendedProps.cal_no);
 						
 					},
+
 					
 					//상세보기 모달창
 					eventClick:function(info){	
@@ -109,13 +124,14 @@ function selectAjax(){
 //					      // 클릭된 이벤트가 기본 동작(새 페이지로 열리는 것 등)을 하지 않도록 방지
 //					      info.jsEvent.preventDefault();
 					},
-
+					
                         events: data
                         		
 				});				
 				calendar.render();// 달력 초기화시 필수		
-				
-			},
+	
+
+				},
 			error: function() {
 				
 			}
