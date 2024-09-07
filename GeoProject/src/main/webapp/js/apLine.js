@@ -53,7 +53,7 @@
 		  			console.log("파일 업로드 버튼 실행");
 		  			var imgFile = this.value.toLowerCase();
 		  			var fileForm = /(.*?)\.(jpg|jpeg|bmp|png|gif|pdf|doc|docx|hwp|xls|xlsx)$/i;
-		  			var maxSize = 5*1024*1024;
+		  			var maxSize = 100*1024*1024;
 		  			var fileSize = document.getElementById("reviewImgFileInput").files[0].size;
 
 		  			console.log(imgFile, fileForm,maxSize, fileSize);
@@ -71,7 +71,7 @@
 		  				return;
 		  			}
 		  			if(maxSize < fileSize){
-		  				alert("이미지 파일은 5MB만 이하만 가능합니다.");
+		  				alert("이미지 파일은 100MB만 이하만 가능합니다.");
 		  				return;
 		  			}
 
