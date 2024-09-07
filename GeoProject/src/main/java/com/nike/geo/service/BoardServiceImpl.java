@@ -121,6 +121,16 @@ public class BoardServiceImpl implements IBoardService {
 	public int putFile(FileVo vo) {
 		return dao.putFile(vo);
 	}
+	
+	@Override
+	public FileVo findFile(String file_no) {
+		return dao.findFile(file_no);
+	}
+	
+	@Override
+	public List<FileVo> selectFile(String origin_no) {
+		return dao.selectFile(origin_no);
+	}
 }
 
 

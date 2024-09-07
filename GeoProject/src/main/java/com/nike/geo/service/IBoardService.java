@@ -39,5 +39,9 @@ public interface IBoardService {
 	public boolean commentInsert(CommVo vo);
 	
 	public int putFile(FileVo vo);
+	//파일 조회
+	public FileVo findFile(String file_no);
+	//첨부 파일 조회
+	public List<FileVo> selectFile(String origin_no);
 	
 }
