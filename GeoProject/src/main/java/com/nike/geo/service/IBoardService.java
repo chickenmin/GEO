@@ -44,4 +44,6 @@ public interface IBoardService {
 	//첨부 파일 조회
 	public List<FileVo> selectFile(String origin_no);
 	
+	public void delFile(Map<String, Object>delFileMap);
+	
 }

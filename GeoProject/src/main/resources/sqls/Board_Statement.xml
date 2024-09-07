@@ -187,16 +187,16 @@
 	)
 	</insert>
 	
-	<!-- 파일업로드 reg_id 나중에 넣어보자 -->
+	<!-- 파일업로드 -->
 	<insert id="putFile">
-		INSERT INTO GEO."FILE" (FILE_NO, ORIGIN_NO, FILE_ONAME,
-								FILE_SNAME, FILE_SIZE, FILE_TYPE,
-								FILE_RANK, FILE_DEL_YN, REG_ID,
-								REG_DATE, MOD_ID, MOD_DATE)
-			VALUES(FILE_SEQ.NEXTVAL, #{origin_no}, #{file_oname},
-					#{file_sname}, #{file_size}, #{file_type},
-					'0', 'N',#{reg_id},
-					SYSDATE, #{reg_id}, SYSDATE)
+	INSERT INTO GEO."FILE" (FILE_NO, ORIGIN_NO, FILE_ONAME,
+							FILE_SNAME, FILE_SIZE, FILE_TYPE,
+							FILE_RANK, FILE_DEL_YN, REG_ID,
+							REG_DATE, MOD_ID, MOD_DATE)
+		VALUES(FILE_SEQ.NEXTVAL, #{origin_no}, #{file_oname},
+				#{file_sname}, #{file_size}, #{file_type},
+				'0', 'N',#{reg_id},
+				SYSDATE, #{reg_id}, SYSDATE)
 	</insert>
 	
 	<!-- 	첨부파일 조회 -->
@@ -208,6 +208,14 @@
 		 FROM "FILE" f 
 		 WHERE ORIGIN_NO = #{origin_no}
 		 AND FILE_TYPE =2
+		 AND FILE_DEL_YN ='N'
 	</select>
+	
+	<update id="delFile">
+	UPDATE "FILE" SET FILE_DEL_YN ='Y', MOD_ID = #{mod_id}, MOD_DATE = SYSDATE
+	WHERE FILE_TYPE =2
+	AND ORIGIN_NO =#{origin_no}
+	</update>
+	
 	
 </mapper>

@@ -278,6 +278,14 @@ public class BoardController {
 			
 		boolean isc = service.modifyBoard(map);
 		
+		 // 기존 파일 비활성화
+	    if (bo_no != null) {
+	        Map<String, Object> delFileMap = new HashMap<>();
+	        delFileMap.put("origin_no", bo_no);
+	        delFileMap.put("mod_id", Evo.getEmp_no());
+	        service.delFile(delFileMap);
+	    }
+		
 		//파일이 있다면 저장
 				if (file != null) {
 
