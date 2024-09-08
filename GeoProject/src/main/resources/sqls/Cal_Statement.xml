@@ -10,8 +10,8 @@
 				INSERT INTO CAL(CAL_NO, CAL_TITLE, CAL_CONTENT, 
                      CAL_START, CAL_STOP, CAL_TYPE, CAL_OPEN_YN)
 				VALUES(CAL_SEQ.NEXTVAL, #{cal_title}, #{cal_content},
-					  TO_DATE(#{cal_start}, 'YYYY/MM/DD HH24:MI'), 
-					  TO_DATE(#{cal_stop}, 'YYYY/MM/DD HH24:MI')
+					  TO_DATE(#{cal_start}, 'YYYY-MM-DD HH24:MI:SS'), 
+					  TO_DATE(#{cal_stop}, 'YYYY-MM-DD HH24:MI:SS')
 					  ,${cal_type}, 'N')
 </insert>
 
@@ -20,7 +20,7 @@
 <select id="calList" parameterType="java.util.Map" resultType="com.nike.geo.vo.co.CalVo">
 SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, 
        CAL_START, CAL_STOP, CAL_TYPE, CAL_OPEN_YN
-		FROM CAL
+		FROM CAL 
 		WHERE CAL_DEL_YN = 'N'
 		and cal_type IN
 		<foreach item="item" index="index" collection="chkArray" open="(" separator="," close=")" >
@@ -38,12 +38,16 @@ SELECT CAL_NO, CAL_TITLE, CAL_CONTENT,
 </select>
 
 <!-- Calendar 드래그 앤 드롭 -->	
-<!-- <update id="dragUpdateCal" parameterType="java.util.Map">
+<update id="dragUpdateCal" parameterType="java.util.Map">
     UPDATE CAL 
     SET "CAL_START" = TO_DATE(#{cal_start},'YYYY/MM/DD HH24:MI'), 
         "CAL_STOP" = TO_DATE(#{cal_stop},'YYYY/MM/DD HH24:MI')
     WHERE CAL_NO = #{cal_no}
-</update> -->
+    
+    C INNER JOIN EMP A 
+         ON C.EMP_NO  = A.EMP_NO
+		WHERE CAL_DEL_YN = 'N'
+</update> 
 
 
 <!-- 게시글 삭제 -->
@@ -55,8 +59,8 @@ UPDATE CAL SET CAL_DEL_YN = 'Y'
 <update id="updateCal" parameterType="CalVo">
 UPDATE CAL SET CAL_TITLE= #{cal_title}, 
         CAL_CONTENT = #{cal_content},
-        "CAL_START" = TO_DATE(#{cal_start},'YYYY-MM-DD HH24:MI:SS'), 
-        "CAL_STOP" = TO_DATE(#{cal_stop},'YYYY-MM-DD HH24:MI:SS'), 
+        "CAL_START" = TO_DATE(#{cal_start},'YYYY/MM/DD HH24:MI'), 
+        "CAL_STOP" = TO_DATE(#{cal_stop},'YYYY/MM/DD HH24:MI'),
         CAL_TYPE= #{cal_type} , CAL_OPEN_YN= #{cal_open_yn}
 WHERE CAL_NO = #{cal_no}
 </update>
