@@ -95,26 +95,6 @@
 			<button type="button" class="btn btn-danger" id="deleteBtn" style="display: inline-block">쪽지 삭제</button>
 <!-- 			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#disablebackdrop">쪽지 삭제</button> -->
 		</div>
-		
-<!-- 		<div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false"> -->
-<!-- 		  <div class="modal-dialog"> -->
-<!-- 		    <div class="modal-content"> -->
-<!-- 		      <div class="modal-header"> -->
-<!-- 		        <h5 class="modal-title">경고</h5> -->
-<!-- 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-<!-- 		      </div> -->
-		
-<!-- 		      <div class="modal-body"> -->
-<!-- 		        	선택한 게시글이 삭제됩니다. 계속하시겠습니까? -->
-<!-- 		      </div> -->
-		
-<!-- 		      <div class="modal-footer"> -->
-<!-- 		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button> -->
-<!-- 		        <button type="button" id="deleteBtn" onclick="deleteMsg()" class="btn btn-primary">삭제</button> -->
-<!-- 		      </div> -->
-<!-- 		    </div> -->
-<!-- 		  </div> -->
-<!-- 		</div>End Disabled Backdrop Modal -->
 
   	</main><!-- End #main -->
 

@@ -20,8 +20,6 @@ function cntUnreadNoti(){
 
 //setInterval(cntUnreadMsg, 5000); // 5초에 한번씩 실행
 //setInterval(cntUnreadNoti, 5000); // 5초에 한번씩 실행
-//setInterval(cntUnreadMsg, 10000); // 10초에 한번씩 실행(배포용)
-//setInterval(cntUnreadNoti, 10000); // 10초에 한번씩 실행(배포용)
 
 window.onload = function(){
 	cntUnreadMsg();
@@ -32,6 +30,7 @@ $(document).ready(function() {
 	$('#msgIcon').on('click', function(){
 		$.ajax({
 			url: "./selectLatestMsg.do",
+			contentType: 'application/json; charset=UTF-8',
 			method: "GET",
 			success: function(data){
 				var msgUl = $("#msgUl");
@@ -104,13 +103,14 @@ $(document).ready(function() {
 	$('#notiIcon').on('click', function(){
 		$.ajax({
 			url: "./selectLatestNoti.do",
+			contentType: 'application/json; charset=UTF-8',
 			method: "GET",
 			success: function(data){
 				var notiUl = $("#notiUl");
 				notiUl.empty();
 				
 				if(data.length === 0) {
-					notiUl.append('<li>읽지 않은 쪽지가 없습니다.</li>');
+					notiUl.append('<li>읽지 않은 알림이 없습니다.</li>');
 				} else {
 					$.each(data, function(index, noti) {
 						var timeDiff = 0;
@@ -140,21 +140,36 @@ $(document).ready(function() {
 						
 						console.log(noti.noti_date);
 						
-						notiUl.append(`<li class="notification-item">
-									      <i class="bi ${noti.noti_status == 1 ? 'bi-exclamation-circle text-warning' : 
-										             noti.noti_status == 2 ? 'bi-check-circle text-success' : 
-										             noti.noti_status == 3 ? 'bi-x-circle text-danger' : ''} "></i>
-										    
-										      <div>
-										        <h4>
-										        	${noti.noti_status == 1 ? '사내 공지사항' : 
-										             noti.noti_status == 2 ? '결재 승인 안내' : 
-										             noti.noti_status == 3 ? '결재 반려 안내' : ''}
-										        </h4>
-										        <p>${noti.noti_content}</p>
-										        <p>${timeDiff}</p>
-										      </div>
-										      
+						var href = '';
+						var iconClass = '';
+						var title = '';
+						var origin_no = `${noti.origin_no}`.substring(1);
+						console.log(origin_no);
+						
+						if (noti.noti_status == 1) {
+						  href = `/GeoProject/detailBoard.do?bo_no=${origin_no}`;
+						  iconClass = 'bi-exclamation-circle text-warning';
+						  title = '사내 공지사항';
+						} else if (noti.noti_status == 2) {
+						  href = `/GeoProject/detailAppr.do?variety=submit&apd_no=${origin_no}`; 
+						  iconClass = 'bi-check-circle text-success';
+						  title = '결재 승인 안내';
+						} else if (noti.noti_status == 3) {
+						  href = `/GeoProject/detailAppr.do?variety=submit&apd_no=${origin_no}`; 
+						  iconClass = 'bi-x-circle text-danger';
+						  title = '결재 반려 안내';
+						}
+						
+						notiUl.append(`
+									  <li class="notification-item">
+									    <a class="dropdown-item" href="${href}">
+									      <i class="bi ${iconClass}"></i>
+									      <div>
+									        <h4>${title}</h4>
+									        <p>${noti.noti_content}</p>
+									        <p>${timeDiff}</p>
+									      </div>
+									    </a>
 									  </li>
 									`);
 						if (index < data.length - 1) {

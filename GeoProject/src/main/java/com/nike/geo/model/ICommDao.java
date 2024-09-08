@@ -41,15 +41,25 @@ public interface ICommDao {
 	// 알림 추가 insertNoti
 	public int insertNoti(Map<String, Object> map);
 	
+	// 결재알림 생성 insertNotiAppr
+	public int insertNotiAppr(Map<String, Object> map);
+	
 	// 재직사원 조회 selectEmpSt
 	public List<String> selectEmpSt();
 	
 	// 안읽은 알림 최신순 3개 조회 selectLatestNoti
 	public List<NotiVo> selectLatestNoti(String empNo);
 	
-	// 알림 시퀀스값 조회 selectNotiSeq
-	public int selectNotiSeq();
-	
 	// 안읽은 알림 갯수 확인 cntUnreadNoti
 	public int cntUnreadNoti(String no);
+	
+	// 알림 읽기 updateNotiRead
+	public int updateNotiRead(NotiVo vo);
+	
+	// 알림 읽음여부 확인 selectNotiRead
+	public String selectNotiRead(NotiVo vo);
+	
+	// 관리자 공지알림 읽기 updateAdminNoti
+	public int updateAdminNoti();
+	
 }

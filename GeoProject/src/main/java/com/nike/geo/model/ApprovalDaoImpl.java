@@ -245,6 +245,10 @@ public class ApprovalDaoImpl implements IApprovalDao{
 		return template.update(NS+"delSign", map);
 	}
 	
+	@Override
+	public Ap_DocuVo selectNotiAppr(String docu_no) {
+		return template.selectOne(NS+"selectNotiAppr", docu_no);
+	}
 	
 	
 	

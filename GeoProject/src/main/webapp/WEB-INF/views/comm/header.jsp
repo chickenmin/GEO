@@ -74,6 +74,7 @@
   <nav class="header-nav ms-auto">
     <ul class="d-flex align-items-center">
 
+	  <!-- 알림 -->
       <li class="nav-item dropdown">
         <a class="nav-link nav-icon" href="#" id="notiIcon" data-bs-toggle="dropdown">
           <i class="bi bi-bell"></i>
@@ -84,7 +85,7 @@
           
         </a><!-- End Notification Icon -->
 
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" id="notiUl" style="width: 400px;">
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" id="notiUl" style="width: 400px; height:400px; overflow-y: auto;">
    
         </ul><!-- End Notification Dropdown Items -->
 
@@ -92,7 +93,7 @@
 
 
 
-	  <!-- 쪽지 알림 -->
+	  <!-- 쪽지 -->
       <li class="nav-item dropdown">
 
         <a class="nav-link nav-icon" href="#" id="msgIcon" data-bs-toggle="dropdown">
@@ -105,36 +106,7 @@
         </a><!-- End Messages Icon -->
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" id="msgUl" style="width: 400px;">
-          <li class="dropdown-header" id="cntDropdown">
-            <a href="#">
-	            <span class="badge rounded-pill bg-primary p-2 ms-2">
-		          	<!-- 'n개의 읽지않은 쪽지가 있습니다.' 텍스트 들어가는 곳 -->
-	            </span>
-            </a>
-          </li>
-          
-          <li>
-            <hr class="dropdown-divider">
-          </li>
 
-          <li class="message-item">
-            <a href="#">
-              <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
-              <div>
-                <h4>강정민 대표</h4>
-                <p>회의실로 오세요</p>
-                <p>30분 전</p>
-              </div>
-            </a>
-          </li>
-          
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          
-          <li class="dropdown-footer">
-            <a href="./recvMsg.do">모든 쪽지 보기</a>
-          </li>
         </ul><!-- End Messages Dropdown Items -->
       </li><!-- End Messages Nav -->
       

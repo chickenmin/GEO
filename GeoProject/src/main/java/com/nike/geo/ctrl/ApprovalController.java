@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,6 +45,7 @@ import com.nike.geo.vo.appr.Ap_RfVo;
 import com.nike.geo.vo.appr.BaseVo;
 import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.hr.EmpVo;
+import com.nike.geo.vo.msg.NotiVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -142,6 +144,27 @@ public class ApprovalController {
 		
 		log.info("결재자 목록 :{}",apprLists.toString());
 		
+		// 알림 읽음 여부 변경
+		NotiVo noti = new NotiVo();
+		noti.setEmp_no(emp_no);
+		if("C".equals(vo.getApd_status())) { // 최종승인된 문서일 경우
+			noti.setOrigin_no("C"+apd_no); 
+		} else if ("R".equals(vo.getApd_status())) { // 반려된 문서일 경우
+			noti.setOrigin_no("R"+apd_no); 
+		} else { // 대기/진행중인 문서일 경우
+			noti.setOrigin_no("WP");
+		}
+		String notiReadYn = commService.selectNotiRead(noti);
+		if("N".equals(notiReadYn)) {
+			log.info("알림을 받고 처음 문서를 읽을 경우에만");
+			int readChk = commService.updateNotiRead(noti);
+			if(readChk == 1) {
+				log.info("알림 읽음 여부 변경 성공");
+			}else {
+				log.info("알림 읽음 여부 변경 실패");
+			}
+		}
+		
 		// 결재함이 아닐 경우, 결재라인 정보 없어서 nullPointException 발생
 		if (variety.equals("appr")) {
 			int order = apprService.checkOrder(map);
@@ -192,15 +215,16 @@ public class ApprovalController {
 		map.put("apl_msg", apl_msg);
 		
 		int returnSubmit = apprService.returnSubmit(map);
+		Ap_DocuVo doc = apprService.selectNotiAppr(Integer.toString(apd_no));
 		if (returnSubmit ==1) {
 			log.info("반려처리 완료");
 			Map<String, Object> notiMap = new HashMap<String, Object>();
-			notiMap.put("emp_list", null);
-			notiMap.put("noti_status", "3");
-			notiMap.put("noti_content", "게시글이 반려되었습니다.");
-			notiMap.put("parent_no", "3");
+			notiMap.put("noti_no", apd_no);
+			notiMap.put("emp_no", doc.getReg_id());
 			notiMap.put("origin_no", "R"+apd_no);
-			commService.insertNoti(null);
+			notiMap.put("noti_status", "3");
+			notiMap.put("noti_content", "상신한 문서 '" + doc.getApd_con() +"' 가 반려되었습니다.");
+			commService.insertNotiAppr(notiMap);
 			return "redirect:/apprList.do?variety=submit";
 		}else {
 			log.info("반려처리 실패");
@@ -492,9 +516,17 @@ public class ApprovalController {
 					double minus = (map.get("apd_half_yn").toString().equals("N")? 1 : 0.5);	//
 					map.put("minus", minus*date.length);	//반차,연차 * 일수
 					apprService.updateVaCheck(map);
-					
 				}	//연차
 				
+				Map<String, Object> notiMap = new HashMap<String, Object>();
+				notiMap.put("noti_no", map.get("apd_no"));
+				notiMap.put("emp_no", map.get("submit_id"));
+				notiMap.put("origin_no", "C"+map.get("apd_no"));
+				notiMap.put("noti_status", "2");
+				// 문서 내용 가져오기
+				Ap_DocuVo doc = apprService.selectDeatil((String)map.get("apd_no"));
+				notiMap.put("noti_content", "상신한 문서 '" + doc.getApd_con() +"' 가 승인되었습니다.");
+				commService.insertNotiAppr(notiMap);
 			} //최종승인
 			
 			apprService.approve(map); //승인

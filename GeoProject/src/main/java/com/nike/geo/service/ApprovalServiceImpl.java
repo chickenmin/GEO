@@ -303,6 +303,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.selectSignature(emp_no);
 	}
 	
+	@Override
+	public Ap_DocuVo selectNotiAppr(String docu_no) {
+		return dao.selectNotiAppr(docu_no);
+	}
+	
 
 	//@Transactional은 annotation 사용
 	

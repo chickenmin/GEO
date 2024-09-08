@@ -26,37 +26,6 @@
     	text-decoration: none;
     }
 </style>
-<script>
-
-	document.addEventListener('DOMContentLoaded', function() {
-	    var calendarEl = document.getElementById('calendar');
-	    var calendar = new FullCalendar.Calendar(calendarEl, {
-			eventSources: [
-				{
-					events: [
-						{
-							// 종일 일정
-							title : '최이사 병가',
-							start : '2024-09-02'
-						},
-						{
-							// 시간 일정
-							title : '최부장 연차',
-							start : '2024-09-06T12:30:00',
-							allDay : false
-						}
-					],
-					color: 'black',
-					textColor: 'white'
-				}
-			],
-			initialView: 'dayGridWeek',
-			height: 300
-	    });
-	    calendar.render();
-	});
-
-</script>
 <body>
 	<script>
         $(document).ready(function() {
@@ -132,9 +101,8 @@
 	            	<img src="storage/${mainVo.emp_img}" style="width: 150px; height: 150px;
 	            		border-radius: 50%; position: absolute; top: 50%; left: 50%;
 	            		transform: translate(-50%, -50%); background-color: white;"
-        onerror="this.style.display='none'; this.parentElement.style.backgroundColor = 'white';">
+        				onerror="this.style.display='none'; this.parentElement.style.backgroundColor = 'white';">
 	            </div>
-<!-- 		        <img src="assets/img/card.jpg" class="card-img-top" alt="..."> -->
 	            <div class="card-body" style="text-align: center;">
 					<h5 class="card-title" style="display: inline-block">${mainVo.emp_name}</h5>
 					<p class="card-text">${mainVo.emp_dept}팀 ${mainVo.emp_pos}</p>
@@ -142,6 +110,7 @@
 	              <button id="arriveWorkBtn" class="btn btn-primary">출근</button>
 				  <button id="leftWorkBtn" class="btn btn-danger">퇴근</button>
 	            </div>
+	            <div class="row mb-2"></div>
 	          </div>
 	          <!-- End Card with an image on top -->
 
@@ -184,12 +153,12 @@
 			
 			  <div class="card">
 	            <div class="card-body" style="text-align: center;">
-	              <h5 class="card-title" style="display: inline-block">
+	              <h5 class="card-title" style="display: inline-block; margin-bottom: 0;" >
 	              	9월 근태 현황
 	              </h5>
 	              
 	              <!-- Pie Chart -->
-	              <canvas id="pieChart" style="max-height: 400px;"></canvas>
+	              <canvas id="pieChart" style="max-height: 400px; margin-top: 0;"></canvas>
 	              <script>
 	                document.addEventListener("DOMContentLoaded", () => {
 	                  new Chart(document.querySelector('#pieChart'), {
@@ -215,7 +184,18 @@
 	                        ],
 	                        hoverOffset: 4
 	                      }]
-	                    }
+	                    },
+	                    options: {
+	                        plugins: {
+	                          legend: {
+	                            display: true,
+	                            position: 'top', // 범례 위치 설정 (예: 'top', 'bottom', 'left', 'right')
+	                            labels: {
+	                              padding: 20   // 각 범례 항목 사이의 여백
+	                            },
+	                          }
+	                        }
+	                      }
 	                  });
 	                });
 	              </script>
@@ -260,7 +240,7 @@
 		                      	${vo.bo_title}
 		                      </a></td>
 		                      
-		                      <td class="text-center">${vo.emp_no}</td> 
+		                      <td class="text-center">${vo.emp_name}</td> 
 		                      <td class="text-center">${vo.bo_view_count}</td> 
 		                      <td class="text-center">${vo.bo_regdate}</td>
 		                    </tr>
@@ -341,9 +321,40 @@
 	                  <h5 class="card-title">이번 주 일정</h5>
 	
 					  <!-- 달력 그려지는 부분 -->
-	                  <div id='calendar-container' style="height: 300px;">
-						  <div id='calendar'></div>
+	                  <div id="calendar-container" style="height: 250px;">
+						  <div id="indexCalendar" style="height: 100%;"></div>
 					  </div>
+					  
+					  <script>
+					        var calendarData = [
+					        	<c:forEach var="cal" items="${calList}" varStatus="status">
+						            {
+						                title: "${cal.cal_title}",
+						                start: "${cal.cal_start}",
+						                end: "${cal.cal_stop}",
+						                content: "${cal.cal_content}",
+						                color: "#FCB31E"
+						            }<c:if test="${!status.last}">,</c:if>
+					       		</c:forEach>
+					        ];
+	
+					        document.addEventListener('DOMContentLoaded', function() {
+					            var calendarEl = document.getElementById('indexCalendar');
+					            var calendar = new FullCalendar.Calendar(calendarEl, {
+					                initialView: 'dayGridWeek', // 기본 주간 보기
+					                selectable: true, // 셀 선택 활성화
+					                displayEventTime: false, // 시간 제거
+					                editable: false, // 일정 수정 비활성화
+					                slotMinTime: "09:00:00", // 시작 시간 설정
+					                slotMaxTime: "18:00:00", // 끝 시간 설정
+					                locale: 'ko', // 한국어 설정
+					                height: 250,
+					                events: calendarData // 일정 데이터를 캘린더에 표시
+					            });
+					            calendar.render(); // 캘린더 초기화
+					        });
+						
+						</script>
 	                </div>
 	                <!-- End card-body -->
 	
