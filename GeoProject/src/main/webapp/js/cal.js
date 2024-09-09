@@ -112,17 +112,6 @@ function selectAjax(){
 					      info.jsEvent.preventDefault();
 					      
 					      
-//  					eventClick:function(info){						
-//						  document.getElementById('eventTitle').textContent = "Title: " + info.event.title;
-//					      document.getElementById('eventStart').textContent = "Start: " + formatDateToKST(info.event.start);
-//					      document.getElementById('eventEnd').textContent = info.event.end ? "End: " + formatDateToKST(info.event.end) : "End: N/A";
-//					      
-//					      // Bootstrap 모달 표시
-//					      var eventModal = new bootstrap.Modal(document.getElementById('eventModal'), {});
-//					      eventModal.show();
-//					      
-//					      // 클릭된 이벤트가 기본 동작(새 페이지로 열리는 것 등)을 하지 않도록 방지
-//					      info.jsEvent.preventDefault();
 					},
 					
                         events: data
@@ -211,43 +200,6 @@ function insertAjax() {
 	})
 }
 
-// 드래그를 통한 시간 업데이트 ajax
-// 파라미터 값 : 시작일(start), 종료일(end), 아이디(id)
-// 돌아오는 반환값(data)값 : boolean
-// true : 성공 / false : 실패
-// 드래그를 통한 시간 업데이트 ajax
-//function updateDragAjax(cal_start, cal_stop, cal_no) {
-//    console.log("시작일:", cal_start);
-//    console.log("종료일:", cal_stop);
-////    console.log("번호:", cal_no);
-////    var cal_no = $(cal_no).val();
-//    var cal_no = 34;
-//    var cal_stop = '202408160301';
-//    var cal_start = '202408160101';
-//    console.log("번호2:", cal_no);
-//    console.log("시작일2:", cal_start);
-//    console.log("종료일2:", cal_stop);
-//    $.ajax({
-//    url: '/GeoProject/updateDragAjax.do',
-//    type: 'POST',
-//    data: {
-//        cal_no: cal_no,  
-//        cal_start: cal_start,
-//        cal_stop: cal_stop
-//    },
-//    success: function(response) {
-//        if(response === 'true') {
-//            alert('Event updated successfully');
-//        } else {
-//            alert('Failed to update event');
-//        }
-//    },
-//    error: function() {
-//        alert('Error occurred');
-//    }
-//});
-//
-//}
 
 // 캘린더 삭제
 function deleteCal(no){
@@ -275,31 +227,6 @@ function updateCal(eventNo){
             $('#update_cal_open_yn').val(data.cal_open_yn);
             $('#updateEventModal').modal('show');
             
-            
-//            // 내용칸이 비었을 경우
-//			if ($("#update_cal_content").val() == "") {
-//				alert("내용을 입력해주세요")
-//				$("#content").focus();
-//				return false;
-//			}
-//			
-//			// 시작일, 종료일이 비엇을경우
-//			if ($("#update_datetimepicker1").val() == "" || $("#datetimepicker2").val() == "") {
-//				alert("시간을 입력해 주세요")
-//				return false;
-//			}
-//		
-//			// 시작일이 종료일보다 클 시 아작스 강제 종료
-//			 dateVal() //시작일 값과 종료일 값을 밀리세컨드로 바꿔 크기를 비교해주는 function
-//			if (dateVal('update_datetimepicker1', 'update_datetimepicker2') == false) {
-//				return false;
-//			}         
-//            // 일정명 칸이 비었을 경우
-//			if ($("#update_cal_title").val() == "") {
-//				alert("일정명을 입력해주세요")
-//				$("#update_cal_title").focus();
-//				return false;
-//			}
 			
         },
         error: function(xhr, status, error) {
@@ -318,22 +245,17 @@ function updateAjax() {
 
 
     $.ajax({
-
         url: '/GeoProject/updateCal.do',
         type: 'POST',
         data: {
             cal_no: $('#update_cal_no').val(),
             cal_title: $('#update_cal_title').val(),
             cal_content: $('#update_cal_content').val(),
-           
            	cal_start : $('#update_datetimepicker1').val(),
 			cal_stop : $('#update_datetimepicker2').val(),
             cal_type: $('#update_cal_type').val(),
             cal_open_yn: $('#update_cal_open_yn').val(),
-
-            
-
-            
+       
         },
         success: function(response) {
             alert('일정이 수정되었습니다');
@@ -385,56 +307,7 @@ function zeroPlus(time) {
 	return time < 10 ? "0" + time : time;
 }
 
-//function openEventModal(){
-//	var cal_title = $("#cal_title").val(cal_title);
-//	var cal_content = $("#cal_content").val(cal_content);
-//	var cal_start = $("#datetimepicker1").val(datetimepicker1);
-//	var cal_stop = $("#datetimepicker2").val(datetimepicker2);
-//	var cal_type = $("#cal_type").val(cal_type);
-//	
-//
-//
-//
-//}
 
-
-
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     const allCheckBox = document.getElementById('allCheckBox');
-        //     const departmentCheckBox = document.getElementById('departmentCheckBox');
-        //     const employeeCheckBox = document.getElementById('employeeCheckBox');
-        //     const calendarDisplay = document.getElementById('calendarDisplay');
-		//
-        //     function updateCalendar() {
-        //         let type = -1;
-        //         if (allCheckBox.checked) {
-        //             type = 0;
-        //         } else if (departmentCheckBox.checked) {
-        //             type = 1;
-        //         } else if (employeeCheckBox.checked) {
-        //             type = 2;
-        //         }
-		//
-        //         if (type !== -1) {
-        //             const xhr = new XMLHttpRequest();
-        //             xhr.open('GET', `/calendar?type=${type}`, true);
-        //             xhr.onload = function () {
-        //                 if (xhr.status === 200) {
-        //                     calendarDisplay.innerText = xhr.responseText;
-        //                 } else {
-        //                     calendarDisplay.innerText = '데이터를 가져오는 데 실패했습니다.';
-        //                 }
-        //             };
-        //             xhr.send();
-        //         } else {
-        //             calendarDisplay.innerText = '';
-        //         }
-        //     }
-		//
-        //     allCheckBox.addEventListener('change', updateCalendar);
-        //     departmentCheckBox.addEventListener('change', updateCalendar);
-        //     employeeCheckBox.addEventListener('change', updateCalendar);
-        // });
 
 
 

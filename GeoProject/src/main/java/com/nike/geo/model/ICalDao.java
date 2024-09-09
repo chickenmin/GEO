@@ -19,7 +19,7 @@ public interface ICalDao {
 	//일정 삭제
 	public int delflagCal(String seqs);
 	
-	// 일정 변경
+	// 일정 업데이트
 	public int updateCal(CalVo vo);
 	
 	public CalVo getOneCal(int no);
