@@ -264,9 +264,8 @@ WHERE EMP_NO = #{emp_no}
 <update id="modPw">
 UPDATE GEO.EMP
 SET emp_pw = #{emp_pw}
+	AND EMP_STATUS = 'ST001'
 WHERE EMP_NO = #{emp_no}
-AND EMP_STATUS = 'ST001'
-
 </update>
 
 </mapper>

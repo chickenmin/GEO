@@ -18,8 +18,8 @@ function cntUnreadNoti(){
 	.catch(error => console.error("Error fetching data:", error));
 }
 
-//setInterval(cntUnreadMsg, 5000); // 5초에 한번씩 실행
-//setInterval(cntUnreadNoti, 5000); // 5초에 한번씩 실행
+setInterval(cntUnreadMsg, 5000); // 5초에 한번씩 실행
+setInterval(cntUnreadNoti, 5000); // 5초에 한번씩 실행
 
 window.onload = function(){
 	cntUnreadMsg();
