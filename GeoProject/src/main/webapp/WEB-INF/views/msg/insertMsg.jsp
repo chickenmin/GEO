@@ -74,10 +74,10 @@
 
 	                <div class="row mb-4">
 	                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
-	                  <div class="col-sm-2">
+	                  <div class="col-sm-3">
 	                    <input type="text" id="recv_jsTree" class="form-control">
 	                  </div>
-	                  <div class="col-sm-8">
+	                  <div class="col-sm-7">
 	                    <button type="button" id="recvJsTree" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
 	                  		선택
 	                  	</button>

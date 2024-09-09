@@ -139,7 +139,7 @@
 				}else if (data.status === "fail"){
 					location.href="./login.do";
 				}else if (data.status === "select-fail"){
-					location.href="./tempPw.do";
+				
 				}
 		});
 	}
