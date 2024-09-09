@@ -58,11 +58,11 @@
 		 <input class="form-control" type="file" name="file" id="reviewImageFileInput" multiple /><!-- ★★★★★★★★★★★파일첨부★★★★★★★★★★★★ -->
 		<c:choose>
 		<c:when test="${mode=='insert'}">
-		<button class="btn btn-primary" type="submit" onclick="submitForm()">게시</button>
+		<button class="btn btn-primary" type="submit" onclick="submitForm(event)">게시</button>
 		</c:when>
 		<c:when test="${mode=='modify'}">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}" />
-		<button class="btn btn-warning" type="submit">수정</button>
+		<button class="btn btn-warning" type="submit" onclick="submitForm(event)">수정</button>
 		</c:when>
 		</c:choose>
 		<button class="btn btn-danger" type="button" onclick="confirmAndGoBack()">취소</button>
@@ -114,6 +114,13 @@ function confirmAndGoBack() {
     if (userConfirmed) {
         window.history.back();
     }
+}
+
+function submitForm(event){
+	 var Confirmed = confirm("완료하시겠습니까?");
+   if (!Confirmed) {
+       event.preventDefault();
+   }
 }
 </script>
 
