@@ -1,4 +1,4 @@
-SELECT CAL_NO, C.EMP_NO, CAL_TITLE,CAL_CONTENT, CAL_DEL_YN 
+SELECT CAL_NO, CAL_TITLE,CAL_CONTENT, CAL_DEL_YN 
    FROM CAL;
 
  -- 삭제된 일정 복구
@@ -58,7 +58,14 @@ UPDATE CAL SET CAL_TITLE= '2222222',
         "CAL_START" = TO_DATE('2024/09/10 09:00','YYYY/MM/DD HH24:MI'), 
         "CAL_STOP" = TO_DATE('2024/09/10 18:00','YYYY/MM/DD HH24:MI'), 
         CAL_TYPE= 2 , CAL_OPEN_YN= 'Y'
-WHERE CAL_NO = 12
+WHERE CAL_NO = 12;
+
+UPDATE CAL SET CAL_TITLE= #{cal_title}, 
+        CAL_CONTENT = #{cal_content},
+        "CAL_START" = TO_DATE(#{cal_start},'YYYY/MM/DD HH24:MI'), 
+        "CAL_STOP" = TO_DATE(#{cal_stop},'YYYY/MM/DD HH24:MI'),
+        CAL_TYPE= #{cal_type} , CAL_OPEN_YN= #{cal_open_yn}
+WHERE CAL_NO = #{cal_no}
 
 
 -- JOIN 

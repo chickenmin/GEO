@@ -321,7 +321,7 @@
 	                  <h5 class="card-title">이번 주 일정</h5>
 	
 					  <!-- 달력 그려지는 부분 -->
-	                  <div id="calendar-container" style="height: 250px;">
+	                  <div id="calendar-container" style="height: 300px;">
 						  <div id="indexCalendar" style="height: 100%;"></div>
 					  </div>
 					  
@@ -348,7 +348,7 @@
 					                slotMinTime: "09:00:00", // 시작 시간 설정
 					                slotMaxTime: "18:00:00", // 끝 시간 설정
 					                locale: 'ko', // 한국어 설정
-					                height: 250,
+					                height: 300,
 					                events: calendarData // 일정 데이터를 캘린더에 표시
 					            });
 					            calendar.render(); // 캘린더 초기화

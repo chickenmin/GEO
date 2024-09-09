@@ -48,8 +48,8 @@ function selectAjax(){
 			        selectable: true, // 달력 셀 선택 활성화
 			        displayEventTime: false, // 시간 표시 제거
 			        editable: true,
-			        slotMinTime: "09:00:00",
-			        slotMaxTime: "18:00:00",
+			        slotMinTime: "09:00",
+			        slotMaxTime: "18:00",
 			        navLinks: true,
 			        locale:'ko', //캘린더 한글로 출력
 			     	dayCellContent: function (info) { //캘린더 한글로 출력시 일 을 없애줌 ex) 2일
@@ -268,8 +268,6 @@ function updateAjax() {
 }
 
 
-
-
 function dateVal(dtp, dtp2) {
 	let date1 = $("#" + dtp + "")  // start 의 date 값 ex) Wed May 11 2022 11:10:17 GMT+0900 (한국 표준시)
 	let i = date1.datetimepicker('getValue');	
@@ -295,6 +293,9 @@ function dateFormat(date) {  // date( Thu May 12 2022 09:30:00 GMT+0900 (한국 
 	let day = zeroPlus(date.getDate());
 	let hour = zeroPlus(date.getHours());
 	let min = zeroPlus(date.getMinutes());
+	
+
+	
 	let startVal = year + "" + month + "" + day + "" + hour + "" + min
 	return startVal;
 } 
@@ -303,9 +304,9 @@ function dateFormat(date) {  // date( Thu May 12 2022 09:30:00 GMT+0900 (한국 
 // 월, 일, 시간, 분 을 바꿀때 사용
 // ex) 1월 => 2월
 function zeroPlus(time) {
-//	console.log("###################", time)
 	return time < 10 ? "0" + time : time;
 }
+
 
 
 
