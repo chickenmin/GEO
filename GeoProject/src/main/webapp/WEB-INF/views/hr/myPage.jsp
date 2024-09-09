@@ -585,22 +585,24 @@
 
 
 						// 가상의 현재 비밀번호를 사용하여 검증
-						const actualCurrentPassword = "서버에서 가져온 실제 현재 비밀번호"; // 실제 비밀번호를 서버에서 가져와야 함
+// 						const actualCurrentPassword = "서버에서 가져온 실제 현재 비밀번호"; // 실제 비밀번호를 서버에서 가져와야 함
 
-						if (currentPassword !== actualCurrentPassword) {
-							alert('현재 비밀번호가 올바르지 않습니다.');
-							return false; // 폼 제출 방지
-						}
+// 						if (currentPassword !== actualCurrentPassword) {
+// 							alert('현재 비밀번호가 올바르지 않습니다.');
+// 							return false; // 폼 제출 방지
+// 						}
 
-						// 새 비밀번호와 비밀번호 확인이 일치하는지 검증
-				        if (newPassword !== renewPassword) {
-				            alert('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
-// 				            return false; // 폼 제출 방지
-				        }
+// 						// 새 비밀번호와 비밀번호 확인이 일치하는지 검증
+// 				        if (newPassword !== renewPassword) {
+// 				            alert('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
+// // 				            return false; // 폼 제출 방지
+// 				        }
 
 						// 추가적인 비밀번호 검증 로직이 필요한 경우 여기에 추가 가능
 						// 예: 비밀번호 길이 체크, 특수문자 포함 여부 등
-
+	
+						alert("비밀번호가 변경되었습니다.");
+						
 						return true; // 폼 제출 허용
 					}
 				</script>

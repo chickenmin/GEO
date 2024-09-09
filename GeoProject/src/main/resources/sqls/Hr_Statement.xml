@@ -263,8 +263,7 @@ WHERE EMP_NO = #{emp_no}
 <!-- 비밀번호 변경 -->
 <update id="modPw">
 UPDATE GEO.EMP
-SET emp_pw = #{emp_pw}
-	AND EMP_STATUS = 'ST001'
+SET emp_pw = #{emp_pw}, EMP_STATUS = 'ST001'
 WHERE EMP_NO = #{emp_no}
 </update>
 
