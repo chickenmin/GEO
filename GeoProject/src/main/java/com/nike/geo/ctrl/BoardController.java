@@ -77,18 +77,13 @@ public class BoardController {
 		return "board/delBoard";
 	}
 
-	
-	
-	//파일업로드중
-	//글작성 bo_status 로 값을 보내줘야 쿼리가 동작 가능
+	//글작성
 	@GetMapping(value = "/writeBoard.do")
 	public String writePostForm(Model model) {
 		model.addAttribute("mode", "insert");
 		
 		return "board/insertBoard";
 	}
-  
-  
 	
 	@PostMapping(value = "/writeBoard.do")
 	public String writeBoard(BoardVo Vo,
@@ -101,7 +96,6 @@ public class BoardController {
  							HttpServletRequest request,Model model,
  							 @RequestParam(value = "bo_no", required = false) Integer bo_no)
  							throws IOException {
-		
 
 		EmpVo Evo = (EmpVo)session.getAttribute("loginVo");
 		String writeId = Evo.getEmp_no();
@@ -201,10 +195,8 @@ public class BoardController {
 	    return "redirect:/writeBoard.do";
 	    
 	}
-
 	
-	
-	//다운로드
+	//파일다운로드
 		@PostMapping(value = "/boardFile.do")
 		public void fileDownload(String file_no,
 								HttpServletResponse response
@@ -216,7 +208,6 @@ public class BoardController {
 			String fileStoredName = file.getFile_sname();
 			log.info("o:{}",fileOriginName);
 			log.info("s:{}",fileStoredName);
-			
 			
 			// C 로컬 폴더
 			String dir ;
@@ -240,11 +231,6 @@ public class BoardController {
 			fis.close();
 			os.close();
 		}
-	
-	
-	
-	
-	
 	
 	//글상세
 	@GetMapping(value = "/detailBoard.do")
@@ -383,11 +369,6 @@ public class BoardController {
 					}	// file 의 foreach 끝
 				}
 		
-		
-		
-		
-		
-		
 		 if (isc) {
 		        return "redirect:/detailBoard.do?bo_no=" + bo_no;
 		    } else {
@@ -446,9 +427,4 @@ public class BoardController {
 		service.commentInsert(vo);
 		return "redirect:/detailBoard.do?bo_no=" + bo_no;
 	}
-	
-	
-	
-	
-	
 }
