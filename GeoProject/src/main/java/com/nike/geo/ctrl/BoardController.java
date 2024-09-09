@@ -36,6 +36,7 @@ import com.nike.geo.vo.bo.CommVo;
 import com.nike.geo.vo.bo.LikeVo;
 import com.nike.geo.vo.comm.FileVo;
 import com.nike.geo.vo.hr.EmpVo;
+import com.nike.geo.vo.msg.NotiVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -121,7 +122,7 @@ public class BoardController {
 			notiMap.put("origin_no","B"+Vo.getBo_no());
 			commService.insertNoti(notiMap);
 		}
-		
+		commService.updateAdminNoti(); // 관리자는 읽음처리
     
 		//파일이 있다면 저장
 		if (file != null) {
@@ -263,6 +264,22 @@ public class BoardController {
 		Vo.setEmp_no(detailId);
 		service.view_Count(Vo);
 		model.addAttribute("Vo",Vo);
+		
+		// 알림 읽음 여부 변경
+		NotiVo noti = new NotiVo();
+		noti.setEmp_no(detailId);
+		noti.setOrigin_no("B"+Bvo.getBo_no());
+		String notiReadYn = commService.selectNotiRead(noti);
+		if("N".equals(notiReadYn)) {
+			log.info("알림을 받고 처음 글을 읽을 경우에만");
+			int readChk = commService.updateNotiRead(noti);
+			if(readChk == 1) {
+				log.info("알림 읽음 여부 변경 성공");
+			}else {
+				log.info("알림 읽음 여부 변경 실패");
+			}
+		}
+				
 		return "board/detailBoard";
 	}
 

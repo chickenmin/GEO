@@ -15,6 +15,7 @@ public class NotiVo {
 
 	private String noti_no;
 	private String emp_no;
+	private String origin_no;
 	private String noti_status;
 	private String noti_content;
 	private String noti_date;

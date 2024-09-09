@@ -101,5 +101,8 @@ public interface IApprovalService {
 	//시그니처 패드 서명 추가
 	public int insertBase (Map<String, Object> map);
 
+	// 결재알림 정보 조회 selectNotiAppr
+	public Ap_DocuVo selectNotiAppr(String docu_no);
+	
 }
 

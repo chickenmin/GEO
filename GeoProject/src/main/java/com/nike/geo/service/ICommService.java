@@ -94,6 +94,13 @@ public interface ICommService {
 	public int insertNoti(Map<String, Object> map);
 	
 	/**
+	 * 결재알림 생성 insertNotiAppr
+	 * @param map
+	 * @return 0 혹은 1
+	 */
+	public int insertNotiAppr(Map<String, Object> map);
+	
+	/**
 	 * 재직사원 조회 
 	 * @return List<String>
 	 */
@@ -107,15 +114,30 @@ public interface ICommService {
 	public List<NotiVo> selectLatestNoti(String empNo);
 	
 	/**
-	 * 알림 시퀀스값 조회 selectNotiSeq
-	 * @return 알림 시퀀스값
-	 */
-	public int selectNotiSeq();
-	
-	/**
 	 * 안읽은 알림 갯수 확인 
 	 * @param no
 	 * @return 안읽은 알림 갯수
 	 */
 	public int cntUnreadNoti(String no);
+	
+	/**
+	 * 알림 읽기 updateNotiRead
+	 * @param vo
+	 * @return 0 혹은 1
+	 */
+	public int updateNotiRead(NotiVo vo);
+	
+	/**
+	 * 알림 읽음여부 확인 selectNotiRead
+	 * @param vo
+	 * @return 알림 읽음여부
+	 */
+	public String selectNotiRead(NotiVo vo);
+	
+	/**
+	 * 관리자 공지알림 읽기 updateAdminNoti
+	 * @return 읽음처리된 알림 갯수
+	 */
+	public int updateAdminNoti();
+	
 }

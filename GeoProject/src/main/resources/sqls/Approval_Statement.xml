@@ -438,6 +438,12 @@
     	</foreach>
 	</update>
 	
+	<!-- 결재알림 정보 조회 selectNotiAppr -->
+	<select id="selectNotiAppr" resultType="Ap_DocuVo">
+		SELECT APD_NO, APD_CON, REG_ID
+			FROM AP_DOCU
+			WHERE APD_NO = #{apd_no}
+	</select>
 	
 </mapper>
 

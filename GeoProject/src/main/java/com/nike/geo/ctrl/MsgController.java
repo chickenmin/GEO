@@ -27,8 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.Gson;
-import com.nike.geo.service.IBoardService;
 import com.nike.geo.service.ICommService;
 import com.nike.geo.service.IEmpService;
 import com.nike.geo.service.IMsgService;
@@ -51,9 +49,6 @@ public class MsgController {
 	
 	@Autowired
 	private ICommService commService;
-	
-	@Autowired
-	private IBoardService boardService;
 	
 	@Autowired
 	private IEmpService empService;
@@ -89,7 +84,7 @@ public class MsgController {
 		
 		// 사원 정보
 		EmpVo mainVo = commService.selectMainEmp(empNo);
-		log.info("MESSAGE controller - index에 띄울 사원정보 {}", mainVo);
+		log.info("index에 띄울 사원정보 {}", mainVo);
 		model.addAttribute("mainVo", mainVo);
 		
 		// 게시판 (공지/일반)
@@ -124,9 +119,12 @@ public class MsgController {
 		List<Ap_DocuVo> docu = commService.selectMainDocu(empNo);
 		for (Ap_DocuVo d : docu) {
 			String content = d.getApd_con();
-			content = Jsoup.parse(content).text();
-			if(content.length() > 30) {
-				content = content.substring(0, 30).concat("...");			
+			content = content.replaceAll("&lt;br&gt;", " ");
+			content = content.replaceAll("<br>", " ");
+			content = content.replaceAll("&nbsp;", " ");
+
+			if(content.length() > 15) {
+				content = content.substring(0, 15).concat("...");			
 			}
 			content = content.replaceAll("(\r\n|\r|\n|\n\r)", " ");
 			d.setApd_con(content);
@@ -135,7 +133,7 @@ public class MsgController {
 
 		// 일정
 		List<CalVo> calList = commService.selectMainCal(loginVo.getEmp_no());
-		log.info("MESSAGE controller - index에 띄울 일정 정보 {}", calList);
+		log.info("index에 띄울 일정 정보 {}", calList);
 		model.addAttribute("calList", calList);
 		
 		return "comm/index";
@@ -193,13 +191,13 @@ public class MsgController {
 		MsgVo msgDetail = service.selectMsgOne(no);
 		
 		// 쪽지 읽음 여부 변경
-		if(msgDetail.getMsg_recv_read_yn().equals("N")) {
-			log.info("MESSAGE controller - 쪽지를 처음 읽을 경우에만");
+		if(msgDetail.getMsg_recv_read_yn().equals("N")) { 
+			log.info("쪽지를 처음 읽을 경우에만");
 			int readChk = service.updateMsgRead(msgDetail);
 			if(readChk == 1) {
-				log.info("MESSAGE controller - 쪽지 읽음 여부 변경 성공");
+				log.info("쪽지 읽음 여부 변경 성공");
 			}else {
-				log.info("MESSAGE controller - 쪽지 읽음 여부 변경 실패");
+				log.info("쪽지 읽음 여부 변경 실패");
 			}
 		}
 		
@@ -240,6 +238,7 @@ public class MsgController {
 	public String insertMsg(MsgVo msgVo,
 							MultipartFile file,
 							HttpSession session) throws IOException {
+		log.info("MESSAGE controller - 쪽지 작성 진행중");
 		
 		// 쪽지 작성
 		String empNo = ((EmpVo)session.getAttribute("loginVo")).getEmp_no();
@@ -253,21 +252,21 @@ public class MsgController {
 			// 진짜 이름 
 			String originFileName = file.getOriginalFilename();
 			fileVo.setFile_oname(originFileName);
-			log.info("MESSAGE controller - 받아온 파일의 원래 이름 : {}", originFileName);
+			log.info("받아온 파일의 원래 이름 : {}", originFileName);
 			
 			String ext = FilenameUtils.getExtension(originFileName); //파일의 확장자
-			log.info("MESSAGE controller - 받아온 파일의 확장자 : {}", ext);
+			log.info("받아온 파일의 확장자 : {}", ext);
 			
 			UUID uuid = UUID.randomUUID(); 
 			// 저장 이름
 			String fileName = uuid + "." + ext;
 			fileVo.setFile_sname(fileName);
-			log.info("MESSAGE controller - 받아온 파일의 DB 저장명 : {}", fileName);
+			log.info("받아온 파일의 DB 저장명 : {}", fileName);
 			
 //			// 파일 사이즈
 			long fileSize = file.getSize();
 			fileVo.setFile_size(fileSize);
-			log.info("MESSAGE controller - 받아온 파일의 크기 : {}", fileSize);
+			log.info("받아온 파일의 크기 : {}", fileSize);
 			
 //			// 파일 저장될 경로
 			String path = "C:/GeoProject/storage/msg/";
@@ -282,15 +281,15 @@ public class MsgController {
 			
 			int fileChk = service.insertFile(fileVo);
 			if(fileChk==1) {
-				log.info("MESSAGE controller - 파일 업로드 완료");
+				log.info("파일 업로드 완료");
 			}
 		}
 		
 		if(msgChk==1) {
-			log.info("MESSAGE controller - 쪽지 작성 완료. 보낸 쪽지 상세 조회로 이동");
+			log.info("쪽지 작성 완료. 보낸 쪽지 상세 조회로 이동");
 			return "redirect:/detailMsgSend.do?no="+msgVo.getMsg_no();
 		}else {
-			log.info("MESSAGE controller - 쪽지 작성 실패. 받은 쪽지함으로 이동");
+			log.info("쪽지 작성 실패. 받은 쪽지함으로 이동");
 			// alert 창
 			return "redirect:/recvMsg.do";
 		}
@@ -299,6 +298,7 @@ public class MsgController {
 	@PostMapping(value = "/downloadMsgFile.do")
 	public void fileDownload(String no,
 							HttpServletResponse response) throws IOException {
+		log.info("MESSAGE controller - 파일 다운로드");
 		FileVo msgFile = service.selectFile(no);
 		String fileOriginName = msgFile.getFile_oname();
 		String fileStoredName = msgFile.getFile_sname();
