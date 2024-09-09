@@ -131,6 +131,12 @@ public class BoardServiceImpl implements IBoardService {
 	public List<FileVo> selectFile(String origin_no) {
 		return dao.selectFile(origin_no);
 	}
+	
+	@Override
+	public void delFile(Map<String, Object> delFileMap) {
+		dao.delFile(delFileMap);
+		
+	}
 }
 
 

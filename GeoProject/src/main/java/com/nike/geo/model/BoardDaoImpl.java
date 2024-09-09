@@ -145,4 +145,10 @@ public class BoardDaoImpl implements IBoardDao {
 	public List<FileVo> selectFile(String origin_no) {
 		return sessionTemplate.selectList(NS+"selectFile", origin_no);
 	}
+	
+	@Override
+	public void delFile(Map<String, Object> delFileMap) {
+		sessionTemplate.update(NS+"delFile",delFileMap);
+		
+	}
 }

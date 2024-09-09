@@ -3,18 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
-<style>
-        /* Flexbox 스타일 추가 */
-        .button-container {
-            display: flex;
-            align-items: center; /* 세로 중앙 정렬 */
-            gap: 10px; /* 버튼 간의 간격 조정 */
-            margin-bottom: 15px;
-        }
-        .button-container form {
-            margin: 0; /* form 기본 여백 제거 */
-        }
-</style>
+ <link rel="stylesheet" type="text/css" href="./css/board.css">
 <%@ include file="../comm/header.jsp" %>
 <script type="text/javascript">
 function del(event) {
@@ -52,31 +41,31 @@ function del(event) {
 	<%@ include file="../comm/sidebar.jsp" %>
  	<main id="main" class="main">
 		<br>
-		<h1>${Vo.bo_title}</h1>
-		${Vo.emp_name} · ${Vo.bo_regdate} · 조회수(${Vo.bo_view_count})<br>
-
+		<div class="post-container">
+        <div class="post-title">${Vo.bo_title}</div>
+        <div class="post-info">${Vo.emp_name} · ${Vo.bo_regdate} · 조회수(${Vo.bo_view_count})</div>
+       
 		<c:choose>
 			<c:when test="${file == null}">
 		  				첨부파일 없음
 		  			</c:when>
 			<c:otherwise>
 				<c:forEach var="f" items="${file}">
-					<form action="./boardFile.do" method="post">
-						${f.file_oname} &nbsp&nbsp 
+				 <div class="file-card">
+						${f.file_oname}
+					<form action="./boardFile.do" method="post" style="display:inline;">
 						<input type="hidden" name="file_no" value="${f.file_no}">
 						<button type="submit">다운로드</button>
 					</form>
+					</div>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
 
 
-
-		<br><br>
-		${Vo.bo_title}
-		<br><br>
-		${Vo.bo_content}
-		<hr>
+		<br>
+		<div class="post-content">${Vo.bo_content}</div>
+		</div>
 		<div class="button-container">
 		<form action="./likeCount.do" method="post">
 		<input type="hidden" name="bo_no" value="${Vo.bo_no}">
@@ -139,7 +128,9 @@ window.onload = function () {
                         var commentsHtml = '';
                         $.each(response, function (index, comment) {
                         	var brContent = comment.comm_content.replace(/\n/g, '<br>');
-                            commentsHtml += '<hr>'+'<p>'+comment.reg_id+ '<p>' + brContent + '</p>'+comment.reg_date+'</p>';
+                            commentsHtml += '<p><h4><strong>'+comment.reg_id+
+                            				'<p></h4></strong>' + brContent +
+                            				'</p><small>'+comment.reg_date+'</p></small>'+'<hr>';
                         });
                         commentSection.html(commentsHtml);
                     }
