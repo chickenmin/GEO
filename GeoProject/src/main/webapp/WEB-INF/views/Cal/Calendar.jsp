@@ -126,6 +126,9 @@
       </div>
       <div class="modal-body">
          <form id="updateEventForm">
+         	<div class="mb-3">
+                <input type="hidden" class="form-control" id="update_cal_no" required/>
+            </div>
             <div class="mb-3">
                 <span>일정명</span>
                 <input type="text" class="form-control" id="update_cal_title" required/>
