@@ -18,11 +18,11 @@
 				EMP_HIREDATE, EMP_EMAIL, EMP_PHONE,
 				EMP_BIRTH, EMP_AUTH, EMP_STATUS,
 				EMP_RETIREDATE, EMP_POSTCODE, EMP_ADDRESS1,
-				EMP_ADDRESS2, EMP_ADDRESS3, EMP_IMG,
+				EMP_ADDRESS2, EMP_ADDRESS3,
 				REG_ID, REG_DATE, MOD_ID, MOD_DATE
 			FROM GEO.EMP
 			WHERE EMP_NO = #{emp_no} AND EMP_PW = #{emp_pw}
-			AND EMP_STATUS = 'ST001'
+			AND EMP_STATUS IN ('ST001', 'ST003')
 	</select>
 	
 	<!-- 임시비밀번호 발급 전 정보 확인 selectEmpTemp -->
@@ -122,6 +122,7 @@
 					 			WHERE EMP_NO = #{emp_no})
 				AND APD_TEMP_YN = 'N'
 				AND APD_STATUS = #{apd_status}
+				AND EXTRACT (MONTH FROM AP_DOCU.APD_CLEAR_DATE) = #{month}
 	</select>
 	
 	<!-- 메인화면 일정 조회 selectMainCal -->

@@ -103,7 +103,7 @@ public class CommServiceImpl implements ICommService {
 	
 	@Override
 	public List<Ap_DocuVo> selectMainDocu(String no) {
-ㄴ		log.info("메인화면 결재문서함 조회 selectMainDocu - 받아온 값 : {}", no);
+		log.info("메인화면 결재문서함 조회 selectMainDocu - 받아온 값 : {}", no);
 		return dao.selectMainDocu(no);
 	}
 	

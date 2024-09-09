@@ -85,12 +85,11 @@
           
         </a><!-- End Notification Icon -->
 
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" id="notiUl" style="width: 400px; height:400px; overflow-y: auto;">
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" id="notiUl" style="width: 450px; height:320px; overflow-y: auto;">
    
         </ul><!-- End Notification Dropdown Items -->
 
       </li><!-- End Notification Nav -->
-
 
 
 	  <!-- 쪽지 -->
