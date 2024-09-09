@@ -10,8 +10,8 @@
 				INSERT INTO CAL(CAL_NO, CAL_TITLE, CAL_CONTENT, 
                      CAL_START, CAL_STOP, CAL_TYPE, CAL_OPEN_YN)
 				VALUES(CAL_SEQ.NEXTVAL, #{cal_title}, #{cal_content},
-					  TO_DATE(#{cal_start}, 'YYYY-MM-DD HH24:MI:SS'), 
-					  TO_DATE(#{cal_stop}, 'YYYY-MM-DD HH24:MI:SS')
+					  TO_DATE(#{cal_start}, 'YYYY-MM-DD HH24:MI'), 
+					  TO_DATE(#{cal_stop}, 'YYYY-MM-DD HH24:MI')
 					  ,${cal_type}, 'N')
 </insert>
 
@@ -50,7 +50,7 @@ SELECT CAL_NO, CAL_TITLE, CAL_CONTENT,
 </update> 
 
 
-<!-- 게시글 삭제 -->
+<!-- 일정 삭제 -->
 <delete id="delflagCal">
 UPDATE CAL SET CAL_DEL_YN = 'Y'
 	WHERE CAL_NO = #{cal_no}
@@ -58,6 +58,7 @@ UPDATE CAL SET CAL_DEL_YN = 'Y'
 
 <!-- 일정 변경 -->
 <update id="updateCal" parameterType="CalVo">
+
 UPDATE CAL SET CAL_TITLE = #{cal_title},
         CAL_CONTENT = #{cal_content},
 	    CAL_START = TO_DATE(#{cal_start}, 'YYYY/MM/DD HH24:MI:SS'),

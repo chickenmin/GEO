@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +95,9 @@ public class MsgController {
 		
 		// 결재 현황 - 완료C, 대기W, 진행중P, 반려R
 		Map<String, Object> map = new HashMap<String, Object>();
+		LocalDate now = LocalDate.now();
 		map.put("emp_no", empNo);
+		map.put("month", now.getMonthValue()); // 현재 날짜에서 n월인지 추출
 		
 		map.put("apd_status", "C");
 		int complete = commService.selectMainAppr(map);
@@ -151,8 +154,8 @@ public class MsgController {
 		for (MsgVo msg : msgListRecv) {
 			String content = msg.getMsg_content();
 			content = Jsoup.parse(content).text();
-			if(content.length() > 30) {
-				content = content.substring(0, 30).concat("...");			
+			if(content.length() > 25) {
+				content = content.substring(0, 25).concat("...");			
 			}
 			content = content.replaceAll("(\r\n|\r|\n|\n\r)", " ");
 			msg.setMsg_content(content);
@@ -174,8 +177,8 @@ public class MsgController {
 		for (MsgVo msg : msgListSend) {
 			String content = msg.getMsg_content();
 			content = Jsoup.parse(content).text();
-			if(content.length() > 30) {
-				content = content.substring(0, 30).concat("...");			
+			if(content.length() > 25) {
+				content = content.substring(0, 25).concat("...");			
 			}
 			content = content.replaceAll("(\r\n|\r|\n|\n\r)", " ");
 			msg.setMsg_content(content);

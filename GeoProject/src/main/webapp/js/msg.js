@@ -162,14 +162,14 @@ $(document).ready(function() {
 						
 						notiUl.append(`
 									  <li class="notification-item">
-									    <a class="dropdown-item" href="${href}">
-									      <i class="bi ${iconClass}"></i>
-									      <div>
-									        <h4>${title}</h4>
-									        <p>${noti.noti_content}</p>
-									        <p>${timeDiff}</p>
-									      </div>
-									    </a>
+									    <i class="bi ${iconClass}"></i>
+									      <a class="dropdown-item" href="${href}">
+										      <div>
+										        <h4>${title}</h4>
+										        <p>${noti.noti_content}</p>
+										        <p>${timeDiff}</p>
+										      </div>
+									      </a>
 									  </li>
 									`);
 						if (index < data.length - 1) {

@@ -1,3 +1,18 @@
+SELECT COUNT(*) 
+			FROM AP_DOCU 
+			WHERE APD_NO IN (SELECT APD_NO 
+								FROM AP_LINE al 
+					 			WHERE EMP_NO = 'EE001')
+				AND APD_TEMP_YN = 'N'
+				AND APD_STATUS = 'C'
+				AND EXTRACT (MONTH FROM AP_DOCU.APD_CLEAR_DATE) = '9' ;
+				
+---------------------------------------------------------------------------------
+
+SELECT APD_NO, EMP_NO, APD_CLEAR_DATE,
+		EXTRACT (MONTH FROM AP_DOCU.APD_CLEAR_DATE) AS MONTH
+	FROM AP_DOCU;
+
 INSERT INTO NOTI(NOTI_NO, EMP_NO, NOTI_STATUS,
                  NOTI_CONTENT, NOTI_DATE, REG_ID,
                  REG_DATE, MOD_ID, MOD_DATE)

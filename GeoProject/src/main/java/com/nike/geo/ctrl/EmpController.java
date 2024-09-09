@@ -229,21 +229,24 @@ public class EmpController {
 		
 		EmpVo loginVo = (EmpVo) session.getAttribute("loginVo");
 
-		// 현재 비밀번호 검증
-		if (!loginVo.getEmp_pw().equals(currentPw)) {
-			model.addAttribute("loginVo", loginVo);
-			return "hr/myPage"; // 비밀번호 변경 페이지로 리다이렉트
-		}
-
-		// 새 비밀번호와 비밀번호 확인 일치 여부 검증
-		if (!newPw.equals(renewPw)) {
-			return "hr/myPage"; // 비밀번호 변경 페이지로 리다이렉트
-		}
-
-		emp_no = loginVo.getEmp_no();
-		loginVo.setEmp_pw(newPw);
+	    // 현재 비밀번호 검증
+	    if (!loginVo.getEmp_pw().equals(currentPw)) {
+	        return "hr/myPage";
+	    }
+	    
+	    // 새 비밀번호와 비밀번호 확인 일치 여부 검증
+	    if (!newPw.equals(renewPw)) {
+	        return "hr/myPage";
+	    }
+	    
+	    // 비밀번호 변경 처리
+	    loginVo.setEmp_pw(newPw);
+	    service.modPw(loginVo);
+	    
+	    
 		
-		service.modPw(loginVo);
+		
+		
 
 
 		return "hr/myPage";
