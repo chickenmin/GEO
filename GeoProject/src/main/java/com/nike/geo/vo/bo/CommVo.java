@@ -28,5 +28,6 @@ public class CommVo {
 	private String reg_date;
 	private String mod_id;
 	private String mod_date;
+	private String emp_name;
 
 }

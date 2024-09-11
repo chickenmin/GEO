@@ -163,11 +163,13 @@
 	
 	<!-- 댓글 -->
 	<select id="commList" resultType="CommVo">
-	SELECT COMM_SEQ ,BO_NO ,EMP_NO ,
+	SELECT COMM_SEQ ,BO_NO ,c.EMP_NO ,
 			COMM_CONTENT ,COMM_DATE ,COMM_REF ,
 			COMM_STEP ,COMM_USE_YN ,COMM_DEL_YN ,
-			REG_ID ,REG_DATE ,MOD_ID ,MOD_DATE 
-	FROM COMM
+			c.REG_ID ,c.REG_DATE ,c.MOD_ID ,c.MOD_DATE ,e.EMP_NAME AS EMP_NAME
+	FROM COMM c
+	INNER JOIN EMP e
+	ON c.EMP_NO = e.EMP_NO
 	WHERE BO_NO=#{bo_no}
 	</select>
 	
