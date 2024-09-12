@@ -75,10 +75,7 @@
 	$(document).ready(function() {
 		$("#BoardTable").DataTable({
 			"info" : false,
-			"columnDefs" : [ {
-				"orderable" : false,
-				"targets" : 0
-			} ]
+			"order": [[3, "desc"]]
 		});
 	});
 </script>
