@@ -423,6 +423,7 @@ public class BoardController {
 		EmpVo Evo=(EmpVo) session.getAttribute("loginVo");
 		vo.setBo_no(bo_no);
 		vo.setEmp_no(Evo.getEmp_no());
+		vo.setEmp_name(Evo.getEmp_name());
 		vo.setComm_content(comm_content);
 		service.commentInsert(vo);
 		return "redirect:/detailBoard.do?bo_no=" + bo_no;

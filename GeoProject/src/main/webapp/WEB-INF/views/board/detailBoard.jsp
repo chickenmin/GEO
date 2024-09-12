@@ -128,7 +128,7 @@ window.onload = function () {
                         var commentsHtml = '';
                         $.each(response, function (index, comment) {
                         	var brContent = comment.comm_content.replace(/\n/g, '<br>');
-                            commentsHtml += '<p><h4><strong>'+comment.reg_id+
+                            commentsHtml += '<p><h4><strong>'+comment.emp_name+
                             				'<p></h4></strong>' + brContent +
                             				'</p><small>'+comment.reg_date+'</p></small>'+'<hr>';
                         });
