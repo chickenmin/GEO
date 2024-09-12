@@ -55,7 +55,7 @@
 			</table>
 			<!-- </table> -->
 
-			<c:if test="${loginVo.emp_name=='관리자'}">
+			<c:if test="${loginVo.emp_auth=='AU002'}">
 				<input class="btn btn-danger" type="submit" value="삭제">
 			</c:if>
 			<input class="btn btn-primary" type="button" onclick="location.href='./writeBoard.do'" value="새글쓰기">
@@ -72,11 +72,22 @@
 
 <%@ include file="../comm/footer.jsp"%>
 <script type="text/javascript">
+if(${loginVo.emp_auth=='AU002'}){
+$(document).ready(function() {
+	$("#BoardTable").DataTable({
+		"info": false,
+		"columnDefs":[
+			{"orderable": false, "targets":0}
+		]
+	});
+});
+}else{
 	$(document).ready(function() {
 		$("#BoardTable").DataTable({
 			"info" : false,
 			"order": [[3, "desc"]]
 		});
 	});
+}
 </script>
 </html>
