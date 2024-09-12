@@ -225,11 +225,11 @@ public class ApprovalController {
 			notiMap.put("noti_status", "3");
 			notiMap.put("noti_content", "상신한 문서 '" + doc.getApd_con() +"' 가 반려되었습니다.");
 			commService.insertNotiAppr(notiMap);
-			return "redirect:/apprList.do?variety=submit";
+			return "redirect:/apprList.do?variety=appr";
 		}else {
 			log.info("반려처리 실패");
 			model.addAttribute("apd_no", apd_no);
-			return "redirect:/detailAppr.do?variety=submit";
+			return "redirect:/detailAppr.do?variety=appr";
 		}
 	}
 
