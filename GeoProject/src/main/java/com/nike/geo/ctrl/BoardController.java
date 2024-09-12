@@ -250,6 +250,7 @@ public class BoardController {
 		Vo.setEmp_no(detailId);
 		service.view_Count(Vo);
 		model.addAttribute("Vo",Vo);
+		model.addAttribute("emp_name", Evo.getEmp_name());
 		
 		// 알림 읽음 여부 변경
 		NotiVo noti = new NotiVo();

@@ -57,7 +57,7 @@
 	VALUES(#{bo_no},#{bo_title},#{emp_no},
 			SYSDATE,0,0
 			,#{bo_content},#{bo_status},'N'
-			,#{emp_no},SYSDATE,#{emp_no}
+			,#{emp_no},SYSDAT  E,#{emp_no}
 			,SYSDATE)
 	</insert>
 	
