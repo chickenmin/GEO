@@ -171,6 +171,7 @@
 	INNER JOIN EMP e
 	ON c.EMP_NO = e.EMP_NO
 	WHERE BO_NO=#{bo_no}
+	ORDER BY c.REG_DATE DESC
 	</select>
 	
 	<!-- 댓글쓰기 -->
